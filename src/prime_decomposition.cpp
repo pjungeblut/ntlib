@@ -2,14 +2,14 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
-#include <vector>
+#include <map>
 
 #include "include/prime_decomposition.hpp"
 #include "include/sieve_eratosthenes.hpp"
 
 template<typename NumberType>
 void test_prime_decomposition_naive(NumberType n) {
-  std::vector<NumberType> factors;
+  std::map<NumberType, NumberType> factors;
 
   auto t0 = std::chrono::high_resolution_clock::now();
   ntlib::prime_decomposition_naive(n, factors);
@@ -19,7 +19,9 @@ void test_prime_decomposition_naive(NumberType n) {
 
   printf("Naive decomposition:\n");
   printf("Factors of %ld:", n);
-  for (NumberType f : factors) printf(" %ld", f);
+  for (auto &[factor, multiplicity] : factors) {
+    printf(" %ld^%ld", factor, multiplicity);
+  }
   printf("\n");
   printf("Time: %.3lf seconds\n", t);
   printf("\n");
@@ -27,7 +29,7 @@ void test_prime_decomposition_naive(NumberType n) {
 
 template<typename NumberType>
 void test_prime_decomposition_list(NumberType n, std::vector<NumberType> &list) {
-  std::vector<NumberType> factors;
+  std::map<NumberType, NumberType> factors;
 
   auto t0 = std::chrono::high_resolution_clock::now();
   ntlib::prime_decomposition_list(n, factors, list);
@@ -37,7 +39,9 @@ void test_prime_decomposition_list(NumberType n, std::vector<NumberType> &list) 
 
   printf("List decomposition:\n");
   printf("Factors of %ld:", n);
-  for (NumberType f : factors) printf(" %ld", f);
+  for (auto &[factor, multiplicity] : factors) {
+    printf(" %ld^%ld", factor, multiplicity);
+  }
   printf("\n");
   printf("Time: %.3lf seconds\n", t);
   printf("\n");
@@ -45,7 +49,7 @@ void test_prime_decomposition_list(NumberType n, std::vector<NumberType> &list) 
 
 template<typename NumberType>
 void test_prime_decomposition_rho(NumberType n) {
-  std::vector<NumberType> factors;
+  std::map<NumberType, NumberType> factors;
 
   auto t0 = std::chrono::high_resolution_clock::now();
   ntlib::prime_decomposition_rho(n, factors);
@@ -55,7 +59,9 @@ void test_prime_decomposition_rho(NumberType n) {
 
   printf("Rho decomposition:\n");
   printf("Factors of %ld:", n);
-  for (NumberType f : factors) printf(" %ld", f);
+  for (auto &[factor, multiplicity] : factors) {
+    printf(" %ld^%ld", factor, multiplicity);
+  }
   printf("\n");
   printf("Time: %.3lf seconds\n", t);
   printf("\n");

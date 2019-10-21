@@ -13,7 +13,7 @@
 #include <cmath>
 #include <cstddef>
 #include <cstdlib>
-#include <vector>
+#include <map>
 
 #include "include/base.hpp"
 #include "include/prime_test.hpp"
@@ -28,14 +28,14 @@ namespace ntlib {
    * @param factors The prime factors.
    */
   template<typename NumberType>
-  void prime_decomposition_naive(NumberType n, std::vector<NumberType> &factors) {
+  void prime_decomposition_naive(NumberType n, std::map<NumberType, NumberType> &factors) {
     for (NumberType i = 2; i * i <= n; ++i) {
       while (n % i == 0) {
         n /= i;
-        factors.push_back(i);
+        factors[i]++;
       }
     }
-    if (n != 1) factors.push_back(n);
+    if (n != 1) factors[n]++;
   }
 
   /**
@@ -51,15 +51,15 @@ namespace ntlib {
    *               correctly.
    */
   template<typename NumberType>
-  void prime_decomposition_list(NumberType n, std::vector<NumberType> &factors,
+  void prime_decomposition_list(NumberType n, std::map<NumberType, NumberType> &factors,
       std::vector<NumberType> &primes) {
     for (std::size_t i = 0; i < primes.size() && primes[i] * primes[i] <= n; ++i) {
       while (n % primes[i] == 0) {
         n /= primes[i];
-        factors.push_back(primes[i]);
+        factors[primes[i]]++;
       }
     }
-    if (n != 1) factors.push_back(n);
+    if (n != 1) factors[n]++;
   }
 
   /**
@@ -95,10 +95,10 @@ namespace ntlib {
    * @param factors The prime factors.
    */
   template<typename NumberType>
-  void prime_decomposition_rho(NumberType n, std::vector<NumberType> &factors) {
+  void prime_decomposition_rho(NumberType n, std::map<NumberType, NumberType> &factors) {
     if (n == 1) return;
     if (is_prime_miller_rabin(n)) {
-      factors.push_back(n);
+      factors[n]++;
       return;
     }
     NumberType f = rho(n);

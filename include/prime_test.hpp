@@ -10,6 +10,7 @@
  */
 
 #include <algorithm>
+#include <vector>
 
 #include "include/base.hpp"
 
