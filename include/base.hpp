@@ -60,7 +60,24 @@ NumberType lcm(NumberType a, NumberType b) {
   return a * (b / gcd(a, b));
 }
 
-// Laufzeit: O(log(b))
+/**
+ * Computes a^b using binary exponentation.
+ * Runtime: O(log b)
+ *
+ * @tparam NumberType Integral data type used for whole numbers.
+ *
+ * @param a The base.
+ * @param b The exponent.
+ * @return a^b
+ */
+template<typename NumberType>
+NumberType pow(NumberType a, NumberType b) {
+  if (b == 0) return 1;
+  if (b == 1) return a;
+  if (b & 1) return pow(a, b - 1) * a;
+  return pow(a * a, b / 2);
+}
+
 /**
  * Computes a^b mod n using binary exponentation.
  * Runtime: O(log b)
@@ -77,7 +94,7 @@ NumberType mod_pow(NumberType a, NumberType b, NumberType n) {
   if (b == 0) return 1;
   if (b == 1) return a % n;
   if (b & 1) return (mod_pow(a, b - 1, n) * a) % n;
-  else return mod_pow((a * a) % n, b / 2, n);
+  return mod_pow((a * a) % n, b / 2, n);
 }
 
 }
