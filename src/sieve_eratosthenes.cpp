@@ -41,19 +41,6 @@ void test_sieve_eratosthenes_generate(std::size_t N) {
   printf("Size of output array: %ld\n", primes.size());
   printf("Time: %.3lf seconds\n", t);
   printf("\n");
-
-  // Project Euler, Problem 7.
-  // https://projecteuler.net/problem=7
-  printf("10001st prime number: %ld\n\n", primes[10000]);
-
-  // Project Euler, Problem 10.
-  // https://projecteuler.net/problem=10
-  NumberType sum = 0;
-  for (NumberType p : primes) {
-    if (p >= 2000000) break;
-    sum += p;
-  }
-  printf("Sum of all primes below 2000000: %ld\n", sum);
 }
 
 template<typename NumberType>
