@@ -15,6 +15,7 @@
  * is even. Every primitive triple an be constructed by above formula.
  */
 
+#include <algorithm>
 #include <vector>
 
 #include "include/base.hpp"
@@ -34,7 +35,11 @@ void primitive_pythagorean_triples(NumberType maxi, std::vector<triple<NumberTyp
   for (NumberType v = 1; 2 * v * v <= maxi; ++v) {
     for (NumberType u = v + 1; u * u + v * v <= maxi; ++u) {
       if (!((u & 1) && (v & 1)) && gcd(u, v) == 1) {
-        triples.push_back(triple<NumberType> {u * u - v * v, 2 * u * v, u * u + v * v});
+        NumberType a = u * u - v * v;
+        NumberType b = 2 * u * v;
+        NumberType c = u * u + v * v;
+        if (a > b) std::swap(a, b);
+        triples.push_back(triple<NumberType> {a, b, c});
       }
     }
   }
