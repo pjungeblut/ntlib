@@ -16,3 +16,6 @@ add_executable(prime_test src/prime_test.cpp)
 
 # Prime decomposition.
 add_executable(prime_decomposition src/prime_decomposition.cpp)
+
+# Pythagorean triples.
+add_executable(pythagorean_triple src/pythagorean_triple.cpp)

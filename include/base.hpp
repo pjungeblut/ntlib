@@ -7,6 +7,18 @@
 namespace ntlib {
 
 /**
+ * A triple of three elements.
+ *
+ * @tparam T Data type for triple elements.
+ */
+template<typename T>
+struct triple {
+  T a;
+  T b;
+  T c;
+};
+
+/**
  * Computes the absolute value of a number.
  *
  * @tparam NumberType Integral data type used for whole numbers.
