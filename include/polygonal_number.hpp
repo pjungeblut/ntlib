@@ -58,4 +58,30 @@ NumberType hexagonal_number(NumberType n) {
   return n * (2 * n - 1);
 }
 
+/**
+ * Computes the n-th heptagonal number.
+ *
+ * @tparam NumberType Integral data type used for natural numbers.
+ *
+ * @param n Which heptagonal number to gnerate.
+ * @return The n-th heptagonal number.
+ */
+template<typename NumberType>
+NumberType heptagonal_number(NumberType n) {
+  return n * (5 * n - 3) / 2;
+}
+
+/**
+ * Computes the n-th octagonal number.
+ *
+ * @tparam NumberType Integral data type used for natural numbers.
+ *
+ * @param n Which octagonal number to gnerate.
+ * @return The n-th octagonal number.
+ */
+template<typename NumberType>
+NumberType octagonal_number(NumberType n) {
+  return n * (3 * n - 2);
+}
+
 }
