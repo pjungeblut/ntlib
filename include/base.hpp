@@ -97,4 +97,45 @@ NumberType mod_pow(NumberType a, NumberType b, NumberType n) {
   return mod_pow((a * a) % n, b / 2, n);
 }
 
+/**
+ * Computes the integer square root.
+ * isqrt(n) := floor(sqrt(n))
+ *
+ * @tpararm NumberType Integral data type used for natural numbers.
+ *
+ * @param n The number to compute the integer square root of.
+ * @return isqrt(n)
+ */
+template<typename NumberType>
+NumberType isqrt(NumberType n) {
+  NumberType op = n;
+  NumberType res = 0;
+  NumberType one = 1LL << (8 * sizeof(NumberType) - 2);
+
+  while (one > op) one >>= 2;
+  while (one != 0) {
+    if (op >= res + one) {
+      op = op - (res + one);
+      res = res + 2 * one;
+    }
+    res >>= 1;
+    one >>= 2;
+  }
+  return res;
+}
+
+/**
+ * Tests, if n is a perfect square.
+ *
+ * @tparam NumberType Integral data type used for natural numbers.
+ *
+ * @param n The number to test.
+ * @return True, iff n is a perfect square.
+ */
+template<typename NumberType>
+bool is_square(NumberType n) {
+  NumberType iroot = isqrt(n);
+  return iroot * iroot == n;
+}
+
 }
