@@ -7,9 +7,8 @@
 
 int main() {
   const uint32_t N = 10000;
-  std::vector<bool> sieve(N + 1, true);
   std::vector<uint32_t> primes;
-  ntlib::sieve_eratosthenes_generate(N, sieve, primes);
+  ntlib::sieve_eratosthenes_list_segmented(N, primes);
 
   for (uint32_t i = 9; ; i += 2) {
     for (uint32_t p : primes) {

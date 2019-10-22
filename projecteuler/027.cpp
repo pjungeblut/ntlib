@@ -8,7 +8,7 @@ int main() {
   const uint32_t N = 1'000'000;
 
   std::vector<bool> sieve(N + 1, 1);
-  ntlib::sieve_eratosthenes_classic(N, sieve);
+  ntlib::sieve_eratosthenes(N, sieve);
 
   int32_t maxn = 0;
   int32_t res = 0;

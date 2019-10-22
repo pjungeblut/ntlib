@@ -11,7 +11,7 @@ int main() {
   const uint32_t N = 10000;
 
   std::vector<uint32_t> primes;
-  ntlib::sieve_eratosthenes_generate_segmented(N, primes);
+  ntlib::sieve_eratosthenes_list_segmented(N, primes);
 
   std::vector<uint32_t> sum_of_divisors(N + 1);
   for (uint32_t i = 1; i <= N; ++i) {

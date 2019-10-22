@@ -9,7 +9,7 @@
 int main() {
   uint32_t N = 1'000'000'000;
   std::vector<bool> sieve(N + 1, true);
-  ntlib::sieve_eratosthenes_classic(N, sieve);
+  ntlib::sieve_eratosthenes(N, sieve);
 
   uint32_t n = 9;
   while (true) {

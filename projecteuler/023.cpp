@@ -11,7 +11,7 @@ int main() {
   const uint32_t N = 28123;
 
   std::vector<uint32_t> primes;
-  ntlib::sieve_eratosthenes_generate_segmented(N, primes);
+  ntlib::sieve_eratosthenes_list_segmented(N, primes);
 
   std::vector<uint32_t> abundant;
   for (uint32_t i = 1; i <= N; ++i) {

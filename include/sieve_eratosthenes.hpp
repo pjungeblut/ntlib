@@ -31,7 +31,7 @@ namespace ntlib {
  *          elements big.
  * @param sieve The sieve array. Must be initialized with true.
  */
-void sieve_eratosthenes_classic(std::size_t N, std::vector<bool> &sieve) {
+void sieve_eratosthenes(std::size_t N, std::vector<bool> &sieve) {
   sieve[0] = 0;
   if (N >= 1) sieve[1] = 0;
   for (std::size_t i = 4; i <= N; i += 2) sieve[i] = 0;
@@ -56,7 +56,7 @@ void sieve_eratosthenes_classic(std::size_t N, std::vector<bool> &sieve) {
  * @param primes The array to write the primes to.
  */
 template<typename NumberType>
-void sieve_eratosthenes_generate(std::size_t N, std::vector<bool> &sieve, std::vector<NumberType> &primes) {
+void sieve_eratosthenes_list(std::size_t N, std::vector<bool> &sieve, std::vector<NumberType> &primes) {
   sieve[0] = 0;
   if (N >= 1) sieve[1] = 0;
   if (N >= 2) primes.push_back(2);
@@ -79,31 +79,6 @@ void sieve_eratosthenes_generate(std::size_t N, std::vector<bool> &sieve, std::v
 
 /**
  * Identifies all prime numbers up to N and fills an array.
- * Runtime: O(N)
- *
- * @tparam NumberType Integral data type used for natural numbers.
- *
- * @param N Identify all primes up to N. Sieve array must be at least N+1
- *          elements big.
- * @param sieve The sieve array. Must be initialized with true.
- * @param primes The array to write the primes to.
- */
-template<typename NumberType>
-void sieve_eratosthenes_generate_linear(std::size_t N, std::vector<bool> &sieve, std::vector<NumberType> &primes) {
-  sieve[0] = 0;
-  if (N >= 1) sieve[1] = 0;
-
-  for (std::size_t i = 2; i <= N; ++i) {
-    if (sieve[i]) primes.push_back(i);
-    for (std::size_t j = 0; j < primes.size() && i * primes[j] <= N; ++j) {
-      sieve[i * primes[j]] = 0;
-      if (i % primes[j] == 0) break;
-    }
-  }
-}
-
-/**
- * Identifies all prime numbers up to N and fills an array.
  * Segments the array to have better cache utilization.
  * Runtime: O(N log log N)
  *
@@ -115,13 +90,13 @@ void sieve_eratosthenes_generate_linear(std::size_t N, std::vector<bool> &sieve,
  * @param primes The array to write the primes to.
  */
 template<typename NumberType, std::size_t SEGMENT_SIZE = 1'000'000>
-void sieve_eratosthenes_generate_segmented(std::size_t N, std::vector<NumberType> &primes) {
+void sieve_eratosthenes_list_segmented(std::size_t N, std::vector<NumberType> &primes) {
   std::vector<bool> sieve(SEGMENT_SIZE + 1, 1);
   std::size_t mini = 0;
   std::size_t maxi = std::min(N, SEGMENT_SIZE);
 
   // Classical sieve for first block.
-  sieve_eratosthenes_generate(maxi, sieve, primes);
+  sieve_eratosthenes_list(maxi, sieve, primes);
 
   // Remaining blocks.
   while (maxi != N) {

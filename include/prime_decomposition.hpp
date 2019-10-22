@@ -14,30 +14,13 @@
 #include <cstddef>
 #include <cstdlib>
 #include <map>
+#include <vector>
 
 #include "include/base.hpp"
 #include "include/prime_test.hpp"
+#include "include/sieve_eratosthenes.hpp"
 
 namespace ntlib {
-  /**
-   * Computes the prime decomposition of a number.
-   *
-   * @tparam NumberType Integral data type used for natural numbers.
-   *
-   * @param n The number to decompose.
-   * @param factors The prime factors.
-   */
-  template<typename NumberType>
-  void prime_decomposition_naive(NumberType n, std::map<NumberType, NumberType> &factors) {
-    for (NumberType i = 2; i * i <= n; ++i) {
-      while (n % i == 0) {
-        n /= i;
-        factors[i]++;
-      }
-    }
-    if (n != 1) factors[n]++;
-  }
-
   /**
    * Computes the prime decomposition of a number.
    * Takes a list of primes used as possible prime factors.
@@ -63,31 +46,7 @@ namespace ntlib {
   }
 
   /**
-   * Finds a non-trivial factor of n (if one exists).
-   *
-   * @tparam NumberType Integral data type used for natural numbers.
-   *
-   * @param n The number to find a factor of.
-   */
-  template<typename NumberType>
-  NumberType rho(NumberType n) {
-    if (!(n & 1)) return 2;
-    NumberType x = std::rand() % n;
-    NumberType y = x;
-    NumberType c = std::rand() % n;
-    NumberType d = 1;
-    while (d == 1) {
-      x = (x * x % n + c) % n;
-      y = (y * y % n + c) % n;
-      y = (y * y % n + c) % n;
-      d = gcd(abs(x - y), n);
-    }
-    return d == n ? rho(n) : d;
-  }
-
-  /**
    * Computes the prime decomposition of a number.
-   * Uses Pollard's Rho Method to find a non-trivial factor.
    *
    * @tparam NumberType Integral data type used for natural numbers.
    *
@@ -95,15 +54,10 @@ namespace ntlib {
    * @param factors The prime factors.
    */
   template<typename NumberType>
-  void prime_decomposition_rho(NumberType n, std::map<NumberType, NumberType> &factors) {
-    if (n == 1) return;
-    if (is_prime_miller_rabin(n)) {
-      factors[n]++;
-      return;
-    }
-    NumberType f = rho(n);
-    prime_decomposition_rho(f, factors);
-    prime_decomposition_rho(n / f, factors);
+  void prime_decomposition(NumberType n, std::map<NumberType, NumberType> &factors) {
+    NumberType iroot = isqrt(n);
+    std::vector<NumberType> primes;
+    sieve_eratosthenes_list_segmented(iroot, primes);
+    prime_decomposition_list(n, factors, primes);
   }
-
 }
