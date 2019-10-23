@@ -110,7 +110,7 @@ template<typename NumberType>
 NumberType isqrt(NumberType n) {
   NumberType op = n;
   NumberType res = 0;
-  NumberType one = 1LL << (8 * sizeof(NumberType) - 2);
+  NumberType one = static_cast<NumberType>(1) << (8 * sizeof(NumberType) - 2);
 
   while (one > op) one >>= 2;
   while (one != 0) {
