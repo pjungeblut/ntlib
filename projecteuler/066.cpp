@@ -3,8 +3,7 @@
 #include <vector>
 
 #include "include/base.hpp"
-#include "include/continued_fraction.hpp"
-#include "include/rational.hpp"
+#include "include/pell_equation.hpp"
 
 int main() {
   __uint128_t max_d = 0;
@@ -12,12 +11,9 @@ int main() {
   for (__uint128_t d = 2; d <= 1'000; ++d) {
     if (ntlib::is_square(d)) continue;
 
-    std::vector<__uint128_t> cf;
-    __uint128_t period = ntlib::quadratic_irrational_cf(d, cf);
-    __uint128_t n = period & 1 ? 2 * period - 1 : period - 1;
-    ntlib::rational<__uint128_t> pq = ntlib::nth_convergent_quadratic_irrational_cf(n, cf);
-    if (pq.numerator > max_x) {
-      max_x = pq.numerator;
+    auto sol = ntlib::min_pell_solution(d);
+    if (sol.a > max_x) {
+      max_x = sol.a;
       max_d = d;
     }
   }

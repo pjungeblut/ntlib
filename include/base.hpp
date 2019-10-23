@@ -7,9 +7,16 @@
 namespace ntlib {
 
 /**
+ * A tuple of two elements.
+ */
+template<typename T>
+struct tuple {
+  T a;
+  T b;
+};
+
+/**
  * A triple of three elements.
- *
- * @tparam T Data type for triple elements.
  */
 template<typename T>
 struct triple {
@@ -20,8 +27,6 @@ struct triple {
 
 /**
  * Computes the absolute value of a number.
- *
- * @tparam NumberType Integral data type used for whole numbers.
  *
  * @param n The number to take the absolute value of.
  * @return The absolute value of n.
@@ -35,8 +40,6 @@ NumberType abs(NumberType n) {
 /**
  * Computes the greatest common divisor of a and b.
  *
- * @tparam NumberType Integral data type used for whole numbers.
- *
  * @param a The first number.
  * @param b The second number.
  * @return The greatest common divisor of a and b.
@@ -48,8 +51,6 @@ NumberType gcd(NumberType a, NumberType b) {
 
 /**
  * Computes the least common multiple of a and b.
- *
- * @tparam NumberType Integral data type used for whole numbers.
  *
  * @param a The first number.
  * @param b The second number.
@@ -63,8 +64,6 @@ NumberType lcm(NumberType a, NumberType b) {
 /**
  * Computes a^b using binary exponentation.
  * Runtime: O(log b)
- *
- * @tparam NumberType Integral data type used for whole numbers.
  *
  * @param a The base.
  * @param b The exponent.
@@ -82,8 +81,6 @@ NumberType pow(NumberType a, NumberType b) {
  * Computes a^b mod n using binary exponentation.
  * Runtime: O(log b)
  *
- * @tparam NumberType Integral data type used for whole numbers.
- *
  * @param a The base.
  * @param b The exponent.
  * @param n The modulus.
@@ -100,8 +97,6 @@ NumberType mod_pow(NumberType a, NumberType b, NumberType n) {
 /**
  * Computes the integer square root.
  * isqrt(n) := floor(sqrt(n))
- *
- * @tpararm NumberType Integral data type used for natural numbers.
  *
  * @param n The number to compute the integer square root of.
  * @return isqrt(n)
@@ -126,8 +121,6 @@ NumberType isqrt(NumberType n) {
 
 /**
  * Tests, if n is a perfect square.
- *
- * @tparam NumberType Integral data type used for natural numbers.
  *
  * @param n The number to test.
  * @return True, iff n is a perfect square.
