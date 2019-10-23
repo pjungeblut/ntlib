@@ -70,7 +70,7 @@ rational<NumberType> nth_convergent_quadratic_irrational_cf(std::size_t n,
   q[0] = 1;
   q[1] = cf[1];
   for (NumberType i = 2; i <= n; ++i) {
-    NumberType cf_idx = i >= cf.size() ? i % (cf.size() - 1) + 1 : i;
+    NumberType cf_idx = i >= cf.size() ? (i - 1) % (cf.size() - 1) + 1: i;
     p[i % 3] = cf[cf_idx] * p[(i + 2) % 3] + p[(i + 1) % 3];
     q[i % 3] = cf[cf_idx] * q[(i + 2) % 3] + q[(i + 1) % 3];
   }
