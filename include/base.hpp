@@ -109,12 +109,13 @@ template<typename NumberType>
 NumberType isqrt(NumberType n) {
   NumberType l = 0;
   NumberType u = static_cast<NumberType>(1) << (4 * sizeof(NumberType));
-  while (u - l > 1) {
+  while (u - l > 16) {
     NumberType m = (u + l) / 2;
     if (m * m <= n) l = m;
     else u = m;
   }
-  return l;
+  while (l * l <= n) ++l;
+  return l - 1;
 }
 
 /**
