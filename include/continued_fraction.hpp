@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- * Implementations regarding the continued fraction expressions of cetain
+ * Implementations regarding the continued fraction expressions of certain
  * numbers.
  */
 

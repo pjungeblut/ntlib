@@ -27,11 +27,11 @@ namespace ntlib {
  * Identify all prime numbers up to N.
  * Runtime: O(N log log N)
  *
- * @param N Identify all primes up to N. Sieve array must be at least N+1
- *          elements big.
- * @param sieve The sieve array. Must be initialized with true.
+ * @param N Identify all primes up to N.
+ * @param sieve The vector to be used as a sieve.
  */
 void sieve_eratosthenes(std::size_t N, std::vector<bool> &sieve) {
+  sieve.assign(N + 1, true);
   sieve[0] = 0;
   if (N >= 1) sieve[1] = 0;
   for (std::size_t i = 4; i <= N; i += 2) sieve[i] = 0;
@@ -48,15 +48,13 @@ void sieve_eratosthenes(std::size_t N, std::vector<bool> &sieve) {
  * Identifies all prime numbers up to N and fills an array.
  * Runtime: O(N log log N)
  *
- * @tparam NumberType Integral data type used for natural numbers.
- *
- * @param N Identify all primes up to N. Sieve array must be at least N+1
- *          elements big.
- * @param sieve The sieve array. Must be initialized with true.
+ * @param N Identify all primes up to N.
+ * @param sieve The array to be used as a sieve.
  * @param primes The array to write the primes to.
  */
 template<typename NumberType>
 void sieve_eratosthenes_list(std::size_t N, std::vector<bool> &sieve, std::vector<NumberType> &primes) {
+  sieve.assign(N + 1, true);
   sieve[0] = 0;
   if (N >= 1) sieve[1] = 0;
   if (N >= 2) primes.push_back(2);
@@ -82,16 +80,12 @@ void sieve_eratosthenes_list(std::size_t N, std::vector<bool> &sieve, std::vecto
  * Segments the array to have better cache utilization.
  * Runtime: O(N log log N)
  *
- * @tparam NumberType Integral data type used for natural numbers.
- * @tparam SEGMENT_SIZE The size of each segment.
- *
- * @param N Identify all primes up to N. Sieve array must be at least N+1
- *          elements big.
+ * @param N Identify all primes up to N.
  * @param primes The array to write the primes to.
  */
 template<typename NumberType, std::size_t SEGMENT_SIZE = 1'000'000>
 void sieve_eratosthenes_list_segmented(std::size_t N, std::vector<NumberType> &primes) {
-  std::vector<bool> sieve(SEGMENT_SIZE + 1, 1);
+  std::vector<bool> sieve;
   std::size_t mini = 0;
   std::size_t maxi = std::min(N, SEGMENT_SIZE);
 

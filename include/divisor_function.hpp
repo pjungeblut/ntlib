@@ -14,12 +14,10 @@ namespace ntlib {
 /**
  * Computes the divisor function for a number n.
  *
- * @tparam NumberType Integral data type used for natural numbers.
- *
  * @param factors The prime factors of n and their multiplicities.
  * @param exponent The power to which all divisors should be taken.
  *                 It must be 0 < exponent.
- * @return The value of d_x(n)
+ * @return The value of d_x(n) = \sum_{d|n} d^x.
  */
 template<typename NumberType>
 NumberType divisor_function(std::map<NumberType, NumberType> &factors, NumberType exponent) {
@@ -34,17 +32,13 @@ NumberType divisor_function(std::map<NumberType, NumberType> &factors, NumberTyp
  * Counts the number of divisors of a given number given its prime
  * factorization.
  *
- * @tparam NumberType Integral data type used for natural numbers.
- *
  * @param factors The prime factors and their multiplicities.
  * @return The number of divisors.
  */
 template<typename NumberType>
 NumberType count_divisors(std::map<NumberType, NumberType> &factors) {
   NumberType divisors = 1;
-  for (auto &f : factors) {
-    divisors *= f.second + 1;
-  }
+  for (auto &f : factors) divisors *= f.second + 1;
   return divisors;
 }
 

@@ -20,8 +20,6 @@ namespace ntlib {
  * Prime number test, naive.
  * Runtime: O(sqrt(n))
  *
- * @tpararm NumberType Integral data type used for natural numbers.
- *
  * @param n The number to be tested.
  */
 template<typename NumberType>
@@ -65,8 +63,6 @@ bool miller_rabin_test(const __uint128_t n, const __uint128_t a) {
  * Deterministic variant of Miller Rabin prime test.
  * Deterministic for n < 318.665.857.834.031.151.167.461.
  * Runtime: O(log n)
- *
- * @tpararm NumberType Integral data type used for natural numbers
  *
  * @param n The number to be tested.
  */

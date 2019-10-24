@@ -25,8 +25,6 @@ namespace ntlib {
 /**
  * Creates all primitive pythagorean triples (a,b,c) with a <= b <= c <= maxi.
  *
- * @tparam NumberType Integral data type used for natural numbers.
- *
  * @param maxi The maximum value of any component.
  * @param triples The vector to push the triples into.
  */

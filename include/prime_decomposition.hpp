@@ -25,8 +25,6 @@ namespace ntlib {
    * Computes the prime decomposition of a number.
    * Takes a list of primes used as possible prime factors.
    *
-   * @tparam NumberType Integral data type used for natural numbers.
-   *
    * @param n The number to decompose.
    * @param factors The prime factors.
    * @param primes List of primes used as possible prime factors.
@@ -47,8 +45,6 @@ namespace ntlib {
 
   /**
    * Computes the prime decomposition of a number.
-   *
-   * @tparam NumberType Integral data type used for natural numbers.
    *
    * @param n The number to decompose.
    * @param factors The prime factors.

@@ -9,8 +9,6 @@ namespace ntlib {
 /**
  * Computes the n-th triangle number.
  *
- * @tparam NumberType Integral data type used for natural numbers.
- *
  * @param n Which triangle number to gnerate.
  * @return The n-th triangle number.
  */
@@ -21,8 +19,6 @@ NumberType triangle_number(NumberType n) {
 
 /**
  * Computes the n-th square number.
- *
- * @tparam NumberType Integral data type used for natural numbers.
  *
  * @param n Which square number to gnerate.
  * @return The n-th square number.
@@ -35,8 +31,6 @@ NumberType square_number(NumberType n) {
 /**
  * Computes the n-th pentagonal number.
  *
- * @tparam NumberType Integral data type used for natural numbers.
- *
  * @param n Which pentagonal number to gnerate.
  * @return The n-th pentagonal number.
  */
@@ -47,8 +41,6 @@ NumberType pentagonal_number(NumberType n) {
 
 /**
  * Computes the n-th hexagonal number.
- *
- * @tparam NumberType Integral data type used for natural numbers.
  *
  * @param n Which hexagonal number to gnerate.
  * @return The n-th hexagonal number.
@@ -61,8 +53,6 @@ NumberType hexagonal_number(NumberType n) {
 /**
  * Computes the n-th heptagonal number.
  *
- * @tparam NumberType Integral data type used for natural numbers.
- *
  * @param n Which heptagonal number to gnerate.
  * @return The n-th heptagonal number.
  */
@@ -73,8 +63,6 @@ NumberType heptagonal_number(NumberType n) {
 
 /**
  * Computes the n-th octagonal number.
- *
- * @tparam NumberType Integral data type used for natural numbers.
  *
  * @param n Which octagonal number to gnerate.
  * @return The n-th octagonal number.
