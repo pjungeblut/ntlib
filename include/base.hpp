@@ -130,12 +130,38 @@ NumberType isqrt(NumberType n) {
  */
 template<typename NumberType>
 bool is_square(NumberType n) {
+  if (n == 0) return true;
+
+  NumberType last_digit = n % 10;
+  NumberType second_last_digit = n / 10 % 10;
+  NumberType third_last_digit = n / 100 % 10;
+
   // If n is a multiple of four, we can look at n/4 instead.
   while ((n & 3) == 0) n >>= 2;
 
+  // If n is not divisible by four (it is not by above test), its binary
+  // representation must end with 001.
+  if (!((n & 7) == 1)) return false;
+
   // All squares end in the numbers 0, 1, 4, 5, 6, or 9.
-  NumberType last_digit = n % 10;
   if (last_digit == 2 || last_digit == 3 || last_digit == 7 || last_digit == 8) return false;
+
+  // The last two digits cannot both be odd.
+  if ((last_digit & 1) && (second_last_digit & 1)) return false;
+
+  // If the last digit is 1 or 9, the two digits befor must be a multiple of 4.
+  if (last_digit == 1 || last_digit == 9) {
+    if ((third_last_digit * 10 + second_last_digit) % 4 != 0) return false;
+  }
+
+  // If the last digit is 4, the digit before it must be even.
+  if (last_digit == 4 && (second_last_digit & 1)) return false;
+
+  // If the last digit is 6, the digit before it must be odd.
+  if (last_digit == 6 && !(second_last_digit & 1)) return false;
+
+  // If the last digit is 5, the digit before it must be 2.
+  if (last_digit == 5 && second_last_digit != 2) return false;
 
   // Take the integer root and square it to check, if the real root is an integer.
   NumberType iroot = isqrt(n);
