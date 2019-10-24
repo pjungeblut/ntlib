@@ -9,8 +9,10 @@ namespace ntlib {
 /**
  * Computes the binomial coefficient binom(n,k).
  * Counts the number of k-element subsets of an n-element universe.
+ * Runtime: O(k)
  *
- * @tparam NumberType Integral data type used for natural numbers.
+ * Intermediate results are at most k times as big as the result.
+ * Be aware of overflows for large numbers.
  *
  * @param n Size of universe.
  * @param k Size of the subsets.

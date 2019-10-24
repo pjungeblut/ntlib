@@ -39,6 +39,8 @@ NumberType abs(NumberType n) {
 
 /**
  * Computes the greatest common divisor of a and b.
+ * Uses the Euclidean Algorithm.
+ * Runtime: O(log a + log b).
  *
  * @param a The first number.
  * @param b The second number.
@@ -51,6 +53,7 @@ NumberType gcd(NumberType a, NumberType b) {
 
 /**
  * Computes the least common multiple of a and b.
+ * Runtime: O(log a + log b)
  *
  * @param a The first number.
  * @param b The second number.
@@ -95,38 +98,46 @@ NumberType mod_pow(NumberType a, NumberType b, NumberType n) {
 }
 
 /**
- * Computes the integer square root.
+ * Computes the integer square root using binary search.
  * isqrt(n) := floor(sqrt(n))
+ * Runtime: O(log n)
  *
  * @param n The number to compute the integer square root of.
  * @return isqrt(n)
  */
 template<typename NumberType>
 NumberType isqrt(NumberType n) {
-  NumberType op = n;
-  NumberType res = 0;
-  NumberType one = static_cast<NumberType>(1) << (8 * sizeof(NumberType) - 2);
-
-  while (one > op) one >>= 2;
-  while (one != 0) {
-    if (op >= res + one) {
-      op = op - (res + one);
-      res = res + 2 * one;
-    }
-    res >>= 1;
-    one >>= 2;
+  NumberType l = 0;
+  NumberType u = static_cast<NumberType>(1) << (4 * sizeof(NumberType));
+  while (u - l > 1) {
+    NumberType m = (u + l) / 2;
+    if (m * m <= n) l = m;
+    else u = m;
   }
-  return res;
+  return l;
 }
 
 /**
  * Tests, if n is a perfect square.
+ * Runtime: O(log n)
+ *
+ * Uses ideas from
+ * https://math.stackexchange.com/questions/131330/detecting-perfect-squares-faster-than-by-extracting-square-root/712818#712818
+ * to identify non-squares quickly.
  *
  * @param n The number to test.
  * @return True, iff n is a perfect square.
  */
 template<typename NumberType>
 bool is_square(NumberType n) {
+  // If n is a multiple of four, we can look at n/4 instead.
+  while ((n & 3) == 0) n >>= 2;
+
+  // All squares end in the numbers 0, 1, 4, 5, 6, or 9.
+  NumberType last_digit = n % 10;
+  if (last_digit == 2 || last_digit == 3 || last_digit == 7 || last_digit == 8) return false;
+
+  // Take the integer root and square it to check, if the real root is an integer.
   NumberType iroot = isqrt(n);
   return iroot * iroot == n;
 }
