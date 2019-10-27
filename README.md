@@ -5,4 +5,4 @@ The library should contain modular implementations that can easily be combined t
 Most code was used to solve [Project Euler](https://projecteuler.net) problems, which are currently also the main tests.
 
 # Documentation
-See the [Wiki](https://github.com/pjungeblut/ntlib/wiki) for an overview of the provided functions.
+See the [Wiki](https://github.com/pjungeblut/ntlib/wiki/NTLib---Wiki) for an overview of the provided functions.
