@@ -58,7 +58,7 @@ int main() {
   test_prime_decomposition(M);
 
   std::vector<NumberType> primes;
-  ntlib::sieve_eratosthenes_list_segmented(1'000'000'007, primes);
+  ntlib::sieve_eratosthenes_list_segmented(static_cast<NumberType>(1'000'000'007), primes);
   test_prime_decomposition_list(L, primes);
   test_prime_decomposition_list(N, primes);
   test_prime_decomposition_list(M, primes);

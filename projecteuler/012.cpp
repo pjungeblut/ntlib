@@ -8,7 +8,7 @@
 
 int main() {
   std::vector<uint32_t> primes;
-  ntlib::sieve_eratosthenes_list_segmented(1000, primes);
+  ntlib::sieve_eratosthenes_list_segmented(1000u, primes);
 
   uint32_t i = 2;
   while (true) {
