@@ -4,17 +4,9 @@
  * Contains base functionality.
  */
 
-#include <type_traits>
+#include "include/integral.hpp"
 
 namespace ntlib {
-
-/**
- * Simple concept for integral data types.
- */
-template<typename T>
-concept bool Integral() {
-  return std::is_integral<T>::value;
-}
 
 /**
  * A tuple of two elements.
@@ -118,7 +110,7 @@ Integral mod_pow(Integral a, Integral b, Integral n) {
 template<typename Integral>
 Integral isqrt(Integral n) {
   Integral l = 0;
-  Integral u = static_cast<Integral>(1) << (4 * sizeof(NumberType));
+  Integral u = static_cast<Integral>(1) << (4 * sizeof(Integral));
   while (u - l > 16) {
     Integral m = (u + l) / 2;
     if (m * m <= n) l = m;
