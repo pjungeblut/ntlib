@@ -4,7 +4,17 @@
  * Contains base functionality.
  */
 
+#include <type_traits>
+
 namespace ntlib {
+
+/**
+ * Simple concept for integral data types.
+ */
+template<typename T>
+concept bool Integral() {
+  return std::is_integral<T>::value;
+}
 
 /**
  * A tuple of two elements.
@@ -31,8 +41,8 @@ struct triple {
  * @param n The number to take the absolute value of.
  * @return The absolute value of n.
  */
-template<typename NumberType>
-NumberType abs(NumberType n) {
+template<typename Integral>
+Integral abs(Integral n) {
   if (n >= 0) return n;
   return -n;
 }
@@ -46,8 +56,8 @@ NumberType abs(NumberType n) {
  * @param b The second number.
  * @return The greatest common divisor of a and b.
  */
-template<typename NumberType>
-NumberType gcd(NumberType a, NumberType b) {
+template<typename Integral>
+Integral gcd(Integral a, Integral b) {
   return b == 0 ? a : gcd(b, a % b);
 }
 
@@ -59,8 +69,8 @@ NumberType gcd(NumberType a, NumberType b) {
  * @param b The second number.
  * @return The least common multiple of a and b.
  */
-template<typename NumberType>
-NumberType lcm(NumberType a, NumberType b) {
+template<typename Integral>
+Integral lcm(Integral a, Integral b) {
   return a * (b / gcd(a, b));
 }
 
@@ -72,8 +82,8 @@ NumberType lcm(NumberType a, NumberType b) {
  * @param b The exponent.
  * @return a^b
  */
-template<typename NumberType>
-NumberType pow(NumberType a, NumberType b) {
+template<typename Integral>
+Integral pow(Integral a, Integral b) {
   if (b == 0) return 1;
   if (b == 1) return a;
   if (b & 1) return pow(a, b - 1) * a;
@@ -89,8 +99,8 @@ NumberType pow(NumberType a, NumberType b) {
  * @param n The modulus.
  * @return a^b mod n
  */
-template<typename NumberType>
-NumberType mod_pow(NumberType a, NumberType b, NumberType n) {
+template<typename Integral>
+Integral mod_pow(Integral a, Integral b, Integral n) {
   if (b == 0) return 1;
   if (b == 1) return a % n;
   if (b & 1) return (mod_pow(a, b - 1, n) * a) % n;
@@ -105,12 +115,12 @@ NumberType mod_pow(NumberType a, NumberType b, NumberType n) {
  * @param n The number to compute the integer square root of.
  * @return isqrt(n)
  */
-template<typename NumberType>
-NumberType isqrt(NumberType n) {
-  NumberType l = 0;
-  NumberType u = static_cast<NumberType>(1) << (4 * sizeof(NumberType));
+template<typename Integral>
+Integral isqrt(Integral n) {
+  Integral l = 0;
+  Integral u = static_cast<Integral>(1) << (4 * sizeof(NumberType));
   while (u - l > 16) {
-    NumberType m = (u + l) / 2;
+    Integral m = (u + l) / 2;
     if (m * m <= n) l = m;
     else u = m;
   }
@@ -129,13 +139,13 @@ NumberType isqrt(NumberType n) {
  * @param n The number to test.
  * @return True, iff n is a perfect square.
  */
-template<typename NumberType>
-bool is_square(NumberType n) {
+template<typename Integral>
+bool is_square(Integral n) {
   if (n == 0) return true;
 
-  NumberType last_digit = n % 10;
-  NumberType second_last_digit = n / 10 % 10;
-  NumberType third_last_digit = n / 100 % 10;
+  Integral last_digit = n % 10;
+  Integral second_last_digit = n / 10 % 10;
+  Integral third_last_digit = n / 100 % 10;
 
   // If n is a multiple of four, we can look at n/4 instead.
   while ((n & 3) == 0) n >>= 2;
@@ -165,7 +175,7 @@ bool is_square(NumberType n) {
   if (last_digit == 5 && second_last_digit != 2) return false;
 
   // Take the integer root and square it to check, if the real root is an integer.
-  NumberType iroot = isqrt(n);
+  Integral iroot = isqrt(n);
   return iroot * iroot == n;
 }
 
