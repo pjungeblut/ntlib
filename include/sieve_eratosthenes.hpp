@@ -18,6 +18,8 @@
 #include <cstddef>
 #include <vector>
 
+#include "include/integral.hpp"
+
 namespace ntlib {
 
 /**
@@ -27,15 +29,15 @@ namespace ntlib {
  * @param N Identify all primes up to N.
  * @param sieve The vector to be used as a sieve.
  */
-template<typename NumberType>
-void sieve_eratosthenes(NumberType N, std::vector<bool> &sieve) {
+template<Integral T>
+void sieve_eratosthenes(T N, std::vector<bool> &sieve) {
   sieve.assign(N + 1, true);
   sieve[0] = 0;
   if (N >= 1) sieve[1] = 0;
-  for (NumberType i = 4; i <= N; i += 2) sieve[i] = 0;
-  for (NumberType i = 3; i * i <= N; i += 2) {
+  for (T i = 4; i <= N; i += 2) sieve[i] = 0;
+  for (T i = 3; i * i <= N; i += 2) {
     if (sieve[i]) {
-      for (NumberType j = i * i; j <= N; j += i) {
+      for (T j = i * i; j <= N; j += i) {
         sieve[j] = 0;
       }
     }
@@ -50,18 +52,19 @@ void sieve_eratosthenes(NumberType N, std::vector<bool> &sieve) {
  * @param sieve The array to be used as a sieve.
  * @param primes The array to write the primes to.
  */
-template<typename NumberType>
-void sieve_eratosthenes_list(NumberType N, std::vector<bool> &sieve, std::vector<NumberType> &primes) {
+template<Integral T>
+void sieve_eratosthenes_list(T N, std::vector<bool> &sieve,
+    std::vector<T> &primes) {
   sieve.assign(N + 1, true);
   sieve[0] = 0;
   if (N >= 1) sieve[1] = 0;
   if (N >= 2) primes.push_back(2);
-  for (NumberType i = 4; i <= N; i += 2) sieve[i] = 0;
-  NumberType i = 3;
+  for (T i = 4; i <= N; i += 2) sieve[i] = 0;
+  T i = 3;
   for (; i * i <= N; i += 2) {
     if (sieve[i]) {
       primes.push_back(i);
-      for (NumberType j = i * i; j <= N; j += i) {
+      for (T j = i * i; j <= N; j += i) {
         sieve[j] = 0;
       }
     }
@@ -81,12 +84,12 @@ void sieve_eratosthenes_list(NumberType N, std::vector<bool> &sieve, std::vector
  * @param N Identify all primes up to N.
  * @param primes The array to write the primes to.
  */
-template<typename NumberType>
-void sieve_eratosthenes_list_segmented(NumberType N, std::vector<NumberType> &primes) {
-  const NumberType SEGMENT_SIZE = 1'000'000;
+template<Integral T>
+void sieve_eratosthenes_list_segmented(T N, std::vector<T> &primes) {
+  const T SEGMENT_SIZE = 1'000'000;
   std::vector<bool> sieve;
-  NumberType mini = 0;
-  NumberType maxi = std::min(N, SEGMENT_SIZE);
+  T mini = 0;
+  T maxi = std::min(N, SEGMENT_SIZE);
 
   // Classical sieve for first block.
   sieve_eratosthenes_list(maxi, sieve, primes);
@@ -97,14 +100,14 @@ void sieve_eratosthenes_list_segmented(NumberType N, std::vector<NumberType> &pr
     maxi = std::min(N, maxi + SEGMENT_SIZE);
 
     std::fill(sieve.begin(), sieve.end(), 1);
-    for (NumberType i = 0; i < primes.size() && primes[i] * primes[i] <= maxi; ++i) {
-      NumberType multiple = (mini + primes[i] - 1) / primes[i] * primes[i];
+    for (T i = 0; i < primes.size() && primes[i] * primes[i] <= maxi; ++i) {
+      T multiple = (mini + primes[i] - 1) / primes[i] * primes[i];
       while (multiple <= maxi) {
         sieve[multiple - mini] = 0;
         multiple += primes[i];
       }
     }
-    for (NumberType i = mini; i <= maxi; ++i) {
+    for (T i = mini; i <= maxi; ++i) {
       if (sieve[i - mini]) primes.push_back(i);
     }
   }

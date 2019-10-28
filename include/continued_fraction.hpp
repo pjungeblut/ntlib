@@ -8,6 +8,7 @@
 #include <cmath>
 #include <vector>
 
+#include "include/integral.hpp"
 #include "include/rational.hpp"
 
 namespace ntlib {
@@ -29,16 +30,16 @@ namespace ntlib {
  *        one form the period.
  * @return The period length.
  */
-template<typename NumberType>
-NumberType quadratic_irrational_cf(NumberType n, std::vector<NumberType> &cf) {
-  std::vector<NumberType> m(1, 0);
-  std::vector<NumberType> d(1, 1);
+template<Integral T>
+T quadratic_irrational_cf(T n, std::vector<T> &cf) {
+  std::vector<T> m(1, 0);
+  std::vector<T> d(1, 1);
   cf.push_back(isqrt(n));
 
-  for (NumberType i = 1; ; ++i) {
-    NumberType m2 = d.back() * cf.back() - m.back();
-    NumberType d2 = (n - m2 * m2) / d.back();
-    NumberType cf2 = (cf[0] + m2) / d2;
+  for (T i = 1; ; ++i) {
+    T m2 = d.back() * cf.back() - m.back();
+    T d2 = (n - m2 * m2) / d.back();
+    T cf2 = (cf[0] + m2) / d2;
 
     if (i > 1 && m2 == m[1] && d2 == d[1] && cf2 == cf[1]) return i - 1;
 
@@ -59,22 +60,22 @@ NumberType quadratic_irrational_cf(NumberType n, std::vector<NumberType> &cf) {
  * @param cf The continued fraction representation of the quadratic irrational.
  * @return The numerator and denominator of the n-th convergent.
  */
-template<typename NumberType>
-rational<NumberType> nth_convergent_quadratic_irrational_cf(std::size_t n,
-    const std::vector<NumberType> &cf) {
-  NumberType p[3];
-  NumberType q[3];
+template<Integral T>
+rational<T> nth_convergent_quadratic_irrational_cf(std::size_t n,
+    const std::vector<T> &cf) {
+  T p[3];
+  T q[3];
 
   p[0] = cf[0];
   p[1] = cf[0] * cf[1] + 1;
   q[0] = 1;
   q[1] = cf[1];
-  for (NumberType i = 2; i <= n; ++i) {
-    NumberType cf_idx = i >= cf.size() ? (i - 1) % (cf.size() - 1) + 1: i;
+  for (T i = 2; i <= n; ++i) {
+    T cf_idx = i >= cf.size() ? (i - 1) % (cf.size() - 1) + 1: i;
     p[i % 3] = cf[cf_idx] * p[(i + 2) % 3] + p[(i + 1) % 3];
     q[i % 3] = cf[cf_idx] * q[(i + 2) % 3] + q[(i + 1) % 3];
   }
-  return rational<NumberType> {p[n % 3], q[n % 3]};
+  return rational<T> {p[n % 3], q[n % 3]};
 }
 
 }

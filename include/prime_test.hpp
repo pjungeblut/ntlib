@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "include/base.hpp"
+#include "include/integral.hpp"
 
 namespace ntlib {
 
@@ -22,9 +23,9 @@ namespace ntlib {
  *
  * @param n The number to be tested.
  */
-template<typename NumberType>
-bool is_prime_naive(NumberType n) {
-  for (NumberType i = 2; i * i <= n; ++i) {
+template<Integral T>
+bool is_prime_naive(T n) {
+  for (T i = 2; i * i <= n; ++i) {
     if (n % i == 0) return false;
   }
   return true;
@@ -66,8 +67,8 @@ bool miller_rabin_test(const __uint128_t n, const __uint128_t a) {
  *
  * @param n The number to be tested.
  */
-template<typename NumberType>
-bool is_prime_miller_rabin(NumberType n) {
+template<Integral T>
+bool is_prime_miller_rabin(T n) {
   // Base cases.
 	if (n == 2) return true;
 	if (n < 2 || n % 2 == 0) return false;

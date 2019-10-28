@@ -4,6 +4,8 @@
  * Implementations to generate polygonal numbers.
  */
 
+#include "include/integral.hpp"
+
 namespace ntlib {
 
 /**
@@ -12,8 +14,8 @@ namespace ntlib {
  * @param n Which triangle number to gnerate.
  * @return The n-th triangle number.
  */
-template<typename NumberType>
-NumberType triangle_number(NumberType n) {
+template<Integral T>
+T triangle_number(T n) {
   return n * (n + 1) / 2;
 }
 
@@ -23,8 +25,8 @@ NumberType triangle_number(NumberType n) {
  * @param n Which square number to gnerate.
  * @return The n-th square number.
  */
-template<typename NumberType>
-NumberType square_number(NumberType n) {
+template<Integral T>
+T square_number(T n) {
   return n * n;
 }
 
@@ -34,8 +36,8 @@ NumberType square_number(NumberType n) {
  * @param n Which pentagonal number to gnerate.
  * @return The n-th pentagonal number.
  */
-template<typename NumberType>
-NumberType pentagonal_number(NumberType n) {
+template<Integral T>
+T pentagonal_number(T n) {
   return n * (3 * n - 1) / 2;
 }
 
@@ -45,8 +47,8 @@ NumberType pentagonal_number(NumberType n) {
  * @param n Which hexagonal number to gnerate.
  * @return The n-th hexagonal number.
  */
-template<typename NumberType>
-NumberType hexagonal_number(NumberType n) {
+template<Integral T>
+T hexagonal_number(T n) {
   return n * (2 * n - 1);
 }
 
@@ -56,8 +58,8 @@ NumberType hexagonal_number(NumberType n) {
  * @param n Which heptagonal number to gnerate.
  * @return The n-th heptagonal number.
  */
-template<typename NumberType>
-NumberType heptagonal_number(NumberType n) {
+template<Integral T>
+T heptagonal_number(T n) {
   return n * (5 * n - 3) / 2;
 }
 
@@ -67,8 +69,8 @@ NumberType heptagonal_number(NumberType n) {
  * @param n Which octagonal number to gnerate.
  * @return The n-th octagonal number.
  */
-template<typename NumberType>
-NumberType octagonal_number(NumberType n) {
+template<Integral T>
+T octagonal_number(T n) {
   return n * (3 * n - 2);
 }
 

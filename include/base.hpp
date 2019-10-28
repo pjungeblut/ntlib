@@ -33,8 +33,8 @@ struct triple {
  * @param n The number to take the absolute value of.
  * @return The absolute value of n.
  */
-template<typename Integral>
-Integral abs(Integral n) {
+template<Integral T>
+T abs(T n) {
   if (n >= 0) return n;
   return -n;
 }
@@ -48,8 +48,8 @@ Integral abs(Integral n) {
  * @param b The second number.
  * @return The greatest common divisor of a and b.
  */
-template<typename Integral>
-Integral gcd(Integral a, Integral b) {
+template<Integral T>
+T gcd(T a, T b) {
   return b == 0 ? a : gcd(b, a % b);
 }
 
@@ -61,8 +61,8 @@ Integral gcd(Integral a, Integral b) {
  * @param b The second number.
  * @return The least common multiple of a and b.
  */
-template<typename Integral>
-Integral lcm(Integral a, Integral b) {
+template<Integral T>
+T lcm(T a, T b) {
   return a * (b / gcd(a, b));
 }
 
@@ -74,8 +74,8 @@ Integral lcm(Integral a, Integral b) {
  * @param b The exponent.
  * @return a^b
  */
-template<typename Integral>
-Integral pow(Integral a, Integral b) {
+template<Integral T>
+T pow(T a, T b) {
   if (b == 0) return 1;
   if (b == 1) return a;
   if (b & 1) return pow(a, b - 1) * a;
@@ -91,8 +91,8 @@ Integral pow(Integral a, Integral b) {
  * @param n The modulus.
  * @return a^b mod n
  */
-template<typename Integral>
-Integral mod_pow(Integral a, Integral b, Integral n) {
+template<Integral T>
+T mod_pow(T a, T b, T n) {
   if (b == 0) return 1;
   if (b == 1) return a % n;
   if (b & 1) return (mod_pow(a, b - 1, n) * a) % n;
@@ -107,12 +107,12 @@ Integral mod_pow(Integral a, Integral b, Integral n) {
  * @param n The number to compute the integer square root of.
  * @return isqrt(n)
  */
-template<typename Integral>
-Integral isqrt(Integral n) {
-  Integral l = 0;
-  Integral u = static_cast<Integral>(1) << (4 * sizeof(Integral));
+template<Integral T>
+T isqrt(T n) {
+  T l = 0;
+  T u = static_cast<T>(1) << (4 * sizeof(T));
   while (u - l > 16) {
-    Integral m = (u + l) / 2;
+    T m = (u + l) / 2;
     if (m * m <= n) l = m;
     else u = m;
   }
@@ -131,13 +131,13 @@ Integral isqrt(Integral n) {
  * @param n The number to test.
  * @return True, iff n is a perfect square.
  */
-template<typename Integral>
-bool is_square(Integral n) {
+template<Integral T>
+bool is_square(T n) {
   if (n == 0) return true;
 
-  Integral last_digit = n % 10;
-  Integral second_last_digit = n / 10 % 10;
-  Integral third_last_digit = n / 100 % 10;
+  T last_digit = n % 10;
+  T second_last_digit = n / 10 % 10;
+  T third_last_digit = n / 100 % 10;
 
   // If n is a multiple of four, we can look at n/4 instead.
   while ((n & 3) == 0) n >>= 2;
@@ -167,7 +167,7 @@ bool is_square(Integral n) {
   if (last_digit == 5 && second_last_digit != 2) return false;
 
   // Take the integer root and square it to check, if the real root is an integer.
-  Integral iroot = isqrt(n);
+  T iroot = isqrt(n);
   return iroot * iroot == n;
 }
 

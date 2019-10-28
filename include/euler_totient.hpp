@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include "include/integral.hpp"
+
 namespace ntlib {
 
 /**
@@ -12,13 +14,13 @@ namespace ntlib {
  * @param N The number until which all values should be computed.
  * @param sieve The sieve to put the values into.
  */
-template<typename NumberType>
-void sieve_phi(NumberType N, std::vector<NumberType> &sieve) {
+template<Integral T>
+void sieve_phi(T N, std::vector<T> &sieve) {
   sieve.resize(N + 1);
-  for (NumberType i = 1; i <= N; ++i) sieve[i] = i;
-  for (NumberType i = 2; i <= N; ++i) {
+  for (T i = 1; i <= N; ++i) sieve[i] = i;
+  for (T i = 2; i <= N; ++i) {
     if (sieve[i] == i) {
-      for (NumberType j = i; j <= N; j += i) {
+      for (T j = i; j <= N; j += i) {
         sieve[j] /= i;
         sieve[j] *= i - 1;
       }

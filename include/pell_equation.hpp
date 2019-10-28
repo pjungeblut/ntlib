@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "include/base.hpp"
+#include "include/integral.hpp"
 #include "include/continued_fraction.hpp"
 
 namespace ntlib {
@@ -14,14 +15,14 @@ namespace ntlib {
  * @param d Parameter d, must not be square.
  * @return Values for a and b, minimal in b.
  */
-template<typename NumberType>
-tuple<NumberType> min_pell_solution(NumberType d) {
-  std::vector<NumberType> cf;
-  NumberType period = ntlib::quadratic_irrational_cf(d, cf);
-  NumberType n = period & 1 ? 2 * period - 1 : period - 1;
-  ntlib::rational<NumberType> pq =
+template<Integral T>
+tuple<T> min_pell_solution(T d) {
+  std::vector<T> cf;
+  T period = ntlib::quadratic_irrational_cf(d, cf);
+  T n = period & 1 ? 2 * period - 1 : period - 1;
+  ntlib::rational<T> pq =
       ntlib::nth_convergent_quadratic_irrational_cf(n, cf);
-  return tuple<NumberType> {pq.numerator, pq.denominator};
+  return tuple<T> {pq.numerator, pq.denominator};
 }
 
 /**
@@ -38,10 +39,10 @@ tuple<NumberType> min_pell_solution(NumberType d) {
  * @param current Any solution.
  * @return The next bigger solution than current (in x).
  */
-template<typename NumberType>
-tuple<NumberType> next_pell_solution(NumberType d,
-    const tuple<NumberType> &initial, const tuple<NumberType> &current) {
-  return tuple<NumberType> {
+template<Integral T>
+tuple<T> next_pell_solution(T d, const tuple<T> &initial,
+    const tuple<T> &current) {
+  return tuple<T> {
       initial.a * current.a + d * initial.b * current.b,
       initial.b * current.a + initial.a * current.b};
 }

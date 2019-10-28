@@ -19,6 +19,7 @@
 #include <vector>
 
 #include "include/base.hpp"
+#include "include/integral.hpp"
 
 namespace ntlib {
 
@@ -28,16 +29,16 @@ namespace ntlib {
  * @param maxi The maximum value of any component.
  * @param triples The vector to push the triples into.
  */
-template<typename NumberType>
-void primitive_pythagorean_triples(NumberType maxi, std::vector<triple<NumberType>> &triples) {
-  for (NumberType v = 1; 2 * v * v <= maxi; ++v) {
-    for (NumberType u = v + 1; u * u + v * v <= maxi; ++u) {
+template<Integral T>
+void primitive_pythagorean_triples(T maxi, std::vector<triple<T>> &triples) {
+  for (T v = 1; 2 * v * v <= maxi; ++v) {
+    for (T u = v + 1; u * u + v * v <= maxi; ++u) {
       if (!((u & 1) && (v & 1)) && gcd(u, v) == 1) {
-        NumberType a = u * u - v * v;
-        NumberType b = 2 * u * v;
-        NumberType c = u * u + v * v;
+        T a = u * u - v * v;
+        T b = 2 * u * v;
+        T c = u * u + v * v;
         if (a > b) std::swap(a, b);
-        triples.push_back(triple<NumberType> {a, b, c});
+        triples.push_back(triple<T> {a, b, c});
       }
     }
   }

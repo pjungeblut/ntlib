@@ -4,6 +4,8 @@
  * Implementations to compute binomial coefficients.
  */
 
+#include "include/integral.hpp"
+
 namespace ntlib {
 
 /**
@@ -18,10 +20,10 @@ namespace ntlib {
  * @param k Size of the subsets.
  * @return The number of k-element subsets of {1,...,n}.
  */
-template<typename NumberType>
-NumberType binom(NumberType n, NumberType k) {
-  NumberType binom = 1;
-  for (NumberType i = 1; i <= k; ++i) {
+template<Integral T>
+T binom(T n, T k) {
+  T binom = 1;
+  for (T i = 1; i <= k; ++i) {
     binom *= n--;
     binom /= i;
   }
