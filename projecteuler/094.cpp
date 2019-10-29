@@ -2,22 +2,29 @@
 #include <cstdio>
 
 #include "include/base.hpp"
+#include "include/pell_equation.hpp"
 
 int main() {
-  __uint128_t sum = 0;
-  for (__uint128_t a = 2; 3 * a - 1 <= 1'000'000'000; ++a) {
-    __uint128_t s2 = 3 * a - 1;
-    __uint128_t inner = s2 * (s2 - 2 * a) * (s2 - 2 * a) * (s2 - 2 * (a - 1));
-    if (ntlib::is_square(inner)) {
-      sum += 3 * a - 1;
-    }
+  const uint64_t max_perimeter = 1'000'000'000;
+  const uint64_t d = 3;
+  ntlib::tuple<uint64_t> initial = ntlib::min_pell_solution(d);
+  ntlib::tuple<uint64_t> current = initial;
+  uint64_t sum = 0;
+  while (true) {
+    // Case 1: (a, a, a - 1)
+    uint64_t a3 = 2 * current.a - 1;
+    if (a3 - 1 > max_perimeter) break;
+    uint64_t area3 = current.b * (a3 - 3) / 2;
+    if (a3 > 0 && area3 > 0 && a3 % 3 == 0 && area3 % 3 == 0) sum += a3 - 1;
 
-    s2 = 3 * a + 1;
-    inner = s2 * (s2 - 2 * a) * (s2 - 2 * a) * (s2 - 2 * (a + 1));
-    if (ntlib::is_square(inner)) {
-      sum += 3 * a + 1;
-    }
+    // Case 2: (a, a, a + 1)
+    a3 = 2 * current.a + 1;
+    if (a3 + 1 > max_perimeter) break;
+    area3 = current.b * (a3 + 3) / 2;
+    if (a3 > 0 && area3 > 0 && a3 % 3 == 0 && area3 % 3 == 0) sum += a3 + 1;
+
+    current = ntlib::next_pell_solution(d, initial, current);
   }
-  printf("%ld\n", static_cast<uint64_t>(sum));
+  printf("%ld\n", sum);
   return 0;
 }
