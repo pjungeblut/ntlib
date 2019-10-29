@@ -12,10 +12,10 @@ namespace ntlib {
 /**
  * Represents a rational number.
  */
-template<Integral T>
+template<Integral I, UnsignedIntegral U>
 struct rational {
-  T numerator;
-  T denominator;
+  I numerator;
+  U denominator;
 
   /**
    * Construct rational from a numerator and a denominator.
@@ -23,26 +23,11 @@ struct rational {
    * @param n The numerator.
    * @param d The denominator. Defaults to 1.
    */
-  rational(T n, T d = 1) {
-    T f = gcd(n, d);
+  rational(I n, U d = 1) {
+    U f = gcd(n, d);
     numerator = n / f;
     denominator = d / f;
   }
 };
-
-/**
- * Allows to add two rational numbers.
- *
- * @param a The first summand.
- * @param b The second summand.
- * @return The sum of a and b, cancelled.
- */
-template<Integral T>
-rational<T> operator+(const rational<T> &a, const rational<T> &b) {
-  T main_denominator = lcm(a.denominator, b.denominator);
-  T fa = main_denominator / a.denominator;
-  T fb = main_denominator / b.denominator;
-  return rational<T> {fa * a.numerator + fb * b.numerator, main_denominator};
-}
 
 }

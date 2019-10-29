@@ -24,7 +24,7 @@ int main() {
   uint32_t amicable_sum = 0;
   for (uint32_t i = 1; i <= N; ++i) {
     if (i == sum_of_divisors[i]) continue;
-    if (sum_of_divisors[sum_of_divisors[i]] == i) {
+    if (sum_of_divisors[i] <= N && sum_of_divisors[sum_of_divisors[i]] == i) {
       amicable_sum += i;
     }
   }

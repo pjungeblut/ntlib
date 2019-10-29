@@ -5,10 +5,18 @@
 namespace ntlib {
 
 /**
- * Simple concept for integral data types.
+ * Concept for integral data types.
+ * These can be used as whole numbers.
  */
- template <typename T>
- concept Integral = std::is_integral<T>::value ||
-    std::is_same<T, __int128_t>::value ||
-    std::is_same<T, __uint128_t>::value;
+template<typename T>
+concept Integral = std::is_integral<T>::value;
+
+/**
+ * Concept for unsigned integral data types.
+ * These can be used as natural numbers.
+ */
+template<typename T>
+concept UnsignedIntegral = std::is_integral<T>::value &&
+    std::is_unsigned<T>::value;
+
 }

@@ -29,17 +29,15 @@ namespace ntlib {
  * @param N Identify all primes up to N.
  * @param sieve The vector to be used as a sieve.
  */
-template<Integral T>
-void sieve_eratosthenes(T N, std::vector<bool> &sieve) {
+template<UnsignedIntegral U>
+void sieve_eratosthenes(U N, std::vector<bool> &sieve) {
   sieve.assign(N + 1, true);
   sieve[0] = 0;
   if (N >= 1) sieve[1] = 0;
-  for (T i = 4; i <= N; i += 2) sieve[i] = 0;
-  for (T i = 3; i * i <= N; i += 2) {
+  for (U i = 4; i <= N; i += 2) sieve[i] = 0;
+  for (U i = 3; i * i <= N; i += 2) {
     if (sieve[i]) {
-      for (T j = i * i; j <= N; j += i) {
-        sieve[j] = 0;
-      }
+      for (U j = i * i; j <= N; j += i) sieve[j] = 0;
     }
   }
 }
@@ -52,27 +50,23 @@ void sieve_eratosthenes(T N, std::vector<bool> &sieve) {
  * @param sieve The array to be used as a sieve.
  * @param primes The array to write the primes to.
  */
-template<Integral T>
-void sieve_eratosthenes_list(T N, std::vector<bool> &sieve,
-    std::vector<T> &primes) {
+template<UnsignedIntegral U>
+void sieve_eratosthenes_list(U N, std::vector<bool> &sieve,
+    std::vector<U> &primes) {
   sieve.assign(N + 1, true);
   sieve[0] = 0;
   if (N >= 1) sieve[1] = 0;
   if (N >= 2) primes.push_back(2);
-  for (T i = 4; i <= N; i += 2) sieve[i] = 0;
-  T i = 3;
+  for (U i = 4; i <= N; i += 2) sieve[i] = 0;
+  U i = 3;
   for (; i * i <= N; i += 2) {
     if (sieve[i]) {
       primes.push_back(i);
-      for (T j = i * i; j <= N; j += i) {
-        sieve[j] = 0;
-      }
+      for (U j = i * i; j <= N; j += i) sieve[j] = 0;
     }
   }
   for (; i <= N; i += 2) {
-    if (sieve[i]) {
-      primes.push_back(i);
-    }
+    if (sieve[i]) primes.push_back(i);
   }
 }
 
@@ -84,12 +78,12 @@ void sieve_eratosthenes_list(T N, std::vector<bool> &sieve,
  * @param N Identify all primes up to N.
  * @param primes The array to write the primes to.
  */
-template<Integral T>
-void sieve_eratosthenes_list_segmented(T N, std::vector<T> &primes) {
-  const T SEGMENT_SIZE = 1'000'000;
+template<UnsignedIntegral U>
+void sieve_eratosthenes_list_segmented(U N, std::vector<U> &primes) {
+  const U SEGMENT_SIZE = std::min(N, static_cast<U>(1'000'000));
+  U mini = 0;
+  U maxi = SEGMENT_SIZE;
   std::vector<bool> sieve;
-  T mini = 0;
-  T maxi = std::min(N, SEGMENT_SIZE);
 
   // Classical sieve for first block.
   sieve_eratosthenes_list(maxi, sieve, primes);
@@ -100,14 +94,14 @@ void sieve_eratosthenes_list_segmented(T N, std::vector<T> &primes) {
     maxi = std::min(N, maxi + SEGMENT_SIZE);
 
     std::fill(sieve.begin(), sieve.end(), 1);
-    for (T i = 0; i < primes.size() && primes[i] * primes[i] <= maxi; ++i) {
-      T multiple = (mini + primes[i] - 1) / primes[i] * primes[i];
+    for (U i = 0; i < primes.size() && primes[i] * primes[i] <= maxi; ++i) {
+      U multiple = (mini + primes[i] - 1) / primes[i] * primes[i];
       while (multiple <= maxi) {
         sieve[multiple - mini] = 0;
         multiple += primes[i];
       }
     }
-    for (T i = mini; i <= maxi; ++i) {
+    for (U i = mini; i <= maxi; ++i) {
       if (sieve[i - mini]) primes.push_back(i);
     }
   }

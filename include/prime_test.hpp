@@ -23,9 +23,9 @@ namespace ntlib {
  *
  * @param n The number to be tested.
  */
-template<Integral T>
-bool is_prime_naive(T n) {
-  for (T i = 2; i * i <= n; ++i) {
+template<UnsignedIntegral U>
+bool is_prime_naive(U n) {
+  for (U i = 2; i * i <= n; ++i) {
     if (n % i == 0) return false;
   }
   return true;
@@ -67,8 +67,8 @@ bool miller_rabin_test(const __uint128_t n, const __uint128_t a) {
  *
  * @param n The number to be tested.
  */
-template<Integral T>
-bool is_prime_miller_rabin(T n) {
+template<UnsignedIntegral U>
+bool is_prime_miller_rabin(U n) {
   // Base cases.
 	if (n == 2) return true;
 	if (n < 2 || n % 2 == 0) return false;

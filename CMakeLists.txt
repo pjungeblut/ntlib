@@ -2,8 +2,9 @@
 cmake_minimum_required (VERSION 2.8)
 
 # Compiler flags.
+# We need -gnu++2a for concepts and for __int128_t to be integral.
 include_directories(.)
-set (CMAKE_CXX_FLAGS "-std=c++2a -fconcepts -Wall -Wextra -O3")
+set (CMAKE_CXX_FLAGS "-std=gnu++2a -fconcepts -Wall -Wextra -O3")
 
 # Base functionality.
 add_executable(base src/base.cpp)

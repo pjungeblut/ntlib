@@ -33,9 +33,9 @@ namespace ntlib {
  *               Must contain all prime factors p, such that p*p <= n to work
  *               correctly.
  */
-template<Integral T>
-void prime_decomposition_list(T n, std::map<T, T> &factors,
-    const std::vector<T> &primes) {
+template<UnsignedIntegral U>
+void prime_decomposition_list(U n, std::map<U, U> &factors,
+    const std::vector<U> &primes) {
   for (std::size_t i = 0; i < primes.size() && primes[i] * primes[i] <= n; ++i) {
     while (n % primes[i] == 0) {
       n /= primes[i];
@@ -51,10 +51,10 @@ void prime_decomposition_list(T n, std::map<T, T> &factors,
  * @param n The number to decompose.
  * @param factors The prime factors.
  */
-template<Integral T>
-void prime_decomposition(T n, std::map<T, T> &factors) {
-  T iroot = isqrt(n);
-  std::vector<T> primes;
+template<UnsignedIntegral U>
+void prime_decomposition(U n, std::map<U, U> &factors) {
+  U iroot = isqrt(n);
+  std::vector<U> primes;
   sieve_eratosthenes_list_segmented(iroot, primes);
   prime_decomposition_list(n, factors, primes);
 }

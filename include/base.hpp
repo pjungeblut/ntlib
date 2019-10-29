@@ -4,6 +4,8 @@
  * Contains base functionality.
  */
 
+#include <type_traits>
+
 #include "include/integral.hpp"
 
 namespace ntlib {
@@ -31,12 +33,13 @@ struct triple {
  * Computes the absolute value of a number.
  *
  * @param n The number to take the absolute value of.
- * @return The absolute value of n.
+ * @return The absolute value of n. Will be an unsigned integer.
  */
-template<Integral T>
-T abs(T n) {
-  if (n >= 0) return n;
-  return -n;
+template<Integral I>
+auto abs(I n) -> std::make_unsigned<I>::type {
+  using return_type = std::make_unsigned<I>::type;
+  if (n >= 0) return static_cast<return_type>(n);
+  return static_cast<return_type>(-n);
 }
 
 /**
@@ -48,9 +51,9 @@ T abs(T n) {
  * @param b The second number.
  * @return The greatest common divisor of a and b.
  */
-template<Integral T>
-T gcd(T a, T b) {
-  return b == 0 ? a : gcd(b, a % b);
+template<Integral I>
+auto gcd(I a, I b) -> std::make_unsigned<I>::type {
+  return b == 0 ? abs(a) : gcd(b, a % b);
 }
 
 /**
@@ -61,9 +64,10 @@ T gcd(T a, T b) {
  * @param b The second number.
  * @return The least common multiple of a and b.
  */
-template<Integral T>
-T lcm(T a, T b) {
-  return a * (b / gcd(a, b));
+template<Integral I>
+auto lcm(I a, I b) -> std::make_unsigned<I>::type {
+  typename std::make_unsigned<I>::type d = gcd(a, b);
+  return abs(a) * (abs(b) / d);
 }
 
 /**
@@ -71,11 +75,11 @@ T lcm(T a, T b) {
  * Runtime: O(log b)
  *
  * @param a The base.
- * @param b The exponent.
+ * @param b The exponent, non-negative.
  * @return a^b
  */
-template<Integral T>
-T pow(T a, T b) {
+template<Integral I, UnsignedIntegral U>
+I pow(I a, U b) {
   if (b == 0) return 1;
   if (b == 1) return a;
   if (b & 1) return pow(a, b - 1) * a;
@@ -91,8 +95,8 @@ T pow(T a, T b) {
  * @param n The modulus.
  * @return a^b mod n
  */
-template<Integral T>
-T mod_pow(T a, T b, T n) {
+template<UnsignedIntegral U>
+U mod_pow(U a, U b, U n) {
   if (b == 0) return 1;
   if (b == 1) return a % n;
   if (b & 1) return (mod_pow(a, b - 1, n) * a) % n;
@@ -107,12 +111,12 @@ T mod_pow(T a, T b, T n) {
  * @param n The number to compute the integer square root of.
  * @return isqrt(n)
  */
-template<Integral T>
-T isqrt(T n) {
-  T l = 0;
-  T u = static_cast<T>(1) << (4 * sizeof(T));
+template<UnsignedIntegral U>
+U isqrt(U n) {
+  U l = 0;
+  U u = static_cast<U>(1) << (4 * sizeof(U));
   while (u - l > 16) {
-    T m = (u + l) / 2;
+    U m = (u + l) / 2;
     if (m * m <= n) l = m;
     else u = m;
   }
@@ -131,13 +135,14 @@ T isqrt(T n) {
  * @param n The number to test.
  * @return True, iff n is a perfect square.
  */
-template<Integral T>
-bool is_square(T n) {
+template<Integral I>
+bool is_square(I n) {
+  if (n < 0) return false;
   if (n == 0) return true;
 
-  T last_digit = n % 10;
-  T second_last_digit = n / 10 % 10;
-  T third_last_digit = n / 100 % 10;
+  I last_digit = n % 10;
+  I second_last_digit = n / 10 % 10;
+  I third_last_digit = n / 100 % 10;
 
   // If n is a multiple of four, we can look at n/4 instead.
   while ((n & 3) == 0) n >>= 2;
@@ -147,7 +152,10 @@ bool is_square(T n) {
   if (!((n & 7) == 1)) return false;
 
   // All squares end in the numbers 0, 1, 4, 5, 6, or 9.
-  if (last_digit == 2 || last_digit == 3 || last_digit == 7 || last_digit == 8) return false;
+  if (last_digit == 2 || last_digit == 3 || last_digit == 7 ||
+      last_digit == 8) {
+    return false;
+  }
 
   // The last two digits cannot both be odd.
   if ((last_digit & 1) && (second_last_digit & 1)) return false;
@@ -166,8 +174,9 @@ bool is_square(T n) {
   // If the last digit is 5, the digit before it must be 2.
   if (last_digit == 5 && second_last_digit != 2) return false;
 
-  // Take the integer root and square it to check, if the real root is an integer.
-  T iroot = isqrt(n);
+  // Take the integer root and square it to check, if the real root is an
+  // integer.
+  I iroot = isqrt(n);
   return iroot * iroot == n;
 }
 
