@@ -16,13 +16,13 @@ namespace ntlib {
  * @return Values for a and b, minimal in b.
  */
 template<UnsignedIntegral U>
-tuple<U> min_pell_solution(U d) {
+tuple<U,U> min_pell_solution(U d) {
   std::vector<U> cf;
   U period = ntlib::quadratic_irrational_cf(d, cf);
   U n = period & 1 ? 2 * period - 1 : period - 1;
   ntlib::rational<U,U> pq =
       ntlib::nth_convergent_quadratic_irrational_cf(n, cf);
-  return tuple<U> {pq.numerator, pq.denominator};
+  return tuple<U,U> {pq.numerator, pq.denominator};
 }
 
 /**
@@ -40,9 +40,9 @@ tuple<U> min_pell_solution(U d) {
  * @return The next bigger solution than current (in x).
  */
 template<UnsignedIntegral U>
-tuple<U> next_pell_solution(U d, const tuple<U> &initial,
-    const tuple<U> &current) {
-  return tuple<U> {
+tuple<U,U> next_pell_solution(U d, const tuple<U,U> &initial,
+    const tuple<U,U> &current) {
+  return tuple<U,U> {
       initial.a * current.a + d * initial.b * current.b,
       initial.b * current.a + initial.a * current.b};
 }

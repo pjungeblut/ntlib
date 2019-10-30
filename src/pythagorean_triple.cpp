@@ -10,7 +10,7 @@ int main() {
   // Project Euler, Problem 9:
   // https://projecteuler.net/problem=9
   const NumberType maxi = 500;
-  std::vector<ntlib::triple<NumberType>> primitives;
+  std::vector<ntlib::triple<NumberType, NumberType, NumberType>> primitives;
   ntlib::primitive_pythagorean_triples(maxi, primitives);
   for (auto &t : primitives) {
     NumberType f = 1;

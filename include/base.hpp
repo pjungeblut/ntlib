@@ -13,20 +13,20 @@ namespace ntlib {
 /**
  * A tuple of two elements.
  */
-template<typename T>
+template<typename T1, typename T2>
 struct tuple {
-  T a;
-  T b;
+  T1 a;
+  T2 b;
 };
 
 /**
  * A triple of three elements.
  */
-template<typename T>
+template<typename T1, typename T2, typename T3>
 struct triple {
-  T a;
-  T b;
-  T c;
+  T1 a;
+  T2 b;
+  T3 c;
 };
 
 /**
@@ -104,6 +104,46 @@ U mod_pow(U a, U b, U n) {
 }
 
 /**
+ * Extended Euclidean Algorithm.
+ * Finds whole number solutions for a*x + b*y = gcd(a,b).
+ *
+ * TODO: Find out minimality of solution.
+ * TODO: Rewrite to return triple (gcd(a,b),x,y).
+ *
+ * @param a Parameter a. Must be non-negative.
+ * @param b Parameter b. Must be non-negative.
+ * @return A triple (gcd(a,b), x, y).
+ */
+template<UnsignedIntegral U>
+auto extended_euclid(U a, U b) ->
+    triple<U, typename std::make_signed<U>::type, typename std::make_signed<U>::type> {
+  using I = std::make_signed<U>::type;
+
+  if (a == 0) return triple<U,I,I> {b, 0, 1};
+  triple<U,I,I> gxy = extended_euclid(b % a, a);
+  return triple<U,I,I> {
+      gxy.a,
+      static_cast<I>(gxy.c) - static_cast<I>((b / a)) * static_cast<I>(gxy.b),
+      gxy.b};
+}
+
+/**
+ * Computes the multiplicative inverse of n (mod m).
+ * Only exists, if gcd(n, m) = 1. This condition is not checked inside the
+ * function.
+ *
+ * @param n The number to invert.
+ * @param m The size of the group.
+ * @return The multiplicative inverse of n (mod m).
+ */
+template<UnsignedIntegral U>
+U mod_mult_inv(U n, U m) {
+  using I = std::make_signed<U>::type;
+  auto gxy = extended_euclid(n, m);
+  return ((gxy.b % static_cast<I>(m)) + m) % m;
+}
+
+/**
  * Computes the integer square root using binary search.
  * isqrt(n) := floor(sqrt(n))
  * Runtime: O(log n)
@@ -178,6 +218,20 @@ bool is_square(I n) {
   // integer.
   I iroot = isqrt(n);
   return iroot * iroot == n;
+}
+
+/**
+ * Tests, if n is a quadratic residue mod p.
+ * Uses Euler's Criterion to compute Legendre Symbol (a/p).
+ *
+ * @param n The number to test.
+ * @param p A prime number.
+ * @return True, if and only if there is an x, such that x^2 = a (mod p).
+ */
+template<UnsignedIntegral U>
+bool mod_is_square(U n, U p) {
+  if (p == 2) return n & 1;
+  return mod_pow(n, (p - 1) / 2) == 1;
 }
 
 }

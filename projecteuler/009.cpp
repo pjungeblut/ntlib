@@ -6,7 +6,7 @@
 
 int main() {
   const uint32_t maxi = 500;
-  std::vector<ntlib::triple<uint32_t>> primitives;
+  std::vector<ntlib::triple<uint32_t, uint32_t, uint32_t>> primitives;
   ntlib::primitive_pythagorean_triples(maxi, primitives);
   for (auto &t : primitives) {
     uint32_t f = 1;

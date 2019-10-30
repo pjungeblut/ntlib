@@ -7,8 +7,8 @@
 int main() {
   const uint64_t max_perimeter = 1'000'000'000;
   const uint64_t d = 3;
-  ntlib::tuple<uint64_t> initial = ntlib::min_pell_solution(d);
-  ntlib::tuple<uint64_t> current = initial;
+  ntlib::tuple<uint64_t, uint64_t> initial = ntlib::min_pell_solution(d);
+  ntlib::tuple<uint64_t, uint64_t> current = initial;
   uint64_t sum = 0;
   while (true) {
     // Case 1: (a, a, a - 1)
