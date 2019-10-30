@@ -54,5 +54,16 @@ int main() {
     printf("All multiplicative inverses in Z/500Z correct.\n");
   }
 
+  {
+    uint32_t m = 509; // Prime and 509 mod 4 = 1, so no shortcut.
+    for (uint32_t n = 1; n < m; ++n) {
+      if (ntlib::mod_is_square(n, m)) {
+        uint32_t x = ntlib::mod_sqrt(n, m);
+        if (x * x % m != n) printf("Wrong modular root for %d (mod %d). Got %d.\n", n, m, x);
+      }
+    }
+    printf("All modular roots in Z/509Z correct.\n");
+  }
+
   return 0;
 }

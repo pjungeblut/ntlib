@@ -4,6 +4,7 @@
  * Contains base functionality.
  */
 
+#include <random>
 #include <type_traits>
 
 #include "include/integral.hpp"
@@ -71,39 +72,6 @@ auto lcm(I a, I b) -> std::make_unsigned<I>::type {
 }
 
 /**
- * Computes a^b using binary exponentation.
- * Runtime: O(log b)
- *
- * @param a The base.
- * @param b The exponent, non-negative.
- * @return a^b
- */
-template<Integral I, UnsignedIntegral U>
-I pow(I a, U b) {
-  if (b == 0) return 1;
-  if (b == 1) return a;
-  if (b & 1) return pow(a, b - 1) * a;
-  return pow(a * a, b / 2);
-}
-
-/**
- * Computes a^b mod n using binary exponentation.
- * Runtime: O(log b)
- *
- * @param a The base.
- * @param b The exponent.
- * @param n The modulus.
- * @return a^b mod n
- */
-template<UnsignedIntegral U>
-U mod_pow(U a, U b, U n) {
-  if (b == 0) return 1;
-  if (b == 1) return a % n;
-  if (b & 1) return (mod_pow(a, b - 1, n) * a) % n;
-  return mod_pow((a * a) % n, b / 2, n);
-}
-
-/**
  * Extended Euclidean Algorithm.
  * Finds whole number solutions for a*x + b*y = gcd(a,b).
  *
@@ -128,19 +96,19 @@ auto extended_euclid(U a, U b) ->
 }
 
 /**
- * Computes the multiplicative inverse of n (mod m).
- * Only exists, if gcd(n, m) = 1. This condition is not checked inside the
- * function.
+ * Computes a^b using binary exponentation.
+ * Runtime: O(log b)
  *
- * @param n The number to invert.
- * @param m The size of the group.
- * @return The multiplicative inverse of n (mod m).
+ * @param a The base.
+ * @param b The exponent, non-negative.
+ * @return a^b
  */
-template<UnsignedIntegral U>
-U mod_mult_inv(U n, U m) {
-  using I = std::make_signed<U>::type;
-  auto gxy = extended_euclid(n, m);
-  return ((gxy.b % static_cast<I>(m)) + m) % m;
+template<Integral I, UnsignedIntegral U>
+I pow(I a, U b) {
+  if (b == 0) return 1;
+  if (b == 1) return a;
+  if (b & 1) return pow(a, b - 1) * a;
+  return pow(a * a, b / 2);
 }
 
 /**
@@ -221,17 +189,108 @@ bool is_square(I n) {
 }
 
 /**
+ * Computes a^b mod n using binary exponentation.
+ * Runtime: O(log b)
+ *
+ * @param a The base.
+ * @param b The exponent.
+ * @param n The modulus.
+ * @return a^b mod n
+ */
+template<UnsignedIntegral U>
+U mod_pow(U a, U b, U n) {
+  if (b == 0) return 1;
+  if (b == 1) return a % n;
+  if (b & 1) return (mod_pow(a, b - 1, n) * a) % n;
+  return mod_pow((a * a) % n, b / 2, n);
+}
+
+/**
+ * Computes the multiplicative inverse of n (mod m).
+ * Only exists, if gcd(n, m) = 1. This condition is not checked inside the
+ * function.
+ *
+ * @param n The number to invert.
+ * @param m The size of the group.
+ * @return The multiplicative inverse of n (mod m).
+ */
+template<UnsignedIntegral U>
+U mod_mult_inv(U n, U m) {
+  using I = std::make_signed<U>::type;
+  auto gxy = extended_euclid(n, m);
+  return ((gxy.b % static_cast<I>(m)) + m) % m;
+}
+
+/**
  * Tests, if n is a quadratic residue mod p.
  * Uses Euler's Criterion to compute Legendre Symbol (a/p).
  *
  * @param n The number to test.
- * @param p A prime number.
  * @return True, if and only if there is an x, such that x^2 = a (mod p).
  */
 template<UnsignedIntegral U>
 bool mod_is_square(U n, U p) {
   if (p == 2) return n & 1;
-  return mod_pow(n, (p - 1) / 2) == 1;
+  return mod_pow(n, (p - 1) / 2, p) == 1;
+}
+
+/**
+ * Computes square roots modular a prime number, that is an integer solution for
+ * x in the equation x^2 = n (mod p).
+ * Uses the Tonelli-Shankes algorithm.
+ *
+ * @param n Parameter n. 0 <= n < p.
+ * @param p Odd prime number p > 2.
+ * @return 0 <= x < p such that x^2 = n (mod p). There are two solutions, the
+ *         other one is p - x. Returns the smaller one.
+ */
+template<UnsignedIntegral U>
+U mod_sqrt(U n, U p) {
+  // Find q, s with p-1 = q*2^s.
+  U q = p - 1;
+  U s = 0;
+  while (!(q & 1)) {
+    q /= 2;
+    ++s;
+  }
+
+  // If and only if s == 1, we have p = 3 (mod 4).
+  // In this case we can compute root x directly.
+  if (s == 1) return mod_pow(n, (p + 1) / 4, p);
+
+  // Find a quadratic non-residue z.
+  // Half the numbers in 1, ..., p-1 are, so we randomly guess.
+  // On average, two tries are necessary.
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> dis(1, p - 1);
+  U z = dis(gen);
+  while (mod_is_square(z, p)) z = dis(gen);
+
+  U c = mod_pow(z, q, p);
+  U x = mod_pow(n, (q + 1) / 2, p);
+  U t = mod_pow(n, q, p);
+  U m = s;
+
+  while (t % p != 1) {
+    // Find lowest 0 < i < m such that t^2^i = 1 (mod p).
+    U i = 0;
+    U test = t;
+    while (test != 1) {
+      test = test * test % p;
+      ++i;
+    }
+
+    // U cexp = mod_pow(static_cast<U>(2), m - i - 1, p - 1);
+    U cexp = static_cast<U>(1) << (m - i - 1);
+    U b = mod_pow(c, cexp, p);
+    x = x * b % p;
+    t = t * b % p * b % p;
+    c = b * b % p;
+    m = i;
+  }
+
+  return std::min(x, p - x);
 }
 
 }
