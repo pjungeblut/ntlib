@@ -59,4 +59,26 @@ void prime_decomposition(U n, std::map<U, U> &factors) {
   prime_decomposition_list(n, factors, primes);
 }
 
+/**
+ * Generates a list of all divisors.
+ *
+ * @param factors The prime factors and their multiplicities.
+ * @param divisors All divisors of the number.
+ */
+template<UnsignedIntegral U>
+void enumerate_divisors(const std::map<U, U> &factors,
+    std::vector<U> &divisors) {
+  divisors.assign(1, static_cast<U>(1));
+  for (auto [factor, multiplicity] : factors) {
+    const std::size_t cur_num_divisors = divisors.size();
+    U power = factor;
+    while (multiplicity--) {
+      for (std::size_t i = 0; i < cur_num_divisors; ++i) {
+        divisors.push_back(divisors[i] * power);
+      }
+      power *= factor;
+    }
+  }
+}
+
 }
