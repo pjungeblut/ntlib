@@ -21,6 +21,9 @@ add_executable(prime_decomposition src/prime_decomposition.cpp)
 # Pythagorean triples.
 add_executable(pythagorean_triple src/pythagorean_triple.cpp)
 
+# Big Integers.
+add_executable(big_unsigned src/big_unsigned.cpp)
+
 # Project Euler tests.
 add_executable(pe_005 projecteuler/005.cpp)
 add_executable(pe_007 projecteuler/007.cpp)
