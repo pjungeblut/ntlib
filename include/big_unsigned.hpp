@@ -183,6 +183,94 @@ public:
     return *this;
   }
 
+  /**
+   * Subtraction for big_unsigned.
+   * It must be a >= b.
+   *
+   * @param a The minuend.
+   * @param b The subtrahend.
+   * @return The difference a - b.
+   */
+  friend big_unsigned operator-(const big_unsigned &a, const big_unsigned &b) {
+    std::size_t da = a.digits.size();
+    std::size_t db = b.digits.size();
+
+    // Initialize result and resize to the maximum number of digits.
+    big_unsigned difference;
+    difference.digits.resize(da);
+
+    // Since a >= b it must be da >= db.
+    // First go through b's digits.
+    digit_type carry = 0;
+    std::size_t i = 0;
+    for (; i < db; ++i) {
+      digit_type lower = b.digits[i] + carry;
+      digit_type upper = a.digits[i];
+      if (lower > upper) {
+        upper += BASE;
+        carry = 1;
+      } else carry = 0;
+      difference.digits[i] = upper - lower;
+    }
+
+    // Now go through the remaining digits of a.
+    for (; i < da; ++i) {
+      if (carry > a.digits[i]) {
+        difference.digits[i] = BASE - 1;
+        carry = 1;
+      } else {
+        difference.digits[i] = a.digits[i] - carry;
+        carry = 0;
+      }
+    }
+
+    // Leading digits of the difference might be 0. Remove those.
+    difference.remove_leading_zeros();
+
+    return difference;
+  }
+
+  /**
+   * Subtracts another big_unsigned from the current one.
+   *
+   * @param other The subtrahend. Must be at least as big as current value.
+   * @return Reference to the current big_unsigned containing the diffrence of
+   *         its previous value and other.
+   */
+  big_unsigned& operator-=(const big_unsigned &other) {
+    std::size_t da = digits.size();
+    std::size_t db = other.digits.size();
+
+    // Since a >= b it must be da >= db.
+    // First go through b's digits.
+    digit_type carry = 0;
+    std::size_t i = 0;
+    for (; i < db; ++i) {
+      digit_type lower = other.digits[i] + carry;
+      digit_type upper = digits[i];
+      if (lower > upper) {
+        upper += BASE;
+        carry = 1;
+      } else carry = 0;
+      digits[i] = upper - lower;
+    }
+
+    // Now go through the remaining digits of a.
+    for (; i < da; ++i) {
+      if (carry > digits[i]) {
+        digits[i] = BASE - 1;
+        carry = 1;
+      } else {
+        digits[i] = digits[i] - carry;
+        carry = 0;
+      }
+    }
+
+    // Leading digits of the difference might be 0. Remove those.
+    remove_leading_zeros();
+    return *this;
+  }
+
 private:
   /**
    * An unbounded array containing the digits.
@@ -220,6 +308,13 @@ private:
         }
       }
     }
+  }
+
+  /**
+   * Removes leading zeros.
+   */
+  void remove_leading_zeros() {
+    while (digits.size() && digits.back() == 0) digits.pop_back();
   }
 };
 

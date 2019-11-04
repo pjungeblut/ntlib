@@ -21,6 +21,7 @@ int main() {
   printf("d: %s\n", d.to_string().c_str());
   printf("e: %s\n", e.to_string().c_str());
   printf("f: %s\n", f.to_string().c_str());
+  printf("\n");
 
   std::cout << "Stream output:" << std::endl;
   std::cout << "a: " << a << std::endl;
@@ -29,16 +30,32 @@ int main() {
   std::cout << "d: " << d << std::endl;
   std::cout << "e: " << e << std::endl;
   std::cout << "f: " << f << std::endl;
+  printf("\n");
 
-  ntlib::big_unsigned ac = a + c;
-  printf("a + c: %s\n", ac.to_string().c_str());
+  printf("Addition:\n");
+  ntlib::big_unsigned a_plus_c = a + c;
+  printf("a + c: %s\n", a_plus_c.to_string().c_str());
   ntlib::big_unsigned g1("999999999999999999999999999999999999999999999999999998");
   ntlib::big_unsigned g2 = 1;
   ntlib::big_unsigned g = g1 + g2;
+  printf("g1: %s\n", g1.to_string().c_str());
+  printf("g2: %s\n", g2.to_string().c_str());
   printf("g1 + g2: %s\n", g.to_string().c_str());
-  ntlib::big_unsigned g3 = 1;
-  g3 += g;
-  printf("g1 + g2 + g3: %s\n", g3.to_string().c_str());
+  g2 += g;
+  printf("g1 + g2 + g2: %s\n", g2.to_string().c_str());
+  printf("\n");
+
+  printf("Subtraction:\n");
+  ntlib::big_unsigned c_minus_a = c - a;
+  printf("c - a: %s\n", c_minus_a.to_string().c_str());
+  ntlib::big_unsigned h1("1000000000000000000000000000000000000000000000000000001");
+  ntlib::big_unsigned h2 = 1;
+  ntlib::big_unsigned h = h1 - h2;
+  printf("h1: %s\n", h1.to_string().c_str());
+  printf("h2: %s\n", h2.to_string().c_str());
+  printf("h1 - h2: %s\n", h.to_string().c_str());
+  h -= h2;
+  printf("h1 - h2 - h2: %s\n", h.to_string().c_str());
 
   return 0;
 }
