@@ -112,6 +112,100 @@ public:
   }
 
   /**
+   * Less than operator.
+   *
+   * TODO: Replace this by the three way comparison (spaceship) operator once
+   *       it gets implemented for g++.
+   *       As soon as this is done, remove the six classic comparison operators.
+   *
+   * @param a The left hand side to compare.
+   * @param b The right hand side to compare.
+   * @return True, if and only if a < b.
+   */
+  friend bool operator<(const big_unsigned &a, const big_unsigned &b) {
+    // If they have different length, we can just compare their lengths.
+    std::size_t da = a.digits.size();
+    std::size_t db = b.digits.size();
+    if (da != db) return da < db;
+
+    // They have the same length. Find the highest position where their digits
+    // are different.
+    for (auto ait = a.digits.rbegin(), bit = b.digits.rbegin();
+        ait != a.digits.rend(); ++ait, ++bit) {
+      if (*ait != *bit) return *ait < *bit;
+    }
+    // They must be equal.
+    return false;
+  }
+
+  /**
+   * Greater than operator.
+   *
+   * @param a The left hand side to compare.
+   * @param b The right hand side to compare.
+   * @return True, if and only if a > b.
+   */
+  friend bool operator>(const big_unsigned &a, const big_unsigned &b) {
+    return b < a;
+  }
+
+  /**
+   * Equal operator.
+   *
+   * @param a The left hand side to compare.
+   * @param b The right hand side to compare.
+   * @return True, if and only if a == b.
+   */
+  friend bool operator==(const big_unsigned &a, const big_unsigned &b) {
+    return a.digits == b.digits;
+  }
+
+  /**
+   * Unequal operator.
+   *
+   * @param a The left hand side to compare.
+   * @param b The right hand side to compare.
+   * @return True, if and only if a != b.
+   */
+  friend bool operator!=(const big_unsigned &a, const big_unsigned &b) {
+    return a.digits != b.digits;
+  }
+
+  /**
+   * Less than or equal operator.
+   *
+   * @param a The left hand side to compare.
+   * @param b The right hand side to compare.
+   * @return True, if and only if a <= b.
+   */
+  friend bool operator<=(const big_unsigned &a, const big_unsigned &b) {
+    // If they have different length, we can just compare their lengths.
+    std::size_t da = a.digits.size();
+    std::size_t db = b.digits.size();
+    if (da != db) return da < db;
+
+    // They have the same length. Find the highest position where their digits
+    // are different.
+    for (auto ait = a.digits.rbegin(), bit = b.digits.rbegin();
+        ait != a.digits.rend(); ++ait, ++bit) {
+      if (*ait != *bit) return *ait < *bit;
+    }
+    // They must be equal.
+    return true;
+  }
+
+  /**
+   * Greater than or equal operator.
+   *
+   * @param a The left hand side to compare.
+   * @param b The right hand side to compare.
+   * @return True, if and only if a >= b.
+   */
+  friend bool operator>=(const big_unsigned &a, const big_unsigned &b) {
+    return b <= a;
+  }
+
+  /**
    * Addition for big_unsigned.
    *
    * @param a The first summand.
