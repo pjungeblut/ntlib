@@ -114,33 +114,8 @@ public:
    * @return The sum of a and b.
    */
   friend big_unsigned operator+(const big_unsigned &a, const big_unsigned &b) {
-    std::size_t da = a.digits.size();
-    std::size_t db = b.digits.size();
-
-    // Initialize result and reserve enough memeory to avoud further copying.
     big_unsigned sum;
-    sum.digits.reserve(std::max(da, db) + 1);
-
-    // Common positions of a and b.
-    digit_type carry = 0;
-    std::size_t i = 0;
-    for (; i < std::min(da, db); ++i) {
-      digit_type digit_sum = a.digits[i] + b.digits[i] + carry;
-      sum.digits.push_back(digit_sum % BASE);
-      carry = digit_sum / BASE;
-    }
-
-    // Take the longer summand and add remaining digits.
-    auto *longer = da > db ? &a : &b;
-    for (; i < std::max(da, db); ++i) {
-      digit_type digit_sum = longer->digits[i] + carry;
-      sum.digits.push_back(digit_sum % BASE);
-      carry = digit_sum / BASE;
-    }
-
-    // If the carry is non-zero we need another digit.
-    if (carry != 0) sum.digits.push_back(carry);
-
+    add(a, b, sum);
     return sum;
   }
 
@@ -152,34 +127,7 @@ public:
    *         previous value and other.
    */
   big_unsigned& operator+=(const big_unsigned &other) {
-    std::size_t da = digits.size();
-    std::size_t db = other.digits.size();
-
-    // Reserve enough space for the sum and zero initialize the minimum amount
-    // of needed digits.
-    digits.reserve(std::max(da, db) + 1);
-    digits.resize(std::max(da, db));
-
-    // Common positions of a and b.
-    digit_type carry = 0;
-    std::size_t i = 0;
-    for (; i < std::min(da, db); ++i) {
-      digit_type digit_sum = digits[i] + other.digits[i] + carry;
-      digits[i] = digit_sum % BASE;
-      carry = digit_sum / BASE;
-    }
-
-    // Take the longer summand and add remaining digits.
-    auto *longer = da > db ? this : &other;
-    for (; i < std::max(da, db); ++i) {
-      digit_type digit_sum = longer->digits[i] + carry;
-      digits[i] = digit_sum % BASE;
-      carry = digit_sum / BASE;
-    }
-
-    // If the carry is non-zero we need another digit.
-    if (carry != 0) digits.push_back(carry);
-
+    add(*this, other, *this);
     return *this;
   }
 
@@ -192,41 +140,8 @@ public:
    * @return The difference a - b.
    */
   friend big_unsigned operator-(const big_unsigned &a, const big_unsigned &b) {
-    std::size_t da = a.digits.size();
-    std::size_t db = b.digits.size();
-
-    // Initialize result and resize to the maximum number of digits.
     big_unsigned difference;
-    difference.digits.resize(da);
-
-    // Since a >= b it must be da >= db.
-    // First go through b's digits.
-    digit_type carry = 0;
-    std::size_t i = 0;
-    for (; i < db; ++i) {
-      digit_type lower = b.digits[i] + carry;
-      digit_type upper = a.digits[i];
-      if (lower > upper) {
-        upper += BASE;
-        carry = 1;
-      } else carry = 0;
-      difference.digits[i] = upper - lower;
-    }
-
-    // Now go through the remaining digits of a.
-    for (; i < da; ++i) {
-      if (carry > a.digits[i]) {
-        difference.digits[i] = BASE - 1;
-        carry = 1;
-      } else {
-        difference.digits[i] = a.digits[i] - carry;
-        carry = 0;
-      }
-    }
-
-    // Leading digits of the difference might be 0. Remove those.
-    difference.remove_leading_zeros();
-
+    subtract(a, b, difference);
     return difference;
   }
 
@@ -238,36 +153,7 @@ public:
    *         its previous value and other.
    */
   big_unsigned& operator-=(const big_unsigned &other) {
-    std::size_t da = digits.size();
-    std::size_t db = other.digits.size();
-
-    // Since a >= b it must be da >= db.
-    // First go through b's digits.
-    digit_type carry = 0;
-    std::size_t i = 0;
-    for (; i < db; ++i) {
-      digit_type lower = other.digits[i] + carry;
-      digit_type upper = digits[i];
-      if (lower > upper) {
-        upper += BASE;
-        carry = 1;
-      } else carry = 0;
-      digits[i] = upper - lower;
-    }
-
-    // Now go through the remaining digits of a.
-    for (; i < da; ++i) {
-      if (carry > digits[i]) {
-        digits[i] = BASE - 1;
-        carry = 1;
-      } else {
-        digits[i] = digits[i] - carry;
-        carry = 0;
-      }
-    }
-
-    // Leading digits of the difference might be 0. Remove those.
-    remove_leading_zeros();
+    subtract(*this, other, *this);
     return *this;
   }
 
@@ -315,6 +201,91 @@ private:
    */
   void remove_leading_zeros() {
     while (digits.size() && digits.back() == 0) digits.pop_back();
+  }
+
+  /**
+   * Adds two big_unsigneds into a third.
+   * Parameters a and c may be the same, for a += b.
+   *
+   * @param a The first summand.
+   * @param b The second summand.
+   * @param c The sum a + b.
+   */
+  static void add(const big_unsigned &a, const big_unsigned &b,
+      big_unsigned &c) {
+    std::size_t da = a.digits.size();
+    std::size_t db = b.digits.size();
+
+    // Reserve enough space for the sum and zero initialize the minimum amount
+    // of needed digits.
+    c.digits.reserve(std::max(da, db) + 1);
+    c.digits.resize(std::max(da, db));
+
+    // Common positions of a and b.
+    digit_type carry = 0;
+    std::size_t i = 0;
+    for (; i < std::min(da, db); ++i) {
+      digit_type digit_sum = a.digits[i] + b.digits[i] + carry;
+      c.digits[i] = digit_sum % BASE;
+      carry = digit_sum / BASE;
+    }
+
+    // Take the longer summand and add remaining digits.
+    auto *longer = da > db ? &a : &b;
+    for (; i < std::max(da, db); ++i) {
+      digit_type digit_sum = longer->digits[i] + carry;
+      c.digits[i] = digit_sum % BASE;
+      carry = digit_sum / BASE;
+    }
+
+    // If the carry is non-zero we need another digit.
+    if (carry != 0) c.digits.push_back(carry);
+  }
+
+  /**
+   * Subtracts two big_unsigneds into a third.
+   * Parameters a and c may be the same, for a -= b.
+   * It must be a >= b.
+   *
+   * @param a The minuend.
+   * @param b The subtrahend.
+   * @param c The difference a - b.
+   */
+  static void subtract(const big_unsigned &a, const big_unsigned &b,
+      big_unsigned &c) {
+    std::size_t da = a.digits.size();
+    std::size_t db = b.digits.size();
+
+    // Initialize result and resize to the maximum number of digits.
+    c.digits.resize(da);
+
+    // Since a >= b it must be da >= db.
+    // First go through b's digits.
+    digit_type carry = 0;
+    std::size_t i = 0;
+    for (; i < db; ++i) {
+      digit_type lower = b.digits[i] + carry;
+      digit_type upper = a.digits[i];
+      if (lower > upper) {
+        upper += BASE;
+        carry = 1;
+      } else carry = 0;
+      c.digits[i] = upper - lower;
+    }
+
+    // Now go through the remaining digits of a.
+    for (; i < da; ++i) {
+      if (carry > a.digits[i]) {
+        c.digits[i] = BASE - 1;
+        carry = 1;
+      } else {
+        c.digits[i] = a.digits[i] - carry;
+        carry = 0;
+      }
+    }
+
+    // Leading digits of the difference might be 0. Remove those.
+    c.remove_leading_zeros();
   }
 };
 

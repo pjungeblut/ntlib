@@ -56,6 +56,7 @@ int main() {
   printf("h1 - h2: %s\n", h.to_string().c_str());
   h -= h2;
   printf("h1 - h2 - h2: %s\n", h.to_string().c_str());
+  printf("\n");
 
   return 0;
 }
