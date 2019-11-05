@@ -23,6 +23,11 @@ private:
   using digit_type = uint64_t;
 
   /**
+   * Integral type used internally to contain the product of two digits.
+   */
+  using prod_type = __uint128_t;
+
+  /**
    * The base in which the numbers are stored is a power of ten for easier
    * printing.
    */
@@ -157,6 +162,35 @@ public:
     return *this;
   }
 
+  /**
+   * Multiplication for big_unsigned.
+   *
+   * @param a The first factor.
+   * @param b The second factor.
+   * @return The product a * b.
+   */
+  friend big_unsigned operator*(const big_unsigned &a, const big_unsigned &b) {
+    big_unsigned product;
+    mulitply(a, b, product);
+    return product;
+  }
+
+  /**
+   * Multiplies another big_unsigned to the current one.
+   *
+   * @param other The other factor.
+   * @return Reference to the current big_unsigned containing the product of its
+   *         previous value and other.
+   */
+  big_unsigned& operator*=(const big_unsigned &other) {
+    // TODO: This creates an intermediate big_unsigned. Find a way to do the
+    //       multiplication in-place.
+    big_unsigned product;
+    mulitply(*this, other, product);
+    digits = std::move(product.digits);
+    return *this;
+  }
+
 private:
   /**
    * An unbounded array containing the digits.
@@ -285,6 +319,83 @@ private:
     }
 
     // Leading digits of the difference might be 0. Remove those.
+    c.remove_leading_zeros();
+  }
+
+  /**
+   * Performs a digit multiplication.
+   *
+   * Simultaneously computes each digit of the product and adds it into the
+   * partial result.
+   *
+   * @param a The first factor with an arbitrary number of digits.
+   * @param b The second factor, a single digit.
+   * @param c The big_unsigned the result is added into.
+   * @param d The offset used when writing the result into c. This allows to not
+   *          just add the result but mulitply it with a factor BASE^i
+   *          beforehand, thus aligning the partial sums.
+   */
+  static void digit_multiply(const big_unsigned &a, const digit_type b,
+      big_unsigned &c, std::size_t d) {
+    std::size_t da = a.digits.size();
+
+    // Go through the digits of a.
+    digit_type product_carry = 0;
+    digit_type sum_carry = 0;
+    std::size_t i = 0;
+    for (; i < da; ++i) {
+      prod_type digit_product =
+          static_cast<prod_type>(a.digits[i]) * b + product_carry;
+      product_carry = digit_product / BASE;
+      digit_type digit_sum = c.digits[d + i] + digit_product % BASE + sum_carry;
+      c.digits[d + i] = digit_sum % BASE;
+      sum_carry = digit_sum / BASE;
+    }
+
+    // If the product_carry is non-zero, it is the most significant digit of the
+    // product. Add it into the result array.
+    // Further there might still be a sum_carry.
+    if (product_carry != 0) {
+      digit_type digit_sum = c.digits[d + i] + product_carry + sum_carry;
+      c.digits[d + i] = digit_sum % BASE;
+      sum_carry = digit_sum / BASE;
+    }
+
+    // Now product_carry is guaranteed to be zero, but we might still have a
+    // carry from the addition.
+    while (sum_carry != 0) {
+      ++i;
+      digit_type digit_sum = c.digits[d + i] + sum_carry;
+      c.digits[d + i] = digit_sum % BASE;
+      sum_carry = digit_sum / BASE;
+    }
+  }
+
+  /**
+   * Multiplies two big_unsigneds into a third.
+   * Parameters a and c may NOT be the same, as the content of c gets erased.
+   *
+   * @param a The first factor.
+   * @param b The second factor.
+   * @param c The product a * b.
+   */
+  static void mulitply(const big_unsigned &a, const big_unsigned &b,
+      big_unsigned &c) {
+    std::size_t da = a.digits.size();
+    std::size_t db = b.digits.size();
+
+    // Reserve enough space for the result and zero initialize.
+    c.digits.assign(da + db, 0);
+
+    // Go through the digits of b and perform digit multiplications adding the
+    // shifted results.
+    // TODO: Investigate whether there is a significant speedup when comparing
+    //       a and b first and going throug the smaller one.
+    for (std::size_t i = 0; i < db; ++i) {
+      digit_multiply(a, b.digits[i], c, i);
+    }
+
+    // Result might not need all reserved digits.
     c.remove_leading_zeros();
   }
 };

@@ -58,5 +58,17 @@ int main() {
   printf("h1 - h2 - h2: %s\n", h.to_string().c_str());
   printf("\n");
 
+  printf("Multiplication:\n");
+  ntlib::big_unsigned c_times_f = c * f;
+  printf("c * f: %s\n", c_times_f.to_string().c_str());
+  ntlib::big_unsigned i = c_times_f;
+  i *= f;
+  printf("c * f * f: %s\n", i.to_string().c_str());
+  ntlib::big_unsigned j("999999999999999999999999999999999999");
+  printf("j: %s\n", j.to_string().c_str());
+  j *= j;
+  printf("j *= j: %s\n", j.to_string().c_str());
+  printf("\n");
+
   return 0;
 }
