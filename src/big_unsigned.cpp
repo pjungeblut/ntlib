@@ -70,5 +70,13 @@ int main() {
   printf("j *= j: %s\n", j.to_string().c_str());
   printf("\n");
 
+  printf("Division:\n");
+  c_times_f = i / f;
+  printf("c * f: %s\n", c_times_f.to_string().c_str());
+  ntlib::big_unsigned k = c_times_f;
+  k /= f;
+  printf("c: %s\n", k.to_string().c_str());
+  printf("\n");
+
   return 0;
 }
