@@ -77,6 +77,43 @@ public:
   }
 
   /**
+   * Copy constructor.
+   *
+   * @param other Another big_unsigned.
+   */
+  big_unsigned(const big_unsigned &other) {
+    digits = other.digits;
+  }
+
+  /**
+   * Copy assignment operator.
+   *
+   * @param other Another big_unsigned.
+   */
+  big_unsigned& operator=(const big_unsigned &other) = default;
+
+  /**
+   * Move constructor.
+   *
+   * @param other Another big_unsigned.
+   */
+  big_unsigned(big_unsigned &&other) {
+    digits = std::move(other.digits);
+  }
+
+  /**
+   * Destructor.
+   */
+  ~big_unsigned() = default;
+
+  /**
+   * Move assignment operator.
+   *
+   * @param other Another big_unsigned.
+   */
+  big_unsigned& operator=(big_unsigned &&other) = default;
+
+  /**
    * Convert value into a string.
    *
    * @param base The base to print in. 2 <= base <= 16.
