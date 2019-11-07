@@ -23,6 +23,7 @@ add_executable(pythagorean_triple src/pythagorean_triple.cpp)
 
 # Big Integers.
 add_executable(big_unsigned src/big_unsigned.cpp)
+add_executable(big_integer src/big_integer.cpp)
 
 # Project Euler tests.
 add_executable(pe_005 projecteuler/005.cpp)

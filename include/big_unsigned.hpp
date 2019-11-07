@@ -13,6 +13,9 @@ namespace ntlib {
 /**
  * Represents a natural number whose size is only limited by the computers
  * memory.
+ *
+ * TODO: Write copy constructor, copy assignment operator, move constructor and
+ *       move assignment operator.
  */
 class big_unsigned {
 private:
@@ -295,7 +298,7 @@ public:
    */
   friend big_unsigned operator/(const big_unsigned &a, const big_unsigned &b) {
     big_unsigned quotient, remainder;
-    divide(a, b, quotient, remainder);
+    divide_with_remainder(a, b, quotient, remainder);
     return quotient;
   }
 
@@ -308,7 +311,7 @@ public:
    */
   big_unsigned& operator/=(const big_unsigned &other) {
     big_unsigned quotient, remainder;
-    divide(*this, other, quotient, remainder);
+    divide_with_remainder(*this, other, quotient, remainder);
     digits = std::move(quotient.digits);
     return *this;
   }
@@ -322,7 +325,7 @@ public:
    */
   friend big_unsigned operator%(const big_unsigned &a, const big_unsigned &b) {
     big_unsigned quotient, remainder;
-    divide(a, b, quotient, remainder);
+    divide_with_remainder(a, b, quotient, remainder);
     return remainder;
   }
 
@@ -335,9 +338,47 @@ public:
    */
   big_unsigned& operator%=(const big_unsigned &other) {
     big_unsigned quotient, remainder;
-    divide(*this, other, quotient, remainder);
+    divide_with_remainder(*this, other, quotient, remainder);
     digits = std::move(remainder.digits);
     return *this;
+  }
+
+  /**
+   * Divides a by b and outputs the quotient and the remainder.
+   *
+   * TODO: Uses binary search to find the quotient. This is far from optimal.
+   *       Investigate for a better algorithm.
+   *
+   * @param a The dividend.
+   * @param b The divisor.
+   * @param quotient The quotient a div b.
+   * @param remainder The remainder a mod b.
+   */
+  static void divide_with_remainder(const big_unsigned &a, const big_unsigned &b,
+      big_unsigned &quotient, big_unsigned &remainder) {
+    // Base case, equality.
+    if (a == b) {
+      quotient = 1;
+      remainder = 0;
+      return;
+    }
+
+    // Base case, a < b.
+    if (a < b) {
+      quotient = 0;
+      remainder = a;
+      return;
+    }
+
+    // Binary search for the quotient.
+    quotient = 0;
+    remainder = a - quotient * b;
+    while (remainder >= b) {
+      big_unsigned increase = 1;
+      while ((quotient + increase * 2) * b <= a) increase *= 2;
+      quotient += increase;
+      remainder = a - quotient * b;
+    }
   }
 
 private:
@@ -546,44 +587,6 @@ private:
 
     // Result might not need all reserved digits.
     c.remove_leading_zeros();
-  }
-
-  /**
-   * Divides a by b and outputs the quotient and the remainder.
-   *
-   * TODO: Uses binary search to find the quotient. This is far from optimal.
-   *       Investigate for a better algorithm.
-   *
-   * @param a The dividend.
-   * @param b The divisor.
-   * @param quotient The quotient a div b.
-   * @param remainder The remainder a mod b.
-   */
-  static void divide(const big_unsigned &a, const big_unsigned &b,
-      big_unsigned &quotient, big_unsigned &remainder) {
-    // Base case, equality.
-    if (a == b) {
-      quotient = 1;
-      remainder = 0;
-      return;
-    }
-
-    // Base case, a < b.
-    if (a < b) {
-      quotient = 0;
-      remainder = a;
-      return;
-    }
-
-    // Binary search for the quotient.
-    quotient = 0;
-    remainder = a - quotient * b;
-    while (remainder >= b) {
-      big_unsigned increase = 1;
-      while ((quotient + 2 * increase) * b <= a) increase *= 2;
-      quotient += increase;
-      remainder = a - quotient * b;
-    }
   }
 };
 
