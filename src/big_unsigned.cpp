@@ -8,7 +8,7 @@
 int main() {
   ntlib::big_unsigned a(5);
   ntlib::big_unsigned b;
-  ntlib::big_unsigned c("12345678998765432112345678910111213141516171819");
+  ntlib::big_unsigned c("12345678910111213141516171819");
   ntlib::big_unsigned d = 10;
   ntlib::big_unsigned e = c;
   ntlib::big_unsigned _f("1234567891011121314151617181920212223242526272829");
@@ -37,12 +37,13 @@ int main() {
   printf("a + c: %s\n", a_plus_c.to_string().c_str());
   ntlib::big_unsigned g1("999999999999999999999999999999999999999999999999999998");
   ntlib::big_unsigned g2 = 1;
-  ntlib::big_unsigned g = g1 + g2;
+  ntlib::big_unsigned g;
+  g += g1 + g2;
   printf("g1: %s\n", g1.to_string().c_str());
   printf("g2: %s\n", g2.to_string().c_str());
   printf("g1 + g2: %s\n", g.to_string().c_str());
-  g2 += g;
-  printf("g1 + g2 + g2: %s\n", g2.to_string().c_str());
+  g += 1;
+  printf("g1 + g2 + g2: %s\n", g.to_string().c_str());
   printf("\n");
 
   printf("Subtraction:\n");

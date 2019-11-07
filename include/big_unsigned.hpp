@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <cstdio>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -16,26 +17,26 @@ namespace ntlib {
  *
  * TODO: Write copy constructor, copy assignment operator, move constructor and
  *       move assignment operator.
+ * TODO: Add missing increment/decrement operators.
  */
 class big_unsigned {
 private:
   /**
    * Integral type used for each digit.
-   * Must be big enoug to contain twice the biggest possible digit.
    */
-  using digit_type = uint64_t;
+  using digit_type = uint32_t;
 
   /**
-   * Integral type used internally to contain the product of two digits.
+   * Type big enough to contain the sum/product of any two digits.
    */
-  using prod_type = __uint128_t;
+  using double_digit_type = uint64_t;
 
   /**
-   * The base in which the numbers are stored is a power of ten for easier
-   * printing.
+   * The base in which the numbers are stored is a power of two for optimal
+   * memory usage.
    */
-  constexpr static std::size_t LOG_BASE = 18;
-  constexpr static std::size_t BASE = 1'000'000'000'000'000'000uLL;
+  constexpr static uint8_t LOG_BASE = sizeof(digit_type) * 8;
+  constexpr static double_digit_type BASE = 1LL << LOG_BASE;
 
 public:
   /**
@@ -44,62 +45,52 @@ public:
   big_unsigned() {}
 
   /**
-   * Constructor to build big_unsigned from a simple unsigned long long.
+   * Constructor to build big_unsigned from a simple integer.
    *
    * @param n The value to initialize with.
    */
-  big_unsigned(unsigned long long n) {
+  big_unsigned(uint32_t n) {
     if (n > 0) digits.assign(1, n);
-    else digits.clear();
   }
 
   /**
-   * Constructor to build big_unsigned from a string giving a base 10
-   * representation of the value.
+   * Constructor to build big_unsigned from a string representation of the
+   * value. Can be given in any base b.
    *
    * @param n The value to initialize with.
+   * @param base The base. 2 <= base <= 16. Default is base = 10.
    */
-  big_unsigned(const std::string &n) {
-    std::size_t i = 0;
-    digit_type digit = 0;
-    digit_type factor = 1;
-    for (auto base_10_digit = n.rbegin(); base_10_digit != n.rend();
-        ++base_10_digit) {
-      digit += factor * (*base_10_digit - '0');
-      factor *= 10;
-      ++i;
-      if (i == LOG_BASE) {
-        digits.push_back(digit);
-        i = 0;
-        digit = 0;
-        factor = 1;
-      }
+  big_unsigned(const std::string &n, uint8_t base = 10) {
+    if (n == "0") return;
+
+    // Create big_unsigned with value 0.
+    // Correct value will added in later.
+    big_unsigned(0);
+
+    // Read digit by digit.
+    for (char digit : n) {
+      digit_multiply(*this, base);
+      // TODO: This would only need a possibly faster digit_add.
+      digit_add(*this, char_to_value(digit, base));
+      // add(*this, char_to_value(digit, base), *this);
     }
-    if (digit != 0) digits.push_back(digit);
   }
 
   /**
    * Convert value into a string.
    *
-   * @return The value as a string in base 10.
+   * @param base The base to print in. 2 <= base <= 16.
+   * @return The value as a string in the given base.
    */
-  std::string to_string() const {
+  std::string to_string(uint8_t base = 10) const {
     // Special case: value = 0.
-    if (digits.size() == 0) {
-      return "0";
-    }
+    if (digits.size() == 0) return "0";
 
-    // Create result string and reserve enough space.
+    // Recursively find the digits in the requested base.
+    // Must work on a copy, since the value must be repeatedly divided by base.
     std::string s;
-    s.reserve(LOG_BASE * digits.size());
-
-    // Write digit by digit.
-    // The most significant digit can be printed "as is".
-    // All other ones need to be padded with leading zeros.
-    for (auto digit = digits.rbegin(); digit != digits.rend(); ++digit) {
-      to_string_digit(*digit, s, digit != digits.rbegin());
-    }
-
+    big_unsigned value = *this;
+    to_string_recursive(s, value, base);
     return s;
   }
 
@@ -233,6 +224,31 @@ public:
     add(*this, other, *this);
     return *this;
   }
+
+  /**
+   * Adds a single digit into the current one.
+   *
+   * @param other The other summand.
+   * @return  Reference to the current big_unsigned containing the sum of its
+   *          previous value and other.
+   */
+   big_unsigned& operator+=(digit_type other) {
+     digit_add(*this, other);
+     return *this;
+   }
+
+  // /**
+  //  * Pre-increment.
+  //  *
+  //  * TODO: Add more efficient implementation. Does not need general big_unsigned
+  //  *       addition. Digits addition is enough.
+  //  *
+  //  * @return Reference to current (incremented object).
+  //  */
+  // big_unsigned& operator++() {
+  //   add(*this, 1, *this);
+  //   return *this;
+  // }
 
   /**
    * Subtraction for big_unsigned.
@@ -381,6 +397,16 @@ public:
     }
   }
 
+  /**
+   * Cast to digit_type.
+   * Only returns the last digit.
+   *
+   * @return The value of the least significant digit.
+   */
+  explicit operator digit_type() const {
+    return digits.size() ? digits[0] : 0;
+  }
+
 private:
   /**
    * An unbounded array containing the digits.
@@ -390,34 +416,51 @@ private:
   std::vector<digit_type> digits;
 
   /**
-   * Appends a base 10 representation of a single digit to a string.
+   * Converts a character into its numerical value.
    *
-   * @param digit The digit to be written.
-   * @param s The string to append this digit to.
-   * @param leading_zeros Whether leading zeros should be printed.
+   * @param c The character.
+   * @param base The base.
+   * @return The numerical value of the character.
    */
-  void to_string_digit(digit_type digit, std::string &s,
-      bool leading_zeros = true) const {
-    char base_10_digits[LOG_BASE];
-    for (std::size_t i = 0; i < LOG_BASE; ++i) {
-      base_10_digits[LOG_BASE - i - 1] = (digit % 10) + '0';
-      digit /= 10;
+  static digit_type char_to_value(char c, uint8_t base) {
+    digit_type value = 0;
+    if ('0' <= c && c <= '9') value = c - '0';
+    else if ('A' <= c && c <= 'F') value = c - 'A' + 10;
+    else throw std::invalid_argument("Digits can only be written by 0..9A..F.");
+
+    if (value >= base) {
+      throw std::invalid_argument("Invalid digit in given base.");
     }
-    if (leading_zeros) {
-      for (std::size_t i = 0; i < LOG_BASE; ++i) {
-        s.push_back(base_10_digits[i]);
-      }
-    } else {
-      bool non_zero = false;
-      for (std::size_t i = 0; i < LOG_BASE; ++i) {
-        if (base_10_digits[i] == '0') {
-          if (non_zero) s.push_back(base_10_digits[i]);
-        } else {
-          s.push_back(base_10_digits[i]);
-          non_zero = true;
-        }
-      }
+    return value;
+  }
+
+  static char value_to_char(digit_type value, uint8_t base) {
+    if (value >= base) {
+      throw std::invalid_argument("Value is too big for the given base.");
     }
+
+    if (value <= 9) return value + '0';
+    return value - 10 + 'A';
+  }
+
+  /**
+   * Recursively computes the digits in the required base.
+   * The result is in reverse order.
+   *
+   * @param s The string to write the result into.
+   * @param value The current value of the remaining big_unsigned.
+   * @param base The base to print in. 2 <= base <= 16.
+   */
+  void to_string_recursive(std::string &s, big_unsigned &value, uint8_t base)
+      const {
+    // Base case for value 0.
+    if (value == 0) return;
+
+    // Compute last digit, recurse and then push it to the result.
+    digit_type remainder;
+    digit_divide_with_remainder(value, base, value, remainder);
+    to_string_recursive(s, value, base);
+    s.push_back(value_to_char(remainder, base));
   }
 
   /**
@@ -425,6 +468,35 @@ private:
    */
   void remove_leading_zeros() {
     while (digits.size() && digits.back() == 0) digits.pop_back();
+  }
+
+  /**
+   * Adds digit b to big_unsigned a.
+   *
+   * @param a The big_unsigned to add into.
+   * @param b The digit to add.
+   */
+  static void digit_add(big_unsigned &a, digit_type b) {
+    std::size_t da = a.digits.size();
+
+    // Base case: a == 0
+    if (da == 0) {
+      a.digits.push_back(b);
+      return;
+    }
+
+    // Add to each digit.
+    digit_type carry = b;
+    for (std::size_t i = 0; i < da; ++i) {
+      // Cast is important to avoid overflows.
+      double_digit_type digit_sum =
+          static_cast<double_digit_type>(a.digits[i]) + carry;
+      a.digits[i] = digit_sum % BASE;
+      carry = digit_sum / BASE;
+    }
+
+    // If the carry is not zero, a has another digit.
+    if (carry != 0) a.digits.push_back(carry);
   }
 
   /**
@@ -449,7 +521,9 @@ private:
     digit_type carry = 0;
     std::size_t i = 0;
     for (; i < std::min(da, db); ++i) {
-      digit_type digit_sum = a.digits[i] + b.digits[i] + carry;
+      // Cast is important to avoid overflows.
+      double_digit_type digit_sum =
+          static_cast<double_digit_type>(a.digits[i]) + b.digits[i] + carry;
       c.digits[i] = digit_sum % BASE;
       carry = digit_sum / BASE;
     }
@@ -457,7 +531,9 @@ private:
     // Take the longer summand and add remaining digits.
     auto *longer = da > db ? &a : &b;
     for (; i < std::max(da, db); ++i) {
-      digit_type digit_sum = longer->digits[i] + carry;
+      // Cast is important to avoid overflows.
+      double_digit_type digit_sum =
+          static_cast<double_digit_type>(longer->digits[i]) + carry;
       c.digits[i] = digit_sum % BASE;
       carry = digit_sum / BASE;
     }
@@ -513,6 +589,30 @@ private:
   }
 
   /**
+   * In place mulitplication of a by digit b.
+   *
+   * @param a The first factor with an arbitrary number of digits.
+   * @param b The second factor, a single digit.
+   */
+  static void digit_multiply(big_unsigned &a, const digit_type b) {
+    std::size_t da = a.digits.size();
+
+    // Go through the digits of a.
+    digit_type product_carry = 0;
+    for (std::size_t i = 0; i < da; ++i) {
+      // Cast is important to avoid overflows.
+      double_digit_type digit_product =
+          static_cast<double_digit_type>(a.digits[i]) * b + product_carry;
+      product_carry = digit_product / BASE;
+      a.digits[i] = digit_product % BASE;
+    }
+
+    // If the product_carry is non-zero, it is the most significant digit of the
+    // product. Add it into the result array.
+    if (product_carry != 0) a.digits.push_back(product_carry);
+  }
+
+  /**
    * Performs a digit multiplication.
    *
    * Simultaneously computes each digit of the product and adds it into the
@@ -525,8 +625,8 @@ private:
    *          just add the result but mulitply it with a factor BASE^i
    *          beforehand, thus aligning the partial sums.
    */
-  static void digit_multiply(const big_unsigned &a, const digit_type b,
-      big_unsigned &c, std::size_t d) {
+  static void digit_multiply_offset(const big_unsigned &a, const digit_type b,
+      big_unsigned &c, std::size_t d = 0) {
     std::size_t da = a.digits.size();
 
     // Go through the digits of a.
@@ -534,10 +634,15 @@ private:
     digit_type sum_carry = 0;
     std::size_t i = 0;
     for (; i < da; ++i) {
-      prod_type digit_product =
-          static_cast<prod_type>(a.digits[i]) * b + product_carry;
+      // Cast is important to avoid overflows.
+      double_digit_type digit_product =
+          static_cast<double_digit_type>(a.digits[i]) * b + product_carry;
       product_carry = digit_product / BASE;
-      digit_type digit_sum = c.digits[d + i] + digit_product % BASE + sum_carry;
+      // Cast is important to avoid overflows.
+      double_digit_type digit_sum =
+          static_cast<double_digit_type>(c.digits[d + i]) +
+          digit_product % BASE +
+          sum_carry;
       c.digits[d + i] = digit_sum % BASE;
       sum_carry = digit_sum / BASE;
     }
@@ -546,7 +651,11 @@ private:
     // product. Add it into the result array.
     // Further there might still be a sum_carry.
     if (product_carry != 0) {
-      digit_type digit_sum = c.digits[d + i] + product_carry + sum_carry;
+      // Cast is important to avoid overflows.
+      double_digit_type digit_sum =
+          static_cast<double_digit_type>(c.digits[d + i]) +
+          product_carry +
+          sum_carry;
       c.digits[d + i] = digit_sum % BASE;
       sum_carry = digit_sum / BASE;
     }
@@ -555,7 +664,9 @@ private:
     // carry from the addition.
     while (sum_carry != 0) {
       ++i;
-      digit_type digit_sum = c.digits[d + i] + sum_carry;
+      // Cast is important to avoid overflows.
+      double_digit_type digit_sum =
+          static_cast<double_digit_type>(c.digits[d + i]) + sum_carry;
       c.digits[d + i] = digit_sum % BASE;
       sum_carry = digit_sum / BASE;
     }
@@ -563,7 +674,7 @@ private:
 
   /**
    * Multiplies two big_unsigneds into a third.
-   * Parameters a and c may NOT be the same, as the content of c gets erased.
+   * Parameters a and b must be different to c, as c's content gets erased.
    *
    * @param a The first factor.
    * @param b The second factor.
@@ -577,16 +688,59 @@ private:
     // Reserve enough space for the result and zero initialize.
     c.digits.assign(da + db, 0);
 
-    // Go through the digits of b and perform digit multiplications adding the
-    // shifted results.
-    // TODO: Investigate whether there is a significant speedup when comparing
-    //       a and b first and going throug the smaller one.
-    for (std::size_t i = 0; i < db; ++i) {
-      digit_multiply(a, b.digits[i], c, i);
+    // Go through the digits of the shorter number and perform digit
+    // multiplications adding the shifted results.
+    if (da <= db) {
+      for (std::size_t i = 0; i < da; ++i) {
+        digit_multiply_offset(b, a.digits[i], c, i);
+      }
+    } else {
+      for (std::size_t i = 0; i < db; ++i) {
+        digit_multiply_offset(a, b.digits[i], c, i);
+      }
     }
 
     // Result might not need all reserved digits.
     c.remove_leading_zeros();
+  }
+
+  /**
+   * Divides the big_unsigned a by a single digit b.
+   * Parameters a and quotient may be the same.
+   *
+   * @param a The dividend.
+   * @param b The divisor. A single digit.
+   * @param quotient The quotient of the division.
+   * @param remainder The remainder of the division.
+   */
+   static void digit_divide_with_remainder(const big_unsigned &a, digit_type b,
+      big_unsigned &quotient, digit_type &remainder) {
+    std::size_t da = a.digits.size();
+
+    // Is the first digit of a at least b?
+    // If so, the quotient has the same length as a.
+    // Otherwise it is exactly one digit shorter.
+    std::size_t dc = da;
+    if (a.digits.back() < b) --dc;
+
+    // Resize quotient to its exact size.
+    quotient.digits.resize(da);
+
+    // Divide by school method.
+    remainder = 0;
+    for (std::size_t i = 0; i < da; ++i) {
+      std::size_t ia = da - i - 1;
+
+      // Cast is important to avoid overflows.
+      double_digit_type double_remainder =
+          static_cast<double_digit_type>(remainder) * BASE + a.digits[ia];
+      quotient.digits[ia] = double_remainder / b;
+      remainder = double_remainder % b;
+    }
+
+    // If dc < da, then the result is shifted.
+    // Bring it back into place.
+    if (dc < da) quotient.digits.pop_back();
   }
 };
 
