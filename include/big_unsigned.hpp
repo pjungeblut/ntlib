@@ -14,8 +14,6 @@ namespace ntlib {
 /**
  * Represents a natural number whose size is only limited by the computers
  * memory.
- *
- * TODO: Look at multiplication/division by zero.
  */
 class big_unsigned {
 private:
@@ -63,7 +61,7 @@ public:
 
     // Create big_unsigned with value 0.
     // Correct value will added in later.
-    big_unsigned(0);
+    digits.assign(1, 0);
 
     // Read digit by digit.
     for (char digit : n) {
@@ -85,8 +83,13 @@ public:
    * Copy assignment operator.
    *
    * @param other Another big_unsigned.
+   * @return Reference to the current big_unsigned containing the same value as
+   *         other.
    */
-  big_unsigned& operator=(const big_unsigned &other) = default;
+  big_unsigned& operator=(const big_unsigned &other) {
+    digits = other.digits;
+    return *this;
+  };
 
   /**
    * Move constructor.
@@ -98,16 +101,21 @@ public:
   }
 
   /**
-   * Destructor.
-   */
-  ~big_unsigned() = default;
-
-  /**
    * Move assignment operator.
    *
    * @param other Another big_unsigned.
+   * @return Reference to the current big_unsigned containing the value of
+   *         other.
    */
-  big_unsigned& operator=(big_unsigned &&other) = default;
+  big_unsigned& operator=(big_unsigned &&other) {
+    digits = std::move(other.digits);
+    return *this;
+  }
+
+  /**
+   * Destructor.
+   */
+  ~big_unsigned() = default;
 
   /**
    * Convert value into a string.
@@ -552,6 +560,11 @@ public:
    */
   static void divide_with_remainder(const big_unsigned &a, const big_unsigned &b,
       big_unsigned &quotient, big_unsigned &remainder) {
+    // Base case, b == 0.
+    if (b == 0) {
+      throw std::invalid_argument("Division by zero.");
+    }
+
     // Base case, equality.
     if (a == b) {
       quotient = 1;
@@ -938,7 +951,8 @@ private:
       // Cast is important to avoid overflows.
       double_digit_type digit_sum =
           static_cast<double_digit_type>(a.digits[i]) + carry;
-      a.digits[i] = digit_sum % BASE;
+      // Implicit modulo by BASE.
+      a.digits[i] = digit_sum;
       carry = digit_sum / BASE;
     }
 
@@ -971,7 +985,8 @@ private:
       // Cast is important to avoid overflows.
       double_digit_type digit_sum =
           static_cast<double_digit_type>(a.digits[i]) + b.digits[i] + carry;
-      c.digits[i] = digit_sum % BASE;
+      // Implicit modulo by BASE.
+      c.digits[i] = digit_sum;
       carry = digit_sum / BASE;
     }
 
@@ -981,7 +996,8 @@ private:
       // Cast is important to avoid overflows.
       double_digit_type digit_sum =
           static_cast<double_digit_type>(longer->digits[i]) + carry;
-      c.digits[i] = digit_sum % BASE;
+      // Implicit modulo by BASE.
+      c.digits[i] = digit_sum;
       carry = digit_sum / BASE;
     }
 
@@ -1087,6 +1103,12 @@ private:
    * @param b The second factor, a single digit.
    */
   static void digit_multiply(big_unsigned &a, const digit_type b) {
+    // Base case: b == 0.
+    if (b == 0) {
+      a.digits.clear();
+      return;
+    }
+
     std::size_t da = a.digits.size();
 
     // Go through the digits of a.
@@ -1096,7 +1118,8 @@ private:
       double_digit_type digit_product =
           static_cast<double_digit_type>(a.digits[i]) * b + product_carry;
       product_carry = digit_product / BASE;
-      a.digits[i] = digit_product % BASE;
+      // Implicit modulo by BASE.
+      a.digits[i] = digit_product;
     }
 
     // If the product_carry is non-zero, it is the most significant digit of the
@@ -1135,7 +1158,8 @@ private:
           static_cast<double_digit_type>(c.digits[d + i]) +
           digit_product % BASE +
           sum_carry;
-      c.digits[d + i] = digit_sum % BASE;
+      // Implicit modulo by BASE.
+      c.digits[d + i] = digit_sum;
       sum_carry = digit_sum / BASE;
     }
 
@@ -1148,7 +1172,8 @@ private:
           static_cast<double_digit_type>(c.digits[d + i]) +
           product_carry +
           sum_carry;
-      c.digits[d + i] = digit_sum % BASE;
+      // Implicit modulo by BASE.
+      c.digits[d + i] = digit_sum;
       sum_carry = digit_sum / BASE;
     }
 
@@ -1159,7 +1184,8 @@ private:
       // Cast is important to avoid overflows.
       double_digit_type digit_sum =
           static_cast<double_digit_type>(c.digits[d + i]) + sum_carry;
-      c.digits[d + i] = digit_sum % BASE;
+      // Implicit modulo by base.
+      c.digits[d + i] = digit_sum;
       sum_carry = digit_sum / BASE;
     }
   }
@@ -1207,6 +1233,9 @@ private:
    */
    static void digit_divide_with_remainder(const big_unsigned &a, digit_type b,
       big_unsigned &quotient, digit_type &remainder) {
+    // Base case: b == 0.
+    if (b == 0) throw std::invalid_argument("Division by zero.");
+
     std::size_t da = a.digits.size();
 
     // Is the first digit of a at least b?
@@ -1321,9 +1350,9 @@ private:
     // All remaining positions can be copied from the longer of the two
     // operands.
     auto *longer = da > db ? &a : &b;
-    for (; i < std::max(a, b); ++i) c.digits[i] = longer->digits[i];
+    for (; i < std::max(da, db); ++i) c.digits[i] = longer->digits[i];
 
-    // Bitwise and cannot lead to leading zeros.
+    // Bitwise or cannot lead to leading zeros.
   }
 
   /**
@@ -1386,24 +1415,37 @@ private:
     const std::size_t positions = b / LOG_BASE;
     const std::size_t remainder = b % LOG_BASE;
 
-    // Reserve enough space for the result.
-    c.digits.resize(a.digits.size() + positions + (remainder != 0));
+    if (remainder == 0) {
+      c.digits.resize(da + positions);
+      for (std::size_t i = 0; i < da; ++i) {
+        c.digits[c.digits.size() - i - 1] = a.digits[da - i - 1];
+      }
+      for (std::size_t i = 0; i < positions; ++i) c.digits[i] = 0;
+    } else {
+      // Reserve enough space for the result.
+      c.digits.resize(da + positions + 1);
 
-    digit_type previous = 0;
-    for (std::size_t i = 0; i < da; ++i) {
-      const std::size_t ia = da - i - 1;
-      const std::size_t ic = c.digits.size() - i - 1;
+      digit_type previous = 0;
+      for (std::size_t i = 0; i < da; ++i) {
+        const std::size_t ia = da - i - 1;
+        const std::size_t ic = c.digits.size() - i - 1;
 
-      // Cast is important to avoid overflows.
-      const double_digit_type shift =
-          static_cast<double_digit_type>(a.digits[ia]) << remainder;
-      c.digits[ic] = shift / BASE + previous;
-      previous = shift % BASE;
+        // Cast is important to avoid overflows.
+        const double_digit_type shift =
+            static_cast<double_digit_type>(a.digits[ia]) << remainder;
+        c.digits[ic] = (shift >> LOG_BASE) + previous;
+        // Implicit modulo by BASE.
+        previous = shift;
+      }
+      c.digits[positions] = previous;
+
+      // Clear least significant bits.
+      for (std::size_t i = 0; i < positions; ++i) c.digits[i] = 0;
+
+      // We might have just shifted zeros into the most significant digit. If so,
+      // they need to be removed.
+      c.remove_leading_zeros();
     }
-
-    // We might have just shifted zeros into the most significant digit. If so,
-    // they need to be removed.
-    c.remove_leading_zeros();
   }
 
   /**
@@ -1419,21 +1461,32 @@ private:
     const std::size_t positions = b / LOG_BASE;
     const std::size_t remainder = b % LOG_BASE;
 
-    for (std::size_t i = positions; i < da; ++i) {
-      std::size_t ic = i - positions;
+    if (remainder == 0) {
+      for (std::size_t i = positions; i < da; ++i) {
+        c.digits[i - positions] = a.digits[i];
+      }
+      for (std::size_t i = 0; i < positions; ++i) c.digits.pop_back();
+    } else {
+      for (std::size_t i = positions; i < da; ++i) {
+        std::size_t ic = i - positions;
 
-      if (ic > 0) {
-        digit_type to_previous = a.digits[i] & ((1 << remainder) - 1);
-        to_previous <<= LOG_BASE - remainder;
-        c.digits[ic - 1] += to_previous;
+        if (ic > 0) {
+          digit_type to_previous =
+              a.digits[i] & ((static_cast<digit_type>(1) << remainder) - 1);
+          to_previous <<= LOG_BASE - remainder;
+          c.digits[ic - 1] += to_previous;
+        }
+
+        c.digits[ic] = a.digits[i] >> remainder;
       }
 
-      c.digits[ic] = a.digits[i] >> remainder;
-    }
+      // Zero out higher digits.
+      for (std::size_t i = da - positions; i < da; ++i) c.digits[i] = 0;
 
-    // Most significant positions can now be zero. If so, they need to be
-    // deleted.
-    c.remove_leading_zeros();
+      // Most significant positions can now be zero. If so, they need to be
+      // deleted.
+      c.remove_leading_zeros();
+    }
   }
 };
 
