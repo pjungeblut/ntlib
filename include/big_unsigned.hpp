@@ -18,6 +18,7 @@ namespace ntlib {
  * TODO: Write copy constructor, copy assignment operator, move constructor and
  *       move assignment operator.
  * TODO: Add missing increment/decrement operators.
+ * TODO: Think about exception safety.
  */
 class big_unsigned {
 private:
@@ -314,6 +315,18 @@ public:
   }
 
   /**
+   * Subtracts a single digit from the current big_unsigned.
+   *
+   * @param other The digit to subtract.
+   * @return Reference to the current big_unsigned containing the difference of
+   *         its previous value and other.
+   */
+  big_unsigned& operator-=(digit_type other) {
+    digit_subtract(*this, other);
+    return *this;
+  }
+
+  /**
    * Multiplication for big_unsigned.
    *
    * @param a The first factor.
@@ -339,6 +352,18 @@ public:
     big_unsigned product;
     mulitply(*this, other, product);
     digits = std::move(product.digits);
+    return *this;
+  }
+
+  /**
+   * Multiplies a single digit to the current big_unsigned.
+   *
+   * @param other The other factor. A single digit.
+   * @return Reference to the current big_unsigned containing the product of its
+   *         previous value and other.
+   */
+  big_unsigned& operator*=(digit_type other) {
+    digit_multiply(*this, other);
     return *this;
   }
 
@@ -370,6 +395,19 @@ public:
   }
 
   /**
+   * Divides a single digit from the current big_unsigned.
+   *
+   * @param other The digit to divide through.
+   * @return Reference to the current big_unsigned containing the quotient of
+   *         its previous value and other.
+   */
+  big_unsigned& operator/=(digit_type other) {
+    digit_type remainder;
+    digit_divide_with_remainder(*this, other, *this, remainder);
+    return *this;
+  }
+
+  /**
    * Computes the remainder of a and b.
    *
    * @param a The dividend.
@@ -393,6 +431,20 @@ public:
     big_unsigned quotient, remainder;
     divide_with_remainder(*this, other, quotient, remainder);
     digits = std::move(remainder.digits);
+    return *this;
+  }
+
+  /**
+   * Computes the remainder when dividing through a single digit.
+   *
+   * @param other The divisor.
+   * @return Reference to the current big_unsigned containing the remainder of
+   *         its previous value and other.
+   */
+  big_unsigned& operator%=(digit_type other) {
+    digit_type remainder;
+    digit_divide_with_remainder(*this, other, *this, remainder);
+    digits.assign(1, remainder);
     return *this;
   }
 
@@ -580,6 +632,39 @@ private:
   }
 
   /**
+   * Subtracts a single digit b from a into a.
+   * It must be b <= a.
+   *
+   * @param a The big_unsigned to subtract from.
+   * @param b The digit to subtract.
+   */
+  static void digit_subtract(big_unsigned &a, digit_type b) {
+    std::size_t da = a.digits.size();
+
+    // Go through a's digits.
+    digit_type carry = b;
+    for (std::size_t i = 0; i < da; ++i) {
+      // Cast is important to avoid overflows.
+      double_digit_type lower = carry;
+      double_digit_type upper = a.digits[i];
+      if (lower > upper) {
+        lower += BASE;
+        carry = 1;
+      } else carry = 0;
+      a.digits[i] = upper - lower;
+    }
+
+    // If the carry is not zero, then b was bigger than a.
+    if (carry != 0) {
+      throw std::invalid_argument(
+          "Digit subtraction: Subtrahend bigger than minuend.");
+    }
+
+    // a might have leading zeros now.
+    a.remove_leading_zeros();
+  }
+
+  /**
    * Subtracts two big_unsigneds into a third.
    * Parameters a and c may be the same, for a -= b.
    * It must be a >= b.
@@ -592,6 +677,12 @@ private:
       big_unsigned &c) {
     std::size_t da = a.digits.size();
     std::size_t db = b.digits.size();
+
+    // Check that da >= db (which must be true, if a >= b).
+    if (da < db) {
+      throw std::invalid_argument(
+          "Subtraction: Subtrahend is bigger than minuend.");
+    }
 
     // Initialize result and resize to the maximum number of digits.
     c.digits.resize(da);
@@ -619,6 +710,12 @@ private:
         c.digits[i] = a.digits[i] - carry;
         carry = 0;
       }
+    }
+
+    // If the carry is not zero, b was bigger than a.
+    if (carry != 0) {
+      throw std::invalid_argument(
+          "Subtraction: Subtrahend is bigger than minuend.");
     }
 
     // Leading digits of the difference might be 0. Remove those.
