@@ -15,8 +15,7 @@ namespace ntlib {
  * Represents a natural number whose size is only limited by the computers
  * memory.
  *
- * TODO: Write copy constructor, copy assignment operator, move constructor and
- *       move assignment operator.
+ * TODO: Look at multiplication/division by zero.
  * TODO: Think about exception safety.
  */
 class big_unsigned {
@@ -251,6 +250,19 @@ public:
   }
 
   /**
+   * Addition for a single digit.
+   *
+   * @param a The first summand.
+   * @param b The second summand. A single digit.
+   * @return The sum a + b.
+   */
+  friend big_unsigned operator+(const big_unsigned &a, digit_type b) {
+    big_unsigned sum = a;
+    digit_add(sum, b);
+    return sum;
+  }
+
+  /**
    * Adds another big_unsigned to the current one.
    *
    * @param other The other summand.
@@ -285,16 +297,6 @@ public:
   }
 
   /**
-   * Pre-decrement.
-   *
-   * @return Reference to the current (decremented) object.
-   */
-  big_unsigned& operator--() {
-    digit_subtract(*this, 1);
-    return *this;
-  }
-
-  /**
    * Post-increment.
    *
    * @return The old value of the object.
@@ -302,17 +304,6 @@ public:
   big_unsigned operator++(int) {
     big_unsigned copy = *this;
     digit_add(*this, 1);
-    return copy;
-  }
-
-  /**
-   * Post-decrement.
-   *
-   * @return The old value of the object.
-   */
-  big_unsigned operator--(int) {
-    big_unsigned copy = *this;
-    digit_subtract(*this, 1);
     return copy;
   }
 
@@ -327,6 +318,19 @@ public:
   friend big_unsigned operator-(const big_unsigned &a, const big_unsigned &b) {
     big_unsigned difference;
     subtract(a, b, difference);
+    return difference;
+  }
+
+  /**
+   * Subtraction for a single digit.
+   *
+   * @param a The minuend.
+   * @param b The subtrahend. It must be a >= b.
+   * @return The difference a - b.
+   */
+  friend big_unsigned operator-(const big_unsigned &a, digit_type b) {
+    big_unsigned difference = a;
+    digit_subtract(difference, b);
     return difference;
   }
 
@@ -355,6 +359,27 @@ public:
   }
 
   /**
+   * Pre-decrement.
+   *
+   * @return Reference to the current (decremented) object.
+   */
+  big_unsigned& operator--() {
+    digit_subtract(*this, 1);
+    return *this;
+  }
+
+  /**
+   * Post-decrement.
+   *
+   * @return The old value of the object.
+   */
+  big_unsigned operator--(int) {
+    big_unsigned copy = *this;
+    digit_subtract(*this, 1);
+    return copy;
+  }
+
+  /**
    * Multiplication for big_unsigned.
    *
    * @param a The first factor.
@@ -364,6 +389,19 @@ public:
   friend big_unsigned operator*(const big_unsigned &a, const big_unsigned &b) {
     big_unsigned product;
     mulitply(a, b, product);
+    return product;
+  }
+
+  /**
+   * Multiplication for a single digit.
+   *
+   * @param a The first factor.
+   * @param b The second factor. A single digit.
+   * @return The product a * b.
+   */
+  friend big_unsigned operator*(const big_unsigned &a, digit_type b) {
+    big_unsigned product = a;
+    digit_multiply(product, b);
     return product;
   }
 
@@ -409,6 +447,20 @@ public:
   }
 
   /**
+   * Division for a single digit.
+   *
+   * @param a The dividend.
+   * @param b The divisor. A single digit.
+   * @return The quotient of a div b.
+   */
+  friend big_unsigned operator/(const big_unsigned &a, digit_type b) {
+    big_unsigned quotient = a;
+    digit_type remainder;
+    digit_divide_with_remainder(quotient, b, quotient, remainder);
+    return quotient;
+  }
+
+  /**
    * Divides another big_unsigned from the current one.
    *
    * @param other The divisor.
@@ -440,11 +492,25 @@ public:
    *
    * @param a The dividend.
    * @param b The divisor.
-   * @return The remainder of a mod b.
+   * @return The remainder a mod b.
    */
   friend big_unsigned operator%(const big_unsigned &a, const big_unsigned &b) {
     big_unsigned quotient, remainder;
     divide_with_remainder(a, b, quotient, remainder);
+    return remainder;
+  }
+
+  /**
+   * Modulo for a single digit.
+   *
+   * @param a The dividend.
+   * @param b The divisor.
+   * @return The remainder a mod b.
+   */
+  friend big_unsigned operator%(const big_unsigned &a, digit_type b) {
+    big_unsigned quotient = a;
+    digit_type remainder;
+    digit_divide_with_remainder(quotient, b, quotient, remainder);
     return remainder;
   }
 
@@ -512,6 +578,60 @@ public:
       quotient += increase;
       remainder = a - quotient * b;
     }
+  }
+
+  /**
+   * Negation operator.
+   *
+   * @param The big_unsigned to negate.
+   * @return True, if and only if the value is zero.
+   */
+  friend bool operator!(const big_unsigned &a) {
+    return a.digits.empty();
+  }
+
+  /**
+   * Logical and operator.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @return Ture, if and only if both big_unsigned are non-zero.
+   */
+  friend bool operator&&(const big_unsigned &a, const big_unsigned &b) {
+    return !a.digits.empty() && !b.digits.empty();
+  }
+
+  /**
+   * Logical and operator for another bool.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @return True, if and only if a is non-zero and b is true.
+   */
+  friend bool operator&&(const big_unsigned &a, bool b) {
+    return !a.digits.empty() && b;
+  }
+
+  /**
+   * Logical or operator.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @return Ture, if and only if at least one big_unsigned is non-zero.
+   */
+  friend bool operator||(const big_unsigned &a, const big_unsigned &b) {
+    return !a.digits.empty() || !b.digits.empty();
+  }
+
+  /**
+   * Logical or operator for another bool.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @return True, if and onlu if a is non-zero and/or b is true.
+   */
+  friend bool operator||(const big_unsigned &a, bool b) {
+    return !a.digits.empty() || b;
   }
 
   /**
