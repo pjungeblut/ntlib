@@ -16,7 +16,6 @@ namespace ntlib {
  * memory.
  *
  * TODO: Look at multiplication/division by zero.
- * TODO: Think about exception safety.
  */
 class big_unsigned {
 private:
@@ -69,9 +68,7 @@ public:
     // Read digit by digit.
     for (char digit : n) {
       digit_multiply(*this, base);
-      // TODO: This would only need a possibly faster digit_add.
       digit_add(*this, char_to_value(digit, base));
-      // add(*this, char_to_value(digit, base), *this);
     }
   }
 
@@ -798,6 +795,56 @@ public:
   }
 
   /**
+   * Left shift operator.
+   *
+   * @param a The big_unsigned to be shifted.
+   * @param b The amount of binary positions to shift.
+   * @return A big_unsigned with a's value left shifted by b binary positions.
+   */
+  friend big_unsigned operator<<(const big_unsigned &a, digit_type b) {
+    big_unsigned shifted;
+    left_shift(a, b, shifted);
+    return shifted;
+  }
+
+  /**
+   * Left shift assignment operator.
+   *
+   * @param b The amount of binary positions to shift.
+   * @return A reference to the current big_unsigned after being shifted by b
+   *         binary positions.
+   */
+  big_unsigned& operator<<=(digit_type b) {
+    left_shift(*this, b, *this);
+    return *this;
+  }
+
+  /**
+   * Right shift operator.
+   *
+   * @param a The big_unsigned to be shifted.
+   * @param b The amount of binary positions to shift.
+   * @return A big_unsigned with a's value left shifted by b binary positions.
+   */
+  friend big_unsigned operator>>(const big_unsigned &a, digit_type b) {
+    big_unsigned shifted;
+    right_shift(a, b, shifted);
+    return shifted;
+  }
+
+  /**
+   * Right shift assignment operator.
+   *
+   * @param b The amount of binary positions to shift.
+   * @return A reference to the current big_unsigned after being shifted by b
+   *         binary positions.
+   */
+  big_unsigned& operator>>=(digit_type b) {
+    right_shift(*this, b, *this);
+    return *this;
+  }
+
+  /**
    * Cast to digit_type.
    * Only returns the last digit.
    *
@@ -1323,6 +1370,69 @@ private:
     for (; i < std::max(a, b); ++i) c.digits[i] = longer->digits[i];
 
     // Bitwise xor can lead to leading zeros that need to be deleted.
+    c.remove_leading_zeros();
+  }
+
+  /**
+   * Left shifts a big_unsigned.
+   * Parameters a and c may be the same.
+   *
+   * @param a The big_unsigned to shift.
+   * @param b The amount of binary digits to shift.
+   * @parmm c The result of c = a << b.
+   */
+  static void left_shift(const big_unsigned &a, digit_type b, big_unsigned &c) {
+    const std::size_t da = a.digits.size();
+    const std::size_t positions = b / LOG_BASE;
+    const std::size_t remainder = b % LOG_BASE;
+
+    // Reserve enough space for the result.
+    c.digits.resize(a.digits.size() + positions + (remainder != 0));
+
+    digit_type previous = 0;
+    for (std::size_t i = 0; i < da; ++i) {
+      const std::size_t ia = da - i - 1;
+      const std::size_t ic = c.digits.size() - i - 1;
+
+      // Cast is important to avoid overflows.
+      const double_digit_type shift =
+          static_cast<double_digit_type>(a.digits[ia]) << remainder;
+      c.digits[ic] = shift / BASE + previous;
+      previous = shift % BASE;
+    }
+
+    // We might have just shifted zeros into the most significant digit. If so,
+    // they need to be removed.
+    c.remove_leading_zeros();
+  }
+
+  /**
+   * Right shifts a big_unsigned.
+   * Parameters a and c may be the same.
+   *
+   * @param a The big_unsigned to shift.
+   * @param b The amount of binary digits to shift.
+   * @parmm c The result of c = a >> b.
+   */
+  static void right_shift(const big_unsigned &a, digit_type b, big_unsigned &c) {
+    const std::size_t da = a.digits.size();
+    const std::size_t positions = b / LOG_BASE;
+    const std::size_t remainder = b % LOG_BASE;
+
+    for (std::size_t i = positions; i < da; ++i) {
+      std::size_t ic = i - positions;
+
+      if (ic > 0) {
+        digit_type to_previous = a.digits[i] & ((1 << remainder) - 1);
+        to_previous <<= LOG_BASE - remainder;
+        c.digits[ic - 1] += to_previous;
+      }
+
+      c.digits[ic] = a.digits[i] >> remainder;
+    }
+
+    // Most significant positions can now be zero. If so, they need to be
+    // deleted.
     c.remove_leading_zeros();
   }
 };
