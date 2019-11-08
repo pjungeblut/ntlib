@@ -17,7 +17,6 @@ namespace ntlib {
  *
  * TODO: Write copy constructor, copy assignment operator, move constructor and
  *       move assignment operator.
- * TODO: Add missing increment/decrement operators.
  * TODO: Think about exception safety.
  */
 class big_unsigned {
@@ -275,18 +274,47 @@ public:
      return *this;
    }
 
-  // /**
-  //  * Pre-increment.
-  //  *
-  //  * TODO: Add more efficient implementation. Does not need general big_unsigned
-  //  *       addition. Digits addition is enough.
-  //  *
-  //  * @return Reference to current (incremented object).
-  //  */
-  // big_unsigned& operator++() {
-  //   add(*this, 1, *this);
-  //   return *this;
-  // }
+  /**
+   * Pre-increment.
+   *
+   * @return Reference to the current (incremented) object.
+   */
+  big_unsigned& operator++() {
+    digit_add(*this, 1);
+    return *this;
+  }
+
+  /**
+   * Pre-decrement.
+   *
+   * @return Reference to the current (decremented) object.
+   */
+  big_unsigned& operator--() {
+    digit_subtract(*this, 1);
+    return *this;
+  }
+
+  /**
+   * Post-increment.
+   *
+   * @return The old value of the object.
+   */
+  big_unsigned operator++(int) {
+    big_unsigned copy = *this;
+    digit_add(*this, 1);
+    return copy;
+  }
+
+  /**
+   * Post-decrement.
+   *
+   * @return The old value of the object.
+   */
+  big_unsigned operator--(int) {
+    big_unsigned copy = *this;
+    digit_subtract(*this, 1);
+    return copy;
+  }
 
   /**
    * Subtraction for big_unsigned.
