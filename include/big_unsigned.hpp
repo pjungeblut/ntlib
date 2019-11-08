@@ -635,6 +635,169 @@ public:
   }
 
   /**
+   * Bitwise negation.
+   * Negates every digit, including the most significant ones (with its leading
+   * zeros).
+   *
+   * @return A big_unsigned with bitwise negated digits.
+   */
+  friend big_unsigned operator~(const big_unsigned &a) {
+    big_unsigned negation = a;
+    for (digit_type &digit : negation.digits) digit = ~digit;
+    return negation;
+  }
+
+  /**
+   * Bitwise and operator.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @return big_unsigned that contains the bitwise and of a and b.
+   */
+  friend big_unsigned operator&(const big_unsigned &a, const big_unsigned &b) {
+    big_unsigned bit_and;
+    bitwise_and(a, b, bit_and);
+    return bit_and;
+  }
+
+  /**
+   * Bitwise and for a single digit.
+   *
+   * @param a The first operand.
+   * @param b The second operand. A single digit.
+   * @return big_unsigned that contains the bitwise and of a and b.
+   */
+  friend big_unsigned operator&(const big_unsigned &a, digit_type b) {
+    big_unsigned bit_and = a;
+    digit_bitwise_and(bit_and, b);
+    return bit_and;
+  }
+
+  /**
+   * Bitwise and with another big_unsigned.
+   *
+   * @param other The other big_unsigned.
+   * @return Reference to the current big_unsigned after bitwise and with
+   *         another big_unsigned.
+   */
+  big_unsigned& operator&=(const big_unsigned &other) {
+    bitwise_and(*this, other, *this);
+    return *this;
+  }
+
+  /**
+   * Bitwise and with just another digit.
+   *
+   * @param other The other digit to bitwise and with.
+   * @return Reference to the current big_unsigned after bitwise and with
+   *         another digit.
+   */
+  big_unsigned& operator&=(digit_type other) {
+    digit_bitwise_and(*this, other);
+    return *this;
+  }
+
+  /**
+   * Bitwise or operator.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @return big_unsigned that contains the bitwise or of a and b.
+   */
+  friend big_unsigned operator|(const big_unsigned &a, const big_unsigned &b) {
+    big_unsigned bit_or;
+    bitwise_or(a, b, bit_or);
+    return bit_or;
+  }
+
+  /**
+   * Bitwise or for a single digit.
+   *
+   * @param a The first operand.
+   * @param b The second operand. A single digit.
+   * @return big_unsigned that contains the bitwise or of a and b.
+   */
+  friend big_unsigned operator|(const big_unsigned &a, digit_type b) {
+    big_unsigned bit_or = a;
+    digit_bitwise_or(bit_or, b);
+    return bit_or;
+  }
+
+  /**
+   * Bitwise or with another big_unsigned.
+   *
+   * @param other The other big_unsigned.
+   * @return Reference to the current big_unsigned after bitwise or with
+   *         another big_unsigned.
+   */
+  big_unsigned& operator|=(const big_unsigned &other) {
+    bitwise_or(*this, other, *this);
+    return *this;
+  }
+
+  /**
+   * Bitwise or with just another digit.
+   *
+   * @param other The other digit to bitwise or with.
+   * @return Reference to the current big_unsigned after bitwise or with
+   *         another digit.
+   */
+  big_unsigned& operator|=(digit_type other) {
+    digit_bitwise_or(*this, other);
+    return *this;
+  }
+
+  /**
+   * Bitwise xor operator.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @return big_unsigned that contains the bitwise xor of a and b.
+   */
+  friend big_unsigned operator^(const big_unsigned &a, const big_unsigned &b) {
+    big_unsigned bit_xor;
+    bitwise_xor(a, b, bit_xor);
+    return bit_xor;
+  }
+
+  /**
+   * Bitwise xor for a single digit.
+   *
+   * @param a The first operand.
+   * @param b The second operand. A single digit.
+   * @return big_unsigned that contains the bitwise xor of a and b.
+   */
+  friend big_unsigned operator^(const big_unsigned &a, digit_type b) {
+    big_unsigned bit_xor = a;
+    digit_bitwise_xor(bit_xor, b);
+    return bit_xor;
+  }
+
+  /**
+   * Bitwise xor with another big_unsigned.
+   *
+   * @param other The other big_unsigned.
+   * @return Reference to the current big_unsigned after bitwise xor with
+   *         another big_unsigned.
+   */
+  big_unsigned& operator^=(const big_unsigned &other) {
+    bitwise_xor(*this, other, *this);
+    return *this;
+  }
+
+  /**
+   * Bitwise xor with just another digit.
+   *
+   * @param other The other digit to bitwise xor with.
+   * @return Reference to the current big_unsigned after bitwise xor with
+   *         another digit.
+   */
+  big_unsigned& operator^=(digit_type other) {
+    digit_bitwise_xor(*this, other);
+    return *this;
+  }
+
+  /**
    * Cast to digit_type.
    * Only returns the last digit.
    *
@@ -1023,6 +1186,144 @@ private:
     // If dc < da, then the result is shifted.
     // Bring it back into place.
     if (dc < da) quotient.digits.pop_back();
+  }
+
+  /**
+   * Bitwise and for a big_unsigned and a single digit.
+   *
+   * @param a The first operand. Result is stored here.
+   * @param b The second operand. A single digit.
+   */
+  static void digit_bitwise_and(big_unsigned &a, digit_type b) {
+    // Base case: a == 0.
+    if (a.digits.empty()) {
+      a.digits.push_back(0);
+      return;
+    }
+
+    // Compute last digit. All other are zero and can be deleted.
+    a.digits[0] &= b;
+    a.digits.resize(1);
+
+    // Even the last digit might be zero. If so, it can be deleted.
+    a.remove_leading_zeros();
+  }
+
+  /**
+   * Bitwise and for two big_unsigneds.
+   * Parameters a and c may be the same.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @param c The bitwise and of a and b.
+   */
+  static void bitwise_and(const big_unsigned &a, const big_unsigned &b,
+      big_unsigned &c) {
+    std::size_t da = a.digits.size();
+    std::size_t db = b.digits.size();
+
+    // Reserve enough space for c and zero initialize.
+    c.digits.assign(std::max(da, db), 0);
+
+    for (std::size_t i = 0; i < std::min(a, b); ++i) {
+      c.digits[i] = a.digits[i] & b.digits[i];
+    }
+    // There is nood to go through the remaining digits of the longer number,
+    // since a bitwise and with 0 is always 0.
+
+    // Bitwise and can lead to leading zeros that need to be deleted.
+    c.remove_leading_zeros();
+  }
+
+  /**
+   * Bitwise or for a big_unsigned and a single digit.
+   *
+   * @param a The first operand. Result is stored here.
+   * @param b The second operand. A single digit.
+   */
+  static void digit_bitwise_or(big_unsigned &a, digit_type b) {
+    // Base case: a == 0.
+    if (a.digits.empty()) {
+      a.digits.push_back(b);
+      return;
+    }
+
+    // Compute last digit. All others stay as they are.
+    // Cannot become zero, if it wasn't zero before.
+    a.digits[0] |= b;
+  }
+
+  /**
+   * Bitwise or for two big_unsigneds.
+   * Parameters a and c may be the same.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @param c The bitwise or of a and b.
+   */
+  static void bitwise_or(const big_unsigned &a, const big_unsigned &b,
+      big_unsigned &c) {
+    std::size_t da = a.digits.size();
+    std::size_t db = b.digits.size();
+
+    // Reserve enough space for c and zero initialize.
+    c.digits.assign(std::max(da, db), 0);
+
+    std::size_t i = 0;
+    for (; i < std::min(a, b); ++i) c.digits[i] = a.digits[i] | b.digits[i];
+    // All remaining positions can be copied from the longer of the two
+    // operands.
+    auto *longer = da > db ? &a : &b;
+    for (; i < std::max(a, b); ++i) c.digits[i] = longer->digits[i];
+
+    // Bitwise and cannot lead to leading zeros.
+  }
+
+  /**
+   * Bitwise xor for a big_unsigned and a single digit.
+   *
+   * @param a The first operand. Result is stored here.
+   * @param b The second operand. A single digit.
+   */
+  static void digit_bitwise_xor(big_unsigned &a, digit_type b) {
+    // Base case: a == 0.
+    if (a.digits.empty()) {
+      a.digits.push_back(b);
+      return;
+    }
+
+    // Compute last digit. All others stay as they are.
+    a.digits[0] ^= b;
+
+    // Bitwise xor can lead to leading zeros that need to be removed.
+    a.remove_leading_zeros();
+  }
+
+  /**
+   * Bitwise xor for two big_unsigneds.
+   * Parameters a and c may be the same.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @param c The bitwise xor of a and b.
+   */
+  static void bitwise_xor(const big_unsigned &a, const big_unsigned &b,
+      big_unsigned &c) {
+    std::size_t da = a.digits.size();
+    std::size_t db = b.digits.size();
+
+    // Reserve enough space for c and zero initialize.
+    c.digits.assign(std::max(da, db), 0);
+
+    std::size_t i = 0;
+    for (; i < std::min(a, b); ++i) c.digits[i] = a.digits[i] ^ b.digits[i];
+    // All remaining positions can be copied from the longer of the two
+    // operands.
+    auto *longer = da > db ? &a : &b;
+    for (; i < std::max(a, b); ++i) c.digits[i] = longer->digits[i];
+
+    // Bitwise xor can lead to leading zeros that need to be deleted.
+    c.remove_leading_zeros();
   }
 };
 
