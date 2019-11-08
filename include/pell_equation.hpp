@@ -15,14 +15,16 @@ namespace ntlib {
  * @param d Parameter d, must not be square.
  * @return Values for a and b, minimal in b.
  */
-template<UnsignedIntegral U>
-tuple<U,U> min_pell_solution(U d) {
-  std::vector<U> cf;
-  U period = ntlib::quadratic_irrational_cf(d, cf);
-  U n = period & 1 ? 2 * period - 1 : period - 1;
-  ntlib::rational<U,U> pq =
+template<Integral I>
+tuple<I,I> min_pell_solution(I d) {
+  std::vector<I> cf;
+  I period = ntlib::quadratic_irrational_cf(d, cf);
+  I n;
+  if ((bool)(period & 1)) n = 2 * period - 1;
+  else n = period - 1;
+  ntlib::rational<I> pq =
       ntlib::nth_convergent_quadratic_irrational_cf(n, cf);
-  return tuple<U,U> {pq.numerator, pq.denominator};
+  return tuple<I,I> {pq.numerator, pq.denominator};
 }
 
 /**
@@ -39,10 +41,10 @@ tuple<U,U> min_pell_solution(U d) {
  * @param current Any solution.
  * @return The next bigger solution than current (in x).
  */
-template<UnsignedIntegral U>
-tuple<U,U> next_pell_solution(U d, const tuple<U,U> &initial,
-    const tuple<U,U> &current) {
-  return tuple<U,U> {
+template<Integral I>
+tuple<I,I> next_pell_solution(I d, const tuple<I,I> &initial,
+    const tuple<I,I> &current) {
+  return tuple<I,I> {
       initial.a * current.a + d * initial.b * current.b,
       initial.b * current.a + initial.a * current.b};
 }

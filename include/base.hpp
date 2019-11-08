@@ -37,10 +37,9 @@ struct triple {
  * @return The absolute value of n. Will be an unsigned integer.
  */
 template<Integral I>
-auto abs(I n) -> std::make_unsigned<I>::type {
-  using return_type = std::make_unsigned<I>::type;
-  if (n >= 0) return static_cast<return_type>(n);
-  return static_cast<return_type>(-n);
+I abs(I n) {
+  if (n >= 0) return n;
+  return -n;
 }
 
 /**
@@ -53,7 +52,7 @@ auto abs(I n) -> std::make_unsigned<I>::type {
  * @return The greatest common divisor of a and b.
  */
 template<Integral I>
-auto gcd(I a, I b) -> std::make_unsigned<I>::type {
+I gcd(I a, I b) {
   return b == 0 ? abs(a) : gcd(b, a % b);
 }
 
@@ -82,17 +81,11 @@ auto lcm(I a, I b) -> std::make_unsigned<I>::type {
  * @param b Parameter b. Must be non-negative.
  * @return A triple (gcd(a,b), x, y).
  */
-template<UnsignedIntegral U>
-auto extended_euclid(U a, U b) ->
-    triple<U, typename std::make_signed<U>::type, typename std::make_signed<U>::type> {
-  using I = std::make_signed<U>::type;
-
-  if (a == 0) return triple<U,I,I> {b, 0, 1};
-  triple<U,I,I> gxy = extended_euclid(b % a, a);
-  return triple<U,I,I> {
-      gxy.a,
-      static_cast<I>(gxy.c) - static_cast<I>((b / a)) * static_cast<I>(gxy.b),
-      gxy.b};
+template<Integral I>
+triple<I,I,I> extended_euclid(I a, I b) {
+  if (a == 0) return triple<I,I,I> {b, 0, 1};
+  triple<I,I,I> gxy = extended_euclid(b % a, a);
+  return triple<I,I,I> {gxy.a, gxy.c - (b / a) * gxy.b, gxy.b};
 }
 
 /**
@@ -103,8 +96,8 @@ auto extended_euclid(U a, U b) ->
  * @param b The exponent, non-negative.
  * @return a^b
  */
-template<Integral I, UnsignedIntegral U>
-I pow(I a, U b) {
+template<Integral I>
+I pow(I a, I b) {
   if (b == 0) return 1;
   if (b == 1) return a;
   if (b & 1) return pow(a, b - 1) * a;
@@ -119,12 +112,12 @@ I pow(I a, U b) {
  * @param n The number to compute the integer square root of.
  * @return isqrt(n)
  */
-template<UnsignedIntegral U>
-U isqrt(U n) {
-  U l = 0;
-  U u = static_cast<U>(1) << (4 * sizeof(U));
+template<Integral I>
+I isqrt(I n) {
+  I l = 0;
+  I u = n;
   while (u - l > 16) {
-    U m = (u + l) / 2;
+    I m = (u + l) / 2;
     if (m * m <= n) l = m;
     else u = m;
   }
@@ -197,8 +190,8 @@ bool is_square(I n) {
  * @param n The modulus.
  * @return a^b mod n
  */
-template<UnsignedIntegral U>
-U mod_pow(U a, U b, U n) {
+template<Integral I>
+I mod_pow(I a, I b, I n) {
   if (b == 0) return 1;
   if (b == 1) return a % n;
   if (b & 1) return (mod_pow(a, b - 1, n) * a) % n;
@@ -214,11 +207,10 @@ U mod_pow(U a, U b, U n) {
  * @param m The size of the group.
  * @return The multiplicative inverse of n (mod m).
  */
-template<UnsignedIntegral U>
-U mod_mult_inv(U n, U m) {
-  using I = std::make_signed<U>::type;
+template<Integral I>
+I mod_mult_inv(I n, I m) {
   auto gxy = extended_euclid(n, m);
-  return ((gxy.b % static_cast<I>(m)) + m) % m;
+  return ((gxy.b % m) + m) % m;
 }
 
 /**
@@ -228,8 +220,8 @@ U mod_mult_inv(U n, U m) {
  * @param n The number to test.
  * @return True, if and only if there is an x, such that x^2 = a (mod p).
  */
-template<UnsignedIntegral U>
-bool mod_is_square(U n, U p) {
+template<Integral I>
+bool mod_is_square(I n, I p) {
   if (p == 2) return n & 1;
   return mod_pow(n, (p - 1) / 2, p) == 1;
 }
@@ -244,11 +236,11 @@ bool mod_is_square(U n, U p) {
  * @return 0 <= x < p such that x^2 = n (mod p). There are two solutions, the
  *         other one is p - x. Returns the smaller one.
  */
-template<UnsignedIntegral U>
-U mod_sqrt(U n, U p) {
+template<Integral I>
+I mod_sqrt(I n, I p) {
   // Find q, s with p-1 = q*2^s.
-  U q = p - 1;
-  U s = 0;
+  I q = p - 1;
+  I s = 0;
   while (!(q & 1)) {
     q /= 2;
     ++s;
@@ -264,26 +256,26 @@ U mod_sqrt(U n, U p) {
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<> dis(1, p - 1);
-  U z = dis(gen);
+  I z = dis(gen);
   while (mod_is_square(z, p)) z = dis(gen);
 
-  U c = mod_pow(z, q, p);
-  U x = mod_pow(n, (q + 1) / 2, p);
-  U t = mod_pow(n, q, p);
-  U m = s;
+  I c = mod_pow(z, q, p);
+  I x = mod_pow(n, (q + 1) / 2, p);
+  I t = mod_pow(n, q, p);
+  I m = s;
 
   while (t % p != 1) {
     // Find lowest 0 < i < m such that t^2^i = 1 (mod p).
-    U i = 0;
-    U test = t;
+    I i = 0;
+    I test = t;
     while (test != 1) {
       test = test * test % p;
       ++i;
     }
 
     // U cexp = mod_pow(static_cast<U>(2), m - i - 1, p - 1);
-    U cexp = static_cast<U>(1) << (m - i - 1);
-    U b = mod_pow(c, cexp, p);
+    I cexp = static_cast<I>(1) << (m - i - 1);
+    I b = mod_pow(c, cexp, p);
     x = x * b % p;
     t = t * b % p * b % p;
     c = b * b % p;

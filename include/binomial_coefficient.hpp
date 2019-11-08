@@ -20,10 +20,10 @@ namespace ntlib {
  * @param k Size of the subsets.
  * @return The number of k-element subsets of {1,...,n}.
  */
-template<UnsignedIntegral U>
-U binom(U n, U k) {
-  U binom = 1;
-  for (U i = 1; i <= k; ++i) {
+template<Integral I>
+I binom(I n, I k) {
+  I binom = 1;
+  for (I i = 1; i <= k; ++i) {
     binom *= n--;
     binom /= i;
   }

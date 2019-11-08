@@ -12,10 +12,10 @@ namespace ntlib {
 /**
  * Represents a rational number.
  */
-template<Integral I, UnsignedIntegral U>
+template<Integral I>
 struct rational {
   I numerator;
-  U denominator;
+  I denominator;
 
   /**
    * Construct rational from a numerator and a denominator.
@@ -23,8 +23,8 @@ struct rational {
    * @param n The numerator.
    * @param d The denominator. Defaults to 1.
    */
-  rational(I n, U d = 1) {
-    U f = gcd(n, d);
+  rational(I n, I d = 1) {
+    I f = gcd(n, d);
     numerator = n / f;
     denominator = d / f;
   }

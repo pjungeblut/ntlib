@@ -14,8 +14,8 @@ namespace ntlib {
  * @param n Which triangle number to gnerate.
  * @return The n-th triangle number.
  */
-template<UnsignedIntegral U>
-U triangle_number(U n) {
+template<Integral I>
+I triangle_number(I n) {
   return n * (n + 1) / 2;
 }
 
@@ -25,8 +25,8 @@ U triangle_number(U n) {
  * @param n Which square number to gnerate.
  * @return The n-th square number.
  */
-template<UnsignedIntegral U>
-U square_number(U n) {
+template<Integral I>
+I square_number(I n) {
   return n * n;
 }
 
@@ -36,8 +36,8 @@ U square_number(U n) {
  * @param n Which pentagonal number to gnerate.
  * @return The n-th pentagonal number.
  */
-template<UnsignedIntegral U>
-U pentagonal_number(U n) {
+template<Integral I>
+I pentagonal_number(I n) {
   return n * (3 * n - 1) / 2;
 }
 
@@ -47,8 +47,8 @@ U pentagonal_number(U n) {
  * @param n Which hexagonal number to gnerate.
  * @return The n-th hexagonal number.
  */
-template<UnsignedIntegral U>
-U hexagonal_number(U n) {
+template<Integral I>
+I hexagonal_number(I n) {
   return n * (2 * n - 1);
 }
 
@@ -58,8 +58,8 @@ U hexagonal_number(U n) {
  * @param n Which heptagonal number to gnerate.
  * @return The n-th heptagonal number.
  */
-template<UnsignedIntegral U>
-U heptagonal_number(U n) {
+template<Integral I>
+I heptagonal_number(I n) {
   return n * (5 * n - 3) / 2;
 }
 
@@ -69,8 +69,8 @@ U heptagonal_number(U n) {
  * @param n Which octagonal number to gnerate.
  * @return The n-th octagonal number.
  */
-template<UnsignedIntegral U>
-U octagonal_number(U n) {
+template<Integral I>
+I octagonal_number(I n) {
   return n * (3 * n - 2);
 }
 

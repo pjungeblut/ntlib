@@ -14,13 +14,13 @@ namespace ntlib {
  * @param N The number until which all values should be computed.
  * @param sieve The sieve to put the values into.
  */
-template<UnsignedIntegral U>
-void sieve_phi(U N, std::vector<U> &sieve) {
+template<Integral I>
+void sieve_phi(I N, std::vector<I> &sieve) {
   sieve.resize(N + 1);
-  for (U i = 1; i <= N; ++i) sieve[i] = i;
-  for (U i = 2; i <= N; ++i) {
+  for (I i = 1; i <= N; ++i) sieve[i] = i;
+  for (I i = 2; i <= N; ++i) {
     if (sieve[i] == i) {
-      for (U j = i; j <= N; j += i) {
+      for (I j = i; j <= N; j += i) {
         sieve[j] /= i;
         sieve[j] *= i - 1;
       }

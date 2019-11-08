@@ -29,17 +29,17 @@ namespace ntlib {
  * @param maxi The maximum value of any component.
  * @param triples The vector to push the triples into.
  */
-template<UnsignedIntegral U>
-void primitive_pythagorean_triples(U maxi,
-    std::vector<triple<U,U,U>> &triples) {
-  for (U v = 1; 2 * v * v <= maxi; ++v) {
-    for (U u = v + 1; u * u + v * v <= maxi; ++u) {
+template<Integral I>
+void primitive_pythagorean_triples(I maxi,
+    std::vector<triple<I,I,I>> &triples) {
+  for (I v = 1; 2 * v * v <= maxi; ++v) {
+    for (I u = v + 1; u * u + v * v <= maxi; ++u) {
       if (!((u & 1) && (v & 1)) && gcd(u, v) == 1) {
-        U a = u * u - v * v;
-        U b = 2 * u * v;
-        U c = u * u + v * v;
+        I a = u * u - v * v;
+        I b = 2 * u * v;
+        I c = u * u + v * v;
         if (a > b) std::swap(a, b);
-        triples.push_back(triple<U,U,U> {a, b, c});
+        triples.push_back(triple<I,I,I> {a, b, c});
       }
     }
   }

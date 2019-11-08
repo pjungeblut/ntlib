@@ -20,9 +20,9 @@ namespace ntlib {
  *                 It must be 0 < exponent.
  * @return The value of d_x(n) = \sum_{d|n} d^x.
  */
-template<UnsignedIntegral U>
-U divisor_function(std::map<U, U> &factors, U exponent) {
-  U result = 1;
+template<Integral I>
+I divisor_function(std::map<I, I> &factors, I exponent) {
+  I result = 1;
   for (auto &[factor, mulitplicity] : factors) {
     result *= (pow(factor, exponent * (mulitplicity + 1)) - 1) / (pow(factor, exponent) - 1);
   }
@@ -36,9 +36,9 @@ U divisor_function(std::map<U, U> &factors, U exponent) {
  * @param factors The prime factors and their multiplicities.
  * @return The number of divisors.
  */
-template<UnsignedIntegral U>
-U count_divisors(std::map<U, U> &factors) {
-  U divisors = 1;
+template<Integral I>
+I count_divisors(std::map<I, I> &factors) {
+  I divisors = 1;
   for (auto &f : factors) divisors *= f.second + 1;
   return divisors;
 }
