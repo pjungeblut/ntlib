@@ -63,9 +63,9 @@ void test_addition() {
 
   ntlib::big_unsigned a_plus_b = a + b;
   assert(a_plus_b.to_string() == "4294967296");
-  ntlib::big_unsigned a_plus_1 = a + 1;
+  ntlib::big_unsigned a_plus_1 = a + 1u;
   assert(a_plus_1.to_string() == "4294967296");
-  a_plus_1 = 1 + a;
+  a_plus_1 = 1u + a;
   assert(a_plus_1.to_string() == "4294967296");
 
   ntlib::big_unsigned c;
@@ -78,8 +78,8 @@ void test_addition() {
   assert(a.to_string() == "4294967296");
   assert((++a).to_string() == "4294967297");
 
-  ntlib::big_unsigned d = 0;
-  ntlib::big_unsigned e = 0;
+  ntlib::big_unsigned d(0);
+  ntlib::big_unsigned e(0);
   assert((d + e).to_string() == "0");
   assert((d + 0).to_string() == "0");
   assert((0 + e).to_string() == "0");

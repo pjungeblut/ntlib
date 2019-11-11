@@ -20,19 +20,21 @@ private:
   /**
    * Integral type used for each digit.
    */
-  using digit_type = uint32_t;
+  using digit_type = uint64_t;
 
   /**
    * Type big enough to contain the sum/product of any two digits.
    */
-  using double_digit_type = uint64_t;
+  using double_digit_type = __uint128_t;
 
   /**
    * The base in which the numbers are stored is a power of two for optimal
    * memory usage.
    */
   constexpr static uint8_t LOG_BASE = sizeof(digit_type) * 8;
-  constexpr static double_digit_type BASE = 1LL << LOG_BASE;
+  // Cast is important to avoid overflows.
+  constexpr static double_digit_type BASE =
+      static_cast<double_digit_type>(1) << LOG_BASE;
 
 public:
   /**
@@ -45,7 +47,7 @@ public:
    *
    * @param n The value to initialize with.
    */
-  big_unsigned(uint32_t n) {
+  big_unsigned(digit_type n) {
     if (n > 0) digits.assign(1, n);
   }
 
@@ -516,7 +518,7 @@ public:
     big_unsigned quotient = a;
     digit_type remainder;
     digit_divide_with_remainder(quotient, b, quotient, remainder);
-    return remainder;
+    return big_unsigned(remainder);
   }
 
   /**
@@ -567,81 +569,70 @@ public:
 
     // Base case, equality.
     if (a == b) {
-      quotient = 1;
-      remainder = 0;
+      quotient = big_unsigned(1);
+      remainder = big_unsigned(0);
       return;
     }
 
     // Base case, a < b.
     if (a < b) {
-      quotient = 0;
+      quotient = big_unsigned(0);
       remainder = a;
       return;
     }
 
     // Binary search for the quotient.
-    quotient = 0;
+    quotient = big_unsigned(0);
     remainder = a - quotient * b;
+    // big_unsigned two(2);
     while (remainder >= b) {
-      big_unsigned increase = 1;
-      while ((quotient + increase * 2) * b <= a) increase *= 2;
+      big_unsigned increase(1);
+      while ((quotient + increase * 2u) * b <= a) increase *= 2;
       quotient += increase;
       remainder = a - quotient * b;
     }
   }
 
   /**
-   * Negation operator.
+   * Divides the big_unsigned a by a single digit b.
+   * Parameters a and quotient may be the same.
    *
-   * @param The big_unsigned to negate.
-   * @return True, if and only if the value is zero.
+   * @param a The dividend.
+   * @param b The divisor. A single digit.
+   * @param quotient The quotient of the division.
+   * @param remainder The remainder of the division.
    */
-  friend bool operator!(const big_unsigned &a) {
-    return a.digits.empty();
-  }
+   static void digit_divide_with_remainder(const big_unsigned &a, digit_type b,
+      big_unsigned &quotient, digit_type &remainder) {
+    // Base case: b == 0.
+    if (b == 0) throw std::invalid_argument("Division by zero.");
 
-  /**
-   * Logical and operator.
-   *
-   * @param a The first operand.
-   * @param b The second operand.
-   * @return Ture, if and only if both big_unsigned are non-zero.
-   */
-  friend bool operator&&(const big_unsigned &a, const big_unsigned &b) {
-    return !a.digits.empty() && !b.digits.empty();
-  }
+    std::size_t da = a.digits.size();
 
-  /**
-   * Logical and operator for another bool.
-   *
-   * @param a The first operand.
-   * @param b The second operand.
-   * @return True, if and only if a is non-zero and b is true.
-   */
-  friend bool operator&&(const big_unsigned &a, bool b) {
-    return !a.digits.empty() && b;
-  }
+    // Is the first digit of a at least b?
+    // If so, the quotient has the same length as a.
+    // Otherwise it is exactly one digit shorter.
+    std::size_t dc = da;
+    if (a.digits.back() < b) --dc;
 
-  /**
-   * Logical or operator.
-   *
-   * @param a The first operand.
-   * @param b The second operand.
-   * @return Ture, if and only if at least one big_unsigned is non-zero.
-   */
-  friend bool operator||(const big_unsigned &a, const big_unsigned &b) {
-    return !a.digits.empty() || !b.digits.empty();
-  }
+    // Resize quotient to its exact size.
+    quotient.digits.resize(da);
 
-  /**
-   * Logical or operator for another bool.
-   *
-   * @param a The first operand.
-   * @param b The second operand.
-   * @return True, if and onlu if a is non-zero and/or b is true.
-   */
-  friend bool operator||(const big_unsigned &a, bool b) {
-    return !a.digits.empty() || b;
+    // Divide by school method.
+    remainder = 0;
+    for (std::size_t i = 0; i < da; ++i) {
+      std::size_t ia = da - i - 1;
+
+      // Cast is important to avoid overflows.
+      double_digit_type double_remainder =
+          static_cast<double_digit_type>(remainder) * BASE + a.digits[ia];
+      quotient.digits[ia] = double_remainder / b;
+      remainder = double_remainder % b;
+    }
+
+    // If dc < da, then the result is shifted.
+    // Bring it back into place.
+    if (dc < da) quotient.digits.pop_back();
   }
 
   /**
@@ -865,6 +856,13 @@ public:
    */
   explicit operator digit_type() const {
     return digits.size() ? digits[0] : 0;
+  }
+
+  /**
+   * Cast to bool.
+   */
+  explicit operator bool() const {
+    return !digits.empty();
   }
 
 private:
@@ -1223,48 +1221,6 @@ private:
   }
 
   /**
-   * Divides the big_unsigned a by a single digit b.
-   * Parameters a and quotient may be the same.
-   *
-   * @param a The dividend.
-   * @param b The divisor. A single digit.
-   * @param quotient The quotient of the division.
-   * @param remainder The remainder of the division.
-   */
-   static void digit_divide_with_remainder(const big_unsigned &a, digit_type b,
-      big_unsigned &quotient, digit_type &remainder) {
-    // Base case: b == 0.
-    if (b == 0) throw std::invalid_argument("Division by zero.");
-
-    std::size_t da = a.digits.size();
-
-    // Is the first digit of a at least b?
-    // If so, the quotient has the same length as a.
-    // Otherwise it is exactly one digit shorter.
-    std::size_t dc = da;
-    if (a.digits.back() < b) --dc;
-
-    // Resize quotient to its exact size.
-    quotient.digits.resize(da);
-
-    // Divide by school method.
-    remainder = 0;
-    for (std::size_t i = 0; i < da; ++i) {
-      std::size_t ia = da - i - 1;
-
-      // Cast is important to avoid overflows.
-      double_digit_type double_remainder =
-          static_cast<double_digit_type>(remainder) * BASE + a.digits[ia];
-      quotient.digits[ia] = double_remainder / b;
-      remainder = double_remainder % b;
-    }
-
-    // If dc < da, then the result is shifted.
-    // Bring it back into place.
-    if (dc < da) quotient.digits.pop_back();
-  }
-
-  /**
    * Bitwise and for a big_unsigned and a single digit.
    *
    * @param a The first operand. Result is stored here.
@@ -1460,6 +1416,8 @@ private:
     const std::size_t da = a.digits.size();
     const std::size_t positions = b / LOG_BASE;
     const std::size_t remainder = b % LOG_BASE;
+
+    c.digits.resize(da);
 
     if (remainder == 0) {
       for (std::size_t i = positions; i < da; ++i) {

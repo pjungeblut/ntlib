@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "include/big_unsigned.hpp"
 
 namespace ntlib {
@@ -35,7 +37,7 @@ public:
    *
    * @param n The value to initialize with.
    */
-  big_integer(long long n) {
+  big_integer(int64_t n) {
     if (n >= 0) {
       magnitude = big_unsigned(n);
       sign = sign_type::PLUS;
@@ -46,29 +48,82 @@ public:
   }
 
   /**
-   * Constructor to build big_integer from a string giving a base 10
-   * representation of the value.
+   * Constructor to build big_integer from a string representation in a given
+   * base.
    *
    * @param n The value to initialize with.
+   * @param base The base. 2 <= base <= 16. Default is base 10.
    */
-  big_integer(const std::string &n) {
+  big_integer(const std::string &n, uint8_t base = 10) {
     if (n.size() && n[0] == '-') {
-      magnitude = big_unsigned(n.substr(1));
+      magnitude = big_unsigned(n.substr(1), base);
       sign = sign_type::MINUS;
     } else {
-      magnitude = big_unsigned(n);
+      magnitude = big_unsigned(n, base);
       sign = sign_type::PLUS;
     }
   }
 
   /**
+   * Copy constructor.
+   *
+   * @param other Another big_integer.
+   */
+  big_integer(const big_integer &other) {
+    sign = other.sign;
+    magnitude = other.magnitude;
+  }
+
+  /**
+   * Copy assignment operator.
+   *
+   * @param other Another big_integer.
+   * @return Reference to the current big_integer containing the same value as
+   *         other.
+   */
+  big_integer& operator=(const big_integer &other) {
+    sign = other.sign;
+    magnitude = other.magnitude;
+    return *this;
+  };
+
+  /**
+   * Move constructor.
+   *
+   * @param other Another big_integer.
+   */
+  big_integer(big_integer &&other) {
+    sign = std::move(other.sign);
+    magnitude = std::move(other.magnitude);
+  }
+
+  /**
+   * Move assignment operator.
+   *
+   * @param other Another big_integer.
+   * @return Reference to the current big_integer containing the value of
+   *         other.
+   */
+  big_integer& operator=(big_integer &&other) {
+    sign = std::move(other.sign);
+    magnitude = std::move(other.magnitude);
+    return *this;
+  }
+
+  /**
+   * Destructor.
+   */
+  ~big_integer() = default;
+
+  /**
    * Convert value into a string.
    *
-   * @return The value as a string in base 10.
+   * @param base The base to print in. 2 <= base <= 16.
+   * @return The value as a string in the given base.
    */
-  std::string to_string() const {
-    if (sign == sign_type::MINUS) return "-" + magnitude.to_string();
-    return magnitude.to_string();
+  std::string to_string(uint8_t base = 10) const {
+    if (sign == sign_type::MINUS) return "-" + magnitude.to_string(base);
+    return magnitude.to_string(base);
   }
 
   /**
@@ -170,7 +225,8 @@ public:
    * @param b The second summand.
    * @return The sum of a and b.
    */
-  friend big_integer operator+(const big_integer &a, const big_integer &b) {
+  template<typename T>
+  friend big_integer operator+(const big_integer &a, const T &b) {
     big_integer sum;
     add(a, b, sum);
     return sum;
@@ -183,7 +239,8 @@ public:
    * @return Reference to the current big_integer containing the sum of its
    *         previous value and other.
    */
-  big_integer& operator+=(const big_integer &other) {
+  template<typename T>
+  big_integer& operator+=(const T &other) {
     add(*this, other, *this);
     return *this;
   }
@@ -202,13 +259,35 @@ public:
   }
 
   /**
+   * Pre-increment.
+   *
+   * @return Reference to the current (incremented) object.
+   */
+  big_integer& operator++() {
+    *this += 1;
+    return *this;
+  }
+
+  /**
+   * Post-increment.
+   *
+   * @return The old value of the object.
+   */
+  big_integer operator++(int) {
+    big_integer copy = *this;
+    *this += 1;
+    return copy;
+  }
+
+  /**
    * Subtraction for big_integer.
    *
    * @param a The minuend.
    * @param b The subtrahend.
    * @return The difference a - b.
    */
-  friend big_integer operator-(const big_integer &a, const big_integer &b) {
+  template<typename T>
+  friend big_integer operator-(const big_integer &a, const T &b) {
     big_integer difference;
     subtract(a, b, difference);
     return difference;
@@ -221,9 +300,31 @@ public:
    * @return Reference to the current big_integer containing the diffrence of
    *         its previous value and other.
    */
-  big_integer& operator-=(const big_integer &other) {
+  template<typename T>
+  big_integer& operator-=(const T &other) {
     subtract(*this, other, *this);
     return *this;
+  }
+
+  /**
+   * Pre-decrement.
+   *
+   * @return Reference to the current (decremented) object.
+   */
+  big_integer& operator--() {
+    *this -= 1;
+    return *this;
+  }
+
+  /**
+   * Post-decrement.
+   *
+   * @return The old value of the object.
+   */
+  big_integer operator--(int) {
+    big_integer copy = *this;
+    *this -= 1;
+    return copy;
   }
 
   /**
@@ -233,7 +334,8 @@ public:
    * @param b The second factor.
    * @return The product a * b.
    */
-  friend big_integer operator*(const big_integer &a, const big_integer &b) {
+  template<typename T>
+  friend big_integer operator*(const big_integer &a, const T &b) {
     big_integer product;
     mulitply(a, b, product);
     return product;
@@ -246,12 +348,13 @@ public:
    * @return Reference to the current big_integer containing the product of its
    *         previous value and other.
    */
-  big_integer& operator*=(const big_integer &other) {
+  template<typename T>
+  big_integer& operator*=(const T &other) {
     // TODO: This creates an intermediate big_integer. Find a way to do the
     //       multiplication in-place.
     big_integer product;
     mulitply(*this, other, product);
-    sign = product.sign;
+    sign = std::move(product.sign);
     magnitude = std::move(product.magnitude);
     return *this;
   }
@@ -263,9 +366,10 @@ public:
    * @param b The divisor.
    * @return The quotient of a div b.
    */
-  friend big_integer operator/(const big_integer &a, const big_integer &b) {
-    big_integer quotient, remainder;
-    divide(a, b, quotient, remainder);
+  template<typename T>
+  friend big_integer operator/(const big_integer &a, const T &b) {
+    big_integer quotient;
+    divide(a, b, quotient);
     return quotient;
   }
 
@@ -276,15 +380,237 @@ public:
    * @return Reference to the current big_integer containing the quotient of
    *         its previous value and other.
    */
-  big_integer& operator/=(const big_integer &other) {
-    big_integer quotient, remainder;
-    divide(*this, other, quotient, remainder);
-    sign = quotient.sign;
+  template<typename T>
+  big_integer& operator/=(const T &other) {
+    big_integer quotient;
+    divide(*this, other, quotient);
+    sign = std::move(quotient.sign);
     magnitude = std::move(quotient.magnitude);
     return *this;
   }
 
+  /**
+   * Computes modulo of a by b.
+   *
+   * @param a The dividend.
+   * @param b The divisor.
+   * @return The modulus a mod b.
+   */
+  template<typename T>
+  friend big_integer operator%(const big_integer &a, const T &b) {
+    big_integer remainder;
+    modulus(a, b, remainder);
+    return remainder;
+  }
+
+  /**
+   * Computes the modulus of another big_integer and the current one.
+   *
+   * @param other The divisor.
+   * @return Reference to the current big_integer containing the modulus of
+   *         its previous value and other.
+   */
+  template<typename T>
+  big_integer& operator%=(const T &other) {
+    big_integer remainder;
+    modulus(*this, other, remainder);
+    sign = get_sign(remainder);
+    magnitude = get_magnitude(remainder);
+    return *this;
+  }
+
+  /**
+   * Bitwise negation.
+   * Negates every digit, including the most significant ones (with its leading
+   * zeros).
+   *
+   * @return A big_integer with bitwise negated digits.
+   */
+  friend big_integer operator~(const big_integer &a) {
+    big_integer negation = a;
+    negation.magnitude = ~negation.magnitude;
+    return negation;
+  }
+
+  /**
+   * Bitwise and operator.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @return big_integer that contains the bitwise and of a and b.
+   */
+  template<typename T>
+  friend big_integer operator&(const big_integer &a, const T &b) {
+    big_integer bit_and;
+    bitwise_and(a, b, bit_and);
+    return bit_and;
+  }
+
+  /**
+   * Bitwise and with another big_integer.
+   *
+   * @param other The other big_integers.
+   * @return Reference to the current big_integer after bitwise and with
+   *         another big_integer.
+   */
+  template<typename T>
+  big_integer& operator&=(const T &other) {
+    bitwise_and(*this, other, *this);
+    return *this;
+  }
+
+  /**
+   * Bitwise or operator.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @return big_integer that contains the bitwise or of a and b.
+   */
+  template<typename T>
+  friend big_integer operator|(const big_integer &a, const T &b) {
+    big_integer bit_or;
+    bitwise_or(a, b, bit_or);
+    return bit_or;
+  }
+
+  /**
+   * Bitwise or with another big_integer.
+   *
+   * @param other The other big_integers.
+   * @return Reference to the current big_integer after bitwise or with
+   *         another big_integer.
+   */
+  template<typename T>
+  big_integer& operator|=(const T &other) {
+    bitwise_or(*this, other, *this);
+    return *this;
+  }
+
+  /**
+   * Bitwise xor operator.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @return big_integer that contains the bitwise or xof a and b.
+   */
+  template<typename T>
+  friend big_integer operator^(const big_integer &a, const T &b) {
+    big_integer bit_xor;
+    bitwise_xor(a, b, bit_xor);
+    return bit_xor;
+  }
+
+  /**
+   * Bitwise xor with another big_integer.
+   *
+   * @param other The other big_integers.
+   * @return Reference to the current big_integer after bitwise xor with
+   *         another big_integer.
+   */
+  template<typename T>
+  big_integer& operator^=(const T &other) {
+    bitwise_xor(*this, other, *this);
+    return *this;
+  }
+
+  /**
+   * Left shift operator.
+   *
+   * @param a The big_integer to be shifted.
+   * @param b The amount of binary positions to shift.
+   * @return A big_integer with a's value left shifted by b binary positions.
+   */
+  friend big_integer operator<<(const big_integer &a, int64_t b) {
+    big_integer shifted;
+    left_shift(a, b, shifted);
+    return shifted;
+  }
+
+  /**
+   * Left shift assignment operator.
+   *
+   * @param b The amount of binary positions to shift.
+   * @return A reference to the current big_integer after being shifted by b
+   *         binary positions.
+   */
+  big_integer& operator<<=(int64_t b) {
+    left_shift(*this, b, *this);
+    return *this;
+  }
+
+  /**
+   * Right shift operator.
+   *
+   * @param a The big_integer to be shifted.
+   * @param b The amount of binary positions to shift.
+   * @return A big_integer with a's value left shifted by b binary positions.
+   */
+  friend big_integer operator>>(const big_integer &a, int64_t b) {
+    big_integer shifted;
+    right_shift(a, b, shifted);
+    return shifted;
+  }
+
+  /**
+   * Right shift assignment operator.
+   *
+   * @param b The amount of binary positions to shift.
+   * @return A reference to the current big_integer after being shifted by b
+   *         binary positions.
+   */
+  big_integer& operator>>=(int64_t b) {
+    right_shift(*this, b, *this);
+    return *this;
+  }
+
+  /**
+   * Cast to bool.
+   */
+  explicit operator bool() const {
+    return (bool)magnitude;
+  }
+
 private:
+  /**
+   * Returns the sign of a big_integer.
+   *
+   * @param n The number.
+   * @return The sign of n.
+   */
+  static sign_type get_sign(const big_integer &n) {
+    return n.sign;
+  }
+
+  /**
+   * Returns the sign of a number.
+   *
+   * @param n The number.
+   * @return The sign of n.
+   */
+  static sign_type get_sign(int64_t n) {
+    return n >= 0 ? sign_type::PLUS : sign_type::MINUS;
+  }
+
+  /**
+   * Returns the magnitude of a big_integer.
+   *
+   * @param n The number.
+   * @return Its magnitude.
+   */
+  static big_unsigned get_magnitude(const big_integer &n) {
+    return n.magnitude;
+  }
+
+  /**
+   * Returns the magnitude of a number.
+   *
+   * @param n The number.
+   * @return Its magnitude, abs(n).
+   */
+  static int64_t get_magnitude(int64_t n) {
+    return abs(n);
+  }
+
   /**
    * Adds two big_integers into a third.
    * Parameters a and c may be the same, for a += b.
@@ -293,29 +619,29 @@ private:
    * @param b The second summand.
    * @param c The sum a + b.
    */
-  static void add(const big_integer &a, const big_integer &b,
-      big_integer &c) {
-    if (a.sign == b.sign) {
-      // Either both positive or both negative.
-      c.sign = a.sign;
-      c.magnitude = a.magnitude + b.magnitude;
-    } else if (a.sign == sign_type::PLUS) {
-      // a is positive, b is negative.
-      if (a.magnitude >= b.magnitude) {
+  template<typename T>
+  static void add(const big_integer &a, const T &b, big_integer &c) {
+    sign_type sa = get_sign(a);
+    sign_type sb = get_sign(b);
+
+    if (sa == sb) {
+      c.sign = sa;
+      c.magnitude = a.magnitude + get_magnitude(b);
+    } else if (sa == sign_type::PLUS) {
+      if (a.magnitude >= get_magnitude(b)) {
         c.sign = sign_type::PLUS;
-        c.magnitude = a.magnitude - b.magnitude;
+        c.magnitude = a.magnitude - get_magnitude(b);
       } else {
         c.sign = sign_type::MINUS;
-        c.magnitude = b.magnitude - a.magnitude;
+        c.magnitude = get_magnitude(b) - a.magnitude;
       }
     } else {
-      // a is negative, b is positive.
-      if (a.magnitude > b.magnitude) {
+      if (a.magnitude > get_magnitude(b)) {
         c.sign = sign_type::MINUS;
-        c.magnitude = a.magnitude - b.magnitude;
+        c.magnitude = a.magnitude - get_magnitude(b);
       } else {
         c.sign = sign_type::PLUS;
-        c.magnitude = b.magnitude - a.magnitude;
+        c.magnitude = get_magnitude(b) - a.magnitude;
       }
     }
   }
@@ -328,21 +654,24 @@ private:
    * @param b The subtrahend.
    * @param c The difference a - b.
    */
-  static void subtract(const big_integer &a, const big_integer &b,
-      big_integer &c) {
-    if (b.sign == sign_type::MINUS) add(a, -b, c);
+  template<typename T>
+  static void subtract(const big_integer &a, const T &b, big_integer &c) {
+    sign_type sa = get_sign(a);
+    sign_type sb = get_sign(b);
+
+    if (sb == sign_type::MINUS) add(a, -b, c);
     else {
-      if (a.sign == sign_type::PLUS) {
-        if (a.magnitude >= b.magnitude) {
+      if (sa == sign_type::PLUS) {
+        if (a.magnitude >= get_magnitude(b)) {
           c.sign = sign_type::PLUS;
-          c.magnitude = a.magnitude - b.magnitude;
+          c.magnitude = a.magnitude - get_magnitude(b);
         } else {
           c.sign = sign_type::MINUS;
-          c.magnitude = b.magnitude - a.magnitude;
+          c.magnitude = get_magnitude(b) - a.magnitude;
         }
       } else {
         c.sign = sign_type::MINUS;
-        c.magnitude = a.magnitude + b.magnitude;
+        c.magnitude = a.magnitude + get_magnitude(b);
       }
     }
   }
@@ -355,26 +684,104 @@ private:
    * @param b The second factor.
    * @param c The product a * b.
    */
-  static void mulitply(const big_integer &a, const big_integer &b,
-      big_integer &c) {
-    c.magnitude = a.magnitude * b.magnitude;
-    c.sign = a.sign == b.sign ? sign_type::PLUS : sign_type:: MINUS;
+  template<typename T>
+  static void mulitply(const big_integer &a, const T &b, big_integer &c) {
+    c.magnitude = a.magnitude * get_magnitude(b);
+    c.sign = a.sign == get_sign(b) ? sign_type::PLUS : sign_type:: MINUS;
   }
 
   /**
-   * Divides a by b and outputs the quotient and the remainder.
+   * Divides a by a digit b and outputs the quotient.
    *
    * @param a The dividend.
    * @param b The divisor.
-   * @param quotient The quotient a div b.
-   * @param remainder The remainder a mod b.
+   * @param c The quotient a div b.
    */
-  static void divide(const big_integer &a, const big_integer &b,
-      big_integer &quotient, big_integer &remainder) {
-    big_unsigned::divide_with_remainder(a.magnitude, b.magnitude,
-        quotient.magnitude, remainder.magnitude);
-    quotient.sign = a.sign == b.sign ? sign_type::PLUS : sign_type:: MINUS;
-    remainder.sign = a.sign;
+  template<typename T>
+  static void divide(const big_integer &a, const T &b, big_integer &c) {
+    c.magnitude = a.magnitude / get_magnitude(b);
+    c.sign = a.sign == get_sign(b) ? sign_type::PLUS : sign_type:: MINUS;
+  }
+
+  /**
+   * Computes the modulus of a and b.
+   *
+   * @param a The dividend.
+   * @param b The divisor.
+   * @param c The remainder a mod b.
+   */
+  template<typename T>
+  static void modulus(const big_integer &a, const T &b, big_integer &c) {
+    c.magnitude = a.magnitude % get_magnitude(b);
+    c.sign = a.sign;
+  }
+
+  /**
+   * Bitwise and of a and b into c.
+   * Parameters a and c may be the same.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @param c The bitwise and c = a & b.
+   */
+  template<typename T>
+  static void bitwise_and(const big_integer &a, const T &b, big_integer &c) {
+    c.magnitude = a.magnitude & get_magnitude(b);
+    c.sign = a.sign;
+  }
+
+  /**
+   * Bitwise or of a and b into c.
+   * Parameters a and c may be the same.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @param c The bitwise or c = a | b.
+   */
+  template<typename T>
+  static void bitwise_or(const big_integer &a, const T &b, big_integer &c) {
+    c.magnitude = a.magnitude | get_magnitude(b);
+    c.sign = a.sign;
+  }
+
+  /**
+   * Bitwise xor of a and b into c.
+   * Parameters a and c may be the same.
+   *
+   * @param a The first operand.
+   * @param b The second operand.
+   * @param c The bitwise or c = a ^ b.
+   */
+  template<typename T>
+  static void bitwise_xor(const big_integer &a, const T &b, big_integer &c) {
+    c.magnitude = a.magnitude ^ get_magnitude(b);
+    c.sign = a.sign;
+  }
+
+  /**
+   * Left shift of a by b binary positions into c.
+   * Parameters a and c may be the same.
+   *
+   * @param a The number to be shifted.
+   * @param b The amount of binary positions to shift.
+   * @param c The result c = a << b.
+   */
+  static void left_shift(const big_integer &a, int64_t b, big_integer &c) {
+    c.magnitude = a.magnitude << b;
+    c.sign = a.sign;
+  }
+
+  /**
+   * Right shift of a by b binary positions into c.
+   * Parameters a and c may be the same.
+   *
+   * @param a The number to be shifted.
+   * @param b The amount of binary positions to shift.
+   * @param c The result c = a >> b.
+   */
+  static void right_shift(const big_integer &a, int64_t b, big_integer &c) {
+    c.magnitude = a.magnitude >> b;
+    c.sign = a.sign;
   }
 };
 
