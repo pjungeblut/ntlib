@@ -607,6 +607,13 @@ public:
     // Base case: b == 0.
     if (b == 0) throw std::invalid_argument("Division by zero.");
 
+    // Base case: a == 0.
+    if (a == 0) {
+      quotient = 0;
+      remainder = 0;
+      return;
+    }
+
     std::size_t da = a.digits.size();
 
     // Is the first digit of a at least b?
@@ -1228,10 +1235,7 @@ private:
    */
   static void digit_bitwise_and(big_unsigned &a, digit_type b) {
     // Base case: a == 0.
-    if (a.digits.empty()) {
-      a.digits.push_back(0);
-      return;
-    }
+    if (a.digits.empty()) return;
 
     // Compute last digit. All other are zero and can be deleted.
     a.digits[0] &= b;

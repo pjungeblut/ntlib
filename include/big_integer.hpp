@@ -564,6 +564,16 @@ public:
   }
 
   /**
+   * Cast to int64_t.
+   * Only returns the last digit.
+   *
+   * @return The value of the least significant digit.
+   */
+  explicit operator std::size_t() const {
+    return (std::size_t)magnitude;
+  }
+
+  /**
    * Cast to bool.
    */
   explicit operator bool() const {

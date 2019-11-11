@@ -146,7 +146,8 @@ bool is_square(I n) {
   I third_last_digit = n / 100 % 10;
 
   // If n is a multiple of four, we can look at n/4 instead.
-  while ((n & 3) == 0) n >>= 2;
+  while (n && (n & 3) == 0) n >>= 2;
+  if (n == 0) return true;
 
   // If n is not divisible by four (it is not by above test), its binary
   // representation must end with 001.
