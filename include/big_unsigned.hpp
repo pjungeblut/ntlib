@@ -134,10 +134,23 @@ public:
     std::string s;
     big_unsigned value = *this;
 
-    while (value != 0) {
-      digit_type remainder;
-      digit_divide_with_remainder(value, base, value, remainder);
-      s.push_back(value_to_char(remainder, base));
+    // Optimization for base 10:
+    if (base == 10) {
+      const digit_type big_base = 1'000'000'000'000'000'000uLL;
+      while (value != 0) {
+        digit_type remainder;
+        digit_divide_with_remainder(value, big_base, value, remainder);
+        std::string s_remainder = std::to_string(remainder);
+        for (auto c = s_remainder.rbegin(); c != s_remainder.rend(); ++c) s.push_back(*c);
+        for (std::size_t i = s_remainder.size(); i < 18; ++i) s.push_back('0');
+      }
+      while (s.back() == '0') s.pop_back();
+    } else {
+      while (value != 0) {
+        digit_type remainder;
+        digit_divide_with_remainder(value, base, value, remainder);
+        s.push_back(value_to_char(remainder, base));
+      }
     }
     std::reverse(s.begin(), s.end());
     return s;
@@ -929,6 +942,9 @@ private:
    */
   static void digit_add(big_unsigned &a, digit_type b) {
     std::size_t da = a.digits.size();
+
+    // Base case: a == 0 and b == 0
+    if (da == 0 && b == 0) return;
 
     // Base case: a == 0
     if (da == 0) {
