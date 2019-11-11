@@ -133,7 +133,13 @@ public:
     // Must work on a copy, since the value must be repeatedly divided by base.
     std::string s;
     big_unsigned value = *this;
-    to_string_recursive(s, value, base);
+
+    while (value != 0) {
+      digit_type remainder;
+      digit_divide_with_remainder(value, base, value, remainder);
+      s.push_back(value_to_char(remainder, base));
+    }
+    std::reverse(s.begin(), s.end());
     return s;
   }
 
@@ -906,26 +912,6 @@ private:
 
     if (value <= 9) return value + '0';
     return value - 10 + 'A';
-  }
-
-  /**
-   * Recursively computes the digits in the required base.
-   * The result is in reverse order.
-   *
-   * @param s The string to write the result into.
-   * @param value The current value of the remaining big_unsigned.
-   * @param base The base to print in. 2 <= base <= 16.
-   */
-  void to_string_recursive(std::string &s, big_unsigned &value, uint8_t base)
-      const {
-    // Base case for value 0.
-    if (value == 0) return;
-
-    // Compute last digit, recurse and then push it to the result.
-    digit_type remainder;
-    digit_divide_with_remainder(value, base, value, remainder);
-    to_string_recursive(s, value, base);
-    s.push_back(value_to_char(remainder, base));
   }
 
   /**
