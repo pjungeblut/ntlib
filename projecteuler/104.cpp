@@ -1,10 +1,10 @@
+#include <cmath>
 #include <cstddef>
+#include <cstdint>
 #include <cstdio>
 #include <string>
 
-#include "include/big_unsigned.hpp"
-
-bool begins_pandigital(std::string &s) {
+bool pandigital(const std::string &s) {
   if (s.size() < 9) return false;
 
   bool found[10] = {false};
@@ -18,23 +18,25 @@ bool begins_pandigital(std::string &s) {
 }
 
 int main() {
-  ntlib::big_unsigned f[3];
-
+  uint64_t f[3];
   f[1] = 1;
   f[2] = 1;
+  const uint64_t MOD = 1'000'000'000uLL;
+  const double log_phi = log10((1 + sqrt(5)) / 2.0);
+  const double log_sqrt5 = log10(sqrt(5));
+
   for (std::size_t i = 3; ; ++i) {
-    std::size_t idx = i % 3;
-    f[idx] = f[(i - 1) % 3] + f[(i - 2) % 3];
+    f[i % 3] = (f[(i - 1) % 3] + f[(i - 2) % 3]) % MOD;
 
-    std::string last_nine = (f[idx] % 1'000'000'000).to_string();
-    if (begins_pandigital(last_nine)) {
-      std::string all = f[idx].to_string();
-
-      if (begins_pandigital(all)) {
+    if (pandigital(std::to_string(f[i % 3]))) {
+      double t = i * log_phi - log_sqrt5;
+      uint64_t first = pow(10, t - (uint64_t)t + 8);
+      if (pandigital(std::to_string(first))) {
         printf("%ld\n", i);
         return 0;
       }
     }
   }
+
   return 0;
 }
