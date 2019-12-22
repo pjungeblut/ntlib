@@ -4,7 +4,7 @@
  * Implementations to compute binomial coefficients.
  */
 
-#include "include/integral.hpp"
+#include "integral.hpp"
 
 namespace ntlib {
 

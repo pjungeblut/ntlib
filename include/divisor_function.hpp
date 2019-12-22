@@ -6,9 +6,9 @@
 
 #include <map>
 
-#include "include/base.hpp"
-#include "include/integral.hpp"
-#include "include/prime_decomposition.hpp"
+#include "base.hpp"
+#include "integral.hpp"
+#include "prime_decomposition.hpp"
 
 namespace ntlib {
 

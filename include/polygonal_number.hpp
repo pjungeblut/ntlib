@@ -4,7 +4,7 @@
  * Implementations to generate polygonal numbers.
  */
 
-#include "include/integral.hpp"
+#include "integral.hpp"
 
 namespace ntlib {
 

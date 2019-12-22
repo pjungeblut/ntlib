@@ -16,10 +16,10 @@
 #include <map>
 #include <vector>
 
-#include "include/base.hpp"
-#include "include/integral.hpp"
-#include "include/prime_test.hpp"
-#include "include/sieve_eratosthenes.hpp"
+#include "base.hpp"
+#include "integral.hpp"
+#include "prime_test.hpp"
+#include "sieve_eratosthenes.hpp"
 
 namespace ntlib {
 

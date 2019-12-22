@@ -8,8 +8,8 @@
 #include <cmath>
 #include <vector>
 
-#include "include/integral.hpp"
-#include "include/rational.hpp"
+#include "integral.hpp"
+#include "rational.hpp"
 
 namespace ntlib {
 

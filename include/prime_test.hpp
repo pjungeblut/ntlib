@@ -12,8 +12,8 @@
 #include <algorithm>
 #include <vector>
 
-#include "include/base.hpp"
-#include "include/integral.hpp"
+#include "base.hpp"
+#include "integral.hpp"
 
 namespace ntlib {
 

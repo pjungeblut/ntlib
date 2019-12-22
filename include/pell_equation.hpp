@@ -2,9 +2,9 @@
 
 #include <vector>
 
-#include "include/base.hpp"
-#include "include/integral.hpp"
-#include "include/continued_fraction.hpp"
+#include "base.hpp"
+#include "integral.hpp"
+#include "continued_fraction.hpp"
 
 namespace ntlib {
 

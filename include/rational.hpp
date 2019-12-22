@@ -4,8 +4,8 @@
  * Implementations to easily work with rational numbers.
  */
 
-#include "include/base.hpp"
-#include "include/integral.hpp"
+#include "base.hpp"
+#include "integral.hpp"
 
 namespace ntlib {
 

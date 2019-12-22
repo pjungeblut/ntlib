@@ -18,7 +18,7 @@
 #include <cstddef>
 #include <vector>
 
-#include "include/integral.hpp"
+#include "integral.hpp"
 
 namespace ntlib {
 
