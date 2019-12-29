@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <vector>
 
-#include "include/pythagorean_triple.hpp"
+#include "pythagorean_triple.hpp"
 
 int main() {
   using NumberType = uint64_t;

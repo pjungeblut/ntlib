@@ -4,8 +4,8 @@
 #include <cstdio>
 #include <map>
 
-#include "include/prime_decomposition.hpp"
-#include "include/sieve_eratosthenes.hpp"
+#include "prime_decomposition.hpp"
+#include "sieve_eratosthenes.hpp"
 
 template<typename NumberType>
 void test_prime_decomposition(NumberType n) {

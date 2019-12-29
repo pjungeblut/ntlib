@@ -4,7 +4,7 @@
 #include <cstdio>
 #include <vector>
 
-#include "include/prime_decomposition.hpp"
+#include "prime_decomposition.hpp"
 
 template<typename NumberType>
 void test_is_prime_naive(NumberType n) {

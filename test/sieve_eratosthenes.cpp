@@ -4,7 +4,7 @@
 #include <cstdio>
 #include <vector>
 
-#include "include/sieve_eratosthenes.hpp"
+#include "sieve_eratosthenes.hpp"
 
 void test_sieve_eratosthenes(std::size_t N) {
   std::vector<bool> sieve(N + 1, true);

@@ -7,8 +7,7 @@
 namespace ntlib {
 
 /**
- * Represents a whole number whose size is only limited by the computers
- * memory.
+ * Represents a whole number whose size is only limited by the available memory.
  */
 class big_integer {
 private:
@@ -29,6 +28,7 @@ private:
 public:
   /**
    * Default constructor.
+   * Initializes with 0.
    */
   big_integer() : magnitude(0), sign(sign_type::PLUS) {}
 
@@ -149,7 +149,7 @@ public:
    * @param b The right hand side to compare.
    * @return True, if and only if a < b.
    */
-  friend bool operator<(const big_integer &a, const big_integer &b) {
+  friend bool operator<(const big_integer &a, const big_integer &b){
     // If they have different sign, we can compare their sign.
     if (a.sign != b.sign) return a.sign < b.sign;
 
@@ -219,6 +219,19 @@ public:
   }
 
   /**
+   * Unary minus to negate value.
+   *
+   * @return The big integer with the same value but opposite sign.
+   */
+  friend big_integer operator-(const big_integer &other) {
+    big_integer negation;
+    negation.sign = other.sign == sign_type::PLUS
+        ? sign_type::MINUS : sign_type::PLUS;
+    negation.magnitude = other.magnitude;
+    return negation;
+  }
+
+  /**
    * Addition for big_integer.
    *
    * @param a The first summand.
@@ -243,19 +256,6 @@ public:
   big_integer& operator+=(const T &other) {
     add(*this, other, *this);
     return *this;
-  }
-
-  /**
-   * Unary minus to negate value.
-   *
-   * @return The big integer with the same value but opposite sign.
-   */
-  friend big_integer operator-(const big_integer &other) {
-    big_integer negation;
-    negation.sign = other.sign == sign_type::PLUS
-        ? sign_type::MINUS : sign_type::PLUS;
-    negation.magnitude = other.magnitude;
-    return negation;
   }
 
   /**
@@ -447,19 +447,6 @@ public:
   }
 
   /**
-   * Bitwise and with another big_integer.
-   *
-   * @param other The other big_integers.
-   * @return Reference to the current big_integer after bitwise and with
-   *         another big_integer.
-   */
-  template<typename T>
-  big_integer& operator&=(const T &other) {
-    bitwise_and(*this, other, *this);
-    return *this;
-  }
-
-  /**
    * Bitwise or operator.
    *
    * @param a The first operand.
@@ -474,19 +461,6 @@ public:
   }
 
   /**
-   * Bitwise or with another big_integer.
-   *
-   * @param other The other big_integers.
-   * @return Reference to the current big_integer after bitwise or with
-   *         another big_integer.
-   */
-  template<typename T>
-  big_integer& operator|=(const T &other) {
-    bitwise_or(*this, other, *this);
-    return *this;
-  }
-
-  /**
    * Bitwise xor operator.
    *
    * @param a The first operand.
@@ -498,6 +472,32 @@ public:
     big_integer bit_xor;
     bitwise_xor(a, b, bit_xor);
     return bit_xor;
+  }
+
+  /**
+   * Bitwise and with another big_integer.
+   *
+   * @param other The other big_integers.
+   * @return Reference to the current big_integer after bitwise and with
+   *         another big_integer.
+   */
+  template<typename T>
+  big_integer& operator&=(const T &other) {
+    bitwise_and(*this, other, *this);
+    return *this;
+  }
+
+  /**
+   * Bitwise or with another big_integer.
+   *
+   * @param other The other big_integers.
+   * @return Reference to the current big_integer after bitwise or with
+   *         another big_integer.
+   */
+  template<typename T>
+  big_integer& operator|=(const T &other) {
+    bitwise_or(*this, other, *this);
+    return *this;
   }
 
   /**
@@ -520,9 +520,22 @@ public:
    * @param b The amount of binary positions to shift.
    * @return A big_integer with a's value left shifted by b binary positions.
    */
-  friend big_integer operator<<(const big_integer &a, int64_t b) {
+  friend big_integer operator<<(const big_integer &a, uint64_t b) {
     big_integer shifted;
-    left_shift(a, b, shifted);
+    big_integer::left_shift(a, b, shifted);
+    return shifted;
+  }
+
+  /**
+   * Right shift operator.
+   *
+   * @param a The big_integer to be shifted.
+   * @param b The amount of binary positions to shift.
+   * @return A big_integer with a's value left shifted by b binary positions.
+   */
+  friend big_integer operator>>(const big_integer &a, uint64_t b) {
+    big_integer shifted;
+    big_integer::right_shift(a, b, shifted);
     return shifted;
   }
 
@@ -533,22 +546,9 @@ public:
    * @return A reference to the current big_integer after being shifted by b
    *         binary positions.
    */
-  big_integer& operator<<=(int64_t b) {
+  big_integer& operator<<=(uint64_t b) {
     left_shift(*this, b, *this);
     return *this;
-  }
-
-  /**
-   * Right shift operator.
-   *
-   * @param a The big_integer to be shifted.
-   * @param b The amount of binary positions to shift.
-   * @return A big_integer with a's value left shifted by b binary positions.
-   */
-  friend big_integer operator>>(const big_integer &a, int64_t b) {
-    big_integer shifted;
-    right_shift(a, b, shifted);
-    return shifted;
   }
 
   /**
@@ -558,7 +558,7 @@ public:
    * @return A reference to the current big_integer after being shifted by b
    *         binary positions.
    */
-  big_integer& operator>>=(int64_t b) {
+  big_integer& operator>>=(uint64_t b) {
     right_shift(*this, b, *this);
     return *this;
   }
@@ -598,7 +598,7 @@ private:
    * @return The sign of n.
    */
   static sign_type get_sign(int64_t n) {
-    return n >= 0 ? sign_type::PLUS : sign_type::MINUS;
+    return n >= 0 ? big_integer::sign_type::PLUS : big_integer::sign_type::MINUS;
   }
 
   /**
@@ -617,7 +617,7 @@ private:
    * @param n The number.
    * @return Its magnitude, abs(n).
    */
-  static int64_t get_magnitude(int64_t n) {
+  static uint64_t get_magnitude(uint64_t n) {
     return abs(n);
   }
 
@@ -776,7 +776,7 @@ private:
    * @param b The amount of binary positions to shift.
    * @param c The result c = a << b.
    */
-  static void left_shift(const big_integer &a, int64_t b, big_integer &c) {
+  static void left_shift(const big_integer &a, uint64_t b, big_integer &c) {
     c.magnitude = a.magnitude << b;
     c.sign = a.sign;
   }
