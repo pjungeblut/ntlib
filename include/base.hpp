@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <random>
+#include <type_traits>
 
 #include "integral.hpp"
 
@@ -69,17 +70,23 @@ I lcm(I a, I b) {
  * Extended Euclidean Algorithm.
  * Finds whole number solutions for a*x + b*y = gcd(a,b).
  *
- * TODO: Find out minimality of solution.
- *
- * @param a Parameter a. Must be non-negative.
- * @param b Parameter b. Must be non-negative.
- * @return A triple (gcd(a,b), x, y).
+ * @param a Parameter a.
+ * @param b Parameter b.
+ * @param x Value for x.
+ * @param y Value for y.
+ * @return The greatest common divisor gcd(a,b) of a and b.
  */
 template<Integral I>
-triple<I,I,I> extended_euclid(I a, I b) {
-  if (a == 0) return triple<I,I,I> {b, 0, 1};
-  triple<I,I,I> gxy = extended_euclid(b % a, a);
-  return triple<I,I,I> {gxy.a, gxy.c - (b / a) * gxy.b, gxy.b};
+I extended_euclid(I a, I b, I &x, I &y) {
+  if (a == 0) {
+    x = 0;
+    y = 1;
+    return b;
+  }
+  I xx, yy, gcd = extended_euclid(b % a, a, xx, yy);
+  x = yy - (b / a) * xx;
+  y = xx;
+  return gcd;
 }
 
 /**
@@ -204,8 +211,10 @@ I mod_pow(I a, I b, I n) {
  */
 template<Integral I>
 I mod_mult_inv(I n, I m) {
-  auto gxy = extended_euclid(n, m);
-  return ((gxy.b % m) + m) % m;
+  using SI = typename std::make_signed<I>::type;
+  SI x, y;
+  extended_euclid(static_cast<SI>(n), static_cast<SI>(m), x, y);
+  return x >= 0 ? x % m : m - (-x % m);
 }
 
 /**

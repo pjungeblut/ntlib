@@ -14,10 +14,11 @@ namespace ntlib {
  * @param c Parameter c.
  * @param x Value for x if a solution was found.
  * @param y Value for y if a solution was found.
+ * @param gcd Value of gcd(a,b). This is needed to compute further solutions.
  * @return Whether a solution exists (and therefore was computed).
  */
 template<Integral I>
-bool diophantine_solution(I a, I b, I c, I &x, I &y) {
+bool diophantine_solution(I a, I b, I c, I &x, I &y, I &gcd) {
   // Special case: a = 0 and b = 0.
   if (a == 0 && b == 0) {
     if (c == 0) {
@@ -39,17 +40,17 @@ bool diophantine_solution(I a, I b, I c, I &x, I &y) {
   // Special case: b = 0.
   if (b == 0) {
     if (c % a == 0) {
-      y = 0;
       x = c / a;
+      y = 0;
       return true;
     } else return false;
   }
 
   // General case.
-  triple<I,I,I> gxy = extended_euclid(abs(a), abs(b));
-  if (x % gxy.a != 0) return false;
-  x = gxy.b * c / gxy.a;
-  y = gxy.c * c / gxy.a;
+  gcd = extended_euclid(abs(a), abs(b), x, y);
+  if (c % gcd != 0) return false;
+  x *= c / gcd;
+  y *= c / gcd;
   if (a < 0) x = -x;
   if (b < 0) y = -y;
   return true;
