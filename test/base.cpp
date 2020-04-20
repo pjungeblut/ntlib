@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 
 #include <bitset>
-#include <exception>
 #include <set>
 
 #include "base.hpp"
