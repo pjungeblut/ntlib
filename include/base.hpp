@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <cassert>
 #include <random>
 #include <type_traits>
 
@@ -35,8 +36,7 @@ struct triple {
  */
 template<Integral I>
 I abs(I n) {
-  if (n >= 0) return n;
-  return -n;
+  return n >= 0 ? n : -n;
 }
 
 /**
@@ -50,6 +50,7 @@ I abs(I n) {
  */
 template<Integral I>
 I gcd(I a, I b) {
+  assert(!(a == 0 && b == 0));
   return b == 0 ? abs(a) : gcd(b, a % b);
 }
 
@@ -63,6 +64,8 @@ I gcd(I a, I b) {
  */
 template<Integral I>
 I lcm(I a, I b) {
+  assert(a != 0);
+  assert(b != 0);
   return abs(a) * (abs(b) / gcd(a, b));
 }
 
@@ -77,16 +80,34 @@ I lcm(I a, I b) {
  * @return The greatest common divisor gcd(a,b) of a and b.
  */
 template<Integral I>
-I extended_euclid(I a, I b, I &x, I &y) {
+I extended_euclid_positive(I a, I b, I &x, I &y) {
   if (a == 0) {
     x = 0;
     y = 1;
     return b;
   }
-  I xx, yy, gcd = extended_euclid(b % a, a, xx, yy);
+  I xx, yy, gcd = extended_euclid_positive(b % a, a, xx, yy);
   x = yy - (b / a) * xx;
   y = xx;
   return gcd;
+}
+template<Integral I>
+I extended_euclid(I a, I b, I &x, I &y) {
+  assert(!(a == 0 && b == 0));
+  if (a < 0 && b < 0) {
+    I gcd = extended_euclid_positive(abs(a), abs(b), x, y);
+    x = -x;
+    y = -y;
+    return gcd;
+  } else if (a < 0) {
+    I gcd = extended_euclid_positive(abs(a), b, x, y);
+    x = -x;
+    return gcd;
+  } else if (b < 0) {
+    I gcd = extended_euclid_positive(a, abs(b), x, y);
+    y = -y;
+    return gcd;
+  } else return extended_euclid_positive(a, b, x, y);
 }
 
 /**
@@ -99,6 +120,8 @@ I extended_euclid(I a, I b, I &x, I &y) {
  */
 template<Integral I>
 I pow(I a, I b) {
+  assert(b >= 0);
+  assert(!(a == 0 && b == 0));
   if (b == 0) return 1;
   if (b == 1) return a;
   if (b & 1) return pow(a, b - 1) * a;
@@ -110,13 +133,17 @@ I pow(I a, I b) {
  * isqrt(n) := floor(sqrt(n))
  * Runtime: O(log n)
  *
- * @param n The number to compute the integer square root of.
+ * @param n The number to compute the integer square root of. Non-negative.
  * @return isqrt(n)
  */
 template<Integral I>
 I isqrt(I n) {
-  I l = 0;
-  I u = n;
+  assert(n >= 0);
+
+  I u = 1;
+  while (u * u <= n) u *= 2;
+  I l = u / 2;
+
   while (u - l > 16) {
     I m = (u + l) / 2;
     if (m * m <= n) l = m;
@@ -194,6 +221,10 @@ bool is_square(I n) {
  */
 template<Integral I>
 I mod_pow(I a, I b, I n) {
+  assert(!(a == 0 && b == 0));
+  assert(a >= 0);
+  assert(b >= 0);
+  assert(n > 0);
   if (b == 0) return 1;
   if (b == 1) return a % n;
   if (b & 1) return (mod_pow(a, b - 1, n) * a) % n;
@@ -211,6 +242,7 @@ I mod_pow(I a, I b, I n) {
  */
 template<Integral I>
 I mod_mult_inv(I n, I m) {
+  assert(gcd(n, m) == 1);
   using SI = typename std::make_signed<I>::type;
   SI x, y;
   extended_euclid(static_cast<SI>(n), static_cast<SI>(m), x, y);
@@ -221,12 +253,16 @@ I mod_mult_inv(I n, I m) {
  * Tests, if n is a quadratic residue mod p.
  * Uses Euler's Criterion to compute Legendre Symbol (a/p).
  *
+ * TODO: Add assert that p is a prime number.
+ *
  * @param n The number to test.
+ * @param p The modulus. Must be prime number.
  * @return True, if and only if there is an x, such that x^2 = a (mod p).
  */
 template<Integral I>
 bool mod_is_square(I n, I p) {
-  if (p == 2) return n & 1;
+  if (n == 0) return true;
+  if (p == 2) return true;
   return mod_pow(n, (p - 1) / 2, p) == 1;
 }
 
@@ -242,6 +278,8 @@ bool mod_is_square(I n, I p) {
  */
 template<Integral I>
 I mod_sqrt(I n, I p) {
+  assert(mod_is_square(n, p));
+
   // Find q, s with p-1 = q*2^s.
   I q = p - 1;
   I s = 0;
