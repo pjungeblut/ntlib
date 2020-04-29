@@ -4,6 +4,7 @@
  * Implementations to compute binomial coefficients.
  */
 #include <cassert>
+#include <vector>
 
 #include "integral.hpp"
 

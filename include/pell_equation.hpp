@@ -24,7 +24,7 @@ tuple<I,I> min_pell_solution(I d) {
   else n = period - 1;
   ntlib::rational<I> pq =
       ntlib::nth_convergent_quadratic_irrational_cf(n, cf);
-  return tuple<I,I> {pq.numerator, pq.denominator};
+  return tuple<I,I> {pq.get_numerator(), pq.get_denominator()};
 }
 
 /**
