@@ -1,5 +1,9 @@
 #pragma once
 
+#include <cassert>
+
+#include "integral.hpp"
+
 namespace ntlib {
 
 /**
@@ -12,6 +16,8 @@ namespace ntlib {
  */
 template<Integral I>
 I turan(I n, I k) {
+  assert(n >= 0);
+  assert(k > 0);
   I s = n % k;
   return ((k - 1) * (n * n - s * s)) / (2 * k) + s * (s - 1) / 2;
 }
