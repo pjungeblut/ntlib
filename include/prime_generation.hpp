@@ -1,17 +1,8 @@
 #pragma once
 
 /**
- * Implemenatations for the Sieve of Eratosthenes.
- *
- * File contains three different implementations:
- * Classic: Basic sieve functionality. The sieve is accessible afterwards. Can
- *          be used for fast 'is_prime' lookup.
- * List: Like the classic variant but also fills a vector with all primes in
- *       ascending order. The sieve stays accessible afterwards.
- * Segmented: Like the list variant. Only used an internal sieve, so it does not
- *            stay accessible afterwards. Memory efficient, since space
- *            complexity is in O(pi(N)).
- *            Seems to be the fastest for all tested inputs.
+ * Implemenatations to generate prime numbers.
+ * Some functions generate sieves, some lists and some both.
  */
 
 #include <algorithm>

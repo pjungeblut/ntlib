@@ -1,50 +1,39 @@
-#include <chrono>
-#include <cstddef>
+#include <gtest/gtest.h>
+
 #include <cstdint>
-#include <cstdio>
 #include <vector>
 
-#include "prime_decomposition.hpp"
+#include "prime_generation.hpp"
+#include "prime_test.hpp"
 
-template<typename NumberType>
-void test_is_prime_naive(NumberType n) {
-  auto t0 = std::chrono::high_resolution_clock::now();
-  bool is_prime = ntlib::is_prime_naive(n);
-  auto t1 = std::chrono::high_resolution_clock::now();
-  double t = std::chrono::duration_cast<std::chrono::milliseconds>
-      (t1 - t0).count() / 1'000.0;
-
-  printf("Naive prime test of %ld: %d\n", n, is_prime);
-  printf("Time: %.3lf seconds\n", t);
-  printf("\n");
+TEST(Naive, SmallValues) {
+  uint32_t N = 1'000'000;
+  std::vector<bool> sieve;
+  ntlib::eratosthenes_sieve(N, sieve);
+  for (uint32_t n = 0; n <= N; ++n) {
+    EXPECT_EQ(ntlib::is_prime_naive(n), sieve[n]);
+  }
 }
 
-template<typename NumberType>
-void test_is_prime_miller_rabin(NumberType n) {
-  auto t0 = std::chrono::high_resolution_clock::now();
-  bool is_prime = ntlib::is_prime_miller_rabin(n);
-  auto t1 = std::chrono::high_resolution_clock::now();
-  double t = std::chrono::duration_cast<std::chrono::milliseconds>
-      (t1 - t0).count() / 1'000.0;
-
-  printf("Miller Rabin prime test of %ld: %d\n", n, is_prime);
-  printf("Time: %.3lf seconds\n", t);
-  printf("\n");
+TEST(MillerRabin, SmallValues) {
+  uint32_t N = 10;
+  std::vector<bool> sieve;
+  ntlib::eratosthenes_sieve(N, sieve);
+  for (uint32_t n = 0; n <= N; ++n) {
+    EXPECT_EQ(ntlib::is_prime_miller_rabin(n), sieve[n]);
+  }
 }
 
-int main() {
-  using NumberType = uint64_t;
-  const NumberType L = 1'000'000'007LL * 1'000'000'007LL; // Composite.
-  const NumberType N = 4'120'038'565'055'551LL; // Composite.
-  const NumberType M = 952'016'363'681'739'749LL; // Prime.
+TEST(MillerRabin, LargeComposites) {
+  __uint128_t n1 = 1'000'000'007LL * 1'000'000'007LL;
+  __uint128_t n2 = 4'120'038'565'055'551LL;
+  EXPECT_FALSE(ntlib::is_prime_miller_rabin(n1));
+  EXPECT_FALSE(ntlib::is_prime_miller_rabin(n2));
+}
 
-  test_is_prime_naive(L);
-  test_is_prime_naive(N);
-  test_is_prime_naive(M);
-
-  test_is_prime_miller_rabin(L);
-  test_is_prime_miller_rabin(N);
-  test_is_prime_miller_rabin(M);
-
-  return 0;
+TEST(MillerRabin, LargePrimes) {
+  __uint128_t n1 = 952'016'363'681'739'749LL;
+  __uint128_t n2 = 301'697'296'732'166'057LL;
+  EXPECT_TRUE(ntlib::is_prime_miller_rabin(n1));
+  EXPECT_TRUE(ntlib::is_prime_miller_rabin(n2));
 }
