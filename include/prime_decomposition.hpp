@@ -28,14 +28,15 @@ namespace ntlib {
  * Takes a list of primes used as possible prime factors.
  *
  * @param n The number to decompose.
- * @param factors The prime factors.
  * @param primes List of primes used as possible prime factors.
  *               Must contain all prime factors p, such that p*p <= n to work
  *               correctly.
+ * @param factors The prime factors.
  */
 template<Integral I>
-void prime_decomposition_list(I n, std::map<I, I> &factors,
-    const std::vector<I> &primes) {
+void prime_decomposition(I n, const std::vector<I> &primes,
+    std::map<I, I> &factors) {
+  factors.clear();
   for (std::size_t i = 0; i < primes.size() && primes[i] * primes[i] <= n; ++i) {
     while (n % primes[i] == 0) {
       n /= primes[i];
@@ -53,10 +54,11 @@ void prime_decomposition_list(I n, std::map<I, I> &factors,
  */
 template<Integral I>
 void prime_decomposition(I n, std::map<I, I> &factors) {
+  factors.clear();
   I iroot = isqrt(n);
   std::vector<I> primes;
   eratosthenes_list(iroot, primes);
-  prime_decomposition_list(n, factors, primes);
+  prime_decomposition(n, primes, factors);
 }
 
 /**

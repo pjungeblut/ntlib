@@ -1,67 +1,43 @@
-#include <chrono>
-#include <cstddef>
-#include <cstdint>
-#include <cstdio>
-#include <map>
+#include <gtest/gtest.h>
 
+#include <cstdint>
+#include <map>
+#include <vector>
+
+#include "base.hpp"
 #include "prime_decomposition.hpp"
 #include "prime_generation.hpp"
 
-template<typename NumberType>
-void test_prime_decomposition(NumberType n) {
-  std::map<NumberType, NumberType> factors;
+const uint64_t numbers[] = {
+  1'000'000'007LL * 1'000'000'007LL, // Composite.
+  1'000'003LL * 1'000'003LL * 1'000'003LL, // Composite.
+  2LL * 2 * 2 * 2 * 3 * 3 * 3 * 3 * 4 * 4 * 4 * 4, // Composite.
+  952'016'363'681'739'749LL // Prime.
+};
 
-  auto t0 = std::chrono::high_resolution_clock::now();
-  ntlib::prime_decomposition(n, factors);
-  auto t1 = std::chrono::high_resolution_clock::now();
-  double t = std::chrono::duration_cast<std::chrono::milliseconds>
-      (t1 - t0).count() / 1'000.0;
-
-  printf("Naive decomposition:\n");
-  printf("Factors of %ld:", n);
-  for (auto &[factor, multiplicity] : factors) {
-    printf(" %ld^%ld", factor, multiplicity);
+template<typename T>
+bool is_prime_decomposition(T n, std::map<T,T> &factors) {
+  T test = 1;
+  for (auto [k,v] : factors) {
+    while (v--) test *= k;
   }
-  printf("\n");
-  printf("Time: %.3lf seconds\n", t);
-  printf("\n");
+  return test == n;
 }
 
-template<typename NumberType>
-void test_prime_decomposition_list(NumberType n, std::vector<NumberType> &list) {
-  std::map<NumberType, NumberType> factors;
-
-  auto t0 = std::chrono::high_resolution_clock::now();
-  ntlib::prime_decomposition_list(n, factors, list);
-  auto t1 = std::chrono::high_resolution_clock::now();
-  double t = std::chrono::duration_cast<std::chrono::milliseconds>
-      (t1 - t0).count() / 1'000.0;
-
-  printf("List decomposition:\n");
-  printf("Factors of %ld:", n);
-  for (auto &[factor, multiplicity] : factors) {
-    printf(" %ld^%ld", factor, multiplicity);
+TEST(PrimeDecomposition, Classical) {
+  std::map<uint64_t, uint64_t> factors;
+  for (const uint64_t n : numbers) {
+    ntlib::prime_decomposition(n, factors);
+    EXPECT_TRUE(is_prime_decomposition(n, factors));
   }
-  printf("\n");
-  printf("Time: %.3lf seconds\n", t);
-  printf("\n");
 }
 
-int main() {
-  using NumberType = uint64_t;
-  const NumberType L = 1'000'000'007LL * 1'000'000'007LL; // Composite.
-  const NumberType N = 1'000'003LL * 1'000'003LL * 1'000'003LL; // Composite.
-  const NumberType M = 952'016'363'681'739'749LL; // Prime.
-
-  test_prime_decomposition(L);
-  test_prime_decomposition(N);
-  test_prime_decomposition(M);
-
-  std::vector<NumberType> primes;
-  ntlib::eratosthenes_list(static_cast<NumberType>(1'000'000'007), primes);
-  test_prime_decomposition_list(L, primes);
-  test_prime_decomposition_list(N, primes);
-  test_prime_decomposition_list(M, primes);
-
-  return 0;
+TEST(PrimeDecomposition, PrimeList) {
+  std::map<uint64_t, uint64_t> factors;
+  for (const uint64_t n : numbers) {
+    std::vector<uint64_t> primes;
+    ntlib::eratosthenes_list(ntlib::isqrt(n), primes);
+    ntlib::prime_decomposition(n, primes, factors);
+    EXPECT_TRUE(is_prime_decomposition(n, factors));
+  }
 }

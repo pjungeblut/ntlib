@@ -15,13 +15,21 @@ TEST(Naive, SmallValues) {
   }
 }
 
+TEST(Naive, NegativeValues) {
+  EXPECT_FALSE(ntlib::is_prime_naive(-1));
+}
+
 TEST(MillerRabin, SmallValues) {
-  uint32_t N = 10;
+  uint64_t N = 1'000'000;
   std::vector<bool> sieve;
   ntlib::eratosthenes_sieve(N, sieve);
-  for (uint32_t n = 0; n <= N; ++n) {
+  for (uint64_t n = 0; n <= N; ++n) {
     EXPECT_EQ(ntlib::is_prime_miller_rabin(n), sieve[n]);
   }
+}
+
+TEST(MillerRabin, NegativeValues) {
+  EXPECT_FALSE(ntlib::is_prime_miller_rabin(-1));
 }
 
 TEST(MillerRabin, LargeComposites) {
