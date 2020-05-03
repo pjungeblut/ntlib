@@ -25,6 +25,7 @@ namespace ntlib {
  */
 template<Integral I>
 bool is_prime_naive(I n) {
+  if (n < 2) return false;
   for (I i = 2; i * i <= n; ++i) {
     if (n % i == 0) return false;
   }

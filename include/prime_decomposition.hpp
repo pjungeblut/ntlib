@@ -18,8 +18,8 @@
 
 #include "base.hpp"
 #include "integral.hpp"
+#include "prime_generation.hpp"
 #include "prime_test.hpp"
-#include "sieve_eratosthenes.hpp"
 
 namespace ntlib {
 
@@ -55,7 +55,7 @@ template<Integral I>
 void prime_decomposition(I n, std::map<I, I> &factors) {
   I iroot = isqrt(n);
   std::vector<I> primes;
-  sieve_eratosthenes_list_segmented(iroot, primes);
+  eratosthenes_list(iroot, primes);
   prime_decomposition_list(n, factors, primes);
 }
 

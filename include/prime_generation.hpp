@@ -8,9 +8,9 @@
  *          be used for fast 'is_prime' lookup.
  * List: Like the classic variant but also fills a vector with all primes in
  *       ascending order. The sieve stays accessible afterwards.
- * Segmented: Like the generate variant. Only used an internal sieve, so it does
- *            not stay accessible afterwards. Memory efficient, since complexity
- *            is pi(N).
+ * Segmented: Like the list variant. Only used an internal sieve, so it does not
+ *            stay accessible afterwards. Memory efficient, since space
+ *            complexity is in O(pi(N)).
  *            Seems to be the fastest for all tested inputs.
  */
 
@@ -30,7 +30,7 @@ namespace ntlib {
  * @param sieve The vector to be used as a sieve.
  */
 template<Integral I>
-void sieve_eratosthenes(I N, std::vector<bool> &sieve) {
+void eratosthenes_sieve(I N, std::vector<bool> &sieve) {
   sieve.assign(N + 1, true);
   sieve[0] = 0;
   if (N >= 1) sieve[1] = 0;
@@ -51,7 +51,7 @@ void sieve_eratosthenes(I N, std::vector<bool> &sieve) {
  * @param primes The array to write the primes to.
  */
 template<Integral I>
-void sieve_eratosthenes_list(I N, std::vector<bool> &sieve,
+void eratosthenes_sieve_list(I N, std::vector<bool> &sieve,
     std::vector<I> &primes) {
   sieve.assign(N + 1, true);
   sieve[0] = 0;
@@ -79,14 +79,14 @@ void sieve_eratosthenes_list(I N, std::vector<bool> &sieve,
  * @param primes The array to write the primes to.
  */
 template<Integral I>
-void sieve_eratosthenes_list_segmented(I N, std::vector<I> &primes) {
+void eratosthenes_list(I N, std::vector<I> &primes) {
   const I SEGMENT_SIZE = std::min(N, static_cast<I>(1'000'000));
   I mini = 0;
   I maxi = SEGMENT_SIZE;
   std::vector<bool> sieve;
 
   // Classical sieve for first block.
-  sieve_eratosthenes_list(maxi, sieve, primes);
+  eratosthenes_sieve_list(maxi, sieve, primes);
 
   // Remaining blocks.
   while (maxi != N) {
