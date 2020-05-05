@@ -10,25 +10,6 @@
 namespace ntlib {
 
 /**
- * A tuple of two elements.
- */
-template<typename T1, typename T2>
-struct tuple {
-  T1 a;
-  T2 b;
-};
-
-/**
- * A triple of three elements.
- */
-template<typename T1, typename T2, typename T3>
-struct triple {
-  T1 a;
-  T2 b;
-  T3 c;
-};
-
-/**
  * Computes the absolute value of a number.
  *
  * @param n The number to take the absolute value of.

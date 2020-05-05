@@ -16,6 +16,7 @@
  */
 
 #include <algorithm>
+#include <tuple>
 #include <vector>
 
 #include "base.hpp"
@@ -31,7 +32,7 @@ namespace ntlib {
  */
 template<Integral I>
 void primitive_pythagorean_triples(I maxi,
-    std::vector<triple<I,I,I>> &triples) {
+    std::vector<std::tuple<I,I,I>> &triples) {
   for (I v = 1; 2 * v * v <= maxi; ++v) {
     for (I u = v + 1; u * u + v * v <= maxi; ++u) {
       if (!((u & 1) && (v & 1)) && gcd(u, v) == 1) {
@@ -39,7 +40,7 @@ void primitive_pythagorean_triples(I maxi,
         I b = 2 * u * v;
         I c = u * u + v * v;
         if (a > b) std::swap(a, b);
-        triples.push_back(triple<I,I,I> {a, b, c});
+        triples.push_back(std::make_tuple(a, b, c));
       }
     }
   }

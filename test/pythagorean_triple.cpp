@@ -1,28 +1,26 @@
+#include <gtest/gtest.h>
+
 #include <cstdint>
-#include <cstdio>
+#include <tuple>
 #include <vector>
 
 #include "pythagorean_triple.hpp"
 
-int main() {
-  using NumberType = uint64_t;
+TEST(PythagoreanTriple, Primitive) {
+  const uint32_t maxi = 1000;
+  std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> triples;
+  ntlib::primitive_pythagorean_triples(maxi, triples);
 
-  // Project Euler, Problem 9:
-  // https://projecteuler.net/problem=9
-  const NumberType maxi = 500;
-  std::vector<ntlib::triple<NumberType, NumberType, NumberType>> primitives;
-  ntlib::primitive_pythagorean_triples(maxi, primitives);
-  for (auto &t : primitives) {
-    NumberType f = 1;
-    NumberType sum;
-    do {
-      sum = f * t.a + f * t.b + f * t.c;
-      if (sum == 1000) {
-        printf("(%ld, %ld, %ld) = %ld * (%ld, %ld, %ld)\n",
-            f * t.a, f * t.b, f * t.c, f, t.a, t.b, t.c);
-      }
-      ++f;
-    } while (sum <= 1000);
+  for (const auto &[a,b,c] : triples) {
+    // Check validity.
+    EXPECT_EQ(a * a + b * b, c * c);
+
+    // Check order.
+    EXPECT_LE(a, b);
+    EXPECT_LE(b, c);
+
+    // Check primitivity.
+    uint32_t gcd = ntlib::gcd(a, ntlib::gcd(b, c));
+    EXPECT_EQ(gcd, 1);
   }
-  return 0;
 }

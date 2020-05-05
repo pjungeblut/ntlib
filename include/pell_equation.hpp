@@ -1,5 +1,6 @@
 #pragma once
 
+#include <tuple>
 #include <vector>
 
 #include "base.hpp"
@@ -16,7 +17,7 @@ namespace ntlib {
  * @return Values for a and b, minimal in b.
  */
 template<Integral I>
-tuple<I,I> min_pell_solution(I d) {
+std::tuple<I,I> min_pell_solution(I d) {
   std::vector<I> cf;
   I period = ntlib::quadratic_irrational_cf(d, cf);
   I n;
@@ -24,7 +25,7 @@ tuple<I,I> min_pell_solution(I d) {
   else n = period - 1;
   ntlib::rational<I> pq =
       ntlib::nth_convergent_quadratic_irrational_cf(n, cf);
-  return tuple<I,I> {pq.get_numerator(), pq.get_denominator()};
+  return std::make_tuple(pq.get_numerator(), pq.get_denominator());
 }
 
 /**
@@ -42,11 +43,13 @@ tuple<I,I> min_pell_solution(I d) {
  * @return The next bigger solution than current (in x).
  */
 template<Integral I>
-tuple<I,I> next_pell_solution(I d, const tuple<I,I> &initial,
-    const tuple<I,I> &current) {
-  return tuple<I,I> {
-      initial.a * current.a + d * initial.b * current.b,
-      initial.b * current.a + initial.a * current.b};
+std::tuple<I,I> next_pell_solution(I d, const std::tuple<I,I> &initial,
+    const std::tuple<I,I> &current) {
+  return std::make_tuple(
+      std::get<0>(initial) * std::get<0>(current) +
+          d * std::get<1>(initial) * std::get<1>(current),
+      std::get<1>(initial) * std::get<0>(current) +
+          std::get<0>(initial) * std::get<1>(current));
 }
 
 }
