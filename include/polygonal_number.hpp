@@ -74,4 +74,15 @@ I octagonal_number(I n) {
   return n * (3 * n - 2);
 }
 
+/**
+ * Computes the n-th square pyramid number.
+ *
+ * @param n Which square pyramid number to gnerate.
+ * @return The n-th square pyramid number.
+ */
+template<Integral I>
+I square_pyramid_number(I n) {
+  return n * (n + 1) / 2 * (2 * n + 1) / 3;
+}
+
 }
