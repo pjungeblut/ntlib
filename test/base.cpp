@@ -114,6 +114,25 @@ TEST(Arithmetic, SquareTest) {
   }
 }
 
+TEST(Arithmetic, Factorial) {
+  // Negative values.
+  EXPECT_DEATH(ntlib::factorial(-1), "");
+
+  // Small values.
+  EXPECT_EQ(ntlib::factorial(0), 1);
+  EXPECT_EQ(ntlib::factorial(1), 1);
+  EXPECT_EQ(ntlib::factorial(2), 2);
+  EXPECT_EQ(ntlib::factorial(3), 6);
+  EXPECT_EQ(ntlib::factorial(4), 24);
+  EXPECT_EQ(ntlib::factorial(5), 120);
+  EXPECT_EQ(ntlib::factorial(6), 720);
+  EXPECT_EQ(ntlib::factorial(7), 5'040);
+  EXPECT_EQ(ntlib::factorial(8), 40'320);
+  EXPECT_EQ(ntlib::factorial(9), 362'880);
+  EXPECT_EQ(ntlib::factorial(10), 3'628'800);
+  EXPECT_EQ(ntlib::factorial(20LL), 2'432'902'008'176'640'000LL);
+}
+
 TEST(ModularArithmetic, Exponentiation) {
   // Negative numbers, modulo zero, 0^0.
   EXPECT_DEATH(ntlib::mod_pow(-1, 2, 10), "");

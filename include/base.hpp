@@ -192,6 +192,20 @@ bool is_square(I n) {
 }
 
 /**
+ * Computes the factorial n!.
+ *
+ * @param n The base.
+ * @return The factorial n!.
+ */
+template<Integral I>
+I factorial(I n) {
+  assert(n >= 0);
+  I result = 1;
+  for (I i = 2; i <= n; ++i) result *= i;
+  return result;
+}
+
+/**
  * Computes a^b mod n using binary exponentation.
  * Runtime: O(log b)
  *
