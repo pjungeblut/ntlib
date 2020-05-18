@@ -41,7 +41,7 @@ struct rational {
    *
    * @return The numerator.
    */
-  I get_numerator() {
+  I get_numerator() const {
     return numerator;
   }
 
@@ -50,7 +50,7 @@ struct rational {
    *
    * @return The denominator.
    */
-  I get_denominator() {
+  I get_denominator() const {
     return denominator;
   }
 
