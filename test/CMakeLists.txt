@@ -1,5 +1,6 @@
 # Compiler flags.
-set (CMAKE_CXX_FLAGS "-std=gnu++2a -fconcepts -Wall -Wextra -O3")
+set(CMAKE_CXX_COMPILER g++-10)
+set (CMAKE_CXX_FLAGS "-std=c++2a -fconcepts -Wall -Wextra -O3")
 
 # Include the necessary files.
 include_directories(../include)

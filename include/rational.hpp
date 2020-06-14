@@ -5,6 +5,7 @@
  */
 
 #include <cassert>
+#include <compare>
 #include <string>
 
 #include "base.hpp"
@@ -82,64 +83,20 @@ struct rational {
    * @param b The right hand side to compare.
    * @return True, if and only if a == b.
    */
-  friend bool operator==(const rational &a, const rational &b) {
-    return a.numerator == b.numerator && a.denominator == b.denominator;
+  bool operator==(const rational &other) const {
+    return numerator == other.numerator && denominator == other.denominator;
   }
 
   /**
-   * Unequal operator.
+   * Three-way comparison.
    *
    * @param a The left hand side to compare.
    * @param b The right hand side to compare.
-   * @return True, if and only if a != b.
+   * @return True, if and only if a <=> b.
    */
-  friend bool operator!=(const rational &a, const rational &b) {
-    return !(a == b);
-  }
-
-  /**
-   * Smaller than operator.
-   *
-   * @param a The left hand side to compare.
-   * @param b The right hand side to compare.
-   * @return True, if and only if a < b.
-   */
-  friend bool operator<(const rational &a, const rational &b) {
-    return a.numerator * b.denominator < b.numerator * a.denominator;
-  }
-
-  /**
-   * Greater than operator.
-   *
-   * @param a The left hand side to compare.
-   * @param b The right hand side to compare.
-   * @return True, if and only if a > b.
-   */
-  friend bool operator>(const rational &a, const rational &b) {
-    return b < a;
-  }
-
-  /**
-   * Less than or equal operator.
-   *
-   * @param a The left hand side to compare.
-   * @param b The right hand side to compare.
-   * @return True, if and only if a <= b.
-   */
-  friend bool operator<=(const rational &a, const rational &b) {
-    return a < b || a == b;
-  }
-
-  /**
-   * Greather than or equal operator.
-   *
-   * @param a The left hand side to compare.
-   * @param b The right hand side to compare.
-   * @return True, if and only if a >= b.
-   */
-  friend bool operator>=(const rational &a, const rational &b) {
-    return a > b || a == b;
-  }
+  std::strong_ordering operator<=>(const rational &other) const {
+    return numerator * other.denominator <=> other.numerator * denominator;
+  };
 
   /**
    * Unary minus to negate value.
