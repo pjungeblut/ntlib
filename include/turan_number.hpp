@@ -2,8 +2,6 @@
 
 #include <cassert>
 
-#include "integral.hpp"
-
 namespace ntlib {
 
 /**
@@ -14,11 +12,11 @@ namespace ntlib {
  * @param k The number of bipartition sets.
  * @return The number of edges in T(n,k).
  */
-template<Integral I>
-I turan(I n, I k) {
+template<typename T>
+T turan(T n, T k) {
   assert(n >= 0);
   assert(k > 0);
-  I s = n % k;
+  T s = n % k;
   return ((k - 1) * (n * n - s * s)) / (2 * k) + s * (s - 1) / 2;
 }
 

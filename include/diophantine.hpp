@@ -1,7 +1,6 @@
 #pragma once
 
 #include "base.hpp"
-#include "integral.hpp"
 
 namespace ntlib {
 
@@ -17,8 +16,8 @@ namespace ntlib {
  * @param gcd Value of gcd(a,b). This is needed to compute further solutions.
  * @return Whether a solution exists (and therefore was computed).
  */
-template<Integral I>
-bool diophantine_solution(I a, I b, I c, I &x, I &y, I &gcd) {
+template<typename T>
+bool diophantine_solution(T a, T b, T c, T &x, T &y, T &gcd) {
   // Special case: a = 0 and b = 0.
   if (a == 0 && b == 0) {
     if (c == 0) {

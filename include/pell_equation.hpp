@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "base.hpp"
-#include "integral.hpp"
 #include "continued_fraction.hpp"
 
 namespace ntlib {
@@ -16,14 +15,14 @@ namespace ntlib {
  * @param d Parameter d, must not be square.
  * @return Values for a and b, minimal in b.
  */
-template<Integral I>
-std::tuple<I,I> min_pell_solution(I d) {
-  std::vector<I> cf;
-  I period = ntlib::quadratic_irrational_cf(d, cf);
-  I n;
+template<typename T>
+std::tuple<T,T> min_pell_solution(T d) {
+  std::vector<T> cf;
+  T period = ntlib::quadratic_irrational_cf(d, cf);
+  T n;
   if ((bool)(period & 1)) n = 2 * period - 1;
   else n = period - 1;
-  ntlib::rational<I> pq =
+  ntlib::rational<T> pq =
       ntlib::nth_convergent_quadratic_irrational_cf(n, cf);
   return std::make_tuple(pq.get_numerator(), pq.get_denominator());
 }
@@ -42,9 +41,11 @@ std::tuple<I,I> min_pell_solution(I d) {
  * @param current Any solution.
  * @return The next bigger solution than current (in x).
  */
-template<Integral I>
-std::tuple<I,I> next_pell_solution(I d, const std::tuple<I,I> &initial,
-    const std::tuple<I,I> &current) {
+template<typename T>
+std::tuple<T,T> next_pell_solution(T d, const std::tuple<T,T> &initial,
+    const std::tuple<T,T> &current) {
+  const auto &[ix, iy] = initial;
+  const auto &[cx, cy] = current;
   return std::make_tuple(
       std::get<0>(initial) * std::get<0>(current) +
           d * std::get<1>(initial) * std::get<1>(current),

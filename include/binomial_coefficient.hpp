@@ -6,8 +6,6 @@
 #include <cassert>
 #include <vector>
 
-#include "integral.hpp"
-
 namespace ntlib {
 
 /**
@@ -21,14 +19,14 @@ namespace ntlib {
  * @param k Size of the subsets.
  * @return The number of k-element subsets of {1,...,n}.
  */
-template<Integral I>
-I binom(I n, I k) {
+template<typename T>
+T binom(T n, T k) {
   assert(n >= 0);
 
   if (k < 0 || k > n) return 0;
 
-  I binom = 1;
-  for (I i = 1; i <= k; ++i) {
+  T binom = 1;
+  for (T i = 1; i <= k; ++i) {
     binom *= n--;
     binom /= i;
   }
@@ -43,15 +41,15 @@ I binom(I n, I k) {
  * @param N The parameter N.
  * @param binoms Two-dimensional vector to store the binomial coefficients.
  */
-template<Integral I>
-void binom_table(I N, std::vector<std::vector<I>> &binoms) {
+template<typename T>
+void binom_table(T N, std::vector<std::vector<T>> &binoms) {
   assert(N >= 0);
 
-  binoms.assign(N + 1, std::vector<I>(N + 1, 0));
+  binoms.assign(N + 1, std::vector<T>(N + 1, 0));
   binoms[0][0] = 1;
-  for (I n = 1; n <= N; ++n) {
+  for (T n = 1; n <= N; ++n) {
     binoms[n][0] = 1;
-    for (I k = 1; k <= n; ++k) {
+    for (T k = 1; k <= n; ++k) {
       binoms[n][k] = binoms[n - 1][k - 1] + binoms[n - 1][k];
     }
   }
@@ -66,16 +64,16 @@ void binom_table(I N, std::vector<std::vector<I>> &binoms) {
  * @param m The modulus.
  * @param binoms Two-dimensional vector to store the binomial coefficients.
  */
-template<Integral I>
-void mod_binom_table(I N, I m, std::vector<std::vector<I>> &binoms) {
+template<typename T>
+void mod_binom_table(T N, T m, std::vector<std::vector<T>> &binoms) {
   assert(N >= 0);
   assert(m > 0);
 
-  binoms.assign(N + 1, std::vector<I>(N + 1, 0));
+  binoms.assign(N + 1, std::vector<T>(N + 1, 0));
   binoms[0][0] = 1;
-  for (I n = 1; n <= N; ++n) {
+  for (T n = 1; n <= N; ++n) {
     binoms[n][0] = 1;
-    for (I k = 1; k <= n; ++k) {
+    for (T k = 1; k <= n; ++k) {
       binoms[n][k] = (binoms[n - 1][k - 1] + binoms[n - 1][k]) % m;
     }
   }

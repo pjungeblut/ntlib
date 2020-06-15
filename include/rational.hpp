@@ -9,14 +9,13 @@
 #include <string>
 
 #include "base.hpp"
-#include "integral.hpp"
 
 namespace ntlib {
 
 /**
  * Represents a rational number.
  */
-template<Integral I>
+template<typename T>
 struct rational {
   /**
    * Construct rational from a numerator and a denominator.
@@ -24,10 +23,10 @@ struct rational {
    * @param n The numerator.
    * @param d The denominator. Defaults to 1.
    */
-  rational(I n = 0, I d = 1) {
+  rational(T n = 0, T d = 1) {
     assert(d != 0);
 
-    I f = gcd(n, d);
+    T f = gcd(n, d);
     numerator = n / f;
     denominator = d / f;
 
@@ -42,7 +41,7 @@ struct rational {
    *
    * @return The numerator.
    */
-  I get_numerator() const {
+  T get_numerator() const {
     return numerator;
   }
 
@@ -51,7 +50,7 @@ struct rational {
    *
    * @return The denominator.
    */
-  I get_denominator() const {
+  T get_denominator() const {
     return denominator;
   }
 
@@ -222,8 +221,8 @@ private:
   /**
    * Numerator and denominator.
    */
-  I numerator;
-  I denominator;
+  T numerator;
+  T denominator;
 
   /**
    * Adds two rationals into a third.
@@ -234,12 +233,12 @@ private:
    * @param c The sum a + b.
    */
   static void add(const rational &a, const rational &b, rational &c) {
-    I lcd = lcm(a.denominator, b.denominator);
-    I fa = lcd / a.denominator;
-    I fb = lcd / b.denominator;
-    I numerator = fa * a.numerator + fb * b.numerator;
-    I denominator = lcd;
-    I g = gcd(numerator, denominator);
+    T lcd = lcm(a.denominator, b.denominator);
+    T fa = lcd / a.denominator;
+    T fb = lcd / b.denominator;
+    T numerator = fa * a.numerator + fb * b.numerator;
+    T denominator = lcd;
+    T g = gcd(numerator, denominator);
     if (g != 1) {
       numerator /= g;
       denominator /= g;
@@ -257,12 +256,12 @@ private:
    * @param c The difference a - b.
    */
   static void subtract(const rational &a, const rational &b, rational &c) {
-    I lcd = lcm(a.denominator, b.denominator);
-    I fa = lcd / a.denominator;
-    I fb = lcd / b.denominator;
-    I numerator = fa * a.numerator - fb * b.numerator;
-    I denominator = lcd;
-    I g = gcd(numerator, denominator);
+    T lcd = lcm(a.denominator, b.denominator);
+    T fa = lcd / a.denominator;
+    T fb = lcd / b.denominator;
+    T numerator = fa * a.numerator - fb * b.numerator;
+    T denominator = lcd;
+    T g = gcd(numerator, denominator);
     if (g != 1) {
       numerator /= g;
       denominator /= g;
@@ -280,9 +279,9 @@ private:
    * @param c The product a * b.
    */
   static void multiply(const rational &a, const rational &b, rational &c) {
-    I numerator = a.numerator * b.numerator;
-    I denominator = a.denominator * b.denominator;
-    I g = gcd(numerator, denominator);
+    T numerator = a.numerator * b.numerator;
+    T denominator = a.denominator * b.denominator;
+    T g = gcd(numerator, denominator);
     if (g != 1) {
       numerator /= g;
       denominator /= g;
@@ -300,9 +299,9 @@ private:
    * @param c The quotient a / b.
    */
   static void divide(const rational &a, const rational &b, rational &c) {
-    I numerator = a.numerator * b.denominator;
-    I denominator = a.denominator * b.numerator;
-    I g = gcd(numerator, denominator);
+    T numerator = a.numerator * b.denominator;
+    T denominator = a.denominator * b.numerator;
+    T g = gcd(numerator, denominator);
     if (g != 1) {
       numerator /= g;
       denominator /= g;

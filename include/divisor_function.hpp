@@ -7,7 +7,6 @@
 #include <map>
 
 #include "base.hpp"
-#include "integral.hpp"
 #include "prime_decomposition.hpp"
 
 namespace ntlib {
@@ -20,11 +19,11 @@ namespace ntlib {
  *                 It must be 0 < exponent.
  * @return The value of d_x(n) = \sum_{d|n} d^x.
  */
-template<Integral I>
-I divisor_function(std::map<I, I> &factors, I exponent) {
-  I result = 1;
-  for (auto &[factor, mulitplicity] : factors) {
-    result *= (pow(factor, exponent * (mulitplicity + 1)) - 1) / (pow(factor, exponent) - 1);
+template<typename T>
+T divisor_function(std::map<T, T> &factors, T exponent) {
+  T result = 1;
+  for (auto &[f, m] : factors) {
+    result *= (pow(f, exponent * (m + 1)) - 1) / (pow(f, exponent) - 1);
   }
   return result;
 }
@@ -36,10 +35,10 @@ I divisor_function(std::map<I, I> &factors, I exponent) {
  * @param factors The prime factors and their multiplicities.
  * @return The number of divisors.
  */
-template<Integral I>
-I count_divisors(std::map<I, I> &factors) {
-  I divisors = 1;
-  for (auto &f : factors) divisors *= f.second + 1;
+template<Integral T>
+T count_divisors(std::map<T, T> &factors) {
+  T divisors = 1;
+  for (auto &[k,v] : factors) divisors *= v + 1;
   return divisors;
 }
 

@@ -2,18 +2,12 @@
 
 /**
  * Implementations for prime number tests.
- *
- * Contains different implementations:
- * Naive: Tests all possible factors <= sqrt(n).
- * Miller Rabin: Deterministic variant of Miller Rabin Prime number test for
- *               64 bit (unsigned) integers.
  */
 
 #include <algorithm>
 #include <vector>
 
 #include "base.hpp"
-#include "integral.hpp"
 
 namespace ntlib {
 
@@ -23,10 +17,10 @@ namespace ntlib {
  *
  * @param n The number to be tested.
  */
-template<Integral I>
-bool is_prime_naive(I n) {
+template<typename T>
+bool is_prime_naive(const T &n) {
   if (n < 2) return false;
-  for (I i = 2; i * i <= n; ++i) {
+  for (T i = 2; i * i <= n; ++i) {
     if (n % i == 0) return false;
   }
   return true;
@@ -41,16 +35,16 @@ bool is_prime_naive(I n) {
  * @return False, if the number is composite. True, if the number is probable
  *         prime.
  */
-template<Integral I>
-bool miller_rabin_test(const I n, const I a) {
-   const I m = n - 1;
-   I d = m >> 1;
-   I e = 1;
+template<typename T>
+bool miller_rabin_test(const T &n, const T &a) {
+   const T m = n - 1;
+   T d = m >> 1;
+   T e = 1;
    while (!(d & 1)) {
      d >>= 1;
      ++e;
    }
-   I p = a;
+   T p = a;
    p = ntlib::mod_pow(a, d, n);
    if (p == 1 || p == m) return true;
    while (--e) {
@@ -64,20 +58,20 @@ bool miller_rabin_test(const I n, const I a) {
 /**
  * Prime number test.
  * Deterministic variant of Miller Rabin prime test.
- * Deterministic for n < 318.665.857.834.031.151.167.461.
+ * Deterministic for n < 318'665'857'834'031'151'167'461.
  * Runtime: O(log n)
  *
  * @param n The number to be tested.
  */
-template<Integral I>
-bool is_prime_miller_rabin(I n) {
+template<typename T>
+bool is_prime_miller_rabin(T n) {
   // Base cases.
 	if (n == 2) return true;
 	if (n < 2 || n % 2 == 0) return false;
 
   // Possible bases.
-  std::vector<I> bases = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37};
-  for (I a : bases) {
+  std::vector<T> bases = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37};
+  for (T a : bases) {
     if (a >= n - 1) break;
     if (!miller_rabin_test(n, a)) return false;
 	}

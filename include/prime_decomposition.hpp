@@ -17,7 +17,6 @@
 #include <vector>
 
 #include "base.hpp"
-#include "integral.hpp"
 #include "prime_generation.hpp"
 #include "prime_test.hpp"
 
@@ -33,9 +32,9 @@ namespace ntlib {
  *               correctly.
  * @param factors The prime factors.
  */
-template<Integral I>
-void prime_decomposition(I n, const std::vector<I> &primes,
-    std::map<I, I> &factors) {
+template<typename T>
+void prime_decomposition(T n, const std::vector<T> &primes,
+    std::map<T, T> &factors) {
   factors.clear();
   for (std::size_t i = 0; i < primes.size() && primes[i] * primes[i] <= n; ++i) {
     while (n % primes[i] == 0) {
@@ -52,11 +51,11 @@ void prime_decomposition(I n, const std::vector<I> &primes,
  * @param n The number to decompose.
  * @param factors The prime factors.
  */
-template<Integral I>
-void prime_decomposition(I n, std::map<I, I> &factors) {
+template<typename T>
+void prime_decomposition(T n, std::map<T, T> &factors) {
   factors.clear();
-  I iroot = isqrt(n);
-  std::vector<I> primes;
+  T iroot = isqrt(n);
+  std::vector<T> primes;
   eratosthenes_list(iroot, primes);
   prime_decomposition(n, primes, factors);
 }
@@ -67,13 +66,13 @@ void prime_decomposition(I n, std::map<I, I> &factors) {
  * @param factors The prime factors and their multiplicities.
  * @param divisors All divisors of the number.
  */
-template<Integral I>
-void enumerate_divisors(const std::map<I, I> &factors,
-    std::vector<I> &divisors) {
-  divisors.assign(1, static_cast<I>(1));
+template<typename T>
+void enumerate_divisors(const std::map<T, T> &factors,
+    std::vector<T> &divisors) {
+  divisors.assign(1, static_cast<T>(1));
   for (auto [factor, multiplicity] : factors) {
     const std::size_t cur_num_divisors = divisors.size();
-    I power = factor;
+    T power = factor;
     while (multiplicity--) {
       for (std::size_t i = 0; i < cur_num_divisors; ++i) {
         divisors.push_back(divisors[i] * power);
