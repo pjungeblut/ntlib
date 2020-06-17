@@ -1,6 +1,8 @@
 # CMake version.
 cmake_minimum_required (VERSION 3.13)
 
+project("ntlib - Number Theory Library")
+
 # Download and unpack GoogleTest at configure time.
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .

@@ -29,7 +29,7 @@ T abs(T n) {
  */
 template<typename T>
 T gcd(T a, T b) {
-  assert(!(a == 0 && b == 0));
+  assert(a != 0 || b != 0);
   return b == 0 ? abs(a) : gcd(b, a % b);
 }
 

@@ -46,11 +46,7 @@ std::tuple<T,T> next_pell_solution(T d, const std::tuple<T,T> &initial,
     const std::tuple<T,T> &current) {
   const auto &[ix, iy] = initial;
   const auto &[cx, cy] = current;
-  return std::make_tuple(
-      std::get<0>(initial) * std::get<0>(current) +
-          d * std::get<1>(initial) * std::get<1>(current),
-      std::get<1>(initial) * std::get<0>(current) +
-          std::get<0>(initial) * std::get<1>(current));
+  return std::make_tuple(ix * cx + d * iy * cy, iy * cx + ix * cy);
 }
 
 }
