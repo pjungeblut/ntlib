@@ -1,8 +1,7 @@
 #pragma once
 
 /**
- * Implementations regarding the continued fraction expressions of certain
- * numbers.
+ * Contininued fraction expansion for quadratic irrationals.
  */
 
 #include <cmath>
@@ -19,12 +18,6 @@ namespace ntlib {
  * For these (and only these) numbers the continued fraction is regular and
  * periodic.
  *
- * Algorithm from:
- * https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Continued_fraction_expansion
- *
- * TODO: Change this to work in constant memory. There is no need to use vectors
- *       as only the very first and last elements are used in each step.
- *
  * @param n The number n, to get the representation for sqrt(n). Must not be a
  *          perfect square.
  * @param The regular, periodic continued fraction representing sqrt(n). The
@@ -33,21 +26,23 @@ namespace ntlib {
  * @return The period length.
  */
 template<typename T>
-T quadratic_irrational_cf(T n, std::vector<T> &cf) {
-  std::vector<T> m(1, 0);
-  std::vector<T> d(1, 1);
-  cf.push_back(isqrt(n));
+T quadratic_irrational_cf(const T &n, std::vector<T> &cf) {
+  const T m0 = 0;
+  const T d0 = 1;
+  cf.assign(1, isqrt(n));
 
-  for (T i = 1; ; ++i) {
-    T m2 = d.back() * cf.back() - m.back();
-    T d2 = (n - m2 * m2) / d.back();
-    T cf2 = (cf[0] + m2) / d2;
+  T m = d0 * cf[0] - m0, m1 = m;
+  T d = (n - m * m) / d0, d1 = d;
+  T c = (cf[0] + m) / d, c1 = c;
+  cf.push_back(c);
 
-    if (i > 1 && m2 == m[1] && d2 == d[1] && cf2 == cf[1]) return i - 1;
+  for (T i = 2; ; ++i) {
+    m = d * cf.back() - m;
+    d = (n - m * m) / d;
+    c = (cf[0] + m) / d;
 
-    m.push_back(m2);
-    d.push_back(d2);
-    cf.push_back(cf2);
+    if (i > 1 && m == m1 && d == d1 && c == c1) return i - 1;
+    cf.push_back(c);
   }
 }
 
