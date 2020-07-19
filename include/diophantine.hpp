@@ -19,18 +19,25 @@ namespace ntlib {
  *
  * @param a Parameter a.
  * @param b Parameter b, must be a multiple of a.
- * return The solution in x.
+ * @param x Output parameter for value x.
+ * return Whether a solution was found.
  */
 template<typename T>
-T diophantine_linear_univariate(const T &a, const T &b) {
+bool diophantine_linear_univariate(const T &a, const T &b, T &x) {
   // If a = 0 then we must also have b = 0.
   // In this case, there are inifinitely many solutions and we return 0.
-  assert(a != 0 || b == 0);
-  if (a == 0) return 0;
+  if (a == 0) {
+    if (b == 0) {
+      x = 0;
+      return true;
+    }
+    return false;
+  }
 
   // There is a unique solution if and only if b is a multiple of a.
-  assert(b % a == 0);
-  return b / a;
+  if (b % a) return false;
+  x = b / a;
+  return true;
 }
 
 /**
@@ -41,32 +48,68 @@ T diophantine_linear_univariate(const T &a, const T &b) {
  * @param a Parameter a.
  * @param b Parameter b.
  * @param c Parameter c, must be a multiple of gcd(a,b).
- * @return A triple with x, y and gcd(a,b) where the latter is needed to compute
- *         further solution via Bezout's Identity. In case a = b = 0, the third
- *         element is 0.
+ * @param x Output parameter for value x.
+ * @param y Output parameter for value y.
+ * @param gcd Output parameter for value gcd(a,b). This is needed to compute
+ *            further solutions vio Beyout's Identity. In case a = b = 0 this
+ *            will not be set.
+ * @return Whether a solution was found.
  */
 template<typename T>
-std::tuple<T,T,T> diophantine_linear_bivariate(T a, T b, T c) {
+bool diophantine_linear_bivariate(const T &a, const T &b, const T &c, T &x, T &y, T &gcd) {
   // Special case: a = 0 and b = 0.
-  assert(a != 0 || b != 0 || c == 0);
-  if (a == 0 && b == 0) return std::make_tuple(0, 0, 0);
+  if (a == 0 && b == 0) {
+    if (c == 0) {
+      x = 0, y = 0;
+      return true;
+    }
+    return false;
+  }
 
   // Special case: a = 0.
-  assert(a != 0 || c % b == 0);
-  if (a == 0) return std::make_tuple(0, c / b, b);
+  if (a == 0) {
+    gcd = b;
+    return diophantine_linear_univariate(b, c, y);
+  }
 
   // Special case: b = 0.
-  assert(b != 0 || c % a == 0);
-  if (b == 0) return std::make_tuple(c / a, 0, a);
+  if (b == 0) {
+    gcd = a;
+    return diophantine_linear_univariate(a, c, x);
+  }
 
   // General case.
-  T x, y, gcd = extended_euclid(abs(a), abs(b), x, y);
-  assert(c % gcd == 0);
+  gcd = extended_euclid(abs(a), abs(b), x, y);
+  if (c % gcd != 0) return false;
   x *= c / gcd;
   y *= c / gcd;
   if (a < 0) x = -x;
   if (b < 0) y = -y;
-  return std::make_tuple(x, y, gcd);
+  return true;
+}
+
+/**
+ * Computes a fundamental solution (x,y) to the diophantine equation
+ * x^2 - d * y^2 = n where d is not a perfect square with gcd(x,y) = 1.
+ *
+ * The algorithm is taken from:
+ * http://www.numbertheory.org/pdfs/talk_2004.pdf
+ *
+ * @param d Parameter d, must not be a perfect square.
+ * @param n Parameter n.
+ * @param x Output parameter for value x.
+ * @param y Output parameter for value y.
+ * @return Whether a solution was found.
+ */
+template<typename T>
+bool diophantine_quadratic_generalized_pell(
+    const T &d, const T &n, T &x, T &y) {
+  if (n * n < d) {
+    // In case abs(N) < sqrt(D), then x/y is a convergent of sqrt(D).
+  } else {
+
+  }
+  return false;
 }
 
 }
