@@ -2,7 +2,7 @@
 
 A small C++ library containing common number theory implementations.
 The library should contain modular implementations that can easily be combined to solve mathematical problems.
-Most code was used to solve [Project Euler](https://projecteuler.net) problems, which are currently also the main tests.
+Most code was used and developed to solve [Project Euler](https://projecteuler.net) problems.
 
-# Documentation
-See the [Wiki](https://github.com/pjungeblut/ntlib/wiki) for an overview of the provided functions.
+# Requirements
+* G++10 or higher to allow use of three way comparison operator.
