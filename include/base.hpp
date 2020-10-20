@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cmath>
 #include <random>
 #include <type_traits>
 
@@ -119,17 +120,25 @@ template<typename T>
 T isqrt(T n) {
   assert(n >= 0);
 
-  T u = 1;
-  while (u * u <= n) u *= 2;
-  T l = u / 2;
+  if constexpr (std::is_integral<T>::value || std::is_same<T, double>::value) {
+    return floor(sqrt(n));
+  } else if constexpr (std::is_same<T, float>::value) {
+    return floorf(sqrtf(n));
+  } else if constexpr (std::is_same<T, long double>::value) {
+    return floorl(sqrtl(n));
+  } else {
+    T u = 1;
+    while (u * u <= n) u *= 2;
+    T l = u / 2;
 
-  while (u - l > 16) {
-    T m = (u + l) / 2;
-    if (m * m <= n) l = m;
-    else u = m;
+    while (u - l > 16) {
+      T m = (u + l) / 2;
+      if (m * m <= n) l = m;
+      else u = m;
+    }
+    while (l * l <= n) ++l;
+    return l - 1;
   }
-  while (l * l <= n) ++l;
-  return l - 1;
 }
 
 /**

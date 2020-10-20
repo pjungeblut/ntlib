@@ -1,12 +1,19 @@
 # Include the necessary files.
 include_directories(../include)
 
-# Select all *.cpp files.
-file(GLOB cppFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+function(add_unittest name)
+  add_executable(ut_${name} ${CMAKE_CURRENT_SOURCE_DIR}/${name}.cpp)
+  set_target_properties(ut_${name} PROPERTIES OUTPUT_NAME ${name})
+  target_link_libraries(ut_${name} gtest_main)
+endfunction()
 
-# Compile each file.
-foreach(cppFile ${cppFiles})
-  add_executable("${cppFile}" "${cppFile}")
-  target_link_libraries("${cppFile}" gtest_main)
-  add_test(NAME "${cppFile}" COMMAND "${cppFile}")
-endForeach(cppFile)
+add_unittest(base)
+add_unittest(binomial_coefficient)
+add_unittest(diophantine)
+add_unittest(pell_equation)
+add_unittest(prime_decomposition)
+add_unittest(prime_generation)
+add_unittest(prime_test)
+add_unittest(pythagorean_triple)
+add_unittest(rational)
+add_unittest(turan_number)
