@@ -5,6 +5,7 @@ function(add_unittest name)
   add_executable(ut_${name} ${CMAKE_CURRENT_SOURCE_DIR}/${name}.cpp)
   set_target_properties(ut_${name} PROPERTIES OUTPUT_NAME ${name})
   target_link_libraries(ut_${name} gtest_main)
+  add_test(NAME ${name} COMMAND ut_${name})
 endfunction()
 
 add_unittest(base)

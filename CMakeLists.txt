@@ -32,6 +32,7 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  EXCLUDE_FROM_ALL)
 
 # Build tests.
+enable_testing()
 add_subdirectory(test)
 
 ################################################################################
@@ -58,6 +59,9 @@ endif()
 add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googlebenchmark-src
                  ${CMAKE_CURRENT_BINARY_DIR}/googlebenchmark-build
                  EXCLUDE_FROM_ALL)
+
+# Don't run tests from Google Benchmark.
+set(BENCHMARK_ENABLE_GTEST_TESTS OFF)
 
 # Build benchmarks.
 add_subdirectory(benchmarks)
