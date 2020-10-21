@@ -117,7 +117,7 @@ T pow(T a, T b) {
  * @return isqrt(n)
  */
 template<typename T>
-T isqrt(T n) {
+inline T isqrt(T n) {
   assert(n >= 0);
 
   if constexpr (std::is_integral<T>::value || std::is_same<T, double>::value) {
@@ -128,11 +128,13 @@ T isqrt(T n) {
     return floorl(sqrtl(n));
   } else {
     T u = 1;
-    while (u * u <= n) u *= 2;
+    do u *= 2;
+    while (u * u <= n);
     T l = u / 2;
 
-    while (u - l > 16) {
-      T m = (u + l) / 2;
+    const T THRESHOLD = 15;
+    while (u - l > THRESHOLD) {
+      T m = l + (u - l) / 2;
       if (m * m <= n) l = m;
       else u = m;
     }
