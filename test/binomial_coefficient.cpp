@@ -5,9 +5,6 @@
 #include "binomial_coefficient.hpp"
 
 TEST(BinomialCoefficient, SingleValue) {
-  // Test invalid inputs (n  negative).
-  EXPECT_DEATH(ntlib::binom(-1, 9), "");
-
   // Test some sample values.
   EXPECT_EQ(ntlib::binom(10, -1), 0);
   EXPECT_EQ(ntlib::binom(10, 0), 1);
@@ -27,9 +24,6 @@ TEST(BinomialCoefficient, SingleValue) {
 TEST(BinomialCoefficient, Table) {
   std::vector<std::vector<int32_t>> binoms;
 
-  // Test invalid input.
-  EXPECT_DEATH(ntlib::binom_table(-1, binoms), "");
-
   // Test some values.
   // N = 29 is the biggest value such that ntlib::binom(N,_) does not overflow.
   const int32_t N = 29;
@@ -43,10 +37,6 @@ TEST(BinomialCoefficient, Table) {
 
 TEST(ModularBinomialCoefficient, Table) {
   std::vector<std::vector<int32_t>> binoms;
-
-  // Test invalid input.
-  EXPECT_DEATH(ntlib::mod_binom_table(-1, 10, binoms), "");
-  EXPECT_DEATH(ntlib::mod_binom_table(10, 0, binoms), "");
 
   // Test some values.
   // N = 29 is the biggest value such that ntlib::binom(N,_) does not overflow.

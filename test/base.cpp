@@ -21,7 +21,6 @@ TEST(ArithmeticFunctions, GreatestCommonDivisor) {
   // At least one parameter is zero.
   EXPECT_EQ(ntlib::gcd(10, 0), 10);
   EXPECT_EQ(ntlib::gcd(0, 10), 10);
-  EXPECT_DEATH(ntlib::gcd(0, 0), "");
 
   // Negative values.
   // The gcd must always be positive.
@@ -34,12 +33,6 @@ TEST(ArithmeticFunctions, LowestCommonMultiple) {
   // Basic examples with (non-multiples).
   EXPECT_EQ(ntlib::lcm(2, 3), 6);
   EXPECT_EQ(ntlib::lcm(3, 9), 9);
-
-  // At least one parameter is zero. The lcm must be positive and is therefore
-  // only defined if both values are non-zero.
-  EXPECT_DEATH(ntlib::lcm(0, 5), "");
-  EXPECT_DEATH(ntlib::lcm(5, 0), "");
-  EXPECT_DEATH(ntlib::lcm(0, 0), "");
 
   // Negative values.
   // The lcm must always be positive.
@@ -58,7 +51,6 @@ TEST(ArithmeticFunctions, ExtendedEuclid) {
   // At least one parameter zero.
   EXPECT_EQ(ntlib::extended_euclid(10, 0, x, y), 10);
   EXPECT_EQ(ntlib::extended_euclid(0, 10, x, y), 10);
-  EXPECT_DEATH(ntlib::extended_euclid(0, 0, x, y), "");
 
   // Negative values.
   EXPECT_EQ(ntlib::extended_euclid(-7, 3, x, y), 1);
@@ -79,9 +71,6 @@ TEST(Arithmetic, BinaryExponentation) {
   for (int32_t i = 0; i <= 10; ++i) {
     EXPECT_EQ(ntlib::pow(-2, i), (i % 2 ? -1 : 1) * (1 << i));
   }
-
-  // 0^0 is undefined.
-  EXPECT_DEATH(ntlib::pow(0, 0), "");
 }
 
 TEST(Arithmetic, IntegerSquareRoot) {
@@ -91,9 +80,6 @@ TEST(Arithmetic, IntegerSquareRoot) {
     EXPECT_LE(root * root, i);
     EXPECT_GT((root + 1) * (root + 1), i);
   }
-
-  // Negative values.
-  EXPECT_DEATH(ntlib::isqrt(-1), "");
 }
 
 TEST(Arithmetic, SquareTest) {
@@ -115,9 +101,6 @@ TEST(Arithmetic, SquareTest) {
 }
 
 TEST(Arithmetic, Factorial) {
-  // Negative values.
-  EXPECT_DEATH(ntlib::factorial(-1), "");
-
   // Small values.
   EXPECT_EQ(ntlib::factorial(0), 1);
   EXPECT_EQ(ntlib::factorial(1), 1);
@@ -134,12 +117,6 @@ TEST(Arithmetic, Factorial) {
 }
 
 TEST(ModularArithmetic, Exponentiation) {
-  // Negative numbers, modulo zero, 0^0.
-  EXPECT_DEATH(ntlib::mod_pow(-1, 2, 10), "");
-  EXPECT_DEATH(ntlib::mod_pow(1, -2, 10), "");
-  EXPECT_DEATH(ntlib::mod_pow(1, 2, 0), "");
-  EXPECT_DEATH(ntlib::mod_pow(0, 0, 10), "");
-
   // General tests.
   uint32_t p = 509;
   for (uint32_t i = 1; i < p; ++i) {
@@ -157,9 +134,7 @@ TEST(ModularArithmetic, Exponentiation) {
 TEST(ModularArithmetic, MultiplicativeInverse) {
   const uint32_t m = 50;
   for (uint32_t n = 1; n < m; ++n) {
-    if (ntlib::gcd(n, m) != 1) {
-      EXPECT_DEATH(ntlib::mod_mult_inv(n, m), "");
-    } else {
+    if (ntlib::gcd(n, m) == 1) {
       uint32_t inv = ntlib::mod_mult_inv(n, m);
       EXPECT_EQ(n * inv % m, 1);
     }
@@ -187,8 +162,6 @@ TEST(ModularArithmetic, SquareRoots) {
     if (ntlib::mod_is_square(n, m)) {
       uint32_t root = ntlib::mod_sqrt(n, m);
       EXPECT_EQ(root * root % m, n);
-    } else {
-      EXPECT_DEATH(ntlib::mod_sqrt(n, m), "");
     }
   }
 }

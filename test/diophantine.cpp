@@ -2,14 +2,6 @@
 
 #include "diophantine.hpp"
 
-TEST(LinearUnivariate, InvalidArguments) {
-  // If a = 0 must imply b = 0.
-  EXPECT_DEATH(ntlib::diophantine_linear_univariate(0, 1), "");
-
-  // There is no solution if b is not a multiple of a.
-  EXPECT_DEATH(ntlib::diophantine_linear_univariate(2, 3), "");
-}
-
 TEST(LinearUnivariate, SmallValues) {
   // Special case 0x = 0.
   EXPECT_EQ(ntlib::diophantine_linear_univariate(0, 0), 0);
@@ -24,20 +16,6 @@ TEST(LinearUnivariate, SmallValues) {
       EXPECT_EQ(a * x, b);
     }
   }
-}
-
-TEST(LinearBivariate, InvalidArguments) {
-  // a = 0 and b = 0 must imply c = 0.
-  EXPECT_DEATH(ntlib::diophantine_linear_bivariate(0, 0, 1), "");
-
-  // a = 0 and b != 0 must imply c % b = 0.
-  EXPECT_DEATH(ntlib::diophantine_linear_bivariate(0, 2, 3), "");
-
-  // b = 0 and a != 0 must imply c % a = 0.
-  EXPECT_DEATH(ntlib::diophantine_linear_bivariate(2, 0, 3), "");
-
-  // a != 0 and b != 0 must imply c % gcd(a,b) = 0.
-  EXPECT_DEATH(ntlib::diophantine_linear_bivariate(2, 4, 3), "");
 }
 
 TEST(LinearBivariate, SmallValues) {

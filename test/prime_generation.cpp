@@ -6,8 +6,8 @@
 #include "prime_generation.hpp"
 #include "prime_test.hpp"
 
-const uint64_t N = 1'000'000;
-const uint64_t M = 1'000'000'000;
+const uint64_t N = 10'000;
+const uint64_t M = 10'000'000;
 
 TEST(Eratosthenes, Sieve) {
   std::vector<bool> sieve;

@@ -9,10 +9,9 @@
 #include "prime_generation.hpp"
 
 const uint64_t numbers[] = {
-  1'000'000'007LL * 1'000'000'007LL, // Composite.
-  1'000'003LL * 1'000'003LL * 1'000'003LL, // Composite.
-  2LL * 2 * 2 * 2 * 3 * 3 * 3 * 3 * 4 * 4 * 4 * 4, // Composite.
-  952'016'363'681'739'749LL // Prime.
+  1'000'003LL * 1'000'003LL, // Composite.
+  2LL * 2 * 2 * 3 * 3 * 3 * 4 * 4 * 4, // Composite.
+  995'831'643'093'719LL // Prime.
 };
 
 template<typename T>

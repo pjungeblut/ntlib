@@ -7,9 +7,6 @@ TEST(Initialization, ConstructionByValue) {
   EXPECT_EQ(ntlib::rational(5), 5);
   EXPECT_EQ(ntlib::rational(6, 2), 3);
 
-  // Invalid input.
-  EXPECT_DEATH(ntlib::rational(5, 0), "");
-
   // Negative denominator.
   EXPECT_EQ(ntlib::rational(4, -2), -2);
 }
@@ -102,12 +99,10 @@ TEST(Arithmetic, Division) {
   ntlib::rational b(4, 5);
   ntlib::rational z(0, 2);
 
-  EXPECT_DEATH(a / z, "");
   EXPECT_EQ(a / b, ntlib::rational(25, 8));
   EXPECT_EQ(b / a, ntlib::rational(8, 25));
   a /= b;
   EXPECT_EQ(a, ntlib::rational(25, 8));
   b /= 10;
   EXPECT_EQ(b, ntlib::rational(2, 25));
-  EXPECT_DEATH(b /= z, "");
 }
