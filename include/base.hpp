@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <climits>
 #include <cmath>
 #include <random>
 #include <type_traits>
@@ -109,9 +110,36 @@ T pow(T a, T b) {
 }
 
 /**
- * Computes the integer square root using binary search.
+ * Computes the ceiling of the binary logarithm.
+ * ceil_log2 := ceil(log2(n))
+ *
+ * TODO: Write better comment.
+ * TODO: Use builtins for standard types.
+ *
+ * @param n The number to compute the ceiling of the binary logarithm for.
+ * Qreturn ceil_log2(n)
+ */
+template<typename T>
+inline T ceil_log2(T n) {
+  assert(n >= 0);
+
+  if constexpr (std::is_same<T, unsigned int>::value) {
+    return sizeof(unsigned int) * CHAR_BIT - __builtin_clz(n) - 1;
+  } else if constexpr (std::is_same<T, unsigned long>::value) {
+    return sizeof(unsigned long) * CHAR_BIT - __builtin_clzl(n) - 1;
+  } else if constexpr (std::is_same<T, unsigned long long>::value) {
+    return sizeof(unsigned long long) * CHAR_BIT - __builtin_clzll(n) - 1;
+  } else {
+    T result = 1;
+    const T one = 1;
+    while ((one << result) < n) ++result;
+    return result;
+  }
+}
+
+/**
+ * Computes the integer square.
  * isqrt(n) := floor(sqrt(n))
- * Runtime: O(log n)
  *
  * @param n The number to compute the integer square root of. Non-negative.
  * @return isqrt(n)

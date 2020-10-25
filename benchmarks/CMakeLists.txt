@@ -1,5 +1,5 @@
 # Include the ntlib headers.
-include_directories(../include)
+include_directories(..)
 
 function(add_benchmark name)
   add_executable(bm_${name} ${CMAKE_CURRENT_SOURCE_DIR}/${name}.cpp)
