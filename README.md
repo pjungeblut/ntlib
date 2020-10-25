@@ -5,4 +5,5 @@ The library should contain modular implementations that can easily be combined t
 Most code was used and developed to solve [Project Euler](https://projecteuler.net) problems.
 
 # Requirements
-* G++10 or higher to allow use of three way comparison operator.
+* Uses plenty of C++20 features, such as the three way comparison operator and modules. Therefore an up to date compiler such as Clang-10 is required.
+* Cmake and CTest.
