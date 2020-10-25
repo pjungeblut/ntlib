@@ -3,7 +3,7 @@
 #include <cmath>
 #include <cstdint>
 
-#include "include/base.hpp"
+#include "base.hpp"
 #include "experiments/isqrt.hpp"
 
 static const int N = 1'000'000;

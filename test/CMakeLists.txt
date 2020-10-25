@@ -1,6 +1,3 @@
-# Include the necessary files.
-include_directories(../include)
-
 function(add_unittest name)
   add_executable(ut_${name} ${CMAKE_CURRENT_SOURCE_DIR}/${name}.cpp)
   set_target_properties(ut_${name} PROPERTIES OUTPUT_NAME ${name})
