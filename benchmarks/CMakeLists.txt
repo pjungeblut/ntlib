@@ -6,3 +6,4 @@ endfunction()
 
 include_directories(./)
 add_benchmark(isqrt)
+add_benchmark(sieve_235)
