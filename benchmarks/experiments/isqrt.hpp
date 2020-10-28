@@ -8,7 +8,7 @@ int isqrt_int_floor_sqrt(int n) {
 }
 
 // Taken from:
-// https://web.archive.org/web/20120306040058/http://medialab.freaknet.org/martin/src/sqrt/sqrt.c
+// http://medialab.freaknet.org/martin/src/sqrt/sqrt.c
 int isqrt_int_abacus(int n) {
   int res = 0;
   int one = 1 << 30;
