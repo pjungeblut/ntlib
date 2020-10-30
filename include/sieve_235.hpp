@@ -6,7 +6,9 @@
  *
  * This allows to optimize for space as from every 30 consecutive numbers only
  * the eight ones with residues 1, 7, 11, 13, 17, 19, 23, 29 modulo 30 need to
- * be stored explicitly. Those can be stored in a single byte.
+ * be stored explicitly. Those can be stored in a single byte resulting in a
+ * memory improvement by a factor of 30 compared to a std::vector<std::byte>
+ * or by a factor of 15/4 compared to a std::vector<bool>.
  */
 
 #include <climits>
@@ -25,6 +27,20 @@ class sieve_235 {
   static constexpr std::size_t PER_BYTE = 2 * 3 * 5;
 
   /**
+   * Stores a bitmaks to access the sieve for each possible remainder
+   * modulo 30.
+   */
+  static constexpr std::byte MASK[PER_BYTE] = {
+      std::byte{0x00}, std::byte{0x80}, std::byte{0x00}, std::byte{0x00},
+      std::byte{0x00}, std::byte{0x00}, std::byte{0x00}, std::byte{0x40},
+      std::byte{0x00}, std::byte{0x00}, std::byte{0x00}, std::byte{0x20},
+      std::byte{0x00}, std::byte{0x10}, std::byte{0x00}, std::byte{0x00},
+      std::byte{0x00}, std::byte{0x08}, std::byte{0x00}, std::byte{0x04},
+      std::byte{0x00}, std::byte{0x00}, std::byte{0x00}, std::byte{0x02},
+      std::byte{0x00}, std::byte{0x00}, std::byte{0x00}, std::byte{0x00},
+      std::byte{0x00}, std::byte{0x01}};
+
+  /**
    * Allocator for the sieve.
    */
   Allocator sieve_allocator;
@@ -38,30 +54,84 @@ class sieve_235 {
   /**
    * Memory for the sieve.
    */
-  std::byte *sieve;
+  std::byte *memory;
 
 public:
+  /**
+   * Constructs an empty sieve.
+   */
+  sieve_235() : capacity(0), memory(nullptr) {}
+
   /**
    * Constructs the sieve with a capacity at least as big as `min_capacity`.
    *
    * @param min_capacity The minimum required capacity.
-   * @param init_value The value to initalize each element with (except for
-   *                   multiples of 2, 3 and 5 which are always false).
    */
-  sieve_235(std::size_t min_capacity, bool init_value) :
+  sieve_235(std::size_t min_capacity) :
       capacity((min_capacity + PER_BYTE - 1) / PER_BYTE) {
     static_assert(CHAR_BIT == 8,
         "235 sieve optimization only works for 8 bits per byte.");
+    if (capacity) memory = sieve_allocator.allocate(capacity);
+  }
 
-    sieve = sieve_allocator.allocate(capacity);
-    memset(sieve, init_value ? 0xFF : 0x00, capacity);
+  /**
+   * Copy constructs a new sieve.
+   *
+   * @param other The other sieve to copy from.
+   */
+  sieve_235(const sieve_235 &other) : capacity(other.capacity) {
+    if (capacity) {
+      memory = sieve_allocator.allocate(capacity);
+      memcpy(memory, other.memory, capacity);
+    }
+  }
+
+  /**
+   * Copy assigns form another sieve.
+   *
+   * @param other The other sieve to copy assign from.
+   * @return Reference to this sieve.
+   */
+  sieve_235& operator=(const sieve_235 &other) {
+    if (this != &other) {
+      if (capacity != other.capacity) {
+        if (memory) sieve_allocator.deallocate(memory, capacity);
+        capacity = other.capacity;
+        if (capacity) sieve_allocator.allocate(memory, capacity);
+      }
+      if (capacity) memcpy(memory, other.memory, capacity);
+    }
+    return *this;
+  }
+
+  /**
+   * Move constructs a new sieve.
+   *
+   * @param other The other sieve to move from.
+   */
+  sieve_235(sieve_235 &&other) noexcept {
+    capacity = std::exchange(other.capacity, 0);
+    memory = std::exchange(other.memory, nullptr);
+  }
+
+  /**
+   * Move assigns from another sieve.
+   *
+   * @param other The other sieve to move assign from.
+   * @return Reference to this sieve.
+   */
+  sieve_235& operator=(sieve_235 &&other) noexcept {
+    if (memory) sieve_allocator.deallocate(memory, capacity);
+    capacity = std::exchange(other.capacity, 0);
+    memory = std::exchange(other.memory, nullptr);
+    return *this;
   }
 
   /**
    * Destructs the sieve and frees the memory.
    */
   ~sieve_235() {
-    sieve_allocator.deallocate(sieve, capacity);
+    if (memory) sieve_allocator.deallocate(memory, capacity);
   }
 
   /**
@@ -69,20 +139,6 @@ public:
    */
   class reference {
     friend class sieve_235;
-
-    /**
-     * Stores a bitmaks to access the sieve for each possible remainder
-     * modulo 30.
-     */
-    static constexpr std::byte MASK[PER_BYTE] = {
-        std::byte{0x00}, std::byte{0x80}, std::byte{0x00}, std::byte{0x00},
-        std::byte{0x00}, std::byte{0x00}, std::byte{0x00}, std::byte{0x40},
-        std::byte{0x00}, std::byte{0x00}, std::byte{0x00}, std::byte{0x20},
-        std::byte{0x00}, std::byte{0x10}, std::byte{0x00}, std::byte{0x00},
-        std::byte{0x00}, std::byte{0x08}, std::byte{0x00}, std::byte{0x04},
-        std::byte{0x00}, std::byte{0x00}, std::byte{0x00}, std::byte{0x02},
-        std::byte{0x00}, std::byte{0x00}, std::byte{0x00}, std::byte{0x00},
-        std::byte{0x00}, std::byte{0x01}};
 
     /**
      * Constant pointer to the element in the sieve to work on.
@@ -145,10 +201,50 @@ public:
   };
 
   /**
+   * Subscript operator for constant array like access.
+   *
+   * @param idx The index of the element to return.
+   * @return The value at the given index.
+   */
+  bool operator[](std::size_t idx) const {
+    return (memory[idx / PER_BYTE] & MASK[idx / PER_BYTE]) != std::byte{0};
+  }
+
+  /**
    * Subscript operator for array like access.
+   *
+   * @param idx The index to return.
+   * @return A proxy to the element at the given index.
    */
   reference operator[](std::size_t idx) {
-    return reference(sieve + (idx / PER_BYTE), idx % PER_BYTE);
+    return reference(memory + (idx / PER_BYTE), idx % PER_BYTE);
+  }
+
+  /**
+   * Tests whehter the sieve is empty.
+   *
+   * @return Whether the sieve is empty.
+   */
+  bool empty() const noexcept {
+    return capacity == 0;
+  }
+
+  /**
+   * Returns the current size of the sieve.
+   *
+   * @return The size of the sieve.
+   */
+  std::size_t size() const noexcept {
+    return capacity;
+  }
+
+  /**
+   * Returns a pointer to the underlying data array.
+   *
+   * @return Pointer to the underlying data array.
+   */
+  std::byte* data() const {
+    return memory;
   }
 };
 

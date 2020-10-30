@@ -8,6 +8,7 @@
 #include <cstddef>
 #include <cstring>
 #include <memory>
+#include <utility>
 
 namespace ntlib {
 
@@ -26,13 +27,13 @@ class sieve {
   /**
    * Memory for the sieve.
    */
-  bool *data;
+  bool *memory;
 
 public:
   /**
    * Constructs an empty sieve.
    */
-  sieve() : capacity(0) {}
+  sieve() : capacity(0), memory(nullptr) {}
 
   /**
    * Constructs the sieve with a given capacity.
@@ -41,8 +42,7 @@ public:
    * @param capacity The capacity of the sieve.
    */
   sieve(std::size_t capacity) : capacity(capacity) {
-    data = sieve_allocator.allocate(capacity);
-    memset(data, true, capacity);
+    if (capacity) memory = sieve_allocator.allocate(capacity);
   }
 
   /**
@@ -51,8 +51,10 @@ public:
    * @param other The other sieve to copy from.
    */
   sieve(const sieve &other) : capacity(other.capacity) {
-    data = sieve_allocator.allocate(capacity);
-    memcpy(data, other.data, capacity);
+    if (capacity) {
+      memory = sieve_allocator.allocate(capacity);
+      memcpy(memory, other.memory, capacity);
+    }
   }
 
   /**
@@ -64,11 +66,11 @@ public:
   sieve& operator=(const sieve &other) {
     if (this != &other) {
       if (capacity != other.capacity) {
-        sieve_allocator.deallocate(data, capacity);
+        if (memory) sieve_allocator.deallocate(memory, capacity);
         capacity = other.capacity;
-        sieve_allocator.allocate(data, capacity);
+        if (capacity) sieve_allocator.allocate(memory, capacity);
       }
-      memcpy(data, other.data, capacity);
+      if (capacity) memcpy(memory, other.memory, capacity);
     }
     return *this;
   }
@@ -78,9 +80,9 @@ public:
    *
    * @param other The other sieve to move from.
    */
-  sieve(sieve &&other) noexcept : capacity(other.capacity) {
-    data = other.data;
-    other.capacity = 0;
+  sieve(sieve &&other) noexcept {
+    capacity = std::exchange(other.capacity, 0);
+    memory = std::exchange(other.memory, nullptr);
   }
 
   /**
@@ -90,9 +92,9 @@ public:
    * @return Reference to this sieve.
    */
   sieve& operator=(sieve &&other) noexcept {
-    capacity = other.capacity;
-    data = other.data;
-    other.capacity = 0;
+    if (memory) sieve_allocator.deallocate(memory, capacity);
+    capacity = std::exchange(other.capacity, 0);
+    memory = std::exchange(other.memory, nullptr);
     return *this;
   }
 
@@ -100,29 +102,27 @@ public:
    * Destructs the sieve and frees the memory.
    */
   ~sieve() {
-    if (capacity > 0) {
-      sieve_allocator.deallocate(data, capacity);
-    }
+    if (memory) sieve_allocator.deallocate(memory, capacity);
   }
 
   /**
-   * Support constant array like access.
+   * Subscript operator for constant array like access.
    *
-   * @param idx The index to return.
+   * @param idx The index of the element to return.
    * @return The value at the given index.
    */
   bool operator[](std::size_t idx) const {
-    return data[idx];
+    return memory[idx];
   }
 
   /**
-   * Support array like access.
+   * Subscript operator for array like access.
    *
-   * @param idx The index to return the element at.
+   * @param idx The index of the element to return.
    * @return A reference to the element at the given index.
    */
   bool& operator[](std::size_t idx) {
-    return data[idx];
+    return memory[idx];
   }
 
   /**
@@ -141,6 +141,15 @@ public:
    */
   std::size_t size() const noexcept {
     return capacity;
+  }
+
+  /**
+   * Returns a pointer to the underlying data array.
+   *
+   * @return Pointer to the underlying data array.
+   */
+  bool* data() const noexcept {
+    return memory;
   }
 };
 
