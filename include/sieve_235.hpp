@@ -49,7 +49,7 @@ class sieve_235 {
    * The actual capacity of the sieve.
    * Equal to the smallest multiple of 30 that is at least `min_capacity`.
    */
-  const std::size_t capacity;
+  std::size_t capacity;
 
   /**
    * Memory for the sieve.
@@ -72,6 +72,7 @@ public:
     static_assert(CHAR_BIT == 8,
         "235 sieve optimization only works for 8 bits per byte.");
     if (capacity) memory = sieve_allocator.allocate(capacity);
+    else memory = nullptr;
   }
 
   /**
@@ -83,6 +84,8 @@ public:
     if (capacity) {
       memory = sieve_allocator.allocate(capacity);
       memcpy(memory, other.memory, capacity);
+    } else {
+      memory = nullptr;
     }
   }
 
@@ -97,7 +100,8 @@ public:
       if (capacity != other.capacity) {
         if (memory) sieve_allocator.deallocate(memory, capacity);
         capacity = other.capacity;
-        if (capacity) sieve_allocator.allocate(memory, capacity);
+        if (capacity) memory = sieve_allocator.allocate(capacity);
+        else memory = nullptr;
       }
       if (capacity) memcpy(memory, other.memory, capacity);
     }
@@ -207,7 +211,7 @@ public:
    * @return The value at the given index.
    */
   bool operator[](std::size_t idx) const {
-    return (memory[idx / PER_BYTE] & MASK[idx / PER_BYTE]) != std::byte{0};
+    return (memory[idx / PER_BYTE] & MASK[idx % PER_BYTE]) != std::byte{0};
   }
 
   /**
@@ -235,7 +239,16 @@ public:
    * @return The size of the sieve.
    */
   std::size_t size() const noexcept {
-    return capacity;
+    return capacity * PER_BYTE;
+  }
+
+  /**
+   * Returns a const pointer to the underlying data array.
+   *
+   * @return Constant pointer to the underlying data array.
+   */
+  const std::byte* data() const noexcept {
+    return memory;
   }
 
   /**
@@ -243,7 +256,7 @@ public:
    *
    * @return Pointer to the underlying data array.
    */
-  std::byte* data() const {
+  std::byte* data() noexcept {
     return memory;
   }
 };

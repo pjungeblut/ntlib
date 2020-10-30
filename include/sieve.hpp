@@ -43,6 +43,7 @@ public:
    */
   sieve(std::size_t capacity) : capacity(capacity) {
     if (capacity) memory = sieve_allocator.allocate(capacity);
+    else memory = nullptr;
   }
 
   /**
@@ -54,6 +55,8 @@ public:
     if (capacity) {
       memory = sieve_allocator.allocate(capacity);
       memcpy(memory, other.memory, capacity);
+    } else {
+      memory = nullptr;
     }
   }
 
@@ -68,7 +71,8 @@ public:
       if (capacity != other.capacity) {
         if (memory) sieve_allocator.deallocate(memory, capacity);
         capacity = other.capacity;
-        if (capacity) sieve_allocator.allocate(memory, capacity);
+        if (capacity) memory = sieve_allocator.allocate(capacity);
+        else memory = nullptr;
       }
       if (capacity) memcpy(memory, other.memory, capacity);
     }
@@ -144,11 +148,20 @@ public:
   }
 
   /**
+   * Returns a constant pointer to the underlying data array.
+   *
+   * @return Constant pointer to the underlying data array.
+   */
+  const bool* data() const noexcept {
+    return memory;
+  }
+
+  /**
    * Returns a pointer to the underlying data array.
    *
    * @return Pointer to the underlying data array.
    */
-  bool* data() const noexcept {
+  bool *data() noexcept {
     return memory;
   }
 };
