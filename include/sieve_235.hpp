@@ -9,6 +9,10 @@
  * be stored explicitly. Those can be stored in a single byte resulting in a
  * memory improvement by a factor of 30 compared to a std::vector<std::byte>
  * or by a factor of 15/4 compared to a std::vector<bool>.
+ *
+ * Note: If this is used as a prime sieve, values 2, 3 and 5 are prime but
+ *       stored as false in the sieve. They must therefore be treated
+ *       differently.
  */
 
 #include <climits>
@@ -199,6 +203,7 @@ public:
      *
      * @return Whether the current element is `true` or `false`.
      */
+    [[nodiscard]]
     operator bool() const {
       return (*element & MASK[idx]) != std::byte{0};
     }
@@ -210,6 +215,7 @@ public:
    * @param idx The index of the element to return.
    * @return The value at the given index.
    */
+  [[nodiscard]]
   bool operator[](std::size_t idx) const {
     return (memory[idx / PER_BYTE] & MASK[idx % PER_BYTE]) != std::byte{0};
   }
@@ -220,6 +226,7 @@ public:
    * @param idx The index to return.
    * @return A proxy to the element at the given index.
    */
+  [[nodiscard]]
   reference operator[](std::size_t idx) {
     return reference(memory + (idx / PER_BYTE), idx % PER_BYTE);
   }
@@ -229,6 +236,7 @@ public:
    *
    * @return Whether the sieve is empty.
    */
+  [[nodiscard]]
   bool empty() const noexcept {
     return capacity == 0;
   }
@@ -238,6 +246,7 @@ public:
    *
    * @return The size of the sieve.
    */
+  [[nodiscard]]
   std::size_t size() const noexcept {
     return capacity * PER_BYTE;
   }
@@ -247,6 +256,7 @@ public:
    *
    * @return Constant pointer to the underlying data array.
    */
+  [[nodiscard]]
   const std::byte* data() const noexcept {
     return memory;
   }
@@ -256,6 +266,7 @@ public:
    *
    * @return Pointer to the underlying data array.
    */
+  [[nodiscard]]
   std::byte* data() noexcept {
     return memory;
   }

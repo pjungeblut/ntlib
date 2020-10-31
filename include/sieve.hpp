@@ -115,6 +115,7 @@ public:
    * @param idx The index of the element to return.
    * @return The value at the given index.
    */
+  [[nodiscard]]
   bool operator[](std::size_t idx) const {
     return memory[idx];
   }
@@ -125,6 +126,7 @@ public:
    * @param idx The index of the element to return.
    * @return A reference to the element at the given index.
    */
+  [[nodiscard]]
   bool& operator[](std::size_t idx) {
     return memory[idx];
   }
@@ -134,6 +136,7 @@ public:
    *
    * @return Whether the sieve is empty.
    */
+  [[nodiscard]]
   bool empty() const noexcept {
     return capacity == 0;
   }
@@ -143,6 +146,7 @@ public:
    *
    * @return The size of the sieve.
    */
+  [[nodiscard]]
   std::size_t size() const noexcept {
     return capacity;
   }
@@ -152,6 +156,7 @@ public:
    *
    * @return Constant pointer to the underlying data array.
    */
+  [[nodiscard]]
   const bool* data() const noexcept {
     return memory;
   }
@@ -161,6 +166,7 @@ public:
    *
    * @return Pointer to the underlying data array.
    */
+  [[nodiscard]]
   bool *data() noexcept {
     return memory;
   }
