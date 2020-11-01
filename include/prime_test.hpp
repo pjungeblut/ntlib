@@ -5,6 +5,7 @@
  */
 
 #include <algorithm>
+#include <cstddef>
 #include <vector>
 
 #include "base.hpp"
@@ -29,8 +30,8 @@ bool is_prime_naive(const T &n) {
 /**
  * Miller Rabin primality test.
  *
- * @param n The number to be tested. Must be odd and fit into a 64 bit
- *          (unsigned) integer.
+ * @param n The number to be tested. Must be odd and `n*n` must still fit into
+ *          type `T`.
  * @prarm a The base to test with. Must be 1 < a < n - 1.
  * @return False, if the number is composite. True, if the number is probable
  *         prime.
@@ -64,7 +65,7 @@ bool miller_rabin_test(const T &n, const T &a) {
  * @param n The number to be tested.
  */
 template<typename T>
-bool is_prime_miller_rabin(T n) {
+bool is_prime_miller_rabin(const T &n) {
   // Base cases.
 	if (n == 2) return true;
 	if (n < 2 || n % 2 == 0) return false;
@@ -76,6 +77,21 @@ bool is_prime_miller_rabin(T n) {
     if (!miller_rabin_test(n, a)) return false;
 	}
 	return true;
+}
+
+/**
+ * Tests whether a given number is (probable) prime.
+ */
+template<typename T, bool allow_probable_prime = true>
+bool is_prime(const T &n) {
+  static const std::size_t THRESHOLD_NAIVE_MILLER_RABIN = 500'000;
+
+  if constexpr (allow_probable_prime) {
+    if (n <= THRESHOLD_NAIVE_MILLER_RABIN) return is_prime_naive(n);
+    else return is_prime_miller_rabin(n);
+  } else {
+    return is_prime_naive(n);
+  }
 }
 
 }
