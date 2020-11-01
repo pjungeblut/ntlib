@@ -7,68 +7,35 @@
 #include "sieve.hpp"
 #include "sieve_235.hpp"
 
+#define UNIT_MS Unit(benchmark::kMicrosecond)
+
 static constexpr std::size_t N = 1'000'000;
 
-static void BM_set_all_sieve(benchmark::State &state) {
+template<typename SieveType>
+static void BM_set_all(benchmark::State &state) {
   for (auto _ : state) {
     state.PauseTiming();
-    ntlib::sieve sieve(N);
+    SieveType sieve(N);
     state.ResumeTiming();
     for (std::size_t i = 0; i < N; ++i) {
       sieve[i] = true;
     }
   }
 }
-BENCHMARK(BM_set_all_sieve)->Unit(benchmark::kMicrosecond);
+BENCHMARK_TEMPLATE(BM_set_all, ntlib::sieve<>)->UNIT_MS;
+BENCHMARK_TEMPLATE(BM_set_all, ntlib::sieve_235<>)->UNIT_MS;
+BENCHMARK_TEMPLATE(BM_set_all, std::vector<bool>)->UNIT_MS;
+BENCHMARK_TEMPLATE(BM_set_all, std::vector<unsigned char>)->UNIT_MS;
 
-static void BM_set_all_sieve_235(benchmark::State &state) {
-  for (auto _ : state) {
-    state.PauseTiming();
-    ntlib::sieve_235 sieve(N);
-    state.ResumeTiming();
-    for (std::size_t i = 0; i < N; ++i) {
-      sieve[i] = true;
-    }
-  }
-}
-BENCHMARK(BM_set_all_sieve_235)->Unit(benchmark::kMicrosecond);
-
-static void BM_set_all_vector_bool(benchmark::State &state) {
-  for (auto _ : state) {
-    state.PauseTiming();
-    std::vector<bool> sieve(N);
-    state.ResumeTiming();
-    for (std::size_t i = 0; i < N; ++i) {
-      sieve[i] = true;
-    }
-  }
-}
-BENCHMARK(BM_set_all_vector_bool)->Unit(benchmark::kMicrosecond);
-
-static void BM_init235_sieve(benchmark::State &state) {
+template<typename SieveType>
+static void BM_init235(benchmark::State &state) {
   for (auto _ : state) {
     std::size_t M = (N + 29) / 30 * 30;
-    ntlib::sieve sieve(M);
-    for (std::size_t i = 0; i < N; i += 30) {
-      sieve[i + 1] = true;
-      sieve[i + 7] = true;
-      sieve[i + 11] = true;
-      sieve[i + 13] = true;
-      sieve[i + 17] = true;
-      sieve[i + 19] = true;
-      sieve[i + 23] = true;
-      sieve[i + 29] = true;
-    }
+    SieveType sieve(M);
+    sieve.init235();
   }
 }
-BENCHMARK(BM_init235_sieve)->Unit(benchmark::kMicrosecond);
-
-static void BM_init235_sieve235(benchmark::State &state) {
-  for (auto _ : state) {
-    ntlib::sieve_235 sieve(N);
-    memset(sieve.data(), 0xFF, (N + 29) / 30);
-  }
-}
-BENCHMARK(BM_init235_sieve235)->Unit(benchmark::kMicrosecond);
+BENCHMARK_TEMPLATE(BM_init235, ntlib::sieve<>)->UNIT_MS;
+BENCHMARK_TEMPLATE(BM_init235, ntlib::sieve_235<>)->UNIT_MS;
 
 BENCHMARK_MAIN();
