@@ -64,8 +64,7 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googlebenchmark-src
                  ${CMAKE_CURRENT_BINARY_DIR}/googlebenchmark-build
                  EXCLUDE_FROM_ALL)
 
-# Don't run tests from Google Benchmark.
-set(BENCHMARK_ENABLE_GTEST_TESTS OFF CACHE BOOL "suppress gbench tests" FORCE)
-
 # Build benchmarks.
+set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "no benchmark test" FORCE)
+set(BENCHMARK_ENABLE_GTEST_TESTS OFF CACHE BOOL "no gtest tests" FORCE)
 add_subdirectory(benchmarks)
