@@ -77,7 +77,9 @@ TEST(Arithmetic, CeilLog2) {
   for (__uint128_t i = 1; i < 1'000'000; ++i) {
     __uint128_t cl2 = ntlib::ceil_log2(i);
     EXPECT_GE(static_cast<__uint128_t>(1) << cl2, i);
-    if (i > 1) EXPECT_LT(static_cast<__uint128_t>(1) << (cl2 - 1), i);
+    if (i > 1) {
+      EXPECT_LT(static_cast<__uint128_t>(1) << (cl2 - 1), i);
+    }
   }
 }
 
