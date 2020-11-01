@@ -59,17 +59,25 @@ TEST(Assignment, CopyAssignment) {
   ntlib::sieve s2;
   s2 = s1;
   EXPECT_EQ(s2.size(), capacity);
-  if (capacity) EXPECT_NE(s1.data(), s2.data());
+  if (capacity) {
+    EXPECT_NE(s1.data(), s2.data());
+  }
   for (std::size_t i = 0; i < capacity; ++i) EXPECT_EQ(s1[i], s2[i]);
 }
 
 TEST(Assignment, SelfAssignment) {
   ntlib::sieve s = get_dummy_sieve(capacity);
 
+  #if defined(__clang__)
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+  #endif
+
   s = s;
+
+  #if defined(__clang__)
   #pragma GCC diagnostic pop
+  #endif
 
   EXPECT_EQ(s.size(), capacity);
   for (std::size_t i = 0; i < capacity; ++i) EXPECT_EQ(dummy[i], s[i]);
