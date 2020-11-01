@@ -69,7 +69,7 @@ make bm_prime_generation
 ```
 **Note 1:** To get realistic benchmarks you should build the library in release mode (see install section).
 
-**Note 2:** To get more constisten benchmarks CPU scaling should be disabled.
+**Note 2:** To get more consistent benchmarks CPU scaling should be disabled.
 This can for example be achieved by (source [here](https://github.com/google/benchmark#disabling-cpu-frequency-scaling)):
 ```
 sudo cpupower frequency-set --governor performance
