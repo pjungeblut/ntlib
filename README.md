@@ -4,6 +4,13 @@ A small C++ header only template library containing common number theory impleme
 The library contains modular implementations that can easily be combined to solve mathematical problems.
 Most code was used and developed to solve [Project Euler](https://projecteuler.net) problems.
 
+Some features on NTLib:
+* Basic number theoretic functions such as `gcd`, `lcm`, `isqrt`, ...
+* Primality test, prime decomposition and prime generation with a heavily optimized variant of the sieve of Eratosthenes.
+* Generate all primitive Pythagorean triples.
+* Solving Pell's equation.
+* Compute binomial coefficients, polygonal numbers, Euler's totient function, divisor function and Turan numbers.
+
 # Requirements and Installation
 * Uses C++20, namely the three-way comparison operator. G++-10, Clang-10 and MSVC-19.20 should work.
 * Cmake and CTest version 3.16 or newer.
@@ -70,6 +77,9 @@ sudo cpupower frequency-set --governor performance
 sudo cpupower frequency-set --governor powersave
 ```
 
-# License
+# License & Disclaimer
 This software is licensed under the MIT license. See `LICENSE` for details.
+NTLib is still in development. Therefore, things could break and the API might change.
+
+Feedback is always welcome.
 
