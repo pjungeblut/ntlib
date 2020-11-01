@@ -110,6 +110,47 @@ public:
   }
 
   /**
+   * Initializes the sieve with `true` everywhere execept for multiples of 2, 3
+   * and 5.
+   *
+   * Note: This operation is only valid if capacity is a multiple of 30!
+   */
+  void init235() {
+    for (std::size_t i = 0; i < capacity; i += 30) {
+      memory[i + 0] = false;
+      memory[i + 1] = true;
+      memory[i + 2] = false;
+      memory[i + 3] = false;
+      memory[i + 4] = false;
+      memory[i + 5] = false;
+      memory[i + 6] = false;
+      memory[i + 7] = true;
+      memory[i + 8] = false;
+      memory[i + 9] = false;
+      memory[i + 10] = false;
+      memory[i + 11] = true;
+      memory[i + 12] = false;
+      memory[i + 13] = true;
+      memory[i + 14] = false;
+      memory[i + 15] = false;
+      memory[i + 16] = false;
+      memory[i + 17] = true;
+      memory[i + 18] = false;
+      memory[i + 19] = true;
+      memory[i + 20] = false;
+      memory[i + 21] = false;
+      memory[i + 22] = false;
+      memory[i + 23] = true;
+      memory[i + 24] = false;
+      memory[i + 25] = false;
+      memory[i + 26] = false;
+      memory[i + 27] = false;
+      memory[i + 28] = false;
+      memory[i + 29] = true;
+    }
+  }
+
+  /**
    * Subscript operator for constant array like access.
    *
    * @param idx The index of the element to return.

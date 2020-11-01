@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <vector>
 
+#include "../benchmarks/experiments/prime_generation.hpp"
 #include "prime_generation.hpp"
 #include "prime_test.hpp"
 
@@ -64,4 +65,18 @@ TEST(Sieves, VariantsMatch) {
   ntlib::sundaram_sieve(M, sieve2);
 
   EXPECT_EQ(sieve1, sieve2);
+}
+
+TEST(Experiments, VariantsMatch) {
+  std::vector<bool> eratosthenes;
+  ntlib::eratosthenes_sieve(M, eratosthenes);
+
+  auto textbook = ntlib::experiments::eratosthenes_textbook(M);
+  for (std::size_t i = 0; i <= M; ++i) EXPECT_EQ(eratosthenes[i], textbook[i]);
+
+  auto jumps = ntlib::experiments::eratosthenes_jumps(M);
+  for (std::size_t i = 0; i <= M; ++i) EXPECT_EQ(eratosthenes[i], jumps[i]);
+
+  auto segmented = ntlib::experiments::eratosthenes_segmented(M);
+  for (std::size_t i = 0; i <= M; ++i) EXPECT_EQ(eratosthenes[i], segmented[i]);
 }

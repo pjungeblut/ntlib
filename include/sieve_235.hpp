@@ -210,6 +210,14 @@ public:
   };
 
   /**
+   * Initializes the sieve with `true` everywhere execept for multiples of 2, 3
+   * and 5.
+   */
+  void init235() {
+    memset(memory, 0xFF, capacity);
+  }
+
+  /**
    * Subscript operator for constant array like access.
    *
    * @param idx The index of the element to return.
