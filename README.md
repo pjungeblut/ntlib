@@ -71,5 +71,5 @@ sudo cpupower frequency-set --governor powersave
 ```
 
 # License
-This software is licensed under the MIT license. See LICENSE.txt for details.
+This software is licensed under the MIT license. See `LICENSE` for details.
 
