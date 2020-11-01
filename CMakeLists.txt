@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.16)
 
-project("ntlib - Number Theory Library" LANGUAGES CXX)
+project("NTLib - Number Theory Library" LANGUAGES CXX)
 
 ################################################################################
 # General settings.
