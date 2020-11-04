@@ -9,153 +9,168 @@
 #include <cstddef>
 #include <vector>
 
+#include "base.hpp"
+#include "sieve.hpp"
+
 namespace ntlib {
 
 /**
- * Identify all prime numbers up to N.
- * Runtime: O(N log log N)
- *
- * @param N Identify all primes up to N.
- * @param sieve The vector to be used as a sieve.
+ * Generates a prime sieve.
+ * See other overload for documentation.
  */
-template<typename T>
-void eratosthenes_sieve_classic(T N, std::vector<bool> &sieve) {
-  sieve.assign(N + 1, true);
-  sieve[0] = 0;
-  if (N >= 1) sieve[1] = 0;
-  for (T i = 4; i <= N; i += 2) sieve[i] = 0;
-  for (T i = 5; i * i <= N; i += 2) {
-    if (sieve[i]) {
-      for (T j = i * i; j <= N; j += 2 * i) sieve[j] = 0;
+template<
+    typename SieveType = ntlib::sieve<>,
+    std::size_t SEGMENT_SIZE = (1 << 18),
+    typename Allocator = std::allocator<std::size_t>,
+    bool CREATE_LIST = true>
+SieveType eratosthenes_segmented(std::size_t N,
+    std::vector<std::size_t> &primes) {
+
+  const std::size_t OFFSETS[8] = {6, 4, 2, 4, 2, 4, 6, 2};
+  const auto clear_multiples_unitl = [OFFSETS](SieveType &sieve, std::size_t p,
+      std::size_t &m, std::size_t &o, std::size_t until) {
+    for (; m <= until; m += OFFSETS[++o % 8] * p) {
+      sieve[m] = false;
     }
+  };
+
+  N = N / 30 * 30 + 29;
+  SieveType sieve(N + 1);
+  sieve.init235();
+
+  std::size_t R = ntlib::isqrt(N) + 1;
+
+  sieve[1] = false;
+  sieve[2] = true;
+  sieve[3] = true;
+  sieve[5] = true;
+
+  // TODO: Reserve space to avoid reallocations.
+  primes = {2, 3, 5};
+  std::vector<std::size_t, Allocator> multiples = {0, 0, 0};
+  std::vector<std::size_t, Allocator> offsets = {0, 0, 0};
+  std::size_t primes_until_root = (R * 4 / 15) + 2;
+  if constexpr (CREATE_LIST) {
+    std::size_t primes_until_N = (N * 4 / 15) + 2;
+    primes.reserve(primes_until_N);
+  } else {
+    primes.reserve(primes_until_root);
   }
-}
+  multiples.reserve(primes_until_root);
+  offsets.reserve(primes_until_root);
 
-/**
- * Identify all prime numbers up to N.
- * Runtime: O(N log log N)
- *
- * @param N Identify all primes up to N.
- * @param sieve The vector to be used as a sieve.
- */
-template<typename T>
-void eratosthenes_sieve(T N, std::vector<bool> &sieve) {
-  sieve.clear();
-  sieve.reserve(N + 1);
-  sieve.push_back(0); // 0
-  sieve.push_back(0); // 1
-  sieve.push_back(1); // 2
-  sieve.push_back(1); // 3
-  sieve.push_back(0); // 4
-  for (std::size_t i = 5; i <= N; i += 6) {
-    sieve.push_back(1);
-    sieve.push_back(0);
-    sieve.push_back(1);
-    sieve.push_back(0);
-    sieve.push_back(0);
-    sieve.push_back(0);
-  }
-  for (T i = 5; i * i <= N; i += 4) {
-    if (sieve[i]) for (T j = i * i; j <= N; j += 2 * i) sieve[j] = 0;
-    i += 2;
-    if (sieve[i]) for (T j = i * i; j <= N; j += 2 * i) sieve[j] = 0;
-  }
-}
-
-/**
- * Identifies all prime numbers up to N and fills an array.
- * Runtime: O(N log log N)
- *
- * @param N Identify all primes up to N.
- * @param sieve The array to be used as a sieve.
- * @param primes The array to write the primes to.
- */
-template<typename T>
-void eratosthenes_sieve_list(T N, std::vector<bool> &sieve,
-    std::vector<T> &primes) {
-  sieve.assign(N + 1, true);
-  sieve[0] = 0;
-  if (N >= 1) sieve[1] = 0;
-  if (N >= 2) primes.push_back(2);
-  for (T i = 4; i <= N; i += 2) sieve[i] = 0;
-  T i = 3;
-  for (; i * i <= N; i += 2) {
-    if (sieve[i]) {
-      primes.push_back(i);
-      for (T j = i * i; j <= N; j += i) sieve[j] = 0;
-    }
-  }
-  for (; i <= N; i += 2) {
-    if (sieve[i]) primes.push_back(i);
-  }
-}
-
-/**
- * Identifies all prime numbers up to N and fills an array.
- * Segments the array to have better cache utilization.
- * Runtime: O(N log log N)
- *
- * @param N Identify all primes up to N.
- * @param primes The array to write the primes to.
- */
-template<typename T>
-void eratosthenes_list(T N, std::vector<T> &primes) {
-  const T SEGMENT_SIZE = std::min(N, static_cast<T>(1'000'000));
-  T mini = 0;
-  T maxi = SEGMENT_SIZE;
-  std::vector<bool> sieve;
-
-  // Classical sieve for first block.
-  eratosthenes_sieve_list(maxi, sieve, primes);
-
-  // Remaining blocks.
-  while (maxi != N) {
-    mini = maxi + 1;
-    maxi = std::min(N, maxi + SEGMENT_SIZE);
-
-    std::fill(sieve.begin(), sieve.end(), 1);
-    for (T i = 0; i < primes.size() && primes[i] * primes[i] <= maxi; ++i) {
-      T multiple = (mini + primes[i] - 1) / primes[i] * primes[i];
-      while (multiple <= maxi) {
-        sieve[multiple - mini] = 0;
-        multiple += primes[i];
+  static const std::size_t REMAINDERS[8] = {1, 7, 11, 13, 17, 19, 23, 29};
+  std::size_t i = 0;
+  while (i * i <= R) {
+    for (std::size_t j = 0; j < 8; ++j) {
+      std::size_t cand = i + REMAINDERS[j];
+      if (sieve[cand]) {
+        primes.push_back(cand);
+        multiples.push_back(cand * cand);
+        offsets.push_back(j + 7);
+        clear_multiples_unitl(
+            sieve, primes.back(), multiples.back(), offsets.back(), R);
       }
     }
-    for (T i = mini; i <= maxi; ++i) {
-      if (sieve[i - mini]) primes.push_back(i);
+    i += 30;
+  }
+  while (i <= R) {
+    for (std::size_t j = 0; j < 8; ++j) {
+      std::size_t cand = i + REMAINDERS[j];
+      if (sieve[cand]) {
+        primes.push_back(cand);
+        multiples.push_back(cand * cand);
+        offsets.push_back(j + 7);
+      }
+    }
+    i += 30;
+  }
+
+  const std::size_t blocks = (N - R) / SEGMENT_SIZE;
+  for (std::size_t b = 1; b <= blocks; ++b) {
+    const std::size_t maxi = R + b * SEGMENT_SIZE;
+
+    for (std::size_t idx = 3; idx < primes.size(); ++idx) {
+      clear_multiples_unitl(
+          sieve, primes[idx], multiples[idx], offsets[idx], maxi);
+    }
+
+    if constexpr (CREATE_LIST) {
+      while (i <= maxi) {
+        for (std::size_t j = 0; j < 8; ++j) {
+          if (sieve[i + REMAINDERS[j]]) {
+            primes.push_back(i + REMAINDERS[j]);
+          }
+        }
+        i += 30;
+      }
     }
   }
+
+  for (std::size_t idx = 3; idx < primes.size(); ++idx) {
+    clear_multiples_unitl(
+        sieve, primes[idx], multiples[idx], offsets[idx], N);
+  }
+
+  if constexpr (CREATE_LIST) {
+    while (i <= N) {
+      for (std::size_t j = 0; j < 8; ++j) {
+        if (sieve[i + REMAINDERS[j]]) {
+          primes.push_back(i + REMAINDERS[j]);
+        }
+      }
+      i += 30;
+    }
+  }
+
+  return sieve;
 }
 
 /**
- * Identify all prime numbers up to N using the sieve of Sundaram.
- * Runtime: O(N log log N)
+ * Generates a prime sieve.
  *
- * Slow and it is easy to get overflows.
- *
- * @param N Identify all primes up to N.
- * @param sieve The vector to be used as a sieve.
+ * @tparam SieveType The datastructure to use as a prime sieve. NTLib provides
+ *                   a classical array like type and a 235-compressed version.
+ *                   The latter one can save half the time to generate the
+ *                   primes in a tradeoff for slower access times.
+ * @tparam SEGMENT_SIZE Portion of the sieve to be processed at once. This
+ *                   should be small enough that `SEGMENT_SIZE` sieve fields fit
+ *                   easily into the L3 cache.
+ * @tparam Allocator The allocator to use for the list of primes.
+ * @param N Generate a prime sieve with all values up to `N`.
+ * @return The sieve.
  */
-template<typename T>
-void sundaram_sieve(T N, std::vector<bool> &sieve) {
-  T K = (N - 2) / 2;
-  sieve.reserve(N + 1);
-  sieve.assign(K + 1, true);
-  sieve.resize(N + 1, false);
+template<
+    typename SieveType = ntlib::sieve<>,
+    std::size_t SEGMENT_SIZE = (1 << 18),
+    typename Allocator = std::allocator<std::size_t>>
+SieveType prime_sieve(std::size_t N) {
+  std::vector<std::size_t> primes;
+  return eratosthenes_segmented<SieveType, SEGMENT_SIZE, Allocator, false>(
+      N, primes);
+}
 
-  for (T i = 1; i <= K; ++i) {
-    for (T j = i; i + j + 2 * i * j <= K; ++j) {
-      sieve[i + j + 2 * i * j] = false;
-    }
-  }
-  for (T i = K; i > 0; --i) {
-    if (sieve[i]) {
-      sieve[2 * i + 1] = true;
-      sieve[i] = false;
-    }
-  }
-  sieve[0] = 0;
-  if (N >= 2) sieve[2] = 1;
+/**
+ * Generates a prime sieve.
+ *
+ * @tparam SieveType The datastructure to use as a prime sieve. NTLib provides
+ *                   a classical array like type and a 235-compressed version.
+ *                   The latter one can save half the time to generate the
+ *                   primes in a tradeoff for slower access times.
+ * @tparam SEGMENT_SIZE Portion of the sieve to be processed at once. This
+ *                   should be small enough that `SEGMENT_SIZE` sieve fields fit
+ *                   easily into the L3 cache.
+ * @tparam Allocator The allocator to use for the list of primes.
+ * @param N Generate a prime sieve with all values up to `N`.
+ * @param primes A vector that will be filled with all primes up to N.
+ * @return The sieve.
+ */
+template<
+    typename SieveType = ntlib::sieve<>,
+    std::size_t SEGMENT_SIZE = (1 << 18),
+    typename Allocator = std::allocator<std::size_t>>
+SieveType prime_sieve(std::size_t N, std::vector<std::size_t> &primes) {
+  return eratosthenes_segmented<SieveType, SEGMENT_SIZE, Allocator>(N, primes);
 }
 
 }

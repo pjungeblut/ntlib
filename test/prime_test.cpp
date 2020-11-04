@@ -8,8 +8,7 @@
 
 TEST(Naive, SmallValues) {
   uint32_t N = 1'000'000;
-  std::vector<bool> sieve;
-  ntlib::eratosthenes_sieve(N, sieve);
+  auto sieve = ntlib::prime_sieve(N);
   for (uint32_t n = 0; n <= N; ++n) {
     EXPECT_EQ(ntlib::is_prime_naive(n), sieve[n]);
   }
@@ -21,8 +20,7 @@ TEST(Naive, NegativeValues) {
 
 TEST(MillerRabin, SmallValues) {
   uint64_t N = 1'000'000;
-  std::vector<bool> sieve;
-  ntlib::eratosthenes_sieve(N, sieve);
+  auto sieve = ntlib::prime_sieve(N);
   for (uint64_t n = 0; n <= N; ++n) {
     EXPECT_EQ(ntlib::is_prime_miller_rabin(n), sieve[n]);
   }
@@ -48,8 +46,7 @@ TEST(MillerRabin, LargePrimes) {
 
 TEST(Combined, First10Million) {
   uint64_t N = 10'000'000;
-  std::vector<bool> sieve;
-  ntlib::eratosthenes_sieve(N, sieve);
+  auto sieve = ntlib::prime_sieve(N);
   for (uint64_t n = 0; n <= N; ++n) {
     EXPECT_EQ(ntlib::is_prime(n), sieve[n]);
   }

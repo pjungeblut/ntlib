@@ -56,7 +56,7 @@ void prime_decomposition(T n, std::map<T, T> &factors) {
   factors.clear();
   T iroot = isqrt(n);
   std::vector<T> primes;
-  eratosthenes_list(iroot, primes);
+  prime_sieve(iroot, primes);
   prime_decomposition(n, primes, factors);
 }
 

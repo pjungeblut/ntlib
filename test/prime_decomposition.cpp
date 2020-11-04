@@ -35,7 +35,7 @@ TEST(PrimeDecomposition, PrimeList) {
   std::map<uint64_t, uint64_t> factors;
   for (const uint64_t n : numbers) {
     std::vector<uint64_t> primes;
-    ntlib::eratosthenes_list(ntlib::isqrt(n), primes);
+    ntlib::prime_sieve(ntlib::isqrt(n), primes);
     ntlib::prime_decomposition(n, primes, factors);
     EXPECT_TRUE(is_prime_decomposition(n, factors));
   }

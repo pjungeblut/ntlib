@@ -17,7 +17,7 @@ namespace experiments {
 template<typename T>
 bool is_prime_list(const T &n) {
   std::vector<T> primes;
-  ntlib::eratosthenes_list(ntlib::isqrt(n) + 1, primes);
+  prime_sieve(isqrt(n) + 1, primes);
   for (const T &p : primes) {
     if (n == p) return true;
     else if (n % p == 0) return false;
