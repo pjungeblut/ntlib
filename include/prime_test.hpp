@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <limits>
 #include <vector>
 
 #include "base.hpp"
@@ -21,7 +22,8 @@ namespace ntlib {
 template<typename T>
 bool is_prime_naive(const T &n) {
   if (n < 2) return false;
-  for (T i = 2; i * i <= n; ++i) {
+  if (n > 2 && n % 2 == 0) return 0;
+  for (T i = 3; i * i <= n; i += 2) {
     if (n % i == 0) return false;
   }
   return true;
@@ -66,12 +68,16 @@ bool miller_rabin_test(const T &n, const T &a) {
  */
 template<typename T>
 bool is_prime_miller_rabin(const T &n) {
+  static const T bases[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37};
+
   // Base cases.
-	if (n == 2) return true;
-	if (n < 2 || n % 2 == 0) return false;
+  if (n < 2) return false;
+  for (T b : bases) {
+    if (n == b) return true;
+    else if (n % b == 0) return false;
+  }
 
   // Possible bases.
-  std::vector<T> bases = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37};
   for (T a : bases) {
     if (a >= n - 1) break;
     if (!miller_rabin_test(n, a)) return false;
@@ -84,13 +90,27 @@ bool is_prime_miller_rabin(const T &n) {
  */
 template<typename T, bool allow_probable_prime = true>
 bool is_prime(const T &n) {
-  static const std::size_t THRESHOLD_NAIVE_MILLER_RABIN = 500'000;
+  // Until this value the naive method is preferred over the Miller Rabin test.
+  static const std::size_t THRESHOLD_NAIVE_MILLER_RABIN = 400'000;
+
+  // Until this value the Miller Rabin test is assumed to be exact.
+  // With all primes p <= 37 as bases, it is actually exact unitl
+  // n < 318'665'857'834'031'151'167'461, which is bigger than any value that
+  // can be stored in an unsigned 64 bit integer.
+  static const std::size_t THRESHOLD_MILLER_RABIN_EXACT =
+      std::numeric_limits<uint64_t>::max();
 
   if constexpr (allow_probable_prime) {
     if (n <= THRESHOLD_NAIVE_MILLER_RABIN) return is_prime_naive(n);
     else return is_prime_miller_rabin(n);
   } else {
-    return is_prime_naive(n);
+    if (n < THRESHOLD_MILLER_RABIN_EXACT) {
+      if (n <= THRESHOLD_NAIVE_MILLER_RABIN) return is_prime_naive(n);
+      else return is_prime_miller_rabin(n);
+    } else {
+      // This will only work if n has only small prime factors...
+      return is_prime_naive(n);
+    }
   }
 }
 

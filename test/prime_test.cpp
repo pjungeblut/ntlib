@@ -45,3 +45,12 @@ TEST(MillerRabin, LargePrimes) {
   EXPECT_TRUE(ntlib::is_prime_miller_rabin(n1));
   EXPECT_TRUE(ntlib::is_prime_miller_rabin(n2));
 }
+
+TEST(Combined, First10Million) {
+  uint64_t N = 10'000'000;
+  std::vector<bool> sieve;
+  ntlib::eratosthenes_sieve(N, sieve);
+  for (uint64_t n = 0; n <= N; ++n) {
+    EXPECT_EQ(ntlib::is_prime(n), sieve[n]);
+  }
+}
