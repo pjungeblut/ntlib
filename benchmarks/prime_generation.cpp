@@ -50,4 +50,14 @@ BENCHMARK_TEMPLATE(BM_prime_sieve_segsize, 1 << 21)->UNIT_MS;
 BENCHMARK_TEMPLATE(BM_prime_sieve_segsize, 1 << 22)->UNIT_MS;
 BENCHMARK_TEMPLATE(BM_prime_sieve_segsize, 1 << 23)->UNIT_MS;
 
+template<typename SieveType>
+static void BM_prime_sieve_list(benchmark::State &state) {
+  for (auto _ : state) {
+    std::vector<std::size_t> primes;
+    ntlib::prime_sieve<SieveType>(N, primes);
+  }
+}
+BENCHMARK_TEMPLATE(BM_prime_sieve_list, ntlib::sieve<>)->UNIT_MS;
+BENCHMARK_TEMPLATE(BM_prime_sieve_list, ntlib::sieve_235<>)->UNIT_MS;
+
 BENCHMARK_MAIN();
