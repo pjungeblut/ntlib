@@ -27,7 +27,7 @@ SieveType eratosthenes_segmented(std::size_t N,
     std::vector<std::size_t> &primes) {
 
   const std::size_t OFFSETS[8] = {6, 4, 2, 4, 2, 4, 6, 2};
-  const auto clear_multiples_unitl = [OFFSETS](SieveType &sieve, std::size_t p,
+  const auto clear_multiples_unitl = [&OFFSETS](SieveType &sieve, std::size_t p,
       std::size_t &m, std::size_t &o, std::size_t until) {
     for (; m <= until; m += OFFSETS[++o % 8] * p) {
       sieve[m] = false;
@@ -38,20 +38,19 @@ SieveType eratosthenes_segmented(std::size_t N,
   SieveType sieve(N + 1);
   sieve.init235();
 
-  std::size_t R = ntlib::isqrt(N) + 1;
+  std::size_t R = ntlib::isqrt(N) / 30 * 30 + 29;
 
   sieve[1] = false;
   sieve[2] = true;
   sieve[3] = true;
   sieve[5] = true;
 
-  // TODO: Reserve space to avoid reallocations.
   primes = {2, 3, 5};
   std::vector<std::size_t, Allocator> multiples = {0, 0, 0};
   std::vector<std::size_t, Allocator> offsets = {0, 0, 0};
-  std::size_t primes_until_root = (R * 4 / 15) + 2;
+  const std::size_t primes_until_root = (R * 4 / 15) + 2;
   if constexpr (CREATE_LIST) {
-    std::size_t primes_until_N = (N * 4 / 15) + 2;
+    const std::size_t primes_until_N = (N * 4 / 15) + 2;
     primes.reserve(primes_until_N);
   } else {
     primes.reserve(primes_until_root);
@@ -93,17 +92,6 @@ SieveType eratosthenes_segmented(std::size_t N,
     for (std::size_t idx = 3; idx < primes.size(); ++idx) {
       clear_multiples_unitl(
           sieve, primes[idx], multiples[idx], offsets[idx], maxi);
-    }
-
-    if constexpr (CREATE_LIST) {
-      while (i <= maxi) {
-        for (std::size_t j = 0; j < 8; ++j) {
-          if (sieve[i + REMAINDERS[j]]) {
-            primes.push_back(i + REMAINDERS[j]);
-          }
-        }
-        i += 30;
-      }
     }
   }
 
