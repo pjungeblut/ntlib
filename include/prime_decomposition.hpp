@@ -1,15 +1,5 @@
 #pragma once
 
-/**
- * Implementations to get the prime decomposition of a natural number.
- *
- * Contains different implementations:
- * Naive: Tests every possible number <= sqrt(n) as a prime factor of n.
- * List: Takes a list of all primes <= sqrt(n) and only tests those as possible
- *       prime factors. This list can be generated before using the Sieve of
- *       Eratosthenes.
- */
-
 #include <cmath>
 #include <cstddef>
 #include <cstdlib>
