@@ -5,6 +5,7 @@ function(add_benchmark name)
 endfunction()
 
 include_directories(./)
+add_benchmark(is_square)
 add_benchmark(isqrt)
 add_benchmark(prime_decomposition)
 add_benchmark(prime_generation)
