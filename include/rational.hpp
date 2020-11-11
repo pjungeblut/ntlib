@@ -16,7 +16,8 @@ namespace ntlib {
  * Represents a rational number.
  */
 template<typename T>
-struct rational {
+class rational {
+public:
   /**
    * Construct rational from a numerator and a denominator.
    *
