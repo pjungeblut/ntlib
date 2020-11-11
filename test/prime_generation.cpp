@@ -10,7 +10,7 @@
 const uint64_t N = 10'000'000;
 
 TEST(Sieve, SmallValues) {
-  std::vector<std::size_t> primes;
+  std::vector<int32_t> primes;
   const auto sieve = ntlib::prime_sieve(10, primes);
   EXPECT_FALSE(sieve[0]);
   EXPECT_FALSE(sieve[1]);

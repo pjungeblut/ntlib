@@ -7,7 +7,7 @@
 
 #define UNIT_MS Unit(benchmark::kMillisecond)
 
-static const std::size_t N = 1'000'000'000;
+static const uint64_t N = 100'000'000;
 
 template<typename SieveType>
 static void BM_eratosthenes_textbook(benchmark::State &state) {

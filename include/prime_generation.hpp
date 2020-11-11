@@ -21,14 +21,13 @@ namespace ntlib {
 template<
     typename SieveType = ntlib::sieve<>,
     std::size_t SEGMENT_SIZE = (1 << 18),
-    typename Allocator = std::allocator<std::size_t>,
+    typename T,
+    typename Allocator = std::allocator<T>,
     bool CREATE_LIST = true>
-SieveType eratosthenes_segmented(std::size_t N,
-    std::vector<std::size_t> &primes) {
-
-  const std::size_t OFFSETS[8] = {6, 4, 2, 4, 2, 4, 6, 2};
-  const auto clear_multiples_unitl = [&OFFSETS](SieveType &sieve, std::size_t p,
-      std::size_t &m, std::size_t &o, std::size_t until) {
+SieveType eratosthenes_segmented(T N, std::vector<T> &primes) {
+  const T OFFSETS[8] = {6, 4, 2, 4, 2, 4, 6, 2};
+  const auto clear_multiples_unitl = [&OFFSETS](SieveType &sieve, T p, T &m,
+      T &o, T until) {
     for (; m <= until; m += OFFSETS[++o % 8] * p) {
       sieve[m] = false;
     }
@@ -38,7 +37,7 @@ SieveType eratosthenes_segmented(std::size_t N,
   SieveType sieve(N + 1);
   sieve.init235();
 
-  std::size_t R = ntlib::isqrt(N) / 30 * 30 + 29;
+  T R = ntlib::isqrt(N) / 30 * 30 + 29;
 
   sieve[1] = false;
   sieve[2] = true;
@@ -46,11 +45,11 @@ SieveType eratosthenes_segmented(std::size_t N,
   sieve[5] = true;
 
   primes = {2, 3, 5};
-  std::vector<std::size_t, Allocator> multiples = {0, 0, 0};
-  std::vector<std::size_t, Allocator> offsets = {0, 0, 0};
-  const std::size_t primes_until_root = (R * 4 / 15) + 2;
+  std::vector<T, Allocator> multiples = {0, 0, 0};
+  std::vector<T, Allocator> offsets = {0, 0, 0};
+  const T primes_until_root = (R * 4 / 15) + 2;
   if constexpr (CREATE_LIST) {
-    const std::size_t primes_until_N = (N * 4 / 15) + 2;
+    const T primes_until_N = (N * 4 / 15) + 2;
     primes.reserve(primes_until_N);
   } else {
     primes.reserve(primes_until_root);
@@ -58,11 +57,11 @@ SieveType eratosthenes_segmented(std::size_t N,
   multiples.reserve(primes_until_root);
   offsets.reserve(primes_until_root);
 
-  static const std::size_t REMAINDERS[8] = {1, 7, 11, 13, 17, 19, 23, 29};
-  std::size_t i = 0;
+  static const T REMAINDERS[8] = {1, 7, 11, 13, 17, 19, 23, 29};
+  T i = 0;
   while (i * i <= R) {
-    for (std::size_t j = 0; j < 8; ++j) {
-      std::size_t cand = i + REMAINDERS[j];
+    for (T j = 0; j < 8; ++j) {
+      T cand = i + REMAINDERS[j];
       if (sieve[cand]) {
         primes.push_back(cand);
         multiples.push_back(cand * cand);
@@ -74,8 +73,8 @@ SieveType eratosthenes_segmented(std::size_t N,
     i += 30;
   }
   while (i <= R) {
-    for (std::size_t j = 0; j < 8; ++j) {
-      std::size_t cand = i + REMAINDERS[j];
+    for (T j = 0; j < 8; ++j) {
+      T cand = i + REMAINDERS[j];
       if (sieve[cand]) {
         primes.push_back(cand);
         multiples.push_back(cand * cand);
@@ -85,24 +84,24 @@ SieveType eratosthenes_segmented(std::size_t N,
     i += 30;
   }
 
-  const std::size_t blocks = (N - R) / SEGMENT_SIZE;
-  for (std::size_t b = 1; b <= blocks; ++b) {
-    const std::size_t maxi = R + b * SEGMENT_SIZE;
+  const T blocks = (N - R) / SEGMENT_SIZE;
+  for (T b = 1; b <= blocks; ++b) {
+    const T maxi = R + b * SEGMENT_SIZE;
 
-    for (std::size_t idx = 3; idx < primes.size(); ++idx) {
+    for (T idx = 3; idx < static_cast<T>(primes.size()); ++idx) {
       clear_multiples_unitl(
           sieve, primes[idx], multiples[idx], offsets[idx], maxi);
     }
   }
 
-  for (std::size_t idx = 3; idx < primes.size(); ++idx) {
+  for (T idx = 3; idx < static_cast<T>(primes.size()); ++idx) {
     clear_multiples_unitl(
         sieve, primes[idx], multiples[idx], offsets[idx], N);
   }
 
   if constexpr (CREATE_LIST) {
     while (i <= N) {
-      for (std::size_t j = 0; j < 8; ++j) {
+      for (T j = 0; j < 8; ++j) {
         if (sieve[i + REMAINDERS[j]]) {
           primes.push_back(i + REMAINDERS[j]);
         }
@@ -117,6 +116,7 @@ SieveType eratosthenes_segmented(std::size_t N,
 /**
  * Generates a prime sieve.
  *
+ * @tparam T The integral data type to use.
  * @tparam SieveType The datastructure to use as a prime sieve. NTLib provides
  *                   a classical array like type and a 235-compressed version.
  *                   The latter one can save half the time to generate the
@@ -131,16 +131,18 @@ SieveType eratosthenes_segmented(std::size_t N,
 template<
     typename SieveType = ntlib::sieve<>,
     std::size_t SEGMENT_SIZE = (1 << 18),
-    typename Allocator = std::allocator<std::size_t>>
-SieveType prime_sieve(std::size_t N) {
-  std::vector<std::size_t> primes;
-  return eratosthenes_segmented<SieveType, SEGMENT_SIZE, Allocator, false>(
+    typename T,
+    typename Allocator = std::allocator<T>>
+SieveType prime_sieve(T N) {
+  std::vector<T> primes;
+  return eratosthenes_segmented<SieveType, SEGMENT_SIZE, T, Allocator, false>(
       N, primes);
 }
 
 /**
  * Generates a prime sieve.
  *
+ * @tparam T The integral data type to use.
  * @tparam SieveType The datastructure to use as a prime sieve. NTLib provides
  *                   a classical array like type and a 235-compressed version.
  *                   The latter one can save half the time to generate the
@@ -156,9 +158,11 @@ SieveType prime_sieve(std::size_t N) {
 template<
     typename SieveType = ntlib::sieve<>,
     std::size_t SEGMENT_SIZE = (1 << 18),
-    typename Allocator = std::allocator<std::size_t>>
-SieveType prime_sieve(std::size_t N, std::vector<std::size_t> &primes) {
-  return eratosthenes_segmented<SieveType, SEGMENT_SIZE, Allocator>(N, primes);
+    typename T,
+    typename Allocator = std::allocator<T>>
+SieveType prime_sieve(T N, std::vector<T> &primes) {
+  return eratosthenes_segmented<SieveType, SEGMENT_SIZE, T, Allocator>(
+      N, primes);
 }
 
 }
