@@ -10,6 +10,12 @@
 namespace ntlib {
 
 /**
+ * A list with all prime numbers below 100 as it is often used.
+ */
+static constexpr uint32_t PRIMES_BELOW_100[] = {2, 3, 5, 7, 11, 13, 17, 19, 23,
+    29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
+
+/**
  * Computes the absolute value of a number.
  *
  * @param n The number to take the absolute value of.
@@ -357,6 +363,48 @@ T mod_sqrt(T n, T p) {
   }
 
   return std::min(x, p - x);
+}
+
+/**
+ * Computes the Legendre Symbol (a/p).
+ *
+ * @param a An integer.
+ * @param p An odd prime number.
+ * @return The Legendre Symbol (a/p).
+ */
+template<typename T>
+T legendre(T a, T p) {
+  assert(p != 2);
+  T rem = mod_pow(a, (p - 1) / 2, p);
+  return rem <= 1 ? rem : rem - p;
+}
+
+/**
+ * Computes the Jacobi Symbol (n/k).
+ *
+ * @param n The "numerator".
+ * @param k The "denominator".
+ * @return The Jacobi Symbol (n/k).
+ */
+template<typename T>
+T jacobi(T n, T k) {
+  assert(k > 0);
+  assert(k % 2 == 1);
+
+  n = n % k;
+  T t = 1;
+  while (n != 0) {
+    while (n % 2 == 0) {
+      n /= 2;
+      const T r = k % 8;
+      if (r == 3 || r == 5) t = -t;
+    }
+    std::swap(n, k);
+    if (n % 4 == 3 && k % 4 == 3) t = -t;
+    n = n % k;
+  }
+  if (k == 1) return t;
+  else return 0;
 }
 
 }

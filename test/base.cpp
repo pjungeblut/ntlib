@@ -1,9 +1,11 @@
 #include <gtest/gtest.h>
 
 #include <bitset>
+#include <map>
 #include <set>
 
 #include "base.hpp"
+#include "prime_decomposition.hpp"
 
 TEST(ArithmeticFunctions, AbsoluteValue) {
   EXPECT_EQ(ntlib::abs(5), 5);
@@ -172,6 +174,107 @@ TEST(ModularArithmetic, SquareRoots) {
     if (ntlib::mod_is_square(n, m)) {
       uint32_t root = ntlib::mod_sqrt(n, m);
       EXPECT_EQ(root * root % m, n);
+    }
+  }
+}
+
+TEST(LegendreSymbol, Prime3) {
+  const int32_t l[] = {2, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1,
+      -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0};
+  for (int32_t i = 1; i <= 30; ++i) {
+    EXPECT_EQ(ntlib::legendre(i, 3), l[i]);
+  }
+}
+
+TEST(LegendreSymbol, Prime127) {
+  const int32_t l[] = {2, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, 1, -1, 1, -1, 1, 1,
+      1, 1, 1, -1, 1, 1, -1, -1, 1, 1, -1, -1, -1, 1};
+  for (int32_t i = 1; i <= 30; ++i) {
+    EXPECT_EQ(ntlib::legendre(i, 127), l[i]);
+  }
+}
+
+TEST(LegendreSymbol, PeriodicInTopElement) {
+  for (int32_t p : ntlib::PRIMES_BELOW_100) {
+    if (p == 2) continue;
+    for (int32_t i = 0; i <= 1'000; ++i) {
+      EXPECT_EQ(ntlib::legendre(i, p), ntlib::legendre(i + p, p));
+    }
+  }
+}
+
+TEST(LegendreSymbol, Multiplicative) {
+  for (int32_t p : ntlib::PRIMES_BELOW_100) {
+    if (p == 2) continue;
+    for (int32_t i = 0; i <= 100; ++i) {
+      for (int32_t j = 0; j <= 100; ++j) {
+        EXPECT_EQ(ntlib::legendre(i, p) * ntlib::legendre(j, p),
+            ntlib::legendre(i * j, p));
+      }
+    }
+  }
+}
+
+TEST(LegendreSymbol, Squares) {
+  for (int32_t p : ntlib::PRIMES_BELOW_100) {
+    if (p == 2) continue;
+    for (int32_t i = 0; i <= 100; ++i) {
+      if (i % p == 0) {
+        EXPECT_EQ(ntlib::legendre(i * i, p), 0);
+      } else {
+        EXPECT_EQ(ntlib::legendre(i * i, p), 1);
+      }
+    }
+  }
+}
+
+TEST(LegendreSymbol, MinusOne) {
+  for (int32_t p : ntlib::PRIMES_BELOW_100) {
+    if (p == 2) continue;
+    if (p % 4 == 1) {
+      EXPECT_EQ(ntlib::legendre(-1, p), 1);
+    } else {
+      EXPECT_EQ(ntlib::legendre(-1, p), -1);
+    }
+  }
+}
+
+TEST(LegendreSymbol, Two) {
+  for (int32_t p : ntlib::PRIMES_BELOW_100) {
+    if (p == 2) continue;
+    if (p % 8 == 1 || p % 8 == 7) {
+      EXPECT_EQ(ntlib::legendre(2, p), 1);
+    } else {
+      EXPECT_EQ(ntlib::legendre(2, p), -1);
+    }
+  }
+}
+
+TEST(JacobiSymbol, EmptyProduct) {
+  for (int32_t a = 0; a <= 10; ++a) {
+    EXPECT_EQ(ntlib::jacobi(a, 1), 1);
+  }
+}
+
+TEST(JacobiSymbol, PrimeDenominator) {
+  for (int32_t n : ntlib::PRIMES_BELOW_100) {
+    if (n == 2) continue;
+    for (int32_t k = 0; k <= 1'000; ++k) {
+      EXPECT_EQ(ntlib::jacobi(k, n), ntlib::legendre(k, n));
+    }
+  }
+}
+
+TEST(JacobiSymbol, PrimeDecompositoin) {
+  for (int32_t n = 1; n <= 1'000; n += 2) {
+    std::map<int32_t, int32_t> factors;
+    ntlib::prime_decomposition(n, factors);
+    for (int32_t k = 0; k <= 1'000; ++k) {
+      int32_t prod = 1;
+      for (auto [f, m] : factors) {
+        while (m--) prod *= ntlib::legendre(k, f);
+      }
+      EXPECT_EQ(ntlib::jacobi(k, n), prod);
     }
   }
 }
