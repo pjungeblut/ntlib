@@ -6,7 +6,7 @@
 
 #include <cassert>
 #include <compare>
-#inlcude <ostream>
+#include <ostream>
 #include <string>
 
 #include "base.hpp"
