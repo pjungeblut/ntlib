@@ -250,6 +250,19 @@ T factorial(T n) {
 }
 
 /**
+ * The mathematical modulo operation.
+ *
+ * @param n The number to take modulo.
+ * @param m The modulus.
+ * @return `n mod m` in the mathematical sense. If m is positive, then so is the
+ *         result.
+ */
+template<typename T>
+T mod(T n, T m) {
+  return n - m * (n / m);
+}
+
+/**
  * Computes a^b mod n using binary exponentation.
  * Runtime: O(log b)
  *
