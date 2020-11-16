@@ -327,6 +327,20 @@ public:
    */
   bool operator==(const matrix&) const = default;
 
+  /**
+   * Returns a square identity matrix with the given dimensions.
+   *
+   * @param dim The dimension.
+   * @return An identity matrix.
+   */
+  static matrix get_identity(std::size_t dim) {
+    assert(dim > 0);
+    
+    matrix id(dim, dim);
+    for (std::size_t i = 0; i < dim; ++i) id[i][i] = 1;
+    return id;
+  }
+
 private:
   /**
    * Number of rows and columns.

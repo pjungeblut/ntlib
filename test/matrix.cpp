@@ -104,3 +104,19 @@ TEST(UnaryOperators, Plus) {
   EXPECT_EQ(m1, +m1);
   EXPECT_EQ(m1, +(+m1));
 }
+
+TEST(Identity, SmallValues) {
+  const auto is_id = [](auto m) {
+    for (std::size_t r = 0; r < m.get_rows(); ++r) {
+      for (std::size_t c = 0; c < m.get_columns(); ++c) {
+        if (m[r][c] != (r == c)) return false;
+      }
+    }
+    return true;
+  };
+
+  for (int32_t i = 0; i < 10; ++i) {
+    const auto id = ntlib::matrix<int32_t>::get_identity(i);
+    EXPECT_TRUE(is_id(id));
+  }
+}
