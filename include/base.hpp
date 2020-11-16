@@ -103,16 +103,17 @@ T extended_euclid(T a, T b, T &x, T &y) {
  *
  * @param a The base.
  * @param b The exponent, non-negative.
+ * @param unit The unit element of the group.
  * @return a^b
  */
-template<typename T>
-T pow(T a, T b) {
+template<typename B, typename E>
+B pow(B a, E b, B unit = 1) {
   assert(b >= 0);
   assert(!(a == 0 && b == 0));
-  if (b == 0) return 1;
+  if (b == 0) return unit;
   if (b == 1) return a;
-  if (b & 1) return pow(a, b - 1) * a;
-  return pow(a * a, b / 2);
+  if (b & 1) return pow(a, b - 1, unit) * a;
+  return pow(a * a, b / 2, unit);
 }
 
 /**
@@ -255,18 +256,19 @@ T factorial(T n) {
  * @param a The base.
  * @param b The exponent.
  * @param n The modulus.
+ * @param unit The unit element of the group.
  * @return a^b mod n
  */
-template<typename T>
-T mod_pow(T a, T b, T n) {
+template<typename B, typename E>
+B mod_pow(B a, E b, E n, B unit = 1) {
   assert(!(a == 0 && b == 0));
   assert(a >= 0);
   assert(b >= 0);
   assert(n > 0);
-  if (b == 0) return 1;
+  if (b == 0) return unit;
   if (b == 1) return a % n;
-  if (b & 1) return (mod_pow(a, b - 1, n) * a) % n;
-  return mod_pow((a * a) % n, b / 2, n);
+  if (b & 1) return (mod_pow(a, b - 1, n, unit) * a) % n;
+  return mod_pow((a * a) % n, b / 2, n, unit);
 }
 
 /**
