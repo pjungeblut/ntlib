@@ -259,7 +259,7 @@ T factorial(T n) {
  */
 template<typename T>
 T mod(T n, T m) {
-  return n - m * (n / m);
+  return n - m * ((n / m) - (n < 0));
 }
 
 /**
@@ -406,17 +406,20 @@ T jacobi(T n, T k) {
   assert(k > 0);
   assert(k % 2 == 1);
 
-  n = n % k;
+  n = mod(n, k);
+  // From here, both n and k are non-negative.
   T t = 1;
   while (n != 0) {
-    while (n % 2 == 0) {
+    T s = 0;
+    while (!(n & 1)) {
       n /= 2;
-      const T r = k % 8;
-      if (r == 3 || r == 5) t = -t;
+      ++s;
     }
+    if ((s & 1) && (k % 8 == 3 || k % 8 == 5)) t = -t;
+
     std::swap(n, k);
     if (n % 4 == 3 && k % 4 == 3) t = -t;
-    n = n % k;
+    n = mod(n, k);
   }
   if (k == 1) return t;
   else return 0;

@@ -278,3 +278,8 @@ TEST(JacobiSymbol, PrimeDecompositoin) {
     }
   }
 }
+
+TEST(JacobiSymbol, SpecialValues1) {
+  auto j = ntlib::jacobi(-11, 35);
+  EXPECT_EQ(j, -1);
+}
