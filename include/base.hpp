@@ -259,7 +259,7 @@ T factorial(T n) {
  */
 template<typename T>
 T mod(T n, T m) {
-  return n - m * ((n / m) - (n < 0));
+  return n - m * ((n / m) - (n < 0 && n % m != 0));
 }
 
 /**
