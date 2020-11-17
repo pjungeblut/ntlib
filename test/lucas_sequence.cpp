@@ -21,7 +21,7 @@ TEST(Lucas, BaseCases) {
 
       const auto [um1, vm1] = ntlib::lucas_nth_term_mod(1, p, q, 11);
       EXPECT_EQ(um1, 1);
-      EXPECT_EQ(vm1, p);
+      EXPECT_EQ(vm1, ntlib::mod(p, 11));
     }
   }
 }
@@ -127,4 +127,26 @@ TEST(Lucas, PQ_P6_P1) {
     EXPECT_EQ(um, u[n] % MOD);
     EXPECT_EQ(vm, v[n] % MOD);
   }
+}
+
+TEST(LucasMod, SpecialValues1) {
+  __int128_t P = 1;
+  __int128_t Q = -3;
+  __int128_t N = 42;
+  __int128_t MOD = 41;
+  const auto [u, v] = ntlib::lucas_nth_term(N, P, Q);
+  const auto [um, vm] = ntlib::lucas_nth_term_mod(N, P, Q, MOD);
+  EXPECT_EQ(um, u % MOD);
+  EXPECT_EQ(vm, v % MOD);
+}
+
+TEST(LucasMod, SpecialValues2) {
+  __int128_t P = 1;
+  __int128_t Q = -9;
+  __int128_t N = 36;
+  __int128_t MOD = 35;
+  const auto [u, v] = ntlib::lucas_nth_term(N, P, Q);
+  const auto [um, vm] = ntlib::lucas_nth_term_mod(N, P, Q, MOD);
+  EXPECT_EQ(um, u % MOD);
+  EXPECT_EQ(vm, v % MOD);
 }

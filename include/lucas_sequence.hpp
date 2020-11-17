@@ -68,9 +68,12 @@ std::pair<T, T> lucas_nth_term_mod(T n, T P, T Q, T m) {
       return std::make_pair(mod(u, m), mod(v, m));
     } else {
       const auto [uu, vv] = lucas_nth_term_mod(n / 2, P, Q, m);
+      auto v = vv * vv + uu * uu * D;
+      if (v & 1) v += m;
+      v /= 2;
       return std::make_pair(
           mod(uu * vv, m),
-          mod((vv * vv + uu * uu * D) / 2, m)
+          mod(v, m)
       );
     }
   }
