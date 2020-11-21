@@ -2,23 +2,21 @@
 
 /**
  * A sieve similar to a std::bitset<N> with the additional property that all
- * multiples of 2, 3 and 5 are always zero.
+ * strict multiples of 2, 3 and 5 are always zero.
+ * 2, 3 and 5 however are always true.
  *
  * This allows to optimize for space as from every 30 consecutive numbers only
  * the eight ones with residues 1, 7, 11, 13, 17, 19, 23, 29 modulo 30 need to
  * be stored explicitly. Those can be stored in a single byte resulting in a
  * memory improvement by a factor of 30 compared to a std::vector<std::byte>
  * or by a factor of 15/4 compared to a std::vector<bool>.
- *
- * Note: If this is used as a prime sieve, values 2, 3 and 5 are prime but
- *       stored as false in the sieve. They must therefore be treated
- *       differently.
  */
 
 #include <climits>
 #include <cstddef>
 #include <cstring>
 #include <memory>
+#include <vector>
 
 namespace ntlib {
 
@@ -45,26 +43,15 @@ class sieve_235 {
       std::byte{0x00}, std::byte{0x01}};
 
   /**
-   * Allocator for the sieve.
-   */
-  Allocator sieve_allocator;
-
-  /**
-   * The actual capacity of the sieve.
-   * Equal to the smallest multiple of 30 that is at least `min_capacity`.
-   */
-  std::size_t capacity;
-
-  /**
    * Memory for the sieve.
    */
-  std::byte *memory;
+  std::vector<std::byte> memory;
 
 public:
   /**
    * Constructs an empty sieve.
    */
-  sieve_235() : capacity(0), memory(nullptr) {}
+  sieve_235() = default;
 
   /**
    * Constructs the sieve with a capacity at least as big as `min_capacity`.
@@ -72,74 +59,9 @@ public:
    * @param min_capacity The minimum required capacity.
    */
   sieve_235(std::size_t min_capacity) :
-      capacity((min_capacity + PER_BYTE - 1) / PER_BYTE) {
+      memory((min_capacity + PER_BYTE - 1) / PER_BYTE) {
     static_assert(CHAR_BIT == 8,
         "235 sieve optimization only works for 8 bits per byte.");
-    if (capacity) memory = sieve_allocator.allocate(capacity);
-    else memory = nullptr;
-  }
-
-  /**
-   * Copy constructs a new sieve.
-   *
-   * @param other The other sieve to copy from.
-   */
-  sieve_235(const sieve_235 &other) : capacity(other.capacity) {
-    if (capacity) {
-      memory = sieve_allocator.allocate(capacity);
-      memcpy(memory, other.memory, capacity);
-    } else {
-      memory = nullptr;
-    }
-  }
-
-  /**
-   * Copy assigns form another sieve.
-   *
-   * @param other The other sieve to copy assign from.
-   * @return Reference to this sieve.
-   */
-  sieve_235& operator=(const sieve_235 &other) {
-    if (this != &other) {
-      if (capacity != other.capacity) {
-        if (memory) sieve_allocator.deallocate(memory, capacity);
-        capacity = other.capacity;
-        if (capacity) memory = sieve_allocator.allocate(capacity);
-        else memory = nullptr;
-      }
-      if (capacity) memcpy(memory, other.memory, capacity);
-    }
-    return *this;
-  }
-
-  /**
-   * Move constructs a new sieve.
-   *
-   * @param other The other sieve to move from.
-   */
-  sieve_235(sieve_235 &&other) noexcept {
-    capacity = std::exchange(other.capacity, 0);
-    memory = std::exchange(other.memory, nullptr);
-  }
-
-  /**
-   * Move assigns from another sieve.
-   *
-   * @param other The other sieve to move assign from.
-   * @return Reference to this sieve.
-   */
-  sieve_235& operator=(sieve_235 &&other) noexcept {
-    if (memory) sieve_allocator.deallocate(memory, capacity);
-    capacity = std::exchange(other.capacity, 0);
-    memory = std::exchange(other.memory, nullptr);
-    return *this;
-  }
-
-  /**
-   * Destructs the sieve and frees the memory.
-   */
-  ~sieve_235() {
-    if (memory) sieve_allocator.deallocate(memory, capacity);
   }
 
   /**
@@ -151,7 +73,12 @@ public:
     /**
      * Constant pointer to the element in the sieve to work on.
      */
-    std::byte * const byte;
+    std::byte* const byte;
+
+    /**
+     * Whether the current byte is the first one.
+     */
+    const bool first_byte;
 
     /**
      * The Index for the referenced bit.
@@ -162,10 +89,11 @@ public:
      * Constructs the reference.
      *
      * @param byte The byte to work on.
+     * @param first_byte Whether the current byte is the first one.
      * @param idx The idx of the bit in `byte` to work on.
      */
-    reference(std::byte *byte, std::size_t idx) :
-        byte(byte), idx(idx) {}
+    reference(std::byte *byte, bool first_byte, std::size_t idx) :
+        byte(byte), first_byte(first_byte), idx(idx) {}
 
   public:
     /**
@@ -182,39 +110,23 @@ public:
     }
 
     /**
-     * Copy assigns a value to the referenced sieve entry.
-     *
-     * @param val The value to set the current element to. If the element is a
-     *            multiple of 2, 3 or 5 and the value of the other element is
-     *            `true`, this operation is ignored.
-     * @return Reference to this reference object.
-     */
-    reference& operator=(const reference &other) {
-      if ((*other.element & MASK[other.idx]) != std::byte{0}) {
-        *byte |= MASK[idx];
-      } else {
-        *byte &= ~MASK[idx];
-      }
-      return *this;
-    }
-
-    /**
      * Returns the value of the current element.
      *
      * @return Whether the current element is `true` or `false`.
      */
     [[nodiscard]]
     operator bool() const {
+      if (first_byte && (idx == 2 || idx == 3 || idx == 5)) return true;
       return (*byte & MASK[idx]) != std::byte{0};
     }
   };
 
   /**
-   * Initializes the sieve with `true` everywhere execept for multiples of 2, 3
-   * and 5.
+   * Initializes the sieve with `true` everywhere execept for strict
+   * multiples of 2, 3 and 5.
    */
   void init235() {
-    memset(memory, 0xFF, capacity);
+    memset(memory.data(), 0xFF, memory.size());
   }
 
   /**
@@ -225,6 +137,7 @@ public:
    */
   [[nodiscard]]
   bool operator[](std::size_t idx) const {
+    if (idx == 2 || idx == 3 || idx == 5) return true;
     return (memory[idx / PER_BYTE] & MASK[idx % PER_BYTE]) != std::byte{0};
   }
 
@@ -236,7 +149,7 @@ public:
    */
   [[nodiscard]]
   reference operator[](std::size_t idx) {
-    return reference(memory + (idx / PER_BYTE), idx % PER_BYTE);
+    return reference(&memory[idx / PER_BYTE], idx < PER_BYTE, idx % PER_BYTE);
   }
 
   /**
@@ -246,7 +159,7 @@ public:
    */
   [[nodiscard]]
   bool empty() const noexcept {
-    return capacity == 0;
+    return memory.empty();
   }
 
   /**
@@ -256,7 +169,7 @@ public:
    */
   [[nodiscard]]
   std::size_t size() const noexcept {
-    return capacity * PER_BYTE;
+    return memory.size() * PER_BYTE;
   }
 
   /**
@@ -266,7 +179,7 @@ public:
    */
   [[nodiscard]]
   const std::byte* data() const noexcept {
-    return memory;
+    return memory.data();
   }
 
   /**
@@ -276,7 +189,7 @@ public:
    */
   [[nodiscard]]
   std::byte* data() noexcept {
-    return memory;
+    return memory.data();
   }
 };
 
