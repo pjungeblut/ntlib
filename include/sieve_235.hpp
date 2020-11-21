@@ -151,7 +151,7 @@ public:
     /**
      * Constant pointer to the element in the sieve to work on.
      */
-    std::byte * const element;
+    std::byte * const byte;
 
     /**
      * The Index for the referenced bit.
@@ -164,8 +164,8 @@ public:
      * @param byte The byte to work on.
      * @param idx The idx of the bit in `byte` to work on.
      */
-    reference(std::byte *element, std::size_t idx) :
-        element(element), idx(idx) {}
+    reference(std::byte *byte, std::size_t idx) :
+        byte(byte), idx(idx) {}
 
   public:
     /**
@@ -177,7 +177,7 @@ public:
      * @return Reference to this reference object.
      */
     reference& operator=(bool val) {
-      *element = val ? *element |= MASK[idx] : *element &= ~MASK[idx];
+      *byte = val ? *byte |= MASK[idx] : *byte &= ~MASK[idx];
       return *this;
     }
 
@@ -191,9 +191,9 @@ public:
      */
     reference& operator=(const reference &other) {
       if ((*other.element & MASK[other.idx]) != std::byte{0}) {
-        *element |= MASK[idx];
+        *byte |= MASK[idx];
       } else {
-        *element &= ~MASK[idx];
+        *byte &= ~MASK[idx];
       }
       return *this;
     }
@@ -205,7 +205,7 @@ public:
      */
     [[nodiscard]]
     operator bool() const {
-      return (*element & MASK[idx]) != std::byte{0};
+      return (*byte & MASK[idx]) != std::byte{0};
     }
   };
 
