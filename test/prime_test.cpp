@@ -1,14 +1,32 @@
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <cstdint>
 #include <vector>
 
+#include "../benchmarks/experiments/prime_test.hpp"
 #include "prime_generation.hpp"
 #include "prime_test.hpp"
 
-TEST(Naive, SmallValues) {
-  uint32_t N = 1'000'000;
-  auto sieve = ntlib::prime_sieve(N);
+static const uint64_t N = 1'000'000;
+static const auto sieve = ntlib::prime_sieve(N);
+
+// Large composites.
+static const __uint128_t composites[] = {
+  1'000'000'007LL * 1'000'000'007LL,
+  4'120'038'565'055'551LL,
+  2LL * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2,
+  2LL * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47
+};
+
+// Large primes.
+static const __uint128_t primes[] = {
+  1'000'000'007,
+  952'016'363'681'739'749LL,
+  301'697'296'732'166'057LL
+};
+
+TEST(Naive, FirstN) {
   for (uint32_t n = 0; n <= N; ++n) {
     EXPECT_EQ(ntlib::is_prime_naive(n), sieve[n]);
   }
@@ -18,30 +36,26 @@ TEST(Naive, NegativeValues) {
   EXPECT_FALSE(ntlib::is_prime_naive(-1));
 }
 
-TEST(MillerRabin, SmallValues) {
-  uint64_t N = 1'000'000;
-  auto sieve = ntlib::prime_sieve(N);
+TEST(MillerRabin, FirstN) {
   for (uint64_t n = 0; n <= N; ++n) {
-    EXPECT_EQ(ntlib::is_prime_miller_rabin(n), sieve[n]);
+    EXPECT_EQ(ntlib::experiments::is_prime_miller_rabin(n), sieve[n]);
   }
 }
 
 TEST(MillerRabin, NegativeValues) {
-  EXPECT_FALSE(ntlib::is_prime_miller_rabin(-1));
+  EXPECT_FALSE(ntlib::experiments::is_prime_miller_rabin(-1));
 }
 
 TEST(MillerRabin, LargeComposites) {
-  __uint128_t n1 = 1'000'000'007LL * 1'000'000'007LL;
-  __uint128_t n2 = 4'120'038'565'055'551LL;
-  EXPECT_FALSE(ntlib::is_prime_miller_rabin(n1));
-  EXPECT_FALSE(ntlib::is_prime_miller_rabin(n2));
+  for (auto c : composites) {
+    EXPECT_FALSE(ntlib::experiments::is_prime_miller_rabin(c));
+  }
 }
 
 TEST(MillerRabin, LargePrimes) {
-  __uint128_t n1 = 952'016'363'681'739'749LL;
-  __uint128_t n2 = 301'697'296'732'166'057LL;
-  EXPECT_TRUE(ntlib::is_prime_miller_rabin(n1));
-  EXPECT_TRUE(ntlib::is_prime_miller_rabin(n2));
+  for (auto p : primes) {
+    EXPECT_TRUE(ntlib::experiments::is_prime_miller_rabin(p));
+  }
 }
 
 TEST(MillerRabin, Base2StrongLiars) {
@@ -92,10 +106,41 @@ TEST(MillerRabin, Base7StrongLiars) {
   }
 }
 
-TEST(Combined, First10Million) {
-  uint64_t N = 10'000'000;
-  auto sieve = ntlib::prime_sieve(N);
+TEST(StrongLucas, SmallValues) {
+  // Strong Lucas Pseudoprimes.
+  // https://oeis.org/A217255
+  const std::set<uint64_t> pseudo({5459, 5777, 10877, 16109, 18971, 22499,
+      24569, 25199, 40309, 58519, 75077, 97439, 100127, 113573, 115639, 130139,
+      155819, 158399, 161027, 162133, 176399, 176471, 189419, 192509, 197801,
+      224369, 230691, 231703, 243629, 253259, 268349, 288919, 313499, 324899});
+  const uint64_t M = std::min(N, *pseudo.rbegin());
+  for (uint64_t n = 3; n <= M; n += 2) {
+    if (pseudo.find(n) != pseudo.end()) {
+      EXPECT_NE(ntlib::is_strong_lucas_probable_prime(n), sieve[n]);
+    } else {
+      EXPECT_EQ(ntlib::is_strong_lucas_probable_prime(n), sieve[n]);
+    }
+  }
+}
+
+TEST(BailliePSW, FirstN) {
   for (uint64_t n = 0; n <= N; ++n) {
     EXPECT_EQ(ntlib::is_prime(n), sieve[n]);
+  }
+}
+
+TEST(BailliePSW, NegativeValues) {
+  EXPECT_FALSE(ntlib::is_prime(-1));
+}
+
+TEST(BailliePSW, LargeComposites) {
+  for (auto c : composites) {
+    EXPECT_FALSE((ntlib::is_prime<__uint128_t, __int128_t>(c)));
+  }
+}
+
+TEST(BailliePSW, LargePrimes) {
+  for (auto p : primes) {
+    EXPECT_TRUE((ntlib::is_prime<__uint128_t, __int128_t>(p)));
   }
 }

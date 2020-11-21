@@ -4,12 +4,11 @@
  * Implementations for prime number tests.
  */
 
-#include <algorithm>
-#include <cstddef>
-#include <limits>
-#include <vector>
+#include <cstdint>
+#include <type_traits>
 
 #include "base.hpp"
+#include "lucas_sequence.hpp"
 
 namespace ntlib {
 
@@ -20,10 +19,13 @@ namespace ntlib {
  * @param n The number to be tested.
  */
 template<typename T>
-bool is_prime_naive(const T &n) {
+bool is_prime_naive(T n) {
   if (n < 2) return false;
-  if (n > 2 && n % 2 == 0) return 0;
-  for (T i = 3; i * i <= n; i += 2) {
+  for (const T p : PRIMES_BELOW_100) {
+    if (n == p) return true;
+    if (n % p == 0) return false;
+  }
+  for (T i = 101; i * i <= n; i += 2) {
     if (n % i == 0) return false;
   }
   return true;
@@ -31,87 +33,119 @@ bool is_prime_naive(const T &n) {
 
 /**
  * Miller Rabin primality test.
+ * Tests if `n` is a strong propable prime.
  *
- * @param n The number to be tested. Must be odd and `n*n` must still fit into
- *          type `T`.
- * @prarm a The base to test with. Must be 1 < a < n - 1.
- * @return False, if the number is composite. True, if the number is probable
- *         prime.
+ * @param n The number to be tested.
+ * @prarm a The base to test with. Must be `1 < a < n-1`.
+ * @return `true` if the `n` is a strong pseudoprime to base `a`.
  */
 template<typename T>
-bool miller_rabin_test(const T &n, const T &a) {
-   const T m = n - 1;
-   T d = m >> 1;
-   T e = 1;
-   while (!(d & 1)) {
-     d >>= 1;
-     ++e;
-   }
-   T p = a;
-   p = ntlib::mod_pow(a, d, n);
-   if (p == 1 || p == m) return true;
-   while (--e) {
-      p *= p, p %= n;
-      if (p == m) return true;
-      if (p <= 1) break;
-   }
-   return false;
+bool miller_rabin_test(T n, T a) {
+  assert(a > 1);
+  assert(a < n - 1);
+
+  // Decompose `n-1` into `d*2^e`.
+  const T m = n - 1;
+  T d = m >> 1;
+  T e = 1;
+  while (!(d & 1)) {
+    d >>= 1;
+    ++e;
+  }
+
+  // Strong pseudoprime test.
+  T p = mod_pow(a, d, n);
+  if (p == 1 || p == m) return true;
+  while (--e) {
+    p *= p;
+    p %= n;
+    if (p == m) return true;
+  }
+  return false;
 }
 
 /**
- * Prime number test.
- * Deterministic variant of Miller Rabin prime test.
- * Deterministic for n < 318'665'857'834'031'151'167'461.
- * Runtime: O(log n)
+ * Checks whether `n` is a Lucas probable prime.
  *
- * @param n The number to be tested.
+ * @param n The number to check.
+ * @return `true` if n is a strong lucas probable prime.
  */
-template<typename T>
-bool is_prime_miller_rabin(const T &n) {
-  static const T bases[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37};
+template<typename U, typename S = std::make_signed<U>::type>
+bool is_strong_lucas_probable_prime(U n) {
+  assert(n > 2);
+  assert(n % 2 == 1);
 
-  // Base cases.
-  if (n < 2) return false;
-  for (T b : bases) {
-    if (n == b) return true;
-    else if (n % b == 0) return false;
+  // Find parameters P, Q and D for Lucas sequences.
+  static const int ITERATIONS_BEFORE_SQUARE_TEST = 10;
+  S D = 5;
+  bool found_d = false;
+  for (int i = 0; i < ITERATIONS_BEFORE_SQUARE_TEST; ++i) {
+    if (jacobi(D, static_cast<S>(n)) == -1) {
+      found_d = true;
+      break;
+    }
+    D = D > 0 ? -(D + 2) : -(D - 2);
+  }
+  // In no value for D was found yet, then it might be that n is a perfect
+  // square. In this case no D exists.
+  if (!found_d && is_square(n)) return false;
+  // If n is not a perfect square we continue looking for a D. It must exist.
+  while (jacobi(D, static_cast<S>(n)) != -1) {
+    D = D > 0 ? -(D + 2) : -(D - 2);
+  }
+  const S P = 1;
+  const S Q = (1 - D) / 4;
+
+  // Decompose `n+1` into `d*2^s`.
+  S d = (n + 1) / 2;
+  S s = 1;
+  while (!(d & 1)) {
+    d /= 2;
+    ++s;
   }
 
-  // Possible bases.
-  for (T a : bases) {
-    if (a >= n - 1) break;
-    if (!miller_rabin_test(n, a)) return false;
-	}
-	return true;
+  // Strong Lucas probable prime test.
+  auto [u, v] = lucas_nth_term_mod(d, P, Q, static_cast<S>(n));
+  if (u == 0 || v == 0) return true;
+  while (--s) {
+    auto uu = mod(u * v, static_cast<S>(n));
+    auto vv = v * v + D * u * u;
+    if (vv & 1) vv += n;
+    vv /= 2;
+    vv = mod(vv, static_cast<S>(n));
+    u = uu;
+    v = vv;
+    if (v == 0) return true;
+  }
+
+  return false;
 }
 
 /**
  * Tests whether a given number is (probable) prime.
+ * Uses a Baillie-PSW-Test, which is deterministic for all values `n<2^64`.
+ *
+ * @param n The number to test.
  */
-template<typename T, bool allow_probable_prime = true>
-bool is_prime(const T &n) {
-  // Until this value the naive method is preferred over the Miller Rabin test.
-  static const std::size_t THRESHOLD_NAIVE_MILLER_RABIN = 400'000;
+template<typename U, typename S = std::make_signed<U>::type>
+bool is_prime(U n) {
+  // Trivial cases.
+  if (n <= 1) return false;
 
-  // Until this value the Miller Rabin test is assumed to be exact.
-  // With all primes p <= 37 as bases, it is actually exact unitl
-  // n < 318'665'857'834'031'151'167'461, which is bigger than any value that
-  // can be stored in an unsigned 64 bit integer.
-  static const std::size_t THRESHOLD_MILLER_RABIN_EXACT =
-      std::numeric_limits<uint64_t>::max();
-
-  if constexpr (allow_probable_prime) {
-    if (n <= THRESHOLD_NAIVE_MILLER_RABIN) return is_prime_naive(n);
-    else return is_prime_miller_rabin(n);
-  } else {
-    if (n < THRESHOLD_MILLER_RABIN_EXACT) {
-      if (n <= THRESHOLD_NAIVE_MILLER_RABIN) return is_prime_naive(n);
-      else return is_prime_miller_rabin(n);
-    } else {
-      // This will only work if n has only small prime factors...
-      return is_prime_naive(n);
-    }
+  // Trial division with some small prime factors.
+  for (U p : PRIMES_BELOW_100) {
+    if (n == p) return true;
+    if (n % p == 0) return false;
   }
+
+  // Strong probable prime test for base 2.
+  if (!ntlib::miller_rabin_test(n, static_cast<U>(2))) return false;
+
+  // Strong Lucas probable prime test.
+  if (!is_strong_lucas_probable_prime<U, S>(n)) return false;
+
+  // Most probably prime.
+  return true;
 }
 
 }
