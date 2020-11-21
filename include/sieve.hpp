@@ -6,147 +6,68 @@
  */
 
 #include <cstddef>
-#include <cstring>
 #include <memory>
-#include <utility>
+#include <vector>
 
 namespace ntlib {
 
-template <class Allocator = std::allocator<bool>>
+template <class Allocator = std::allocator<std::byte>>
 class sieve {
-  /**
-   * Allocator for the sieve.
-   */
-  Allocator sieve_allocator;
-
-  /**
-   * Capacity of the sieve.
-   */
-  std::size_t capacity;
-
   /**
    * Memory for the sieve.
    */
-  bool *memory;
+  std::vector<std::byte, Allocator> memory;
 
 public:
   /**
    * Constructs an empty sieve.
    */
-  sieve() : capacity(0), memory(nullptr) {}
+  sieve() = default;
 
   /**
-   * Constructs the sieve with a given capacity.
-   * Initially all elements are set to `true`.
+   * Constructs the sieve with at least the given capacity.
    *
-   * @param capacity The capacity of the sieve.
+   * @param min_capacity The minimum capacity of the sieve.
    */
-  sieve(std::size_t capacity) : capacity(capacity) {
-    if (capacity) memory = sieve_allocator.allocate(capacity);
-    else memory = nullptr;
-  }
-
-  /**
-   * Copy constructs a new sieve.
-   *
-   * @param other The other sieve to copy from.
-   */
-  sieve(const sieve &other) : capacity(other.capacity) {
-    if (capacity) {
-      memory = sieve_allocator.allocate(capacity);
-      memcpy(memory, other.memory, capacity);
-    } else {
-      memory = nullptr;
-    }
-  }
-
-  /**
-   * Copy assigns from another sieve.
-   *
-   * @param other The other sieve to copy assign from.
-   * @return Reference to this sieve.
-   */
-  sieve& operator=(const sieve &other) {
-    if (this != &other) {
-      if (capacity != other.capacity) {
-        if (memory) sieve_allocator.deallocate(memory, capacity);
-        capacity = other.capacity;
-        if (capacity) memory = sieve_allocator.allocate(capacity);
-        else memory = nullptr;
-      }
-      if (capacity) memcpy(memory, other.memory, capacity);
-    }
-    return *this;
-  }
-
-  /**
-   * Move constructs a new sieve.
-   *
-   * @param other The other sieve to move from.
-   */
-  sieve(sieve &&other) noexcept {
-    capacity = std::exchange(other.capacity, 0);
-    memory = std::exchange(other.memory, nullptr);
-  }
-
-  /**
-   * Move assigns from another sieve.
-   *
-   * @param other The other sieve to move assign from.
-   * @return Reference to this sieve.
-   */
-  sieve& operator=(sieve &&other) noexcept {
-    if (memory) sieve_allocator.deallocate(memory, capacity);
-    capacity = std::exchange(other.capacity, 0);
-    memory = std::exchange(other.memory, nullptr);
-    return *this;
-  }
-
-  /**
-   * Destructs the sieve and frees the memory.
-   */
-  ~sieve() {
-    if (memory) sieve_allocator.deallocate(memory, capacity);
-  }
+  sieve(std::size_t min_capacity) : memory((min_capacity + 29) / 30 * 30) {}
 
   /**
    * Initializes the sieve with `true` everywhere execept for multiples of 2, 3
-   * and 5.
-   *
-   * Note: This operation is only valid if capacity is a multiple of 30!
+   * and 5. This needs the invariant that `memory.size()` is always a multiple
+   * of 30.
    */
   void init235() {
-    for (std::size_t i = 0; i < capacity; i += 30) {
-      memory[i + 0] = false;
-      memory[i + 1] = true;
-      memory[i + 2] = false;
-      memory[i + 3] = false;
-      memory[i + 4] = false;
-      memory[i + 5] = false;
-      memory[i + 6] = false;
-      memory[i + 7] = true;
-      memory[i + 8] = false;
-      memory[i + 9] = false;
-      memory[i + 10] = false;
-      memory[i + 11] = true;
-      memory[i + 12] = false;
-      memory[i + 13] = true;
-      memory[i + 14] = false;
-      memory[i + 15] = false;
-      memory[i + 16] = false;
-      memory[i + 17] = true;
-      memory[i + 18] = false;
-      memory[i + 19] = true;
-      memory[i + 20] = false;
-      memory[i + 21] = false;
-      memory[i + 22] = false;
-      memory[i + 23] = true;
-      memory[i + 24] = false;
-      memory[i + 25] = false;
-      memory[i + 26] = false;
-      memory[i + 27] = false;
-      memory[i + 28] = false;
-      memory[i + 29] = true;
+    for (std::size_t i = 0; i < memory.size(); i += 30) {
+      memory[i + 0] = std::byte{false};
+      memory[i + 1] = std::byte{true};
+      memory[i + 2] = std::byte{false};
+      memory[i + 3] = std::byte{false};
+      memory[i + 4] = std::byte{false};
+      memory[i + 5] = std::byte{false};
+      memory[i + 6] = std::byte{false};
+      memory[i + 7] = std::byte{true};
+      memory[i + 8] = std::byte{false};
+      memory[i + 9] = std::byte{false};
+      memory[i + 10] = std::byte{false};
+      memory[i + 11] = std::byte{true};
+      memory[i + 12] = std::byte{false};
+      memory[i + 13] = std::byte{true};
+      memory[i + 14] = std::byte{false};
+      memory[i + 15] = std::byte{false};
+      memory[i + 16] = std::byte{false};
+      memory[i + 17] = std::byte{true};
+      memory[i + 18] = std::byte{false};
+      memory[i + 19] = std::byte{true};
+      memory[i + 20] = std::byte{false};
+      memory[i + 21] = std::byte{false};
+      memory[i + 22] = std::byte{false};
+      memory[i + 23] = std::byte{true};
+      memory[i + 24] = std::byte{false};
+      memory[i + 25] = std::byte{false};
+      memory[i + 26] = std::byte{false};
+      memory[i + 27] = std::byte{false};
+      memory[i + 28] = std::byte{false};
+      memory[i + 29] = std::byte{true};
     }
   }
 
@@ -158,8 +79,50 @@ public:
    */
   [[nodiscard]]
   bool operator[](std::size_t idx) const {
-    return memory[idx];
+    return std::to_integer<bool>(memory[idx]);
   }
+
+  /**
+   * A proxy class to provide an lvalue that can be returned from operator[]
+   * that can be assigned booleans.
+   */
+  class reference {
+    friend class sieve;
+
+    /**
+     * Constant pointer to the element in the sieve to work on.
+     */
+    std::byte * const element;
+
+    /**
+     * Constructs the reference.
+     *
+     * @param element The element to work on.
+     */
+    reference(std::byte *element) : element(element) {};
+
+  public:
+    /**
+     * Assigns a value to the referenced sieve entry.
+     *
+     * @param val The value to set.
+     * @return Reference to this reference object.
+     */
+    reference& operator=(bool val) {
+      *element = std::byte{val};
+      return *this;
+    }
+
+    /**
+     * Returns the value of the current element.
+     *
+     * @return Whether the current element is `true` or `false`.
+     */
+    [[nodiscard]]
+    operator bool() const {
+      return std::to_integer<bool>(*element);
+    }
+  };
 
   /**
    * Subscript operator for array like access.
@@ -168,8 +131,8 @@ public:
    * @return A reference to the element at the given index.
    */
   [[nodiscard]]
-  bool& operator[](std::size_t idx) {
-    return memory[idx];
+  reference operator[](std::size_t idx) {
+    return reference(&memory[idx]);
   }
 
   /**
@@ -179,7 +142,7 @@ public:
    */
   [[nodiscard]]
   bool empty() const noexcept {
-    return capacity == 0;
+    return memory.empty();
   }
 
   /**
@@ -189,7 +152,7 @@ public:
    */
   [[nodiscard]]
   std::size_t size() const noexcept {
-    return capacity;
+    return memory.size();
   }
 
   /**
@@ -198,8 +161,8 @@ public:
    * @return Constant pointer to the underlying data array.
    */
   [[nodiscard]]
-  const bool* data() const noexcept {
-    return memory;
+  const std::byte* data() const noexcept {
+    return memory.data();
   }
 
   /**
@@ -208,8 +171,8 @@ public:
    * @return Pointer to the underlying data array.
    */
   [[nodiscard]]
-  bool *data() noexcept {
-    return memory;
+  std::byte* data() noexcept {
+    return memory.data();
   }
 };
 
