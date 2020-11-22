@@ -4,6 +4,12 @@
 
 #include "matrix.hpp"
 
+TEST(Construction, Default) {
+  ntlib::matrix<int32_t> mat;
+  EXPECT_EQ(mat.get_rows(), 0);
+  EXPECT_EQ(mat.get_columns(), 0);
+}
+
 TEST(Construction, ByDimensions) {
   const int32_t rows = 3;
   const int32_t columns = 5;

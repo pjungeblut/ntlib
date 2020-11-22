@@ -17,6 +17,11 @@ template<typename T, template <typename> typename Allocator = std::allocator>
 class matrix {
 public:
   /**
+   * Default construction for an empty matrix.
+   */
+  matrix() : rows(0), columns(0) {};
+
+  /**
    * Constructs a new matrix of the given dimensions with the values default
    * initialized.
    *
@@ -68,18 +73,47 @@ public:
   }
 
   /**
+   * A proxy class to provide an lvalue that can be returned from operator[]
+   * so that values can be changed but for example dimensions cannot.
+   */
+  class reference {
+    friend class matrix;
+
+    /**
+     * Constant pointer to the queried row.
+     */
+    std::vector<T, Allocator<T>>* const row;
+
+    /**
+     * Constructs the reference.
+     *
+     * @param row_idx The index of the row to access.
+     */
+    reference(std::vector<T, Allocator<T>>* const row) : row(row) {};
+
+  public:
+    /**
+     * Array subscript operator to access the row.
+     *
+     * @param col_idx The index of the column to access.
+     * @return The value in row `row_idx` and column `col_idx`.
+     */
+    [[nodiscard]]
+    T& operator[](std::size_t col_idx) {
+      return (*row)[col_idx];
+    }
+  };
+
+  /**
    * Array subscript operator.
-   *
-   * TODO: The should not return a reference to the vector as the caller could
-   *       change its size, etc. Instead this should return a proxy.
-   *       Check that this does not come with a performace overhead though!
    *
    * @param row_idx The index of the row to access.
    * @return A reference to the vector containing the entries of the queried
    *         row.
    */
-  std::vector<T, Allocator<T>>& operator[](std::size_t row_idx) {
-    return mat[row_idx];
+  [[nodiscard]]
+  reference operator[](std::size_t row_idx) {
+    return reference(&mat[row_idx]);
   }
 
   /**
@@ -335,7 +369,7 @@ public:
    */
   static matrix get_identity(std::size_t dim) {
     assert(dim > 0);
-    
+
     matrix id(dim, dim);
     for (std::size_t i = 0; i < dim; ++i) id[i][i] = 1;
     return id;
