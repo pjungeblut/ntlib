@@ -1,60 +1,132 @@
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <bitset>
+#include <limits>
 #include <map>
 #include <set>
+#include <vector>
 
 #include "base.hpp"
 #include "prime_decomposition.hpp"
+#include "prime_generation.hpp"
 
-TEST(ArithmeticFunctions, AbsoluteValue) {
-  EXPECT_EQ(ntlib::abs(5), 5);
-  EXPECT_EQ(ntlib::abs(-5), 5);
-  EXPECT_EQ(ntlib::abs(0), 0);
-  EXPECT_EQ(ntlib::abs(-0), 0);
-  EXPECT_EQ(ntlib::abs(-0.0), 0);
+static const int min_int = std::numeric_limits<int>::min();
+static const int max_int = std::numeric_limits<int>::max();
+static const unsigned int max_uint = std::numeric_limits<unsigned int>::max();
+
+TEST(PrimesBelow100, ListContainsOnlyPrimes) {
+  const auto sieve = ntlib::prime_sieve(100);
+  for (uint32_t p : ntlib::PRIMES_BELOW_100) {
+    EXPECT_TRUE(sieve[p]);
+  }
 }
 
-TEST(ArithmeticFunctions, GreatestCommonDivisor) {
-  // Basic tests with (non-)coprime integers.
-  EXPECT_EQ(ntlib::gcd(10, 15), 5);
-  EXPECT_EQ(ntlib::gcd(10, 7), 1);
+TEST(PrimesBelow100, ListComplete) {
+  std::vector<uint32_t> primes;
+  ntlib::prime_sieve(100u, primes);
+  while (primes.back() >= 100) primes.pop_back();
+  EXPECT_EQ(primes, ntlib::PRIMES_BELOW_100);
+}
 
-  // At least one parameter is zero.
+TEST(AbsoluteValue, SmallValues) {
+  EXPECT_EQ(ntlib::abs(1), 1);
+  EXPECT_EQ(ntlib::abs(-1), 1);
+  EXPECT_EQ(ntlib::abs(0), 0);
+  EXPECT_EQ(ntlib::abs(-0), 0);
+}
+
+TEST(AbsoluteValue, CornerCases) {
+  EXPECT_EQ(ntlib::abs(min_int + 1), max_int);
+  EXPECT_EQ(ntlib::abs(max_int), max_int);
+  EXPECT_EQ(ntlib::abs(max_uint), max_uint);
+}
+
+TEST(GreatestCommonDivisor, OneParameterZero) {
   EXPECT_EQ(ntlib::gcd(10, 0), 10);
   EXPECT_EQ(ntlib::gcd(0, 10), 10);
+}
 
-  // Negative values.
-  // The gcd must always be positive.
+TEST(GreatestCommonDivisor, Coprime) {
+  EXPECT_EQ(ntlib::gcd(1, 2), 1);
+  EXPECT_EQ(ntlib::gcd(2, 3), 1);
+  EXPECT_EQ(ntlib::gcd(7, 15), 1);
+}
+
+TEST(GreatestCommonDivisor, NonCoprime) {
+  EXPECT_EQ(ntlib::gcd(2, 2), 2);
+  EXPECT_EQ(ntlib::gcd(2, 4), 2);
+  EXPECT_EQ(ntlib::gcd(4, 6), 2);
+}
+
+TEST(GreatestCommonDivisor, NegativeValues) {
   EXPECT_EQ(ntlib::gcd(10, -5), 5);
   EXPECT_EQ(ntlib::gcd(-10, -5), 5);
   EXPECT_EQ(ntlib::gcd(-10, 5), 5);
 }
 
-TEST(ArithmeticFunctions, LowestCommonMultiple) {
-  // Basic examples with (non-multiples).
-  EXPECT_EQ(ntlib::lcm(2, 3), 6);
-  EXPECT_EQ(ntlib::lcm(3, 9), 9);
+TEST(GreatestCommonDivisor, CornerCases) {
+  // 2^31-1 is prime.
+  EXPECT_EQ(ntlib::gcd(max_int, 2), 1);
 
-  // Negative values.
-  // The lcm must always be positive.
+  // 2^32-1 is composite.
+  EXPECT_EQ(ntlib::gcd(max_uint, 2u), 1);
+  EXPECT_EQ(ntlib::gcd(max_uint, 3u), 3);
+  EXPECT_EQ(ntlib::gcd(max_uint, 9u), 3);
+  EXPECT_EQ(ntlib::gcd(max_uint, 65537u), 65537);
+  EXPECT_EQ(ntlib::gcd(max_uint, 10u * 65537), 5 * 65537);
+
+  EXPECT_EQ(ntlib::gcd(min_int, 2), 2);
+  EXPECT_EQ(ntlib::gcd(min_int, -2), 2);
+}
+
+TEST(LeastCommonMultiple, Multiples) {
+  EXPECT_EQ(ntlib::lcm(2, 8), 8);
+  EXPECT_EQ(ntlib::lcm(3, 9), 9);
+}
+
+TEST(LeastCommonMultiple, NonCoprime) {
+  EXPECT_EQ(ntlib::lcm(4, 4), 4);
+  EXPECT_EQ(ntlib::lcm(4, 6), 12);
+}
+
+TEST(LeastCommonMultiple, Coprime) {
+  EXPECT_EQ(ntlib::lcm(1, 2), 2);
+  EXPECT_EQ(ntlib::lcm(2, 3), 6);
+}
+
+TEST(LeastCommonMultiple, NegativeValues) {
   EXPECT_EQ(ntlib::lcm(2, -3), 6);
   EXPECT_EQ(ntlib::lcm(-2, 3), 6);
   EXPECT_EQ(ntlib::lcm(-2, -3), 6);
 }
 
-TEST(ArithmeticFunctions, ExtendedEuclid) {
-  // General example.
-  int32_t x, y;
-  uint32_t g = ntlib::extended_euclid(99, 78, x, y);
-  EXPECT_EQ(g, 3);
+TEST(LeastCommonMultiple, CornerCases) {
+  EXPECT_EQ(ntlib::lcm(max_int, 1), max_int);
+  EXPECT_EQ(ntlib::lcm(min_int + 1, 1), max_int);
+  EXPECT_EQ(ntlib::lcm(3u * 5 * 17 * 257, 65537u), max_uint);
+}
+
+TEST(ExtendedEuclid, SmallValues) {
+  int x, y;
+  int g = ntlib::extended_euclid(99, 78, x, y);
+  EXPECT_EQ(g, ntlib::gcd(99, 78));
   EXPECT_EQ(x * 99 + y * 78, g);
+}
 
-  // At least one parameter zero.
-  EXPECT_EQ(ntlib::extended_euclid(10, 0, x, y), 10);
-  EXPECT_EQ(ntlib::extended_euclid(0, 10, x, y), 10);
+TEST(ExtendedEuclid, OneParameterZero) {
+  int x, y;
+  int gcd = ntlib::extended_euclid(10, 0, x, y);
+  EXPECT_EQ(gcd, ntlib::gcd(10, 0));
+  EXPECT_EQ(x * 10 + y * 0, gcd);
 
-  // Negative values.
+  gcd = ntlib::extended_euclid(0, 10, x, y);
+  EXPECT_EQ(gcd, ntlib::gcd(0, 10));
+  EXPECT_EQ(x * 0 + y * 10, gcd);
+}
+
+TEST(ExtendedEuclid, NegativeValues) {
+  int x, y;
   EXPECT_EQ(ntlib::extended_euclid(-7, 3, x, y), 1);
   EXPECT_EQ(x * (-7) + 3 * y, 1);
   EXPECT_EQ(ntlib::extended_euclid(7, -3, x, y), 1);
@@ -63,26 +135,67 @@ TEST(ArithmeticFunctions, ExtendedEuclid) {
   EXPECT_EQ(x * (-7) + (-3) * y, 1);
 }
 
-TEST(Arithmetic, BinaryExponentation) {
-  // Positive values.
-  for (int32_t i = 0; i <= 10; ++i) {
-    EXPECT_EQ(ntlib::pow(2, i), 1 << i);
-  }
+TEST(ExtendedEuclid, CornerCases) {
+  // 2^31-1 is prime.
+  int x, y;
+  EXPECT_EQ(ntlib::extended_euclid(max_int, 2, x, y), 1);
+  EXPECT_EQ(x * max_int + y * 2, 1);
+  EXPECT_EQ(ntlib::extended_euclid(-max_int, 2, x, y), 1);
+  EXPECT_EQ(x * -max_int + y * 2, 1);
+}
 
-  // Negative values.
-  for (int32_t i = 0; i <= 10; ++i) {
-    EXPECT_EQ(ntlib::pow(-2, i), (i % 2 ? -1 : 1) * (1 << i));
+TEST(Exponentiation, BaseCases) {
+  EXPECT_EQ(ntlib::pow(2, 0), 1);
+  EXPECT_EQ(ntlib::pow(2, 1), 2);
+  EXPECT_EQ(ntlib::pow(0, 1), 0);
+}
+
+TEST(Exponentiation, PowersOf2) {
+  for (unsigned int e = 0; e <= 31; ++e) {
+    EXPECT_EQ(ntlib::pow(2, e), 1 << e);
   }
 }
 
-TEST(Arithmetic, CeilLog2) {
-  for (__uint128_t i = 1; i < 1'000'000; ++i) {
-    __uint128_t cl2 = ntlib::ceil_log2(i);
-    EXPECT_GE(static_cast<__uint128_t>(1) << cl2, i);
-    if (i > 1) {
-      EXPECT_LT(static_cast<__uint128_t>(1) << (cl2 - 1), i);
+TEST(Exponentiation, PowersOfMinus2) {
+  for (int e = 0; e <= 30; ++e) {
+    if (e & 1) {
+      EXPECT_EQ(ntlib::pow(-2, e), -(1 << e));
+    } else {
+      EXPECT_EQ(ntlib::pow(-2, e), 1 << e);
     }
   }
+}
+
+TEST(IntegerLog2, Signed) {
+  for (int i = 1; i < 1'000'000; ++i) {
+    int cl2 = ntlib::ilog2(i);
+    EXPECT_LE(1 << cl2, i);
+    EXPECT_GT(1 << (cl2 + 1), i);
+  }
+}
+
+TEST(IntegerLog2, Unsigned) {
+  for (unsigned int i = 1; i < 1'000'000; ++i) {
+    unsigned int cl2 = ntlib::ilog2(i);
+    EXPECT_LE(1 << cl2, i);
+    EXPECT_GT(1 << (cl2 + 1), i);
+  }
+}
+
+TEST(IntegerLog2, NoBuiltin) {
+  for (__uint128_t i = 1; i < 1'000'000; ++i) {
+    __uint128_t cl2 = ntlib::ilog2(i);
+    EXPECT_LE(1 << cl2, i);
+    EXPECT_GT(1 << (cl2 + 1), i);
+  }
+}
+
+TEST(IntegerLog2, CornerCases) {
+  EXPECT_EQ(ntlib::ilog2(max_int), 30);
+  EXPECT_EQ(ntlib::ilog2(max_uint), 31);
+  __uint128_t power127 = static_cast<__uint128_t>(1) << 127;
+  EXPECT_EQ(ntlib::ilog2(power127), 127);
+  EXPECT_EQ(ntlib::ilog2(power127 - 1 + power127), 127);
 }
 
 TEST(Arithmetic, IntegerSquareRoot) {

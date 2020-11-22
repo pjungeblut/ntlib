@@ -4,22 +4,24 @@
 #include <cassert>
 #include <climits>
 #include <cmath>
+#include <functional>
 #include <random>
 #include <type_traits>
+#include <vector>
 
 namespace ntlib {
 
 /**
  * A list with all prime numbers below 100 as it is often used.
  */
-static constexpr uint32_t PRIMES_BELOW_100[] = {2, 3, 5, 7, 11, 13, 17, 19, 23,
-    29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
+static const std::vector<uint32_t> PRIMES_BELOW_100 = {2, 3, 5, 7, 11, 13,
+    17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
 
 /**
  * Computes the absolute value of a number.
  *
  * @param n The number to take the absolute value of.
- * @return The absolute value of n. Will be an unsigned integer.
+ * @return The absolute value of n.
  */
 template<typename T>
 T abs(T n) {
@@ -30,6 +32,9 @@ T abs(T n) {
  * Computes the greatest common divisor of a and b.
  * Uses the Euclidean Algorithm.
  * Runtime: O(log a + log b).
+ *
+ * The greatest common divisor of two numbers `a` and `b` (not both zero) is the
+ * smallest positive number that divides both `a` and `b`.
  *
  * @param a The first number.
  * @param b The second number.
@@ -44,6 +49,11 @@ T gcd(T a, T b) {
 /**
  * Computes the least common multiple of a and b.
  * Runtime: O(log a + log b)
+ *
+ * The least common multiple of two non-zero integers `a` and `b` is the
+ * smallest positive integer that can be divided by both `a` and `b`.
+ *
+ * If `lcm(a,b)` fits into T, then there are no integer overflows.
  *
  * @param a The first number.
  * @param b The second number.
@@ -67,34 +77,27 @@ T lcm(T a, T b) {
  * @return The greatest common divisor gcd(a,b) of a and b.
  */
 template<typename T>
-T extended_euclid_positive(T a, T b, T &x, T &y) {
-  if (a == 0) {
-    x = 0;
-    y = 1;
-    return b;
-  }
-  T xx, yy, gcd = extended_euclid_positive(b % a, a, xx, yy);
-  x = yy - (b / a) * xx;
-  y = xx;
-  return gcd;
-}
-template<typename T>
 T extended_euclid(T a, T b, T &x, T &y) {
-  assert(!(a == 0 && b == 0));
-  if (a < 0 && b < 0) {
-    T gcd = extended_euclid_positive(abs(a), abs(b), x, y);
-    x = -x;
-    y = -y;
+  assert(a != 0 || b != 0);
+
+  // Extended Euclidean Algorithm for positive values.
+  const std::function<T(T, T, T&, T&)> extended_euclid_positive =
+      [&extended_euclid_positive](T a, T b, T &x, T &y) {
+    if (a == 0) {
+      x = 0;
+      y = 1;
+      return b;
+    }
+    T xx, yy, gcd = extended_euclid_positive(b % a, a, xx, yy);
+    x = yy - (b / a) * xx;
+    y = xx;
     return gcd;
-  } else if (a < 0) {
-    T gcd = extended_euclid_positive(abs(a), b, x, y);
-    x = -x;
-    return gcd;
-  } else if (b < 0) {
-    T gcd = extended_euclid_positive(a, abs(b), x, y);
-    y = -y;
-    return gcd;
-  } else return extended_euclid_positive(a, b, x, y);
+  };
+
+  T gcd = extended_euclid_positive(abs(a), abs(b), x, y);
+  if (a < 0) x = -x;
+  if (b < 0) y = -y;
+  return gcd;
 }
 
 /**
@@ -109,7 +112,8 @@ T extended_euclid(T a, T b, T &x, T &y) {
 template<typename B, typename E>
 B pow(B a, E b, B unit = 1) {
   assert(b >= 0);
-  assert(!(a == 0 && b == 0));
+  assert(a != 0 || b != 0);
+
   if (b == 0) return unit;
   if (b == 1) return a;
   if (b & 1) return pow(a, b - 1, unit) * a;
@@ -117,29 +121,28 @@ B pow(B a, E b, B unit = 1) {
 }
 
 /**
- * Computes the ceiling of the binary logarithm.
- * ceil_log2 := ceil(log2(n))
- *
- * TODO: Write better comment.
- * TODO: Use builtins for standard types.
+ * Computes the integer part of the binary logarithm.
  *
  * @param n The number to compute the ceiling of the binary logarithm for.
- * Qreturn ceil_log2(n)
+ * @return floor(log2(n))
  */
 template<typename T>
-inline T ceil_log2(T n) {
-  assert(n >= 0);
+inline T ilog2(T n) {
+  assert(n > 0);
 
-  if constexpr (std::is_same<T, unsigned int>::value) {
-    return sizeof(unsigned int) * CHAR_BIT - __builtin_clz(n) - 1;
-  } else if constexpr (std::is_same<T, unsigned long>::value) {
-    return sizeof(unsigned long) * CHAR_BIT - __builtin_clzl(n) - 1;
-  } else if constexpr (std::is_same<T, unsigned long long>::value) {
-    return sizeof(unsigned long long) * CHAR_BIT - __builtin_clzll(n) - 1;
+  const T length = sizeof(T) * CHAR_BIT;
+  if constexpr (std::is_same<T, unsigned int>::value ||
+      std::is_same<T, int>::value) {
+    return length - __builtin_clz(static_cast<unsigned int>(n)) - 1;
+  } else if constexpr (std::is_same<T, unsigned long>::value ||
+      std::is_same<T, long>::value) {
+    return length - __builtin_clzl(static_cast<unsigned long>(n)) - 1;
+  } else if constexpr (std::is_same<T, unsigned long long>::value ||
+      std::is_same<T, long long>::value) {
+    return length - __builtin_clzll(static_cast<unsigned long long>(n)) - 1;
   } else {
-    T result = 1;
-    const T one = 1;
-    while ((one << result) < n) ++result;
+    T result = 0;
+    while (n >>= 1) ++result;
     return result;
   }
 }
