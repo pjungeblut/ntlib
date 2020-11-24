@@ -5,6 +5,7 @@
 #include <climits>
 #include <cmath>
 #include <functional>
+#include <numeric>
 #include <random>
 #include <type_traits>
 #include <vector>
@@ -158,26 +159,26 @@ template<typename T>
 inline T isqrt(T n) {
   assert(n >= 0);
 
-  if constexpr (std::is_integral<T>::value || std::is_same<T, double>::value) {
+  if constexpr ((std::is_integral<T>::value && sizeof(T) <= 4) ||
+      std::is_same<T, double>::value) {
     return floor(sqrt(n));
   } else if constexpr (std::is_same<T, float>::value) {
     return floorf(sqrtf(n));
   } else if constexpr (std::is_same<T, long double>::value) {
     return floorl(sqrtl(n));
   } else {
-    T u = 1;
-    do u *= 2;
-    while (u * u <= n);
-    T l = u / 2;
+    // Checks without overflows that `a*a <= b`.
+    const auto square_atmost = [](T a, T b) {
+      return a <= b / a;
+    };
 
-    const T THRESHOLD = 15;
-    while (u - l > THRESHOLD) {
-      T m = l + (u - l) / 2;
-      if (m * m <= n) l = m;
-      else u = m;
+    T result = 0, summand = 1;
+    while (square_atmost(result + summand, n)) {
+      while (square_atmost(result + 2 * summand, n)) summand *= 2;
+      result += summand;
+      summand = 1;
     }
-    while (l * l <= n) ++l;
-    return l - 1;
+    return result;
   }
 }
 
@@ -253,6 +254,38 @@ T factorial(T n) {
 }
 
 /**
+ * Returns the quotient of `n/m` rounded down.
+ *
+ * @param n The dividend.
+ * @param m The divisor.
+ * @return The quotient, rounded down.
+ */
+template<typename T>
+T floor_div(T n, T m) {
+  assert(m != 0);
+
+  T quotient = n / m;
+  if (((n < 0) ^ (m < 0)) && n % m != 0) --quotient;
+  return quotient;
+}
+
+/**
+ * Returns the quotient of `n/m` rounded up.
+ *
+ * @param n The dividend.
+ * @param m The divisor.
+ * @return The quotient, rounded up.
+ */
+template<typename T>
+T ceil_div(T n, T m) {
+  assert(m != 0);
+
+  T quotient = n / m;
+  if (((n > 0 && m > 0) || (n < 0 && m < 0)) && n % m != 0) ++quotient;
+  return quotient;
+}
+
+/**
  * The mathematical modulo operation.
  *
  * @param n The number to take modulo.
@@ -262,25 +295,28 @@ T factorial(T n) {
  */
 template<typename T>
 T mod(T n, T m) {
-  return n - m * ((n / m) - (n < 0 && n % m != 0));
+  return n - m * floor_div(n, m);
 }
 
 /**
  * Computes a^b mod n using binary exponentation.
  * Runtime: O(log b)
  *
+ * Caution: `n*n` must be small enough to fit into type `B`.
+ *
  * @param a The base.
  * @param b The exponent.
- * @param n The modulus.
+ * @param n The modulus, must be positive.
  * @param unit The unit element of the group.
- * @return a^b mod n
+ * @return The remainder of `a^b` modulo `n`.
  */
 template<typename B, typename E>
-B mod_pow(B a, E b, E n, B unit = 1) {
-  assert(!(a == 0 && b == 0));
+B mod_pow(B a, E b, B n, B unit = 1) {
+  assert(a != 0 || b != 0);
   assert(a >= 0);
   assert(b >= 0);
   assert(n > 0);
+
   if (b == 0) return unit;
   if (b == 1) return a % n;
   if (b & 1) return (mod_pow(a, b - 1, n, unit) * a) % n;
@@ -296,41 +332,39 @@ B mod_pow(B a, E b, E n, B unit = 1) {
  * @param m The size of the group.
  * @return The multiplicative inverse of n (mod m).
  */
-template<typename T>
-T mod_mult_inv(T n, T m) {
+template<typename U, typename S = std::make_signed<U>::type>
+U mod_mult_inv(U n, U m) {
   assert(gcd(n, m) == 1);
-  using ST = typename std::make_signed<T>::type;
-  ST x, y;
-  extended_euclid(static_cast<ST>(n), static_cast<ST>(m), x, y);
+
+  S x, y;
+  extended_euclid(static_cast<S>(n), static_cast<S>(m), x, y);
   return x >= 0 ? x % m : m - (-x % m);
 }
 
 /**
- * Tests, if n is a quadratic residue mod p.
+ * Tests, if `n` is a quadratic residue modulo `p`.
  * Uses Euler's Criterion to compute Legendre Symbol (a/p).
- *
- * TODO: Add assert that p is a prime number.
  *
  * @param n The number to test.
  * @param p The modulus. Must be prime number.
- * @return True, if and only if there is an x, such that x^2 = a (mod p).
+ * @return True, if and only if there is an `x`, such that `x^2 = a` modulo `p`.
  */
 template<typename T>
-bool mod_is_square(T n, T p) {
-  if (n == 0) return true;
+bool mod_is_square(T a, T p) {
+  if (a == 0) return true;
   if (p == 2) return true;
-  return mod_pow(n, (p - 1) / 2, p) == 1;
+  return mod_pow(a, (p - 1) / 2, p) == 1;
 }
 
 /**
  * Computes square roots modular a prime number, that is an integer solution for
- * x in the equation x^2 = n (mod p).
+ * `x` in the equation `x^2 = n` modulo `p`.
  * Uses the Tonelli-Shankes algorithm.
  *
- * @param n Parameter n. 0 <= n < p.
- * @param p Odd prime number p > 2.
- * @return 0 <= x < p such that x^2 = n (mod p). There are two solutions, the
- *         other one is p - x. Returns the smaller one.
+ * @param n Parameter `n`. `0 <= n < p`.
+ * @param p Odd prime number `p > 2`.
+ * @return `0 <= x < p` such that `x^2 = n` modulo `p`. There are two solutions,
+ *         the other one is `p - x`. Returns the smaller one.
  */
 template<typename T>
 T mod_sqrt(T n, T p) {

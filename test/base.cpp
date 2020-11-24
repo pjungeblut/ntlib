@@ -14,6 +14,14 @@
 static const int min_int = std::numeric_limits<int>::min();
 static const int max_int = std::numeric_limits<int>::max();
 static const unsigned int max_uint = std::numeric_limits<unsigned int>::max();
+static const int64_t max_int64 = std::numeric_limits<int64_t>::max();
+static const uint64_t max_uint64 = std::numeric_limits<uint64_t>::max();
+static const __int128_t max_int128 =
+    (static_cast<__int128_t>(1) << 126) - 1 +
+    (static_cast<__int128_t>(1) << 126);
+static const __uint128_t max_uint128 =
+    (static_cast<__uint128_t>(1) << 127) - 1 +
+    (static_cast<__uint128_t>(1) << 127);
 
 TEST(PrimesBelow100, ListContainsOnlyPrimes) {
   const auto sieve = ntlib::prime_sieve(100);
@@ -193,13 +201,11 @@ TEST(IntegerLog2, NoBuiltin) {
 TEST(IntegerLog2, CornerCases) {
   EXPECT_EQ(ntlib::ilog2(max_int), 30);
   EXPECT_EQ(ntlib::ilog2(max_uint), 31);
-  __uint128_t power127 = static_cast<__uint128_t>(1) << 127;
-  EXPECT_EQ(ntlib::ilog2(power127), 127);
-  EXPECT_EQ(ntlib::ilog2(power127 - 1 + power127), 127);
+  EXPECT_EQ(ntlib::ilog2(max_int128), 126);
+  EXPECT_EQ(ntlib::ilog2(max_uint128), 127);
 }
 
-TEST(Arithmetic, IntegerSquareRoot) {
-  // General values.
+TEST(IntegerSquareRoot, Integral) {
   for (uint32_t i = 0; i <= 1'000'000; ++i) {
     uint32_t root = ntlib::isqrt(i);
     EXPECT_LE(root * root, i);
@@ -207,26 +213,59 @@ TEST(Arithmetic, IntegerSquareRoot) {
   }
 }
 
-TEST(Arithmetic, SquareTest) {
-  // Negative values.
-  EXPECT_FALSE(ntlib::is_square(-1));
+TEST(IntegerSquareRoot, NoBuiltin) {
+  for (__uint128_t i = 0; i <= 1'000'000; ++i) {
+    __uint128_t root = ntlib::isqrt(i);
+    EXPECT_LE(root * root, i);
+    EXPECT_GT((root + 1) * (root + 1), i);
+  }
+}
 
-  // Squares.
-  std::set<int32_t> squares;
+TEST(IntegerSquareRoot, CornerCases) {
+  EXPECT_EQ(ntlib::isqrt(max_int), 46'340);
+  EXPECT_EQ(ntlib::isqrt(max_uint), 65'535);
+
+  EXPECT_EQ(ntlib::isqrt(max_int64), 3'037'000'499LL);
+  EXPECT_EQ(ntlib::isqrt(max_uint64), 4'294'967'295LL);
+
+  __int128_t iroot128_ntlib = ntlib::isqrt(max_int128);
+  __int128_t iroot128_expected =
+      static_cast<__int128_t>(2) * 2 * 3 * 3 * 3 * 991 * 283'183 * 430'368'163;
+  EXPECT_EQ(iroot128_ntlib, iroot128_expected);
+
+  __uint128_t uroot128_ntlib = ntlib::isqrt(max_uint128);
+  __uint128_t uroot128_expected =
+      static_cast<__uint128_t>(3) * 5 * 17 * 257 * 641 * 65537 * 6'700'417;
+  EXPECT_EQ(uroot128_ntlib, uroot128_expected);
+}
+
+TEST(SquareTest, NegativeValues) {
+  EXPECT_FALSE(ntlib::is_square(-1));
+}
+
+TEST(SquareTest, Squares) {
   for (int32_t i = 0; i * i <= 1'000'000'000; ++i) {
     EXPECT_TRUE(ntlib::is_square(i * i));
-    if (i * i <= 1'000'000) squares.insert(i * i);
   }
+}
 
-  // Small non-squares.
+TEST(SquareTest, NonSquares) {
+  std::set<int32_t> squares;
+  for (int32_t i = 0; i * i <= 1'000'000; ++i) squares.insert(i * i);
   for (int32_t i = 0; i <= 1'000'000; ++i) {
     if (squares.find(i) != squares.end()) continue;
     EXPECT_FALSE(ntlib::is_square(i));
   }
 }
 
-TEST(Arithmetic, Factorial) {
-  // Small values.
+TEST(SquareTest, CornerCases) {
+  EXPECT_TRUE(ntlib::is_square(0));
+  EXPECT_FALSE(ntlib::is_square(max_int));
+  EXPECT_FALSE(ntlib::is_square(max_uint));
+  EXPECT_TRUE(ntlib::is_square(1 << 30));
+}
+
+TEST(Factorial, First20) {
   EXPECT_EQ(ntlib::factorial(0), 1);
   EXPECT_EQ(ntlib::factorial(1), 1);
   EXPECT_EQ(ntlib::factorial(2), 2);
@@ -238,11 +277,90 @@ TEST(Arithmetic, Factorial) {
   EXPECT_EQ(ntlib::factorial(8), 40'320);
   EXPECT_EQ(ntlib::factorial(9), 362'880);
   EXPECT_EQ(ntlib::factorial(10), 3'628'800);
+  EXPECT_EQ(ntlib::factorial(11), 39'916'800);
+  EXPECT_EQ(ntlib::factorial(12), 479'001'600);
+  EXPECT_EQ(ntlib::factorial(13LL), 6'227'020'800);
+  EXPECT_EQ(ntlib::factorial(14LL), 87'178'291'200);
+  EXPECT_EQ(ntlib::factorial(15LL), 1'307'674'368'000);
+  EXPECT_EQ(ntlib::factorial(16LL), 20'922'789'888'000);
+  EXPECT_EQ(ntlib::factorial(17LL), 355'687'428'096'000);
+  EXPECT_EQ(ntlib::factorial(18LL), 6'402'373'705'728'000);
+  EXPECT_EQ(ntlib::factorial(19LL), 121'645'100'408'832'000);
   EXPECT_EQ(ntlib::factorial(20LL), 2'432'902'008'176'640'000LL);
 }
 
-TEST(ModularArithmetic, Exponentiation) {
-  // General tests.
+TEST(FloorDiv, SmallValues) {
+  EXPECT_EQ(ntlib::floor_div(6, 2), 3);
+  EXPECT_EQ(ntlib::floor_div(6, -2), -3);
+  EXPECT_EQ(ntlib::floor_div(-6, 2), -3);
+  EXPECT_EQ(ntlib::floor_div(-6, -2), 3);
+
+  EXPECT_EQ(ntlib::floor_div(9, 4), 2);
+  EXPECT_EQ(ntlib::floor_div(9, -4), -3);
+  EXPECT_EQ(ntlib::floor_div(-9, 4), -3);
+  EXPECT_EQ(ntlib::floor_div(-9, -4), 2);
+}
+
+TEST(CeilDiv, SmallValues) {
+  EXPECT_EQ(ntlib::ceil_div(6, 2), 3);
+  EXPECT_EQ(ntlib::ceil_div(6, -2), -3);
+  EXPECT_EQ(ntlib::ceil_div(-6, 2), -3);
+  EXPECT_EQ(ntlib::ceil_div(-6, -2), 3);
+
+  EXPECT_EQ(ntlib::ceil_div(9, 4), 3);
+  EXPECT_EQ(ntlib::ceil_div(9, -4), -2);
+  EXPECT_EQ(ntlib::ceil_div(-9, 4), -2);
+  EXPECT_EQ(ntlib::ceil_div(-9, -4), 3);
+}
+
+TEST(Modulo, KnuthExamples) {
+  // Concrete Mathematics, p. 82.
+  EXPECT_EQ(ntlib::mod(5, 3), 2);
+  EXPECT_EQ(ntlib::mod(5, -3), -1);
+  EXPECT_EQ(ntlib::mod(-5, 3), 1);
+  EXPECT_EQ(ntlib::mod(-5, -3), -2);
+}
+
+TEST(Modulo, Divides) {
+  EXPECT_EQ(ntlib::mod(6, 3), 0);
+  EXPECT_EQ(ntlib::mod(6, -3), 0);
+  EXPECT_EQ(ntlib::mod(-6, 3), 0);
+  EXPECT_EQ(ntlib::mod(-6, -3), 0);
+}
+
+TEST(Modulo, DoesNotDivide) {
+  EXPECT_EQ(ntlib::mod(6, 5), 1);
+  EXPECT_EQ(ntlib::mod(6, -5), -4);
+  EXPECT_EQ(ntlib::mod(-6, 5), 4);
+  EXPECT_EQ(ntlib::mod(-6, -5), -1);
+}
+
+TEST(ModularExponentiation, BaseCases) {
+  EXPECT_EQ(ntlib::mod_pow(2, 0, 3), 1);
+  EXPECT_EQ(ntlib::mod_pow(2, 1, 3), 2);
+  EXPECT_EQ(ntlib::mod_pow(4, 1, 3), 1);
+  EXPECT_EQ(ntlib::mod_pow(0, 1, 3), 0);
+}
+
+TEST(ModularExponentiation, PowersOf2) {
+  for (int32_t i = 1; i < 30; ++i) {
+    EXPECT_EQ(ntlib::mod_pow(2, i, 2), 0);
+    EXPECT_EQ(ntlib::mod_pow(2, i, 3), (1 << i) % 3);
+  }
+}
+
+TEST(ModularExponentiation, PowersOfMinus2) {
+  for (int32_t i = 1; i < 30; ++i) {
+    EXPECT_EQ(ntlib::mod_pow(-2, i, 2), 0);
+    if (i & 1) {
+      EXPECT_EQ(ntlib::mod_pow(-2, i, 3), -(1 << i) % 3);
+    } else {
+      EXPECT_EQ(ntlib::mod_pow(-2, i, 3), (1 << i) % 3);
+    }
+  }
+}
+
+TEST(ModularExponentiation, SmallValues) {
   uint32_t p = 509;
   for (uint32_t i = 1; i < p; ++i) {
     for (uint32_t j = 1; j < p; ++j) {
@@ -256,7 +374,7 @@ TEST(ModularArithmetic, Exponentiation) {
   }
 }
 
-TEST(ModularArithmetic, MultiplicativeInverse) {
+TEST(MultiplicativeInverse, SmallValues) {
   const uint32_t m = 50;
   for (uint32_t n = 1; n < m; ++n) {
     if (ntlib::gcd(n, m) == 1) {
@@ -266,7 +384,7 @@ TEST(ModularArithmetic, MultiplicativeInverse) {
   }
 }
 
-TEST(ModularArithmetic, LegendreSymbol) {
+TEST(ModularSquareTest, SmallValues) {
   const uint32_t p = 509;
   std::bitset<p> square;
   for (uint32_t n = 0; n < p; ++n) {
@@ -281,7 +399,7 @@ TEST(ModularArithmetic, LegendreSymbol) {
   }
 }
 
-TEST(ModularArithmetic, SquareRoots) {
+TEST(ModularSquareRoot, SmallValues) {
   const uint32_t m = 59;
   for (uint32_t n = 0; n < m; ++n) {
     if (ntlib::mod_is_square(n, m)) {
