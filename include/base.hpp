@@ -28,7 +28,7 @@ static constexpr auto SMALL_PRIMES = std::to_array<uint32_t>({2, 3, 5, 7, 11, 13
  * @return The absolute value of n.
  */
 template<typename T>
-T abs(T n) {
+constexpr T abs(T n) {
   return n >= 0 ? n : -n;
 }
 
