@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <array>
 #include <cassert>
 #include <climits>
 #include <cmath>
@@ -13,9 +14,9 @@
 namespace ntlib {
 
 /**
- * A list with all prime numbers below 100 as it is often used.
+ * A list with all 25 prime numbers below 100 as it is often used.
  */
-static const std::vector<uint32_t> PRIMES_BELOW_100 = {2, 3, 5, 7, 11, 13,
+static constexpr std::array<uint32_t, 25> PRIMES_BELOW_100 = {2, 3, 5, 7, 11, 13,
     17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
 
 /**
