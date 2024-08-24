@@ -426,7 +426,7 @@ TEST(LegendreSymbol, Prime127) {
 }
 
 TEST(LegendreSymbol, PeriodicInTopElement) {
-  for (int32_t p : ntlib::PRIMES_BELOW_100) {
+  for (int32_t p : ntlib::SMALL_PRIMES) {
     if (p == 2) continue;
     for (int32_t i = 0; i <= 1'000; ++i) {
       EXPECT_EQ(ntlib::legendre(i, p), ntlib::legendre(i + p, p));
@@ -435,10 +435,10 @@ TEST(LegendreSymbol, PeriodicInTopElement) {
 }
 
 TEST(LegendreSymbol, Multiplicative) {
-  for (int32_t p : ntlib::PRIMES_BELOW_100) {
+  for (int32_t p : ntlib::SMALL_PRIMES) {
     if (p == 2) continue;
-    for (int32_t i = 0; i <= 100; ++i) {
-      for (int32_t j = 0; j <= 100; ++j) {
+    for (int32_t i = 0; i <= static_cast<int32_t>(ntlib::SMALL_PRIMES_UPPER_BOUND); ++i) {
+      for (int32_t j = 0; j <= static_cast<int32_t>(ntlib::SMALL_PRIMES_UPPER_BOUND); ++j) {
         EXPECT_EQ(ntlib::legendre(i, p) * ntlib::legendre(j, p),
             ntlib::legendre(i * j, p));
       }
@@ -447,37 +447,28 @@ TEST(LegendreSymbol, Multiplicative) {
 }
 
 TEST(LegendreSymbol, Squares) {
-  for (int32_t p : ntlib::PRIMES_BELOW_100) {
+  for (int32_t p : ntlib::SMALL_PRIMES) {
     if (p == 2) continue;
-    for (int32_t i = 0; i <= 100; ++i) {
-      if (i % p == 0) {
-        EXPECT_EQ(ntlib::legendre(i * i, p), 0);
-      } else {
-        EXPECT_EQ(ntlib::legendre(i * i, p), 1);
-      }
+    for (int32_t i = 0; i <= static_cast<int32_t>(ntlib::SMALL_PRIMES_UPPER_BOUND); ++i) {
+      int32_t result = i % p ? 1 : 0;
+      EXPECT_EQ(ntlib::legendre(i * i, p), result);
     }
   }
 }
 
 TEST(LegendreSymbol, MinusOne) {
-  for (int32_t p : ntlib::PRIMES_BELOW_100) {
+  for (int32_t p : ntlib::SMALL_PRIMES) {
     if (p == 2) continue;
-    if (p % 4 == 1) {
-      EXPECT_EQ(ntlib::legendre(-1, p), 1);
-    } else {
-      EXPECT_EQ(ntlib::legendre(-1, p), -1);
-    }
+    int32_t result = p % 4 == 1 ? 1 : -1;
+    EXPECT_EQ(ntlib::legendre(-1, p), result);
   }
 }
 
 TEST(LegendreSymbol, Two) {
-  for (int32_t p : ntlib::PRIMES_BELOW_100) {
+  for (int32_t p : ntlib::SMALL_PRIMES) {
     if (p == 2) continue;
-    if (p % 8 == 1 || p % 8 == 7) {
-      EXPECT_EQ(ntlib::legendre(2, p), 1);
-    } else {
-      EXPECT_EQ(ntlib::legendre(2, p), -1);
-    }
+    int32_t result = (p % 8 == 1 || p % 8 == 7) ? 1 : -1;
+    EXPECT_EQ(ntlib::legendre(2, p), result);
   }
 }
 
@@ -488,7 +479,7 @@ TEST(JacobiSymbol, EmptyProduct) {
 }
 
 TEST(JacobiSymbol, PrimeDenominator) {
-  for (int32_t n : ntlib::PRIMES_BELOW_100) {
+  for (int32_t n : ntlib::SMALL_PRIMES) {
     if (n == 2) continue;
     for (int32_t k = 0; k <= 1'000; ++k) {
       EXPECT_EQ(ntlib::jacobi(k, n), ntlib::legendre(k, n));
