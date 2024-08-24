@@ -308,22 +308,31 @@ T mod(T n, T m) {
  * Caution: `n*n` must be small enough to fit into type `B`.
  *
  * @param a The base.
- * @param b The exponent.
+ * @param b The exponent, must be non-negative.
  * @param n The modulus, must be positive.
  * @param unit The unit element of the group.
- * @return The remainder of `a^b` modulo `n`.
+ * @return a^b mod n, in particular the return value is in [0,n-1].
  */
-template<typename B, typename E>
-B mod_pow(B a, E b, B n, B unit = 1) {
+template<typename T, typename U = std::make_unsigned<T>::type>
+U mod_pow(T a, U b, U n, U unit = 1u) {
   assert(a != 0 || b != 0);
-  assert(a >= 0);
   assert(b >= 0);
   assert(n > 0);
 
+  U absa = abs(a);
+
   if (b == 0) return unit;
-  if (b == 1) return a % n;
-  if (b & 1) return (mod_pow(a, b - 1, n, unit) * a) % n;
-  return mod_pow((a * a) % n, b / 2, n, unit);
+  if (b == 1) {
+    U pos_res = mod(absa, n);
+    if (a < 0 && pos_res != 0) return n - pos_res;
+    else return pos_res;
+  }
+  if (b & 1) {
+    U pos_res = mod(mod_pow(absa, b - 1, n, unit) * absa, n);
+    if (a < 0 && pos_res != 0) return n - pos_res;
+    else return pos_res;
+  }
+  return mod_pow(mod(absa * absa, n), b / 2, n, unit);
 }
 
 /**
