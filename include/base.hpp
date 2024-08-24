@@ -44,8 +44,8 @@ constexpr T abs(T n) {
  * @param b The second number.
  * @return The greatest common divisor of a and b.
  */
-template<typename T>
-T gcd(T a, T b) {
+template<typename A, typename B>
+constexpr std::common_type_t<A,B> gcd(A a, B b) {
   assert(a != 0 || b != 0);
   return b == 0 ? abs(a) : gcd(b, a % b);
 }
@@ -63,8 +63,8 @@ T gcd(T a, T b) {
  * @param b The second number.
  * @return The least common multiple of a and b.
  */
-template<typename T>
-T lcm(T a, T b) {
+template<typename A, typename B>
+constexpr std::common_type_t<A,B> lcm(A a, B b) {
   assert(a != 0);
   assert(b != 0);
   return abs(a) * (abs(b) / gcd(a, b));
@@ -80,25 +80,29 @@ T lcm(T a, T b) {
  * @param y Value for y.
  * @return The greatest common divisor gcd(a,b) of a and b.
  */
-template<typename T>
-T extended_euclid(T a, T b, T &x, T &y) {
+template<typename A, typename B,
+    typename S = std::make_signed_t<std::common_type_t<A,B>>>
+auto extended_euclid(A a, B b, S &x, S &y) {
   assert(a != 0 || b != 0);
 
-  // Extended Euclidean Algorithm for positive values.
-  const std::function<T(T, T, T&, T&)> extended_euclid_positive =
-      [&extended_euclid_positive](T a, T b, T &x, T &y) {
+  using C = std::common_type_t<A,B>;
+
+  // Extended Euclidean Algorithm for non-negative values.
+  const std::function<C(A, B, S&, S&)> extended_euclid_non_negative =
+      [&extended_euclid_non_negative](A a, B b, S &x, S &y) {
     if (a == 0) {
       x = 0;
       y = 1;
       return b;
     }
-    T xx, yy, gcd = extended_euclid_positive(b % a, a, xx, yy);
+    S xx, yy;
+    C gcd = extended_euclid_non_negative(b % a, a, xx, yy);
     x = yy - (b / a) * xx;
     y = xx;
     return gcd;
   };
 
-  T gcd = extended_euclid_positive(abs(a), abs(b), x, y);
+  C gcd = extended_euclid_non_negative(abs(a), abs(b), x, y);
   if (a < 0) x = -x;
   if (b < 0) y = -y;
   return gcd;
@@ -257,112 +261,114 @@ T factorial(T n) {
 }
 
 /**
- * Returns the quotient of `n/m` rounded down.
+ * Returns the quotient of `a/b` rounded down.
  *
- * @param n The dividend.
- * @param m The divisor.
+ * @param a The dividend.
+ * @param b The divisor.
  * @return The quotient, rounded down.
  */
-template<typename T>
-T floor_div(T n, T m) {
-  assert(m != 0);
+template<typename A, typename B>
+auto floor_div(A a, B b) {
+  assert(b != 0);
 
-  T quotient = n / m;
-  if (((n < 0) ^ (m < 0)) && n % m != 0) --quotient;
+  auto quotient = a / b;
+  if (((a < 0) ^ (b < 0)) && a % b != 0) --quotient;
   return quotient;
 }
 
 /**
- * Returns the quotient of `n/m` rounded up.
+ * Returns the quotient of `a/b` rounded up.
  *
- * @param n The dividend.
+ * @param a The dividend.
  * @param m The divisor.
  * @return The quotient, rounded up.
  */
-template<typename T>
-T ceil_div(T n, T m) {
-  assert(m != 0);
+template<typename A, typename B>
+auto ceil_div(A a, B b) {
+  assert(b != 0);
 
-  T quotient = n / m;
-  if (((n > 0 && m > 0) || (n < 0 && m < 0)) && n % m != 0) ++quotient;
+  auto quotient = a / b;
+  if (((a > 0 && b > 0) || (a < 0 && b < 0)) && a % b != 0) ++quotient;
   return quotient;
 }
 
 /**
  * The mathematical modulo operation.
  *
- * @param n The number to take modulo.
+ * @param a The number to take modulo.
  * @param m The modulus.
- * @return `n mod m` in the mathematical sense. If m is positive, then so is the
- *         result.
+ * @return `a mod m` in the mathematical sense.
+ *         If m is positive, then so is the result.
  */
-template<typename T>
-T mod(T n, T m) {
-  return n - m * floor_div(n, m);
+template<typename A, typename M>
+M mod(A a, M m) {
+  return a - m * floor_div(a, m);
 }
 
 /**
- * Computes a^b mod n using binary exponentation.
+ * Computes a^b mod m using binary exponentation.
  * Runtime: O(log b)
  *
- * Caution: `n*n` must be small enough to fit into type `B`.
+ * Caution: `m*m` must be small enough to fit into type `T`.
  *
  * @param a The base.
  * @param b The exponent, must be non-negative.
- * @param n The modulus, must be positive.
+ * @param m The modulus, must be positive.
  * @param unit The unit element of the group.
- * @return a^b mod n, in particular the return value is in [0,n-1].
+ * @return a^b mod m, in particular the return value is in [0,m-1].
  */
-template<typename T, typename U = std::make_unsigned<T>::type>
-U mod_pow(T a, U b, U n, U unit = 1u) {
+template<typename T, typename U = std::make_unsigned_t<T>>
+U mod_pow(T a, U b, U m, U unit = 1u) {
   assert(a != 0 || b != 0);
   assert(b >= 0);
-  assert(n > 0);
+  assert(m > 0);
 
   U absa = abs(a);
 
   if (b == 0) return unit;
   if (b == 1) {
-    U pos_res = mod(absa, n);
-    if (a < 0 && pos_res != 0) return n - pos_res;
+    U pos_res = mod(absa, m);
+    if (a < 0 && pos_res != 0) return m - pos_res;
     else return pos_res;
   }
   if (b & 1) {
-    U pos_res = mod(mod_pow(absa, b - 1, n, unit) * absa, n);
-    if (a < 0 && pos_res != 0) return n - pos_res;
+    U pos_res = mod(mod_pow(absa, b - 1, m, unit) * absa, m);
+    if (a < 0 && pos_res != 0) return m - pos_res;
     else return pos_res;
   }
-  return mod_pow(mod(absa * absa, n), b / 2, n, unit);
+  return mod_pow(mod(absa * absa, m), b / 2, m, unit);
 }
 
 /**
- * Computes the multiplicative inverse of n (mod m).
- * Only exists, if gcd(n, m) = 1. This condition is not checked inside the
- * function.
+ * Computes the multiplicative inverse of a (mod m).
+ * Only exists, if gcd(a, m) = 1.
+ * This condition is not checked inside the function.
  *
- * @param n The number to invert.
- * @param m The size of the group.
- * @return The multiplicative inverse of n (mod m).
+ * @param a The number to invert.
+ * @param m The order of the group.
+ * @return The multiplicative inverse of a (mod m).
  */
-template<typename U, typename S = std::make_signed<U>::type>
-U mod_mult_inv(U n, U m) {
-  assert(gcd(n, m) == 1);
+template<typename A, typename M,
+    typename S = std::make_signed_t<std::common_type_t<A, M>>>
+auto mod_mult_inv(A a, M m) {
+  assert(a >= 0);
+  assert(m > 0);
 
   S x, y;
-  extended_euclid(static_cast<S>(n), static_cast<S>(m), x, y);
+  extended_euclid(a, m, x, y);
   return x >= 0 ? x % m : m - (-x % m);
 }
 
 /**
- * Tests, if `n` is a quadratic residue modulo `p`.
+ * Tests, if `a` is a quadratic residue modulo `p`.
  * Uses Euler's Criterion to compute Legendre Symbol (a/p).
  *
- * @param n The number to test.
+ * @param a The number to test.
  * @param p The modulus. Must be prime number.
- * @return True, if and only if there is an `x`, such that `x^2 = a` modulo `p`.
+ * @return True, if and only if there is an `x`, such that `x^2 = a mod p`.
  */
-template<typename T>
-bool mod_is_square(T a, T p) {
+template<typename A, typename P>
+bool mod_is_square(A a, P p) {
   if (a == 0) return true;
   if (p == 2) return true;
   return mod_pow(a, (p - 1) / 2, p) == 1;
@@ -370,21 +376,22 @@ bool mod_is_square(T a, T p) {
 
 /**
  * Computes square roots modular a prime number, that is an integer solution for
- * `x` in the equation `x^2 = n` modulo `p`.
+ * `x` in the equation `x^2 = a mod p`.
  * Uses the Tonelli-Shankes algorithm.
  *
- * @param n Parameter `n`. `0 <= n < p`.
+ * @param a Parameter `a`. `0 <= a < p`.
  * @param p Odd prime number `p > 2`.
- * @return `0 <= x < p` such that `x^2 = n` modulo `p`. There are two solutions,
- *         the other one is `p - x`. Returns the smaller one.
+ * @return `0 <= x < p` such that `x^2 = a mod p`.
+ *         There are two solutions, the other one is `p - x`.
+ *         Returns the smaller one.
  */
-template<typename T>
-T mod_sqrt(T n, T p) {
-  assert(mod_is_square(n, p));
+template<typename A, typename P>
+auto mod_sqrt(A n, P p) {
+  using C = std::common_type_t<A, P>;
 
   // Find q, s with p-1 = q*2^s.
-  T q = p - 1;
-  T s = 0;
+  C q = p - 1;
+  C s = 0;
   while (!(q & 1)) {
     q /= 2;
     ++s;
@@ -400,26 +407,25 @@ T mod_sqrt(T n, T p) {
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<> dis(1, p - 1);
-  T z = dis(gen);
+  C z = dis(gen);
   while (mod_is_square(z, p)) z = dis(gen);
 
-  T c = mod_pow(z, q, p);
-  T x = mod_pow(n, (q + 1) / 2, p);
-  T t = mod_pow(n, q, p);
-  T m = s;
+  C c = mod_pow(z, q, p);
+  C x = mod_pow(n, (q + 1) / 2, p);
+  C t = mod_pow(n, q, p);
+  C m = s;
 
   while (t % p != 1) {
     // Find lowest 0 < i < m such that t^2^i = 1 (mod p).
-    T i = 0;
-    T test = t;
+    C i = 0;
+    C test = t;
     while (test != 1) {
       test = test * test % p;
       ++i;
     }
 
-    // U cexp = mod_pow(static_cast<U>(2), m - i - 1, p - 1);
-    T cexp = static_cast<T>(1) << (m - i - 1);
-    T b = mod_pow(c, cexp, p);
+    C cexp = static_cast<C>(1) << (m - i - 1);
+    C b = mod_pow(c, cexp, p);
     x = x * b % p;
     t = t * b % p * b % p;
     c = b * b % p;
@@ -436,41 +442,43 @@ T mod_sqrt(T n, T p) {
  * @param p An odd prime number.
  * @return The Legendre Symbol (a/p).
  */
-template<typename T, typename P, typename S = std::make_signed<T>::type>
-S legendre(T a, P p) {
+template<typename A, typename P, typename S = std::make_signed_t<A>>
+S legendre(A a, P p) {
   assert(p != 2);
-  T rem = mod_pow(a, (p - 1) / 2, p);
+  auto rem = mod_pow(a, (p - 1) / 2, p);
   return rem <= 1 ? rem : -1;
 }
 
 /**
- * Computes the Jacobi Symbol (n/k).
+ * Computes the Jacobi Symbol (a/b).
  *
- * @param n The "numerator".
- * @param k The "denominator".
- * @return The Jacobi Symbol (n/k).
+ * @param a The "numerator".
+ * @param b The "denominator".
+ * @return The Jacobi Symbol (a/b).
  */
-template<typename T>
-T jacobi(T n, T k) {
-  assert(k > 0);
-  assert(k % 2 == 1);
+template<typename A, typename B>
+auto jacobi(A a, B b) {
+  assert(b > 0);
+  assert(b % 2 == 1);
 
-  n = mod(n, k);
-  // From here, both n and k are non-negative.
-  T t = 1;
-  while (n != 0) {
-    T s = 0;
-    while (!(n & 1)) {
-      n /= 2;
+  using C = std::common_type_t<A,B>;
+
+  a = mod(a, b);
+  // From here, both a and b are non-negative.
+  C t = 1;
+  while (a != 0) {
+    C s = 0;
+    while (!(a & 1)) {
+      a /= 2;
       ++s;
     }
-    if ((s & 1) && (k % 8 == 3 || k % 8 == 5)) t = -t;
+    if ((s & 1) && (b % 8 == 3 || b % 8 == 5)) t = -t;
 
-    std::swap(n, k);
-    if (n % 4 == 3 && k % 4 == 3) t = -t;
-    n = mod(n, k);
+    std::swap(a, b);
+    if (a % 4 == 3 && b % 4 == 3) t = -t;
+    a = mod(a, b);
   }
-  if (k == 1) return t;
+  if (b == 1) return t;
   else return 0;
 }
 
