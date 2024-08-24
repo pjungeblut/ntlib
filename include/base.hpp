@@ -14,10 +14,12 @@
 namespace ntlib {
 
 /**
- * A list with all 25 prime numbers below 100 as it is often used.
+ * A list with all prime numbers below SMALL_PRIMES_UPPER_BOUND.
+ * Useful as these are used frequently.
  */
-static constexpr std::array<uint32_t, 25> PRIMES_BELOW_100 = {2, 3, 5, 7, 11, 13,
-    17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
+static constexpr uint32_t SMALL_PRIMES_UPPER_BOUND = 100;
+static constexpr auto SMALL_PRIMES = std::to_array<uint32_t>({2, 3, 5, 7, 11, 13,
+    17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97});
 
 /**
  * Computes the absolute value of a number.

@@ -23,18 +23,18 @@ static const __uint128_t max_uint128 =
     (static_cast<__uint128_t>(1) << 127) - 1 +
     (static_cast<__uint128_t>(1) << 127);
 
-TEST(PrimesBelow100, ListContainsOnlyPrimes) {
-  const auto sieve = ntlib::prime_sieve(100);
-  for (uint32_t p : ntlib::PRIMES_BELOW_100) {
+TEST(SmallPrimes, ListContainsOnlyPrimes) {
+  const auto sieve = ntlib::prime_sieve(ntlib::SMALL_PRIMES_UPPER_BOUND);
+  for (uint32_t p : ntlib::SMALL_PRIMES) {
     EXPECT_TRUE(sieve[p]);
   }
 }
 
-TEST(PrimesBelow100, ListComplete) {
+TEST(SmallPrimes, ListComplete) {
   std::vector<uint32_t> primes;
-  ntlib::prime_sieve(100u, primes);
-  while (primes.back() >= 100) primes.pop_back();
-  EXPECT_EQ(primes, ntlib::PRIMES_BELOW_100);
+  ntlib::prime_sieve(ntlib::SMALL_PRIMES_UPPER_BOUND, primes);
+  while (primes.back() >= ntlib::SMALL_PRIMES_UPPER_BOUND) primes.pop_back();
+  EXPECT_TRUE(std::ranges::equal(primes, ntlib::SMALL_PRIMES));
 }
 
 TEST(AbsoluteValue, SmallValues) {

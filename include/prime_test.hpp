@@ -21,11 +21,11 @@ namespace ntlib {
 template<typename T>
 bool is_prime_naive(T n) {
   if (n < 2) return false;
-  for (const T p : PRIMES_BELOW_100) {
+  for (const T p : SMALL_PRIMES) {
     if (n == p) return true;
     if (n % p == 0) return false;
   }
-  for (T i = 101; i * i <= n; i += 2) {
+  for (T i = ntlib::SMALL_PRIMES_UPPER_BOUND + 1; i * i <= n; i += 2) {
     if (n % i == 0) return false;
   }
   return true;
@@ -134,7 +134,7 @@ bool is_prime(U n) {
   if (n <= 1) return false;
 
   // Trial division with some small prime factors.
-  for (U p : PRIMES_BELOW_100) {
+  for (U p : SMALL_PRIMES) {
     if (n == p) return true;
     if (n % p == 0) return false;
   }
