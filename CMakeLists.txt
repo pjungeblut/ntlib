@@ -8,7 +8,7 @@ project("NTLib - Number Theory Library" LANGUAGES CXX)
 
 # Build in Release mode to disable asserts.
 set(CMAKE_BUILD_TYPE Release)
-set(CMAKE_CXX_FLAGS "-std=c++2a -Wall -Wextra -O3")
+set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Wextra -O3")
 include_directories(./include)
 
 ################################################################################
