@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <algorithm>
+#include <array>
 #include <bitset>
 #include <limits>
 #include <map>
@@ -11,15 +12,16 @@
 #include "prime_decomposition.hpp"
 #include "prime_generation.hpp"
 
-static const int min_int = std::numeric_limits<int>::min();
-static const int max_int = std::numeric_limits<int>::max();
-static const unsigned int max_uint = std::numeric_limits<unsigned int>::max();
-static const int64_t max_int64 = std::numeric_limits<int64_t>::max();
-static const uint64_t max_uint64 = std::numeric_limits<uint64_t>::max();
-static const __int128_t max_int128 =
+static constexpr int min_int = std::numeric_limits<int>::min();
+static constexpr int max_int = std::numeric_limits<int>::max();
+static constexpr unsigned int max_uint =
+    std::numeric_limits<unsigned int>::max();
+static constexpr int64_t max_int64 = std::numeric_limits<int64_t>::max();
+static constexpr uint64_t max_uint64 = std::numeric_limits<uint64_t>::max();
+static constexpr __int128_t max_int128 =
     (static_cast<__int128_t>(1) << 126) - 1 +
     (static_cast<__int128_t>(1) << 126);
-static const __uint128_t max_uint128 =
+static constexpr __uint128_t max_uint128 =
     (static_cast<__uint128_t>(1) << 127) - 1 +
     (static_cast<__uint128_t>(1) << 127);
 
@@ -33,6 +35,8 @@ TEST(SmallPrimes, ListContainsOnlyPrimes) {
 TEST(SmallPrimes, ListComplete) {
   std::vector<uint32_t> primes;
   ntlib::prime_sieve(ntlib::SMALL_PRIMES_UPPER_BOUND, primes);
+  // The `prime_sieve` method might return a larger sieve than requested.
+  // In this case, we remove the additional primes in `primes`.
   while (primes.back() >= ntlib::SMALL_PRIMES_UPPER_BOUND) primes.pop_back();
   EXPECT_TRUE(std::ranges::equal(primes, ntlib::SMALL_PRIMES));
 }
@@ -81,8 +85,8 @@ TEST(GreatestCommonDivisor, CornerCases) {
   EXPECT_EQ(ntlib::gcd(max_uint, 2u), 1);
   EXPECT_EQ(ntlib::gcd(max_uint, 3u), 3);
   EXPECT_EQ(ntlib::gcd(max_uint, 9u), 3);
-  EXPECT_EQ(ntlib::gcd(max_uint, 65537u), 65537);
-  EXPECT_EQ(ntlib::gcd(max_uint, 10u * 65537), 5 * 65537);
+  EXPECT_EQ(ntlib::gcd(max_uint, 65'537u), 65'537);
+  EXPECT_EQ(ntlib::gcd(max_uint, 10u * 65'537), 5 * 65'537);
 
   EXPECT_EQ(ntlib::gcd(min_int, 2), 2);
   EXPECT_EQ(ntlib::gcd(min_int, -2), 2);
@@ -112,7 +116,7 @@ TEST(LeastCommonMultiple, NegativeValues) {
 TEST(LeastCommonMultiple, CornerCases) {
   EXPECT_EQ(ntlib::lcm(max_int, 1), max_int);
   EXPECT_EQ(ntlib::lcm(min_int + 1, 1), max_int);
-  EXPECT_EQ(ntlib::lcm(3u * 5 * 17 * 257, 65537u), max_uint);
+  EXPECT_EQ(ntlib::lcm(3u * 5 * 17 * 257, 65'537u), max_uint);
 }
 
 TEST(ExtendedEuclid, SmallValues) {
@@ -166,11 +170,8 @@ TEST(Exponentiation, PowersOf2) {
 
 TEST(Exponentiation, PowersOfMinus2) {
   for (int e = 0; e <= 30; ++e) {
-    if (e & 1) {
-      EXPECT_EQ(ntlib::pow(-2, e), -(1 << e));
-    } else {
-      EXPECT_EQ(ntlib::pow(-2, e), 1 << e);
-    }
+    int sign = e & 1 ? -1 : 1;
+    EXPECT_EQ(ntlib::pow(-2, e), sign * (1 << e));
   }
 }
 
@@ -314,7 +315,7 @@ TEST(CeilDiv, SmallValues) {
 }
 
 TEST(Modulo, KnuthExamples) {
-  // Concrete Mathematics, p. 82.
+  // Examples from Knuth's Concrete Mathematics.
   EXPECT_EQ(ntlib::mod(5, 3), 2);
   EXPECT_EQ(ntlib::mod(5, -3), -1);
   EXPECT_EQ(ntlib::mod(-5, 3), 1);
@@ -340,6 +341,8 @@ TEST(ModularExponentiation, BaseCases) {
   EXPECT_EQ(ntlib::mod_pow(2, 1, 3), 2);
   EXPECT_EQ(ntlib::mod_pow(4, 1, 3), 1);
   EXPECT_EQ(ntlib::mod_pow(0, 1, 3), 0);
+  EXPECT_EQ(ntlib::mod_pow(-1, 1, 3), 2);
+  EXPECT_EQ(ntlib::mod_pow(-2, 1, 3), 1);
 }
 
 TEST(ModularExponentiation, PowersOf2) {
@@ -351,12 +354,8 @@ TEST(ModularExponentiation, PowersOf2) {
 
 TEST(ModularExponentiation, PowersOfMinus2) {
   for (int32_t i = 1; i < 30; ++i) {
-    EXPECT_EQ(ntlib::mod_pow(-2, i, 2), 0);
-    if (i & 1) {
-      EXPECT_EQ(ntlib::mod_pow(-2, i, 3), -(1 << i) % 3);
-    } else {
-      EXPECT_EQ(ntlib::mod_pow(-2, i, 3), (1 << i) % 3);
-    }
+    EXPECT_EQ(ntlib::mod_pow(-2, i, 2), 0) << "i = " << i;
+    EXPECT_EQ(ntlib::mod_pow(-2, i, 3), 1) << "i = " << i;
   }
 }
 
@@ -410,35 +409,35 @@ TEST(ModularSquareRoot, SmallValues) {
 }
 
 TEST(LegendreSymbol, Prime3) {
-  const int32_t l[] = {2, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1,
-      -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0};
-  for (int32_t i = 1; i <= 30; ++i) {
+  const auto l = std::to_array<int32_t>({2, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1,
+      0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0});
+  for (uint32_t i = 1; i < l.size(); ++i) {
     EXPECT_EQ(ntlib::legendre(i, 3), l[i]);
   }
 }
 
 TEST(LegendreSymbol, Prime127) {
-  const int32_t l[] = {2, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, 1, -1, 1, -1, 1, 1,
-      1, 1, 1, -1, 1, 1, -1, -1, 1, 1, -1, -1, -1, 1};
-  for (int32_t i = 1; i <= 30; ++i) {
+  const auto l = std::to_array<int32_t>({2, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1,
+      1, -1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, -1, -1, 1, 1, -1, -1, -1, 1});
+  for (uint32_t i = 1; i < l.size(); ++i) {
     EXPECT_EQ(ntlib::legendre(i, 127), l[i]);
   }
 }
 
 TEST(LegendreSymbol, PeriodicInTopElement) {
-  for (int32_t p : ntlib::SMALL_PRIMES) {
+  for (uint32_t p : ntlib::SMALL_PRIMES) {
     if (p == 2) continue;
-    for (int32_t i = 0; i <= 1'000; ++i) {
+    for (uint32_t i = 0; i <= 1'000; ++i) {
       EXPECT_EQ(ntlib::legendre(i, p), ntlib::legendre(i + p, p));
     }
   }
 }
 
 TEST(LegendreSymbol, Multiplicative) {
-  for (int32_t p : ntlib::SMALL_PRIMES) {
+  for (uint32_t p : ntlib::SMALL_PRIMES) {
     if (p == 2) continue;
-    for (int32_t i = 0; i <= static_cast<int32_t>(ntlib::SMALL_PRIMES_UPPER_BOUND); ++i) {
-      for (int32_t j = 0; j <= static_cast<int32_t>(ntlib::SMALL_PRIMES_UPPER_BOUND); ++j) {
+    for (uint32_t i = 0; i <= 100; ++i) {
+      for (uint32_t j = 0; j <= 100; ++j) {
         EXPECT_EQ(ntlib::legendre(i, p) * ntlib::legendre(j, p),
             ntlib::legendre(i * j, p));
       }
@@ -447,9 +446,9 @@ TEST(LegendreSymbol, Multiplicative) {
 }
 
 TEST(LegendreSymbol, Squares) {
-  for (int32_t p : ntlib::SMALL_PRIMES) {
+  for (uint32_t p : ntlib::SMALL_PRIMES) {
     if (p == 2) continue;
-    for (int32_t i = 0; i <= static_cast<int32_t>(ntlib::SMALL_PRIMES_UPPER_BOUND); ++i) {
+    for (uint32_t i = 0; i <= 100; ++i) {
       int32_t result = i % p ? 1 : 0;
       EXPECT_EQ(ntlib::legendre(i * i, p), result);
     }
@@ -457,9 +456,9 @@ TEST(LegendreSymbol, Squares) {
 }
 
 TEST(LegendreSymbol, MinusOne) {
-  for (int32_t p : ntlib::SMALL_PRIMES) {
+  for (uint32_t p : ntlib::SMALL_PRIMES) {
     if (p == 2) continue;
-    int32_t result = p % 4 == 1 ? 1 : -1;
+    int32_t result = (p % 4 == 1) ? 1 : -1;
     EXPECT_EQ(ntlib::legendre(-1, p), result);
   }
 }

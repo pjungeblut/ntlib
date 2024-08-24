@@ -436,11 +436,11 @@ T mod_sqrt(T n, T p) {
  * @param p An odd prime number.
  * @return The Legendre Symbol (a/p).
  */
-template<typename T>
-T legendre(T a, T p) {
+template<typename T, typename P, typename S = std::make_signed<T>::type>
+S legendre(T a, P p) {
   assert(p != 2);
   T rem = mod_pow(a, (p - 1) / 2, p);
-  return rem <= 1 ? rem : rem - p;
+  return rem <= 1 ? rem : -1;
 }
 
 /**
