@@ -46,7 +46,7 @@ The library comes with extensive unit tests to ensure its correctness.
 To run all tests yourself run:
 ```
 cd build
-make tests
+ctest
 ```
 Alternatively you can build and run the tests for only a specific part of the library.
 All unit test targets are prefixed with `ut_`.
