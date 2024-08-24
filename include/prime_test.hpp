@@ -36,7 +36,7 @@ bool is_prime_naive(T n) {
  * Tests if `n` is a strong propable prime.
  *
  * @param n The number to be tested.
- * @prarm a The base to test with. Must be `1 < a < n-1`.
+ * @param a The base to test with. Must be `1 < a < n-1`.
  * @return `true` if the `n` is a strong pseudoprime to base `a`.
  */
 template<typename T>
@@ -68,7 +68,7 @@ bool miller_rabin_test(T n, T a) {
  * Checks whether `n` is a Lucas probable prime.
  *
  * @param n The number to check.
- * @return `true` if n is a strong lucas probable prime.
+ * @return `true` if n is a strong Lucas probable prime.
  */
 template<typename U, typename S = std::make_signed<U>::type>
 bool is_strong_lucas_probable_prime(U n) {
@@ -86,7 +86,7 @@ bool is_strong_lucas_probable_prime(U n) {
     }
     D = D > 0 ? -(D + 2) : -(D - 2);
   }
-  // In no value for D was found yet, then it might be that n is a perfect
+  // If no value for D was found yet, then it might be that n is a perfect
   // square. In this case no D exists.
   if (!found_d && is_square(n)) return false;
   // If n is not a perfect square we continue looking for a D. It must exist.
@@ -123,9 +123,10 @@ bool is_strong_lucas_probable_prime(U n) {
 
 /**
  * Tests whether a given number is (probable) prime.
- * Uses a Baillie-PSW-Test, which is deterministic for all values `n<2^64`.
+ * Uses a Baillie-PSW-Test, which is deterministic for all values `n < 2^64`.
  *
  * @param n The number to test.
+ * @return Whether `n` is a prime number.
  */
 template<typename U, typename S = std::make_signed<U>::type>
 bool is_prime(U n) {
