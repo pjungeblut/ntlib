@@ -479,7 +479,7 @@ auto jacobi(A a, B b) {
     a = mod(a, b);
   }
   if (b == 1) return t;
-  else return 0;
+  else return static_cast<C>(0);
 }
 
 }

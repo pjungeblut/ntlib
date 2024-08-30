@@ -13,20 +13,21 @@ namespace ntlib {
  * Runtime: O(k)
  *
  * Intermediate results are at most k times as big as the result.
- * Be aware of overflows for large numbers.
  *
  * @param n Size of universe.
  * @param k Size of the subsets.
  * @return The number of k-element subsets of {1,...,n}.
  */
-template<typename T>
-T binom(T n, T k) {
+template<typename N, typename K>
+auto binom(N n, K k) {
   assert(n >= 0);
 
-  if (k < 0 || k > n) return 0;
+  using C = std::common_type_t<N,K>;
 
-  T binom = 1;
-  for (T i = 1; i <= k; ++i) {
+  if (k < 0 || k > n) return C{0};
+
+  C binom = 1;
+  for (K i = 1; i <= k; ++i) {
     binom *= n--;
     binom /= i;
   }
@@ -45,10 +46,10 @@ template<typename T>
 void binom_table(T N, std::vector<std::vector<T>> &binoms) {
   assert(N >= 0);
 
-  binoms.assign(N + 1, std::vector<T>(N + 1, 0));
-  binoms[0][0] = 1;
+  binoms.assign(N + 1, std::vector<T>(N + 1, T{0}));
+  binoms[0][0] = T {1};
   for (T n = 1; n <= N; ++n) {
-    binoms[n][0] = 1;
+    binoms[n][0] = T {1};
     for (T k = 1; k <= n; ++k) {
       binoms[n][k] = binoms[n - 1][k - 1] + binoms[n - 1][k];
     }
