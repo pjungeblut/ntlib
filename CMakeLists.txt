@@ -1,14 +1,17 @@
 cmake_minimum_required (VERSION 3.16)
 
-project("NTLib - Number Theory Library" LANGUAGES CXX)
+project("NTLib - Number Theory Library" VERSION 0.9 LANGUAGES CXX)
 
 ################################################################################
 # General settings.
 ################################################################################
 
-# Build in Release mode to disable asserts.
-set(CMAKE_BUILD_TYPE Release)
-set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Wextra -O3")
+# Set the C++ version.
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED)
+set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Wextra -O2")
+
+# Include directories.
 include_directories(./include)
 
 ################################################################################
