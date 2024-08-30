@@ -19,7 +19,7 @@ namespace ntlib {
  * @return The number of k-element subsets of {1,...,n}.
  */
 template<typename N, typename K>
-auto binom(N n, K k) {
+std::common_type_t<N,K> binom(N n, K k) {
   assert(n >= 0);
 
   using C = std::common_type_t<N,K>;
