@@ -19,7 +19,7 @@ static constexpr unsigned int max_uint =
 static constexpr int64_t max_int64 = std::numeric_limits<int64_t>::max();
 static constexpr uint64_t max_uint64 = std::numeric_limits<uint64_t>::max();
 static constexpr __int128_t max_int128 =
-    (static_cast<__int128_t>(1) << 126) - 1 +
+    (__int128_t(1) << 126) - 1 +
     (static_cast<__int128_t>(1) << 126);
 static constexpr __uint128_t max_uint128 =
     (static_cast<__uint128_t>(1) << 127) - 1 +

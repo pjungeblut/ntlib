@@ -22,6 +22,15 @@ public:
   matrix() : rows(0), columns(0) {};
 
   /**
+   * Constructs a 1x1 matrix from a single value.
+   *
+   * @param val The single value.
+   */
+  explicit matrix(T &&val) : rows(1), columns(1) {
+    mat[0][0] = std::forward<T>(val);
+  }
+
+  /**
    * Constructs a new matrix of the given dimensions with the values default
    * initialized.
    *
@@ -418,10 +427,10 @@ private:
    * @param difference The difference. May be the same as `lhs`.
    */
   static void subtract(const matrix &lhs, const matrix &rhs, matrix &difference) {
-    assert(a.get_rows() == rhs.get_rows());
-    assert(a.get_rows() == difference.get_rows());
-    assert(a.get_columns() == rhs.get_columns());
-    assert(a.get_columns() == difference.get_columns());
+    assert(lhs.get_rows() == rhs.get_rows());
+    assert(lhs.get_rows() == difference.get_rows());
+    assert(lhs.get_columns() == rhs.get_columns());
+    assert(lhs.get_columns() == difference.get_columns());
 
     for (std::size_t r = 0; r < lhs.get_rows(); ++r) {
       for (std::size_t c = 0; c < lhs.get_columns(); ++c) {

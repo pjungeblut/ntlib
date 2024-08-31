@@ -118,9 +118,8 @@ auto extended_euclid(A a, B b, S &x, S &y) {
  * @return a^b
  */
 template<typename B, typename E>
-B pow(B a, E b, B unit = 1) {
-  assert(b >= 0);
-  assert(a != 0 || b != 0);
+B pow(B a, E b, B unit = B(1)) {
+  assert(a != B(0) || b != E(0));
 
   if (b == 0) return unit;
   if (b == 1) return a;
