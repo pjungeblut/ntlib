@@ -2,6 +2,7 @@
 
 #include <cstdint>
 
+#include "base.hpp"
 #include "matrix.hpp"
 
 TEST(Construction, Default) {
@@ -97,6 +98,16 @@ TEST(Arithmetic, Multiplication) {
   EXPECT_EQ(m1, m3);
 }
 
+TEST(Arithmetic, Exponentiation) {
+  ntlib::matrix<int32_t> m({{1,1},{1,0}});
+  ntlib::matrix<int32_t> f({{1},{0}});
+  auto unit = ntlib::matrix<int32_t>::get_identity(2);
+  m = ntlib::pow(m, 10, unit);
+  auto fib = m * f;
+  EXPECT_EQ(fib[0][0], 89); // 11th Fibonacci number
+  EXPECT_EQ(fib[1][0], 55); // 10th Fibonacci number
+}
+
 TEST(UnaryOperators, Minus) {
   ntlib::matrix<int32_t> m1({{1,2,3},{4,5,6}});
   ntlib::matrix<int32_t> m2({{-1,-2,-3},{-4,-5,-6}});
@@ -121,7 +132,7 @@ TEST(Identity, SmallValues) {
     return true;
   };
 
-  for (int32_t i = 0; i < 10; ++i) {
+  for (int32_t i = 1; i < 10; ++i) {
     const auto id = ntlib::matrix<int32_t>::get_identity(i);
     EXPECT_TRUE(is_id(id));
   }

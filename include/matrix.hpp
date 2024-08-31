@@ -26,8 +26,9 @@ public:
    *
    * @param val The single value.
    */
-  explicit matrix(T &&val) : rows(1), columns(1) {
-    mat[0][0] = std::forward<T>(val);
+  explicit matrix(T val) : rows(1), columns(1) {
+    mat.resize(rows, std::vector<T, Allocator<T>>(columns));
+    mat[0][0] = val;
   }
 
   /**
