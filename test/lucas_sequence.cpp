@@ -41,12 +41,12 @@ TEST(Lucas, PQ_P1_N1) {
 
   for (__int128_t n = 0; n < N; ++n) {
     const auto [un, vn] = ntlib::lucas_nth_term(
-        n, static_cast<__int128_t>(1), static_cast<__int128_t>(-1));
+        n, __int128_t(1), __int128_t(-1));
     EXPECT_EQ(un, u[n]);
     EXPECT_EQ(vn, v[n]);
 
     const auto [um, vm] = ntlib::lucas_nth_term_mod(
-        n, static_cast<__int128_t>(1), static_cast<__int128_t>(-1), MOD);
+        n, __int128_t(1), __int128_t(-1), MOD);
     EXPECT_EQ(um, u[n] % MOD);
     EXPECT_EQ(vm, v[n] % MOD);
   }
