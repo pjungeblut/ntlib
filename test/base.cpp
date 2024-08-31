@@ -20,10 +20,10 @@ static constexpr int64_t max_int64 = std::numeric_limits<int64_t>::max();
 static constexpr uint64_t max_uint64 = std::numeric_limits<uint64_t>::max();
 static constexpr __int128_t max_int128 =
     (__int128_t(1) << 126) - 1 +
-    (static_cast<__int128_t>(1) << 126);
+    (__int128_t(1) << 126);
 static constexpr __uint128_t max_uint128 =
-    (static_cast<__uint128_t>(1) << 127) - 1 +
-    (static_cast<__uint128_t>(1) << 127);
+    (__uint128_t(1) << 127) - 1 +
+    (__uint128_t(1) << 127);
 
 TEST(SmallPrimes, ListContainsOnlyPrimes) {
   const auto sieve = ntlib::prime_sieve(ntlib::SMALL_PRIMES_UPPER_BOUND);
@@ -37,7 +37,9 @@ TEST(SmallPrimes, ListComplete) {
   ntlib::prime_sieve(ntlib::SMALL_PRIMES_UPPER_BOUND, primes);
   // The `prime_sieve` method might return a larger sieve than requested.
   // In this case, we remove the additional primes in `primes`.
-  while (primes.back() >= ntlib::SMALL_PRIMES_UPPER_BOUND) primes.pop_back();
+  while (primes.back() >= ntlib::SMALL_PRIMES_UPPER_BOUND) {
+    primes.pop_back();
+  }
   EXPECT_TRUE(std::ranges::equal(primes, ntlib::SMALL_PRIMES));
 }
 
@@ -82,11 +84,11 @@ TEST(GreatestCommonDivisor, CornerCases) {
   EXPECT_EQ(ntlib::gcd(max_int, 2), 1);
 
   // 2^32-1 is composite.
-  EXPECT_EQ(ntlib::gcd(max_uint, 2u), 1);
-  EXPECT_EQ(ntlib::gcd(max_uint, 3u), 3);
-  EXPECT_EQ(ntlib::gcd(max_uint, 9u), 3);
-  EXPECT_EQ(ntlib::gcd(max_uint, 65'537u), 65'537);
-  EXPECT_EQ(ntlib::gcd(max_uint, 10u * 65'537), 5 * 65'537);
+  EXPECT_EQ(ntlib::gcd(max_uint, 2), 1);
+  EXPECT_EQ(ntlib::gcd(max_uint, 3), 3);
+  EXPECT_EQ(ntlib::gcd(max_uint, 9), 3);
+  EXPECT_EQ(ntlib::gcd(max_uint, 65'537), 65'537);
+  EXPECT_EQ(ntlib::gcd(max_uint, 10 * 65'537), 5 * 65'537);
 
   EXPECT_EQ(ntlib::gcd(min_int, 2), 2);
   EXPECT_EQ(ntlib::gcd(min_int, -2), 2);
@@ -231,12 +233,12 @@ TEST(IntegerSquareRoot, CornerCases) {
 
   __int128_t iroot128_ntlib = ntlib::isqrt(max_int128);
   __int128_t iroot128_expected =
-      static_cast<__int128_t>(2) * 2 * 3 * 3 * 3 * 991 * 283'183 * 430'368'163;
+      __int128_t(2) * 2 * 3 * 3 * 3 * 991 * 283'183 * 430'368'163;
   EXPECT_EQ(iroot128_ntlib, iroot128_expected);
 
   __uint128_t uroot128_ntlib = ntlib::isqrt(max_uint128);
   __uint128_t uroot128_expected =
-      static_cast<__uint128_t>(3) * 5 * 17 * 257 * 641 * 65537 * 6'700'417;
+      __uint128_t(3) * 5 * 17 * 257 * 641 * 65537 * 6'700'417;
   EXPECT_EQ(uroot128_ntlib, uroot128_expected);
 }
 
@@ -280,13 +282,13 @@ TEST(Factorial, First20) {
   EXPECT_EQ(ntlib::factorial(10), 3'628'800);
   EXPECT_EQ(ntlib::factorial(11), 39'916'800);
   EXPECT_EQ(ntlib::factorial(12), 479'001'600);
-  EXPECT_EQ(ntlib::factorial(13LL), 6'227'020'800);
-  EXPECT_EQ(ntlib::factorial(14LL), 87'178'291'200);
-  EXPECT_EQ(ntlib::factorial(15LL), 1'307'674'368'000);
-  EXPECT_EQ(ntlib::factorial(16LL), 20'922'789'888'000);
-  EXPECT_EQ(ntlib::factorial(17LL), 355'687'428'096'000);
-  EXPECT_EQ(ntlib::factorial(18LL), 6'402'373'705'728'000);
-  EXPECT_EQ(ntlib::factorial(19LL), 121'645'100'408'832'000);
+  EXPECT_EQ(ntlib::factorial(13LL), 6'227'020'800LL);
+  EXPECT_EQ(ntlib::factorial(14LL), 87'178'291'200LL);
+  EXPECT_EQ(ntlib::factorial(15LL), 1'307'674'368'000LL);
+  EXPECT_EQ(ntlib::factorial(16LL), 20'922'789'888'000LL);
+  EXPECT_EQ(ntlib::factorial(17LL), 355'687'428'096'000LL);
+  EXPECT_EQ(ntlib::factorial(18LL), 6'402'373'705'728'000LL);
+  EXPECT_EQ(ntlib::factorial(19LL), 121'645'100'408'832'000LL);
   EXPECT_EQ(ntlib::factorial(20LL), 2'432'902'008'176'640'000LL);
 }
 
