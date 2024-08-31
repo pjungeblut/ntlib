@@ -60,7 +60,7 @@ std::tuple<T,T,T> diophantine_linear_bivariate(T a, T b, T c) {
   if (b == 0) return std::make_tuple(c / a, 0, a);
 
   // General case.
-  T x, y, gcd = extended_euclid(abs(a), abs(b), x, y);
+  auto [gcd, x, y] = extended_euclid(abs(a), abs(b));
   assert(c % gcd == 0);
   x *= c / gcd;
   y *= c / gcd;

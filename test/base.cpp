@@ -122,40 +122,44 @@ TEST(LeastCommonMultiple, CornerCases) {
 }
 
 TEST(ExtendedEuclid, SmallValues) {
-  int x, y;
-  int g = ntlib::extended_euclid(99, 78, x, y);
-  EXPECT_EQ(g, ntlib::gcd(99, 78));
-  EXPECT_EQ(x * 99 + y * 78, g);
+  auto [gcd, x, y] = ntlib::extended_euclid(99, 78);
+  EXPECT_EQ(gcd, ntlib::gcd(99, 78));
+  EXPECT_EQ(x * 99 + y * 78, gcd);
 }
 
 TEST(ExtendedEuclid, OneParameterZero) {
-  int x, y;
-  int gcd = ntlib::extended_euclid(10, 0, x, y);
-  EXPECT_EQ(gcd, ntlib::gcd(10, 0));
-  EXPECT_EQ(x * 10 + y * 0, gcd);
+  auto [gcd1, x1, y1] = ntlib::extended_euclid(10, 0);
+  EXPECT_EQ(gcd1, ntlib::gcd(10, 0));
+  EXPECT_EQ(x1 * 10 + y1 * 0, gcd1);
 
-  gcd = ntlib::extended_euclid(0, 10, x, y);
-  EXPECT_EQ(gcd, ntlib::gcd(0, 10));
-  EXPECT_EQ(x * 0 + y * 10, gcd);
+  auto [gcd2, x2, y2] = ntlib::extended_euclid(0, 10);
+  EXPECT_EQ(gcd2, ntlib::gcd(0, 10));
+  EXPECT_EQ(x2 * 0 + y2 * 10, gcd2);
 }
 
 TEST(ExtendedEuclid, NegativeValues) {
-  int x, y;
-  EXPECT_EQ(ntlib::extended_euclid(-7, 3, x, y), 1);
-  EXPECT_EQ(x * (-7) + 3 * y, 1);
-  EXPECT_EQ(ntlib::extended_euclid(7, -3, x, y), 1);
-  EXPECT_EQ(x * 7 + (-3) * y, 1);
-  EXPECT_EQ(ntlib::extended_euclid(-7, -3, x, y), 1);
-  EXPECT_EQ(x * (-7) + (-3) * y, 1);
+  auto [gcd1, x1, y1] = ntlib::extended_euclid(-7, 3);
+  EXPECT_EQ(gcd1, ntlib::gcd(-7, 3));
+  EXPECT_EQ(x1 * (-7) + 3 * y1, gcd1);
+
+  auto [gcd2, x2, y2] = ntlib::extended_euclid(7, -3);
+  EXPECT_EQ(gcd2, ntlib::gcd(7, -3));
+  EXPECT_EQ(x2 * 7 + (-3) * y2, gcd2);
+
+  auto [gcd3, x3, y3] = ntlib::extended_euclid(-7, -3);
+  EXPECT_EQ(gcd3, ntlib::gcd(-7, -3));
+  EXPECT_EQ(x3 * (-7) + (-3) * y3, gcd3);
 }
 
 TEST(ExtendedEuclid, CornerCases) {
   // 2^31-1 is prime.
-  int x, y;
-  EXPECT_EQ(ntlib::extended_euclid(max_int, 2, x, y), 1);
-  EXPECT_EQ(x * max_int + y * 2, 1);
-  EXPECT_EQ(ntlib::extended_euclid(-max_int, 2, x, y), 1);
-  EXPECT_EQ(x * -max_int + y * 2, 1);
+  auto [gcd1, x1, y1] = ntlib::extended_euclid(max_int, 2);
+  EXPECT_EQ(gcd1, ntlib::gcd(max_int, 2));
+  EXPECT_EQ(x1 * max_int + y1 * 2, gcd1);
+
+  auto [gcd2, x2, y2] = ntlib::extended_euclid(-max_int, 2);
+  EXPECT_EQ(gcd2, ntlib::gcd(-max_int, 2));
+  EXPECT_EQ(x2 * -max_int + y2 * 2, gcd2);
 }
 
 TEST(Exponentiation, BaseCases) {

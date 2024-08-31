@@ -70,42 +70,33 @@ template<typename A, typename B>
 }
 
 /**
- * Extended Euclidean Algorithm.
+ * Extended Euclidean algorithm.
  * Finds whole number solutions for a*x + b*y = gcd(a,b).
- *
- * @param a Parameter a.
- * @param b Parameter b.
- * @param x Value for x.
- * @param y Value for y.
- * @return The greatest common divisor gcd(a,b) of a and b.
+ * 
+ * @param a Parameter a
+ * @param b Parameter b
+ * @return Tuple (gcd(a,b), x, y).
  */
 template<typename A, typename B,
     typename S = std::make_signed_t<std::common_type_t<A,B>>>
-constexpr std::common_type_t<A,B> extended_euclid(
-    A a, B b, S &x, S &y) noexcept {
-  assert(a != A(0) || b != B(0));
+[[nodiscard]] constexpr
+std::tuple<std::common_type_t<A,B>, S, S> extended_euclid(A a, B b) noexcept {
+  assert(!(a == A(0) && b == B(0)));
 
-  using C = std::common_type_t<A,B>;
-
-  // Extended Euclidean Algorithm for non-negative values.
-  const std::function<C(A, B, S&, S&)> extended_euclid_non_negative =
-      [&extended_euclid_non_negative](A a, B b, S &x, S &y) {
-    if (a == S(0)) {
-      x = S(0);
-      y = S(1);
-      return b;
-    }
-    S xx, yy;
-    C gcd = extended_euclid_non_negative(b % a, a, xx, yy);
-    x = yy - (b / a) * xx;
-    y = xx;
-    return gcd;
+  // Extended Euclidean algorithm for non-negative values.
+  const std::function<std::tuple<std::common_type_t<A,B>, S, S>(A, B)>
+      extended_euclid_non_negative = [&extended_euclid_non_negative](A a, B b) {
+    if (a == S(0)) { return std::make_tuple(b, S(0), S(1)); }
+    auto [gcd, xx, yy] = extended_euclid_non_negative(b % a, a);
+    S x = yy - (b / a) * xx;
+    S y = xx;
+    return std::make_tuple(gcd, x, y);
   };
 
-  C gcd = extended_euclid_non_negative(abs(a), abs(b), x, y);
+  auto [gcd, x, y] = extended_euclid_non_negative(abs(a), abs(b));
   if (a < A(0)) x = -x;
   if (b < B(0)) y = -y;
-  return gcd;
+  return std::make_tuple(gcd, x, y);
 }
 
 /**
@@ -364,14 +355,11 @@ std::common_type_t<A,M> mod_mult_inv(A a, M m) noexcept {
   assert(a >= 0);
   assert(m > 0);
 
-  using C = std::common_type_t<A,M>;
-  using S = std::make_signed_t<C>;
+  auto [gcd, x, y] = extended_euclid(a, m);
 
-  assert(ntlib::gcd(a, m) == C(1));
+  assert(ntlib::gcd(a, m) == decltype(gcd)(1));
 
-  S x, y;
-  extended_euclid(a, m, x, y);
-  return x >= S(0) ? x % m : m - (-x % m);
+  return x >= decltype(x)(0) ? x % m : m - (-x % m);
 }
 
 /**
