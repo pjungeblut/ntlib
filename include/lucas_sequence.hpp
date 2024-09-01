@@ -63,7 +63,7 @@ std::pair<T, T> lucas_nth_term_mod(std::size_t n, T p, T q, T m) noexcept {
     matrix<T> mat({{mod(p, m), mod(-q, m)}, {T{1}, T{0}}});
     mat = ntlib::pow(mat, n - 1, matrix<T>::get_identity(2));
     matrix<T> u({{T{1}}, {T{0}}});
-    matrix<T> v({{mod(p, m)}, {T{mod(2, m)}}});
+    matrix<T> v({{mod(p, m)}, {T{mod(T{2}, m)}}});
     u = mat * u;
     v = mat * v;
     return std::make_pair(mod(u[0][0], m), mod(v[0][0], m));
