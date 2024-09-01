@@ -23,6 +23,28 @@ static constexpr auto SMALL_PRIMES = std::to_array<uint32_t>({
     73, 79, 83, 89, 97});
 
 /**
+ * Checks whether a number is odd.
+ * 
+ * @param n The number.
+ * @return Whether n is odd.
+ */
+template<typename T>
+[[nodiscard]] constexpr bool is_odd(T n) noexcept {
+  return n & T{1};
+}
+
+/**
+ * Checks whether a number is eve.
+ * 
+ * @param n The number.
+ * @return Whether n is even.
+ */
+template<typename T>
+[[nodiscard]] constexpr bool is_even(T n) noexcept {
+  return !is_odd(n);
+}
+
+/**
  * Computes the absolute value of a number.
  *
  * @param n The number to take the absolute value of.
@@ -30,7 +52,7 @@ static constexpr auto SMALL_PRIMES = std::to_array<uint32_t>({
  */
 template<typename T>
 [[nodiscard]] constexpr T abs(T n) noexcept {
-  return n >= T(0) ? n : -n;
+  return n >= T{0} ? n : -n;
 }
 
 /**
@@ -45,10 +67,10 @@ template<typename T>
  * @param b The second number.
  * @return The greatest common divisor of a and b.
  */
-template<typename A, typename B>
-[[nodiscard]] constexpr std::common_type_t<A,B> gcd(A a, B b) noexcept {
-  assert(a != A(0) || b != B(0));
-  return b == B(0) ? abs(a) : gcd(b, a % b);
+template<typename T>
+[[nodiscard]] constexpr T gcd(T a, T b) noexcept {
+  assert(!(a == T{0} && b == T{0}));
+  return b == T{0} ? abs(a) : gcd(b, a % b);
 }
 
 /**
@@ -62,10 +84,10 @@ template<typename A, typename B>
  * @param b The second number.
  * @return The least common multiple of a and b.
  */
-template<typename A, typename B>
-[[nodiscard]] constexpr std::common_type_t<A,B> lcm(A a, B b) noexcept {
-  assert(a != A(0));
-  assert(b != B(0));
+template<typename T>
+[[nodiscard]] constexpr T lcm(T a, T b) noexcept {
+  assert(a != T{0});
+  assert(b != T{0});
   return abs(a) * (abs(b) / gcd(a, b));
 }
 
@@ -77,25 +99,24 @@ template<typename A, typename B>
  * @param b Parameter b
  * @return Tuple (gcd(a,b), x, y).
  */
-template<typename A, typename B,
-    typename S = std::make_signed_t<std::common_type_t<A,B>>>
-[[nodiscard]] constexpr
-std::tuple<std::common_type_t<A,B>, S, S> extended_euclid(A a, B b) noexcept {
-  assert(!(a == A(0) && b == B(0)));
+template<typename T, typename S = std::make_signed_t<T>>
+[[nodiscard]] constexpr std::tuple<T, S, S> extended_euclid(T a, T b) noexcept {
+  assert(!(a == T{0} && b == T{0}));
 
   // Extended Euclidean algorithm for non-negative values.
-  const std::function<std::tuple<std::common_type_t<A,B>, S, S>(A, B)>
-      extended_euclid_non_negative = [&extended_euclid_non_negative](A a, B b) {
-    if (a == S(0)) { return std::make_tuple(b, S(0), S(1)); }
+  const std::function<std::tuple<T, S, S>(T, T)>
+      extended_euclid_non_negative = [&extended_euclid_non_negative](T a, T b) {
+    if (a == S{0}) { return std::make_tuple(b, S{0}, S{1}); }
     auto [gcd, xx, yy] = extended_euclid_non_negative(b % a, a);
-    S x = yy - (b / a) * xx;
-    S y = xx;
+
+    S x{yy - static_cast<S>(b / a) * xx};
+    S y{xx};
     return std::make_tuple(gcd, x, y);
   };
 
   auto [gcd, x, y] = extended_euclid_non_negative(abs(a), abs(b));
-  if (a < A(0)) x = -x;
-  if (b < B(0)) y = -y;
+  if (a < T{0}) x = -x;
+  if (b < T{0}) y = -y;
   return std::make_tuple(gcd, x, y);
 }
 
@@ -109,14 +130,14 @@ std::tuple<std::common_type_t<A,B>, S, S> extended_euclid(A a, B b) noexcept {
  * @return a^b
  */
 template<typename A, typename B>
-[[nodiscard]] constexpr A pow(A a, B b, A unit = A(1)) noexcept {
-  assert(!(a == A(0) && b == B(0)));
-  assert(b >= 0);
+[[nodiscard]] constexpr A pow(A a, B b, A unit = A{1}) noexcept {
+  assert(!(a == A{0} && b == B{0}));
+  assert(b >= B{0});
 
-  if (b == B(0)) { return unit; }
-  else if (b == B(1)) { return a; }
-  else if (b & B(1)) { return pow(a, b - B(1), unit) * a; }
-  else { return pow(a * a, b / B(2), unit); }
+  if (b == B{0}) { return unit; }
+  else if (b == B{1}) { return a; }
+  else if (is_odd(b)) { return pow(a, b - B{1}, unit) * a; }
+  else { return pow(a * a, b / B{2}, unit); }
 }
 
 /**
@@ -127,7 +148,7 @@ template<typename A, typename B>
  */
 template<typename T>
 [[nodiscard]] constexpr T ilog2(T n) noexcept {
-  assert(n > T(0));
+  assert(n > T{0});
 
   constexpr T length = sizeof(T) * CHAR_BIT;
   if constexpr (std::is_same_v<T, unsigned int> ||
@@ -140,8 +161,8 @@ template<typename T>
       std::is_same_v<T, long long>) {
     return length - __builtin_clzll(static_cast<unsigned long long>(n)) - 1;
   } else {
-    T result(0);
-    while (n >>= T(1)) ++result;
+    T result{0};
+    while (n >>= T{1}) ++result;
     return result;
   }
 }
@@ -155,7 +176,7 @@ template<typename T>
  */
 template<typename T>
 [[nodiscard]] constexpr T isqrt(T n) noexcept {
-  assert(n >= T(0));
+  assert(n >= T{0});
 
   if constexpr ((std::is_integral_v<T> && sizeof(T) <= 4) ||
       std::is_same_v<T, double>) {
@@ -170,11 +191,11 @@ template<typename T>
       return a <= b / a;
     };
 
-    T result(0), summand(1);
+    T result{0}, summand{1};
     while (square_atmost(result + summand, n)) {
-      while (square_atmost(result + T(2) * summand, n)) summand *= T(2);
+      while (square_atmost(result + T{2} * summand, n)) { summand *= T{2}; }
       result += summand;
-      summand = T(1);
+      summand = T{1};
     }
     return result;
   }
@@ -193,48 +214,48 @@ template<typename T>
  */
 template<typename T>
 [[nodiscard]] constexpr bool is_square(T n) noexcept {
-  if (n < T(0)) { return false; }
-  if (n == T(0)) { return true; }
+  if (n < T{0}) { return false; }
+  if (n == T{0}) { return true; }
 
-  T last_digit(n % 10);
-  T second_last_digit(n / 10 % 10);
-  T third_last_digit(n / 100 % 10);
+  T last_digit = n % T{10};
+  T second_last_digit = n / T{10} % T{10};
+  T third_last_digit = n / T{100} % T{10};
 
   // If n is a multiple of four, we can look at n/4 instead.
-  while (n && (n & 3) == T(0)) n >>= 2;
-  if (n == T(0)) { return true; }
+  while (n && (n & T{3}) == T{0}) n >>= 2;
+  if (n == T{0}) { return true; }
 
   // If n is not divisible by four (it is not by above test), its binary
   // representation must end with 001.
-  if (!((n & 7) == T(1))) { return false; }
+  if (!((n & T{7}) == T{1})) { return false; }
 
   // All squares end in the numbers 0, 1, 4, 5, 6, or 9.
-  if (last_digit == T(2) || last_digit == T(3) || last_digit == T(7) ||
-      last_digit == T(8)) {
+  if (last_digit == T{2} || last_digit == T{3} || last_digit == T{7} ||
+      last_digit == T{8}) {
     return false;
   }
 
   // The last two digits cannot both be odd.
-  if ((last_digit & 1) && (second_last_digit & 1)) { return false; }
+  if (is_odd(last_digit) && is_odd(second_last_digit)) { return false; }
 
   // If the last digit is 1 or 9, the two digits befor must be a multiple of 4.
-  if ((last_digit == T(1) || last_digit == T(9)) &&
-      ((third_last_digit * 10 + second_last_digit) % 4 != T(0))) {
+  if ((last_digit == T{1} || last_digit == T{9}) &&
+      ((third_last_digit * T{10} + second_last_digit) % T{4} != T{0})) {
     return false;
   }
 
   // If the last digit is 4, the digit before it must be even.
-  if (last_digit == T(4) && (second_last_digit & 1)) { return false; }
+  if (last_digit == T{4} && is_odd(second_last_digit)) { return false; }
 
   // If the last digit is 6, the digit before it must be odd.
-  if (last_digit == T(6) && !(second_last_digit & 1)) { return false; }
+  if (last_digit == T{6} && is_even(second_last_digit)) { return false; }
 
   // If the last digit is 5, the digit before it must be 2.
-  if (last_digit == T(5) && second_last_digit != T(2)) { return false; }
+  if (last_digit == T{5} && second_last_digit != T{2}) { return false; }
 
   // Take the integer root and square it to check, if the real root is an
   // integer.
-  T iroot(isqrt(n));
+  T iroot = isqrt(n);
   return iroot * iroot == n;
 }
 
@@ -246,10 +267,10 @@ template<typename T>
  */
 template<typename T>
 [[nodiscard]] constexpr T factorial(T n) noexcept{
-  assert(n >= T(0));
+  assert(n >= T{0});
 
-  T result(1);
-  for (T i(2); i <= n; ++i) { result *= i; }
+  T result{1};
+  for (T i{2}; i <= n; ++i) { result *= i; }
   return result;
 }
 
@@ -260,14 +281,12 @@ template<typename T>
  * @param b The divisor.
  * @return The quotient, rounded down.
  */
-template<typename A, typename B>
-[[nodiscard]] constexpr std::common_type_t<A,B> floor_div(A a, B b) noexcept {
-  assert(b != B(0));
+template<typename T>
+[[nodiscard]] constexpr T floor_div(T a, T b) noexcept {
+  assert(b != T{0});
 
-  using C = std::common_type_t<A,B>;
-
-  C quotient = a / b;
-  if (((a < A(0)) ^ (b < B(0))) && a % b != C(0)) --quotient;
+  T quotient = a / b;
+  if (((a < T{0}) ^ (b < T{0})) && a % b != T{0}) --quotient;
   return quotient;
 }
 
@@ -278,14 +297,12 @@ template<typename A, typename B>
  * @param m The divisor.
  * @return The quotient, rounded up.
  */
-template<typename A, typename B>
-[[nodiscard]] constexpr std::common_type_t<A,B> ceil_div(A a, B b) noexcept {
-  assert(b != B(0));
+template<typename T>
+[[nodiscard]] constexpr T ceil_div(T a, T b) noexcept {
+  assert(b != T{0});
 
-  using C = std::common_type_t<A,B>;
-
-  C quotient = a / b;
-  if (((a > A(0) && b > B(0)) || (a < A(0) && b < B(0))) && a % b != C(0)) {
+  T quotient = a / b;
+  if (((a > T{0} && b > T{0}) || (a < T{0} && b < T{0})) && a % b != T{0}) {
     ++quotient;
   }
   return quotient;
@@ -299,8 +316,8 @@ template<typename A, typename B>
  * @return a mod m in the mathematical sense.
  *         If m is positive, then so is the result.
  */
-template<typename A, typename M>
-[[nodiscard]] constexpr std::common_type_t<A,M> mod(A a, M m) noexcept {
+template<typename T>
+[[nodiscard]] constexpr T mod(T a, T m) noexcept {
   return a - m * floor_div(a, m);
 }
 
@@ -316,29 +333,21 @@ template<typename A, typename M>
  * @param unit The unit element of the group.
  * @return a^b (mod m), in particular the return value is in [0,m-1].
  */
-template<typename A, typename B, typename M>
-[[nodiscard]] constexpr std::common_type_t<A,B,M> mod_pow(
-    A a, B b, M m, M unit = M(1)) noexcept {
-  assert(a != A(0) || b != B(0));
-  assert(b >= B(0));
-  assert(m > M(0));
+template<typename A, typename B>
+[[nodiscard]] constexpr A mod_pow(A a, B b, A m, A unit = A{1}) noexcept {
+  assert(!(a == A{0} && b == B{0}));
+  assert(b >= B{0});
+  assert(m > A{0});
 
-  using C = std::common_type_t<A,B,M>;
-
-  C absa = abs(a);
-
-  if (b == B(0)) { return unit; }
-  if (b == B(1)) {
-    C pos_res = mod(absa, m);
-    if (a < A(0) && pos_res != C(0)) { return m - pos_res; }
-    else { return pos_res; }
+  if (b == B{0}) {
+    return unit;
+  } else if (b == B{1}) {
+    return mod(a, m);
+  } else if (is_odd(b)) {
+    return mod(mod_pow(a, b - B{1}, m, unit) * a, m);
+  } else {
+    return mod_pow(mod(a * a, m), b / B{2}, m, unit);
   }
-  if (b & 1) {
-    C pos_res = mod(mod_pow(absa, b - B(1), m, unit) * absa, m);
-    if (a < A(0) && pos_res != C(0)) { return m - pos_res; }
-    else { return pos_res; }
-  }
-  return mod_pow(mod(absa * absa, m), b / C(2), m, unit);
 }
 
 /**
@@ -349,88 +358,83 @@ template<typename A, typename B, typename M>
  * @param m The order of the group.
  * @return The multiplicative inverse of a (mod m).
  */
-template<typename A, typename M>
-[[nodiscard]] constexpr
-std::common_type_t<A,M> mod_mult_inv(A a, M m) noexcept {
-  assert(a >= 0);
-  assert(m > 0);
+template<typename T, typename S = std::make_signed_t<T>>
+[[nodiscard]] constexpr T mod_mult_inv(T a, T m) noexcept {
+  assert(m > T{0});
 
-  auto [gcd, x, y] = extended_euclid(a, m);
+  auto [gcd, x, y] = extended_euclid<T, S>(a, m);
+  assert(gcd == T{1});
 
-  assert(ntlib::gcd(a, m) == decltype(gcd)(1));
-
-  return x >= decltype(x)(0) ? x % m : m - (-x % m);
+  return x >= S{0}
+      ? mod(static_cast<T>(x), m)
+      : m - (mod(static_cast<T>(-x), m));
 }
 
 /**
  * Tests, if a is a quadratic residue modulo p.
- * Uses Euler's Criterion to compute Legendre Symbol (a/p).
+ * Uses Euler's criterion to compute Legendre Symbol (a/p).
  *
  * @param a The number to test.
  * @param p The modulus. Must be prime.
  * @return True, if and only if there is an x, such that x^2 = a (mod p).
  */
-template<typename A, typename P>
-[[nodiscard]] constexpr bool mod_is_square(A a, P p) noexcept {
-  using C = std::common_type_t<A,P>;
-
-  if (a == A(0)) { return true; }
-  if (p == P(2)) { return true; }
-  return mod_pow(a, (p - P(1)) / P(2), p) == C(1);
+template<typename T>
+[[nodiscard]] constexpr bool mod_is_square(T a, T p) noexcept {
+  if (a == T{0}) { return true; }
+  if (p == T{2}) { return true; }
+  return mod_pow(a, (p - T{1}) / T{2}, p) == T{1};
 }
 
 /**
  * Computes square roots modular a prime number, that is an integer solution for
- * `x` in the equation `x^2 = a mod p`.
+ * x in the equation x^2 = a mod p.
  * Uses the Tonelli-Shankes algorithm.
  *
- * @param a Parameter `a`. `0 <= a < p`.
- * @param p Odd prime number `p > 2`.
- * @return `0 <= x < p` such that `x^2 = a mod p`.
- *         There are two solutions, the other one is `p - x`.
+ * @param a Parameter a. 0 <= a < p.
+ * @param p Odd prime number p > 2.
+ * @return 0 <= x < p such that x^2 = a mod p.
+ *         There are two solutions, the other one is p-x.
  *         Returns the smaller one.
  */
-template<typename A, typename P>
-[[nodiscard]] constexpr std::common_type_t<A,P> mod_sqrt(A n, P p) noexcept {
-  using C = std::common_type_t<A,P>;
-
+template<typename T>
+[[nodiscard]] constexpr T mod_sqrt(T n, T p) noexcept {
   // Find q, s with p-1 = q*2^s.
-  C q(p - 1);
-  C s(0);
-  while (!(q & 1)) {
-    q /= C(2);
+  T q{p - T{1}};
+  T s{0};
+  while (is_even(q)) {
+    q /= T{2};
     ++s;
   }
 
   // If and only if s == 1, we have p = 3 (mod 4).
   // In this case we can compute root x directly.
-  if (s == C(1)) return mod_pow(n, (p + C(1)) / C(4), p);
+  if (s == T{1}) { return mod_pow(n, (p + T{1}) / T{4}, p); }
 
   // Find a quadratic non-residue z.
   // Half the numbers in 1, ..., p-1 are, so we randomly guess.
   // On average, two tries are necessary.
   std::random_device rd;
   std::mt19937 gen(rd());
-  std::uniform_int_distribution<> dis(C(1), p - C(1));
-  C z = dis(gen);
+  std::uniform_int_distribution<T> dis(T{1}, p - T{1});
+  T z{dis(gen)};
   while (mod_is_square(z, p)) z = dis(gen);
 
-  C c = mod_pow(z, q, p);
-  C x = mod_pow(n, (q + 1) / 2, p);
-  C t = mod_pow(n, q, p);
-  C m = s;
+  T c = mod_pow(z, q, p);
+  T x = mod_pow(n, (q + T{1}) / T{2}, p);
+  T t = mod_pow(n, q, p);
+  T m = s;
 
-  while (t % p != C(1)) {
+  while (t % p != T{1}) {
     // Find lowest 0 < i < m such that t^2^i = 1 (mod p).
-    C i(0);
-    C test(t);
-    while (test != C(1)) {
+    T i{0};
+    T test{t};
+    while (test != T{1}) {
       test = test * test % p;
       ++i;
     }
 
-    C cexp = C(1) << (m - i - 1);
-    C b = mod_pow(c, cexp, p);
+    T cexp = T{1} << (m - i - T{1});
+    T b = mod_pow(c, cexp, p);
     x = x * b % p;
     t = t * b % p * b % p;
     c = b * b % p;
@@ -447,13 +451,12 @@ template<typename A, typename P>
  * @param p An odd prime number.
  * @return The Legendre Symbol (a/p).
  */
-template<typename A, typename P,
-    typename S = std::make_signed_t<std::common_type_t<A,P>>>
-[[nodiscard]] constexpr S legendre(A a, P p) noexcept {
-  assert(p != P(2));
+template<typename T, typename S = std::make_signed_t<T>>
+[[nodiscard]] constexpr S legendre(T a, T p) noexcept {
+  assert(p != T{2});
 
-  S rem = mod_pow(a, (p - P(1)) / P(2), p);
-  return rem <= S(1) ? rem : S(-1);
+  T rem = mod_pow(a, (p - T{1}) / T{2}, p);
+  return rem <= T{1} ? static_cast<S>(rem) : S{-1};
 }
 
 /**
@@ -463,30 +466,28 @@ template<typename A, typename P,
  * @param b The "denominator".
  * @return The Jacobi Symbol (a/b).
  */
-template<typename A, typename B>
-[[nodiscard]] constexpr std::common_type_t<A,B> jacobi(A a, B b) noexcept {
-  assert(b > B(0));
-  assert(b & B(1));
-
-  using C = std::common_type_t<A,B>;
+template<typename T, typename S = std::make_signed_t<T>>
+[[nodiscard]] constexpr S jacobi(T a, T b) noexcept {
+  assert(b > T{0});
+  assert(is_odd(b));
 
   a = mod(a, b);
   // From here, both a and b are non-negative.
-  C t(1);
-  while (a != C(0)) {
-    C s(0);
-    while (!(a & C(1))) {
-      a /= C(2);
+  S t{1};
+  while (a != T{0}) {
+    T s(0);
+    while (is_even(a)) {
+      a /= T{2};
       ++s;
     }
-    if ((s & C(1)) && (b % C(8) == C(3) || b % C(8) == C(5))) { t = -t; }
+    if (is_odd(s) && (b % T{8} == T{3} || b % T{8} == T{5})) { t = -t; }
 
     std::swap(a, b);
-    if (a % C(4) == C(3) && b % C(4) == C(3)) { t = -t; }
+    if (a % T{4} == T{3} && b % T{4} == T{3}) { t = -t; }
     a = mod(a, b);
   }
-  if (b == C(1)) return t;
-  else return C(0);
+  if (b == T{1}) return t;
+  else return S{0};
 }
 
 }
