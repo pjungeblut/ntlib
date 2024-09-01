@@ -59,6 +59,22 @@ TEST(Even, SmallValues) {
   EXPECT_TRUE(ntlib::is_even(2));
 }
 
+TEST(OddPart, SmallValues) {
+  EXPECT_EQ(ntlib::odd_part(-3), std::make_pair(0, -3));
+  EXPECT_EQ(ntlib::odd_part(-2), std::make_pair(1, -1));
+  EXPECT_EQ(ntlib::odd_part(-1), std::make_pair(0, -1));
+  EXPECT_EQ(ntlib::odd_part(0), std::make_pair(0, 0));
+  EXPECT_EQ(ntlib::odd_part(1), std::make_pair(0, 1));
+  EXPECT_EQ(ntlib::odd_part(2), std::make_pair(1, 1));
+  EXPECT_EQ(ntlib::odd_part(3), std::make_pair(0, 3));
+}
+
+TEST(OddPart, PowersOfTwo) {
+  for (uint32_t i = 0; i < 32; ++i) {
+    EXPECT_EQ(ntlib::odd_part(1u << i), std::make_pair(i, 1u));
+  }
+}
+
 TEST(AbsoluteValue, SmallValues) {
   EXPECT_EQ(ntlib::abs(1), 1);
   EXPECT_EQ(ntlib::abs(-1), 1);
