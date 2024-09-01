@@ -34,7 +34,7 @@ template<typename T>
 }
 
 /**
- * Checks whether a number is eve.
+ * Checks whether a number is even.
  * 
  * @param n The number.
  * @return Whether n is even.
@@ -53,6 +53,22 @@ template<typename T>
 template<typename T>
 [[nodiscard]] constexpr T abs(T n) noexcept {
   return n >= T{0} ? n : -n;
+}
+
+/**
+ * Given a number n, computes (e, o), such that n=2^e*o.
+ * 
+ * @param n The number to decompose.
+ * @return A pair with e and o. 
+ */
+template<typename T>
+[[nodiscard]] constexpr std::pair<T,T> odd_part(T n) noexcept {
+  T e{0};
+  while (n != T{0} && is_even(n)) {
+    n /= T{2};
+    ++e;
+  }
+  return std::make_pair(e, n);
 }
 
 /**
@@ -399,12 +415,7 @@ template<typename T>
 template<typename T>
 [[nodiscard]] constexpr T mod_sqrt(T n, T p) noexcept {
   // Find q, s with p-1 = q*2^s.
-  T q{p - T{1}};
-  T s{0};
-  while (is_even(q)) {
-    q /= T{2};
-    ++s;
-  }
+  auto [s, q] = odd_part(p - T{1});
 
   // If and only if s == 1, we have p = 3 (mod 4).
   // In this case we can compute root x directly.
@@ -472,14 +483,9 @@ template<typename T, typename S = std::make_signed_t<T>>
   assert(is_odd(b));
 
   a = mod(a, b);
-  // From here, both a and b are non-negative.
   S t{1};
   while (a != T{0}) {
-    T s(0);
-    while (is_even(a)) {
-      a /= T{2};
-      ++s;
-    }
+    auto [s, a] = odd_part(a);
     if (is_odd(s) && (b % T{8} == T{3} || b % T{8} == T{5})) { t = -t; }
 
     std::swap(a, b);
