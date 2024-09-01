@@ -527,4 +527,22 @@ private:
   }
 };
 
+/**
+ * Executes a function an each element.
+ * 
+ * TODO: This creates (possibly) unnecessary copies.
+ * 
+ * @param func The function to execute.
+ */
+template<typename T, typename F>
+matrix<T> exec_each_element(const matrix<T> &m, F func) {
+  matrix<T> res(m.get_columns(), m.get_rows());
+  for (std::size_t r = 0; r < res.get_rows(); ++r) {
+    for (std::size_t c = 0; c < res.get_columns(); ++c) {
+      res[r][c] = func(m[r][c]);
+    }
+  }
+  return res;
+}
+
 }
