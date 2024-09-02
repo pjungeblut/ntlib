@@ -24,7 +24,7 @@ template <typename T>
 [[nodiscard]] constexpr
 std::pair<T, T> lucas_nth_term(std::size_t n, T p, T q) noexcept {
   if (n == 0) {
-    return std::make_pair(T{p}, T{2});
+    return std::make_pair(T{0}, T{2});
   } else if (n == 1) {
     return std::make_pair(T{1}, p);
   } else {
@@ -61,7 +61,14 @@ std::pair<T, T> lucas_nth_term_mod(std::size_t n, T p, T q, T m) noexcept {
     return std::make_pair(T{1}, mod(p, m));
   } else {
     matrix<T> mat({{mod(p, m), mod(-q, m)}, {T{1}, T{0}}});
-    mat = ntlib::pow(mat, n - 1, matrix<T>::get_identity(2));
+
+    const auto component_mod_m = [m](matrix<T> &x) {
+      const auto mod_m = [m](T y) { return mod(y, m); };
+      return exec_each_element(std::move(x), mod_m);
+    };
+    mat = ntlib::mod_pow(mat, n - 1, component_mod_m,
+        matrix<T>::get_identity(2));
+
     matrix<T> u({{T{1}}, {T{0}}});
     matrix<T> v({{mod(p, m)}, {T{mod(T{2}, m)}}});
     u = mat * u;

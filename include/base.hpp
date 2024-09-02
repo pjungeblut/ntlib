@@ -349,20 +349,24 @@ template<typename T>
  * @param unit The unit element of the group.
  * @return a^b (mod m), in particular the return value is in [0,m-1].
  */
-template<typename A, typename B>
-[[nodiscard]] constexpr A mod_pow(A a, B b, A m, A unit = A{1}) noexcept {
+template<typename A, typename B, typename MF>
+[[nodiscard]] constexpr
+A mod_pow(A a, B b, MF mod_func, A unit = A{1}) noexcept {
   assert(!(a == A{0} && b == B{0}));
   assert(b >= B{0});
-  assert(m > A{0});
 
   if (b == B{0}) {
     return unit;
   } else if (b == B{1}) {
-    return mod(a, m);
+    return mod_func(a);
   } else if (is_odd(b)) {
-    return mod(mod_pow(a, b - B{1}, m, unit) * a, m);
+    // TODO: Check why this cannot be in one line.
+    auto no_mod = mod_pow(a, b - B{1}, mod_func, unit) * a;
+    return mod_func(no_mod);
   } else {
-    return mod_pow(mod(a * a, m), b / B{2}, m, unit);
+    // TODO: Check why this cannot be in one line.
+    auto a_squared = a * a;
+    return mod_pow(mod_func(a_squared), b / B{2}, mod_func, unit);
   }
 }
 
@@ -398,7 +402,8 @@ template<typename T>
 [[nodiscard]] constexpr bool mod_is_square(T a, T p) noexcept {
   if (a == T{0}) { return true; }
   if (p == T{2}) { return true; }
-  return mod_pow(a, (p - T{1}) / T{2}, p) == T{1};
+  const auto mod_p = [p](T n) { return mod(n, p); };
+  return mod_pow(a, (p - T{1}) / T{2}, mod_p) == T{1};
 }
 
 /**
@@ -414,12 +419,14 @@ template<typename T>
  */
 template<typename T>
 [[nodiscard]] constexpr T mod_sqrt(T n, T p) noexcept {
+  const auto mod_p = [p](T x) { return mod(x, p); };
+
   // Find q, s with p-1 = q*2^s.
   auto [s, q] = odd_part(p - T{1});
 
   // If and only if s == 1, we have p = 3 (mod 4).
   // In this case we can compute root x directly.
-  if (s == T{1}) { return mod_pow(n, (p + T{1}) / T{4}, p); }
+  if (s == T{1}) { return mod_pow(n, (p + T{1}) / T{4}, mod_p); }
 
   // Find a quadratic non-residue z.
   // Half the numbers in 1, ..., p-1 are, so we randomly guess.
@@ -430,9 +437,9 @@ template<typename T>
   T z{dis(gen)};
   while (mod_is_square(z, p)) z = dis(gen);
 
-  T c = mod_pow(z, q, p);
-  T x = mod_pow(n, (q + T{1}) / T{2}, p);
-  T t = mod_pow(n, q, p);
+  T c = mod_pow(z, q, mod_p);
+  T x = mod_pow(n, (q + T{1}) / T{2}, mod_p);
+  T t = mod_pow(n, q, mod_p);
   T m = s;
 
   while (t % p != T{1}) {
@@ -445,7 +452,7 @@ template<typename T>
     }
 
     T cexp = T{1} << (m - i - T{1});
-    T b = mod_pow(c, cexp, p);
+    T b = mod_pow(c, cexp, mod_p);
     x = x * b % p;
     t = t * b % p * b % p;
     c = b * b % p;
@@ -466,7 +473,8 @@ template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr S legendre(T a, T p) noexcept {
   assert(p != T{2});
 
-  T rem = mod_pow(a, (p - T{1}) / T{2}, p);
+  const auto mod_p = [&p](T n) { return mod(n, p); };
+  T rem = mod_pow(a, (p - T{1}) / T{2}, mod_p);
   return rem <= T{1} ? static_cast<S>(rem) : S{-1};
 }
 
@@ -485,7 +493,9 @@ template<typename T, typename S = std::make_signed_t<T>>
   a = mod(a, b);
   S t{1};
   while (a != T{0}) {
-    auto [s, a] = odd_part(a);
+    auto [s, aa] = odd_part(a);
+    a = aa;
+
     if (is_odd(s) && (b % T{8} == T{3} || b % T{8} == T{5})) { t = -t; }
 
     std::swap(a, b);

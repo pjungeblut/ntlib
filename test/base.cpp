@@ -375,30 +375,36 @@ TEST(Modulo, DoesNotDivide) {
 }
 
 TEST(ModularExponentiation, BaseCases) {
-  EXPECT_EQ(ntlib::mod_pow(2, 0, 3), 1);
-  EXPECT_EQ(ntlib::mod_pow(2, 1, 3), 2);
-  EXPECT_EQ(ntlib::mod_pow(4, 1, 3), 1);
-  EXPECT_EQ(ntlib::mod_pow(0, 1, 3), 0);
-  EXPECT_EQ(ntlib::mod_pow(-1, 1, 3), 2);
-  EXPECT_EQ(ntlib::mod_pow(-2, 1, 3), 1);
+  const auto mod_3 = [](int n) { return ntlib::mod(n, 3); };
+  EXPECT_EQ(ntlib::mod_pow(2, 0, mod_3), 1);
+  EXPECT_EQ(ntlib::mod_pow(2, 1, mod_3), 2);
+  EXPECT_EQ(ntlib::mod_pow(4, 1, mod_3), 1);
+  EXPECT_EQ(ntlib::mod_pow(0, 1, mod_3), 0);
+  EXPECT_EQ(ntlib::mod_pow(-1, 1, mod_3), 2);
+  EXPECT_EQ(ntlib::mod_pow(-2, 1, mod_3), 1);
 }
 
 TEST(ModularExponentiation, PowersOf2) {
+  const auto mod_2 = [](int n) { return ntlib::mod(n, 2); };
+  const auto mod_3 = [](int n) { return ntlib::mod(n, 3); };
   for (int32_t i = 1; i < 30; ++i) {
-    EXPECT_EQ(ntlib::mod_pow(2, i, 2), 0);
-    EXPECT_EQ(ntlib::mod_pow(2, i, 3), (1 << i) % 3);
+    EXPECT_EQ(ntlib::mod_pow(2, i, mod_2), 0);
+    EXPECT_EQ(ntlib::mod_pow(2, i, mod_3), (1 << i) % 3);
   }
 }
 
 TEST(ModularExponentiation, PowersOfMinus2) {
+  const auto mod_2 = [](int n) { return ntlib::mod(n, 2); };
+  const auto mod_3 = [](int n) { return ntlib::mod(n, 3); };
   for (int32_t i = 1; i < 30; ++i) {
-    EXPECT_EQ(ntlib::mod_pow(-2, i, 2), 0) << "i = " << i;
-    EXPECT_EQ(ntlib::mod_pow(-2, i, 3), 1) << "i = " << i;
+    EXPECT_EQ(ntlib::mod_pow(-2, i, mod_2), 0) << "i = " << i;
+    EXPECT_EQ(ntlib::mod_pow(-2, i, mod_3), 1) << "i = " << i;
   }
 }
 
 TEST(ModularExponentiation, SmallValues) {
   uint32_t p = 509;
+  const auto mod_p = [p](uint32_t n) { return ntlib::mod(n, p); };
   for (uint32_t i = 1; i < p; ++i) {
     for (uint32_t j = 1; j < p; ++j) {
       uint32_t correct = 1;
@@ -406,7 +412,7 @@ TEST(ModularExponentiation, SmallValues) {
         correct *= i;
         correct %= p;
       }
-      EXPECT_EQ(ntlib::mod_pow(i, j, p), correct);
+      EXPECT_EQ(ntlib::mod_pow(i, j, mod_p), correct);
     }
   }
 }
@@ -509,36 +515,36 @@ TEST(LegendreSymbol, Two) {
   }
 }
 
-// TEST(JacobiSymbol, EmptyProduct) {
-//   for (int32_t a = 0; a <= 10; ++a) {
-//     EXPECT_EQ(ntlib::jacobi(a, 1), 1);
-//   }
-// }
+TEST(JacobiSymbol, EmptyProduct) {
+  for (int32_t a = 0; a <= 10; ++a) {
+    EXPECT_EQ(ntlib::jacobi(a, 1), 1);
+  }
+}
 
-// TEST(JacobiSymbol, PrimeDenominator) {
-//   for (int32_t n : ntlib::SMALL_PRIMES) {
-//     if (n == 2) continue;
-//     for (int32_t k = 0; k <= 1'000; ++k) {
-//       EXPECT_EQ(ntlib::jacobi(k, n), ntlib::legendre(k, n));
-//     }
-//   }
-// }
+TEST(JacobiSymbol, PrimeDenominator) {
+  for (int32_t n : ntlib::SMALL_PRIMES) {
+    if (n == 2) continue;
+    for (int32_t k = 0; k <= 1'000; ++k) {
+      EXPECT_EQ(ntlib::jacobi(k, n), ntlib::legendre(k, n));
+    }
+  }
+}
 
-// TEST(JacobiSymbol, PrimeDecompositoin) {
-//   for (int32_t n = 1; n <= 1'000; n += 2) {
-//     std::map<int32_t, int32_t> factors;
-//     ntlib::prime_decomposition(n, factors);
-//     for (int32_t k = 0; k <= 1'000; ++k) {
-//       int32_t prod = 1;
-//       for (auto [f, m] : factors) {
-//         while (m--) prod *= ntlib::legendre(k, f);
-//       }
-//       EXPECT_EQ(ntlib::jacobi(k, n), prod);
-//     }
-//   }
-// }
+TEST(JacobiSymbol, PrimeDecompositoin) {
+  for (int32_t n = 1; n <= 1'000; n += 2) {
+    std::map<int32_t, int32_t> factors;
+    ntlib::prime_decomposition(n, factors);
+    for (int32_t k = 0; k <= 1'000; ++k) {
+      int32_t prod = 1;
+      for (auto [f, m] : factors) {
+        while (m--) prod *= ntlib::legendre(k, f);
+      }
+      EXPECT_EQ(ntlib::jacobi(k, n), prod);
+    }
+  }
+}
 
-// TEST(JacobiSymbol, SpecialValues1) {
-//   auto j = ntlib::jacobi(-11, 35);
-//   EXPECT_EQ(j, -1);
-// }
+TEST(JacobiSymbol, SpecialValues1) {
+  auto j = ntlib::jacobi(-11, 35);
+  EXPECT_EQ(j, -1);
+}

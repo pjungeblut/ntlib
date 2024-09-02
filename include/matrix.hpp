@@ -527,4 +527,21 @@ private:
   }
 };
 
+/**
+ * Executes a function an each element.
+ * 
+ * @param func The function to execute. Will be moved from.
+ * @return The new matrix.
+ */
+template<typename T, typename F>
+matrix<T> exec_each_element(matrix<T> &&m, F func) {
+  matrix<T> res(std::forward<matrix<T>>(m));
+  for (std::size_t r = 0; r < res.get_rows(); ++r) {
+    for (std::size_t c = 0; c < res.get_columns(); ++c) {
+      res[r][c] = func(res[r][c]);
+    }
+  }
+  return res;
+}
+
 }

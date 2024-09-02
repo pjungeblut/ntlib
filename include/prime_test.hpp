@@ -54,7 +54,8 @@ bool miller_rabin_test(T n, T a) {
   }
 
   // Strong pseudoprime test.
-  T p = mod_pow(a, d, n);
+  const auto mod_n = [n](T x) { return mod(x, n); };
+  T p = mod_pow(a, d, mod_n);
   if (p == 1 || p == m) return true;
   while (--e) {
     p *= p;
