@@ -402,7 +402,8 @@ template<typename T>
 [[nodiscard]] constexpr bool mod_is_square(T a, T p) noexcept {
   if (a == T{0}) { return true; }
   if (p == T{2}) { return true; }
-  return mod_pow(a, (p - T{1}) / T{2}, p) == T{1};
+  const auto mod_p = [p](T n) { return mod(n, p); };
+  return mod_pow(a, (p - T{1}) / T{2}, mod_p) == T{1};
 }
 
 /**
@@ -418,12 +419,14 @@ template<typename T>
  */
 template<typename T>
 [[nodiscard]] constexpr T mod_sqrt(T n, T p) noexcept {
+  const auto mod_p = [p](T x) { return mod(x, p); };
+
   // Find q, s with p-1 = q*2^s.
   auto [s, q] = odd_part(p - T{1});
 
   // If and only if s == 1, we have p = 3 (mod 4).
   // In this case we can compute root x directly.
-  if (s == T{1}) { return mod_pow(n, (p + T{1}) / T{4}, p); }
+  if (s == T{1}) { return mod_pow(n, (p + T{1}) / T{4}, mod_p); }
 
   // Find a quadratic non-residue z.
   // Half the numbers in 1, ..., p-1 are, so we randomly guess.
@@ -434,9 +437,9 @@ template<typename T>
   T z{dis(gen)};
   while (mod_is_square(z, p)) z = dis(gen);
 
-  T c = mod_pow(z, q, p);
-  T x = mod_pow(n, (q + T{1}) / T{2}, p);
-  T t = mod_pow(n, q, p);
+  T c = mod_pow(z, q, mod_p);
+  T x = mod_pow(n, (q + T{1}) / T{2}, mod_p);
+  T t = mod_pow(n, q, mod_p);
   T m = s;
 
   while (t % p != T{1}) {
@@ -449,7 +452,7 @@ template<typename T>
     }
 
     T cexp = T{1} << (m - i - T{1});
-    T b = mod_pow(c, cexp, p);
+    T b = mod_pow(c, cexp, mod_p);
     x = x * b % p;
     t = t * b % p * b % p;
     c = b * b % p;

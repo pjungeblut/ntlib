@@ -417,40 +417,40 @@ TEST(ModularExponentiation, SmallValues) {
   }
 }
 
-// TEST(MultiplicativeInverse, SmallValues) {
-//   const uint32_t m = 50;
-//   for (uint32_t n = 1; n < m; ++n) {
-//     if (ntlib::gcd(n, m) == 1) {
-//       uint32_t inv = ntlib::mod_mult_inv(n, m);
-//       EXPECT_EQ(n * inv % m, 1);
-//     }
-//   }
-// }
+TEST(MultiplicativeInverse, SmallValues) {
+  const uint32_t m = 50;
+  for (uint32_t n = 1; n < m; ++n) {
+    if (ntlib::gcd(n, m) == 1) {
+      uint32_t inv = ntlib::mod_mult_inv(n, m);
+      EXPECT_EQ(n * inv % m, 1);
+    }
+  }
+}
 
-// TEST(ModularSquareTest, SmallValues) {
-//   const uint32_t p = 509;
-//   std::bitset<p> square;
-//   for (uint32_t n = 0; n < p; ++n) {
-//     uint32_t nn = n * n % p;
-//     square[nn] = true;
-//     EXPECT_TRUE(ntlib::mod_is_square(nn, p));
-//   }
-//   for (uint32_t n = 0; n < p; ++n) {
-//     if (!square[n]) {
-//       EXPECT_FALSE(ntlib::mod_is_square(n, p));
-//     }
-//   }
-// }
+TEST(ModularSquareTest, SmallValues) {
+  const uint32_t p = 509;
+  std::bitset<p> square;
+  for (uint32_t n = 0; n < p; ++n) {
+    uint32_t nn = n * n % p;
+    square[nn] = true;
+    EXPECT_TRUE(ntlib::mod_is_square(nn, p));
+  }
+  for (uint32_t n = 0; n < p; ++n) {
+    if (!square[n]) {
+      EXPECT_FALSE(ntlib::mod_is_square(n, p));
+    }
+  }
+}
 
-// TEST(ModularSquareRoot, SmallValues) {
-//   const uint32_t m = 59;
-//   for (uint32_t n = 0; n < m; ++n) {
-//     if (ntlib::mod_is_square(n, m)) {
-//       uint32_t root = ntlib::mod_sqrt(n, m);
-//       EXPECT_EQ(root * root % m, n);
-//     }
-//   }
-// }
+TEST(ModularSquareRoot, SmallValues) {
+  const uint32_t m = 59;
+  for (uint32_t n = 0; n < m; ++n) {
+    if (ntlib::mod_is_square(n, m)) {
+      uint32_t root = ntlib::mod_sqrt(n, m);
+      EXPECT_EQ(root * root % m, n);
+    }
+  }
+}
 
 TEST(LegendreSymbol, Prime3) {
   const auto l = std::to_array<int32_t>({2, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1,
@@ -515,36 +515,36 @@ TEST(LegendreSymbol, Two) {
   }
 }
 
-// TEST(JacobiSymbol, EmptyProduct) {
-//   for (int32_t a = 0; a <= 10; ++a) {
-//     EXPECT_EQ(ntlib::jacobi(a, 1), 1);
-//   }
-// }
+TEST(JacobiSymbol, EmptyProduct) {
+  for (int32_t a = 0; a <= 10; ++a) {
+    EXPECT_EQ(ntlib::jacobi(a, 1), 1);
+  }
+}
 
-// TEST(JacobiSymbol, PrimeDenominator) {
-//   for (int32_t n : ntlib::SMALL_PRIMES) {
-//     if (n == 2) continue;
-//     for (int32_t k = 0; k <= 1'000; ++k) {
-//       EXPECT_EQ(ntlib::jacobi(k, n), ntlib::legendre(k, n));
-//     }
-//   }
-// }
+TEST(JacobiSymbol, PrimeDenominator) {
+  for (int32_t n : ntlib::SMALL_PRIMES) {
+    if (n == 2) continue;
+    for (int32_t k = 0; k <= 1'000; ++k) {
+      EXPECT_EQ(ntlib::jacobi(k, n), ntlib::legendre(k, n));
+    }
+  }
+}
 
-// TEST(JacobiSymbol, PrimeDecompositoin) {
-//   for (int32_t n = 1; n <= 1'000; n += 2) {
-//     std::map<int32_t, int32_t> factors;
-//     ntlib::prime_decomposition(n, factors);
-//     for (int32_t k = 0; k <= 1'000; ++k) {
-//       int32_t prod = 1;
-//       for (auto [f, m] : factors) {
-//         while (m--) prod *= ntlib::legendre(k, f);
-//       }
-//       EXPECT_EQ(ntlib::jacobi(k, n), prod);
-//     }
-//   }
-// }
+TEST(JacobiSymbol, PrimeDecompositoin) {
+  for (int32_t n = 1; n <= 1'000; n += 2) {
+    std::map<int32_t, int32_t> factors;
+    ntlib::prime_decomposition(n, factors);
+    for (int32_t k = 0; k <= 1'000; ++k) {
+      int32_t prod = 1;
+      for (auto [f, m] : factors) {
+        while (m--) prod *= ntlib::legendre(k, f);
+      }
+      EXPECT_EQ(ntlib::jacobi(k, n), prod);
+    }
+  }
+}
 
-// TEST(JacobiSymbol, SpecialValues1) {
-//   auto j = ntlib::jacobi(-11, 35);
-//   EXPECT_EQ(j, -1);
-// }
+TEST(JacobiSymbol, SpecialValues1) {
+  auto j = ntlib::jacobi(-11, 35);
+  EXPECT_EQ(j, -1);
+}
