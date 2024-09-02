@@ -2,7 +2,7 @@
 
 #include "lucas_sequence.hpp"
 
-static constexpr __int128_t MOD = 1'000'000'007; 
+static constexpr __int128 MOD = 1'000'000'007; 
 
 TEST(Lucas, BaseCases) {
   for (int p = -10; p < 10; ++p) {
