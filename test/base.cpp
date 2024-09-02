@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base.hpp"
+#include "int128.hpp"
 #include "prime_decomposition.hpp"
 #include "prime_generation.hpp"
 
@@ -18,12 +19,8 @@ static constexpr unsigned int max_uint =
     std::numeric_limits<unsigned int>::max();
 static constexpr int64_t max_int64 = std::numeric_limits<int64_t>::max();
 static constexpr uint64_t max_uint64 = std::numeric_limits<uint64_t>::max();
-static constexpr __int128_t max_int128 =
-    (__int128_t(1) << 126) - 1 +
-    (__int128_t(1) << 126);
-static constexpr __uint128_t max_uint128 =
-    (__uint128_t(1) << 127) - 1 +
-    (__uint128_t(1) << 127);
+static constexpr i128 max_int128 = (i128(1) << 126) - 1 + (i128(1) << 126);
+static constexpr u128 max_uint128 = (u128(1) << 127) - 1 + (u128(1) << 127);
 
 TEST(SmallPrimes, ListContainsOnlyPrimes) {
   const auto sieve = ntlib::prime_sieve(ntlib::SMALL_PRIMES_UPPER_BOUND);
@@ -230,8 +227,8 @@ TEST(IntegerLog2, Unsigned) {
 }
 
 TEST(IntegerLog2, NoBuiltin) {
-  for (__uint128_t i = 1; i < 1'000'000; ++i) {
-    __uint128_t cl2 = ntlib::ilog2(i);
+  for (u128 i = 1; i < 1'000'000; ++i) {
+    u128 cl2 = ntlib::ilog2(i);
     EXPECT_LE(1 << cl2, i);
     EXPECT_GT(1 << (cl2 + 1), i);
   }
@@ -253,8 +250,8 @@ TEST(IntegerSquareRoot, Integral) {
 }
 
 TEST(IntegerSquareRoot, NoBuiltin) {
-  for (__uint128_t i = 0; i <= 1'000'000; ++i) {
-    __uint128_t root = ntlib::isqrt(i);
+  for (u128 i = 0; i <= 1'000'000; ++i) {
+    u128 root = ntlib::isqrt(i);
     EXPECT_LE(root * root, i);
     EXPECT_GT((root + 1) * (root + 1), i);
   }
@@ -267,14 +264,14 @@ TEST(IntegerSquareRoot, CornerCases) {
   EXPECT_EQ(ntlib::isqrt(max_int64), 3'037'000'499LL);
   EXPECT_EQ(ntlib::isqrt(max_uint64), 4'294'967'295LL);
 
-  __int128_t iroot128_ntlib = ntlib::isqrt(max_int128);
-  __int128_t iroot128_expected =
-      __int128_t(2) * 2 * 3 * 3 * 3 * 991 * 283'183 * 430'368'163;
+  i128 iroot128_ntlib = ntlib::isqrt(max_int128);
+  i128 iroot128_expected =
+      i128(2) * 2 * 3 * 3 * 3 * 991 * 283'183 * 430'368'163;
   EXPECT_EQ(iroot128_ntlib, iroot128_expected);
 
-  __uint128_t uroot128_ntlib = ntlib::isqrt(max_uint128);
-  __uint128_t uroot128_expected =
-      __uint128_t(3) * 5 * 17 * 257 * 641 * 65537 * 6'700'417;
+  u128 uroot128_ntlib = ntlib::isqrt(max_uint128);
+  u128 uroot128_expected =
+      u128(3) * 5 * 17 * 257 * 641 * 65537 * 6'700'417;
   EXPECT_EQ(uroot128_ntlib, uroot128_expected);
 }
 

@@ -5,6 +5,7 @@
 
 #include "base.hpp"
 #include "experiments/isqrt.hpp"
+#include "int128.hpp"
 
 static const int N = 1'000'000;
 
@@ -46,7 +47,7 @@ BENCHMARK(BM_isqrt_int_binsearch)->Unit(benchmark::kMillisecond);
 
 static void BM_isqrt_int128(benchmark::State &state) {
   for (auto _ : state) {
-    for (__int128_t n = 1; n < N; ++n) {
+    for (i128 n = 1; n < N; ++n) {
       benchmark::DoNotOptimize(ntlib::isqrt(n));
     }
   }
