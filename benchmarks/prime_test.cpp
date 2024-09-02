@@ -3,6 +3,7 @@
 #include <cstddef>
 
 #include "experiments/prime_test.hpp"
+#include "int128.hpp"
 #include "prime_test.hpp"
 
 #define UNIT_MS Unit(benchmark::kMillisecond)
@@ -37,7 +38,7 @@ BENCHMARK(BM_is_prime_list)
 
 static void BM_is_prime_miller_rabin(benchmark::State &state) {
   for (auto _ : state) {
-    for (__uint128_t i = state.range(0); i <= state.range(0) + NUM_TESTS; ++i) {
+    for (u128 i = state.range(0); i <= state.range(0) + NUM_TESTS; ++i) {
       benchmark::DoNotOptimize(ntlib::experiments::is_prime_miller_rabin(i));
     }
   }
@@ -54,8 +55,8 @@ BENCHMARK(BM_is_prime_miller_rabin)
 
 static void BM_is_prime_bpsw(benchmark::State &state) {
   for (auto _ : state) {
-    for (__uint128_t i = state.range(0); i <= state.range(0) + NUM_TESTS; ++i) {
-      benchmark::DoNotOptimize(ntlib::is_prime<__uint128_t, __int128_t>(i));
+    for (u128 i = state.range(0); i <= state.range(0) + NUM_TESTS; ++i) {
+      benchmark::DoNotOptimize(ntlib::is_prime<u128, i128>(i));
     }
   }
 }
