@@ -6,6 +6,7 @@
 
 #include "base.hpp"
 #include "matrix.hpp"
+#include "modulo.hpp"
 
 namespace ntlib {
 
