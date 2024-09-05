@@ -73,9 +73,10 @@ BENCHMARK(BM_is_prime_bpsw)
 
 static void BM32_is_prime_miller_selfridge_rabin(benchmark::State &state) {
   for (auto _ : state) {
-    for (uint32_t i = state.range(0); i <= state.range(0) + NUM_TESTS; ++i) {
+    for (uint32_t i = 1; i < NUM_TESTS; i += 2) {
+      uint32_t n = state.range(0) + i;
       benchmark::DoNotOptimize(
-          ntlib::experiments::is_prime_miller_selfridge_rabin(i));
+          ntlib::experiments::is_prime_miller_selfridge_rabin(n));
     }
   }
 }
@@ -88,8 +89,10 @@ BENCHMARK(BM32_is_prime_miller_selfridge_rabin)
 
 static void BM32_is_prime_forisek_jancina(benchmark::State &state) {
   for (auto _ : state) {
-    for (uint32_t i = state.range(0); i <= state.range(0) + NUM_TESTS; ++i) {
-      benchmark::DoNotOptimize(ntlib::experiments::is_prime_forisek_jancina(i));
+    for (uint32_t i = 1; i < NUM_TESTS; i += 2) {
+      uint32_t n = state.range(0) + i;
+      benchmark::DoNotOptimize(
+          ntlib::experiments::is_prime_forisek_jancina(n));
     }
   }
 }

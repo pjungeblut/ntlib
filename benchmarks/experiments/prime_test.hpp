@@ -14,7 +14,7 @@ namespace experiments {
 // These bases guarantee that the Miller-Selfridge-Rabin primality test is
 // deterministic for all 32- and 64-bit numbers.
 // See: https://miller-rabin.appspot.com/
-constexpr auto bases32 = std::to_array<uint32_t>({2, 7, 61});
+constexpr auto bases32 = std::to_array<uint64_t>({2, 7, 61});
 constexpr auto bases64 = std::to_array<uint64_t>({
     2, 325, 9'375, 28'178, 450'775, 9'780'504, 1'795'265'022});
 
@@ -88,7 +88,7 @@ bool is_prime_miller_selfridge_rabin(T n) noexcept {
 
 [[nodiscard]] constexpr
 bool is_prime_miller_selfridge_rabin(uint32_t n) noexcept {
-  return is_prime_miller_selfridge_rabin<uint32_t, bases32.size(), bases32>(n);
+  return is_prime_miller_selfridge_rabin<uint64_t, bases32.size(), bases32>(n);
 }
 
 [[nodiscard]] constexpr
@@ -133,7 +133,7 @@ bool is_prime_forisek_jancina(uint32_t n) {
   if (n == 2 || n == 3 || n == 5 || n == 7) { return true; }
   if (n % 2 == 0 || n % 3 == 0 || n % 5 == 0 || n % 7 == 0) { return false; }
   // Every composite below 120 has a prime factor in {2, 3, 5, 7}.
-  if (n < 121) return n > 1;
+  if (n < 121) { return n > 1; }
 
   // Hashing to find the correct base.
   uint64_t h = n;

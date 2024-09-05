@@ -16,17 +16,18 @@ namespace ntlib {
  * Miller-Selfridge-Rabin primality test.
  * Tests if `n` is a strong propable prime.
  *
- * @param n The number to be tested, odd, `n >= 5`.
- * @param a The base to test with, `1 < a < n-1`.
+ * @param n The number to be tested, odd, `n > 2`.
+ * @param a The base to test with.
  * @return `true` if and only if the `n` is a strong probable prime to base `a`.
  */
 template<typename T>
 [[nodiscard]] constexpr
 bool miller_selfridge_rabin_test(T n, T a) noexcept {
-  assert(n >= T{5});
+  assert(n > T{2});
   assert(is_odd(n));
-  assert(a > T{1});
-  assert(a < n - T{1});
+
+  // For `a = 0`, the test should return true.
+  if (a == T{0}) { return true; }
 
   // Decompose, such that `n-1 = o*2^e`.
   auto [e, o] = odd_part(n - T{1});
@@ -34,11 +35,11 @@ bool miller_selfridge_rabin_test(T n, T a) noexcept {
   const auto mod_n = [n](T x) { return mod(x, n); };
   T p = mod_pow(a, o, mod_n);
 
-  if (p == T{1}) { return true; }
-  do {
-    if (p == n - T{1}) { return true; }
+  if (p == T{1} || p == n - T{1}) { return true; }
+  for (T r = 1; r < e && p > T{1}; ++r) {
     p = mod(p * p, n);
-  } while (--e > T{0} && p > T{1});
+    if (p == n - T{1}) { return true; }
+  }
   return false;
 }
 
