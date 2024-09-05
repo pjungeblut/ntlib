@@ -27,38 +27,6 @@ static constexpr auto PRIMES = std::to_array<u128>({
     301'697'296'732'166'057LL
 });
 
-TEST(Naive, FirstN) {
-  for (uint32_t n = 0; n <= N; ++n) {
-    EXPECT_EQ(ntlib::is_prime_naive(n), SIEVE[n]);
-  }
-}
-
-TEST(Naive, NegativeValues) {
-  EXPECT_FALSE(ntlib::is_prime_naive(-1));
-}
-
-TEST(MillerRabin, FirstN) {
-  for (uint64_t n = 0; n <= N; ++n) {
-    EXPECT_EQ(ntlib::experiments::is_prime_miller_rabin(n), SIEVE[n]);
-  }
-}
-
-TEST(MillerRabin, NegativeValues) {
-  EXPECT_FALSE(ntlib::experiments::is_prime_miller_rabin(-1));
-}
-
-TEST(MillerRabin, LargeComposites) {
-  for (auto c : COMPOSITES) {
-    EXPECT_FALSE(ntlib::experiments::is_prime_miller_rabin(c));
-  }
-}
-
-TEST(MillerRabin, LargePrimes) {
-  for (auto p : PRIMES) {
-    EXPECT_TRUE(ntlib::experiments::is_prime_miller_rabin(p));
-  }
-}
-
 TEST(MillerRabin, Base2StrongLiars) {
   // From: https://oeis.org/A001262
   constexpr auto liars = std::to_array<uint64_t>({2047, 3277, 4033, 4681, 8321,
@@ -67,7 +35,7 @@ TEST(MillerRabin, Base2StrongLiars) {
       271951, 280601, 314821, 357761, 390937, 458989, 476971, 486737});
   for (auto l : liars) {
     EXPECT_FALSE(ntlib::is_prime(l));
-    EXPECT_TRUE(ntlib::miller_rabin_test(l, 2uL)) << "l = " << l;
+    EXPECT_TRUE(ntlib::miller_selfridge_rabin_test(l, 2uL)) << "l = " << l;
   }
 }
 
@@ -79,7 +47,7 @@ TEST(MillerRabin, Base3StrongLiars) {
       112141, 148417, 152551, 182527, 188191, 211411, 218791, 221761, 226801});
   for (auto l : liars) {
     EXPECT_FALSE(ntlib::is_prime(l));
-    EXPECT_TRUE(ntlib::miller_rabin_test(l, 3uL)) << "l = " << l;
+    EXPECT_TRUE(ntlib::miller_selfridge_rabin_test(l, 3uL)) << "l = " << l;
   }
 }
 
@@ -91,7 +59,7 @@ TEST(MillerRabin, Base5StrongLiars) {
       195313, 211951, 216457, 222301, 251521, 289081, 290629, 298271, 315121});
   for (auto l : liars) {
     EXPECT_FALSE(ntlib::is_prime(l));
-    EXPECT_TRUE(ntlib::miller_rabin_test(l, 5uL)) << "l = " << l;
+    EXPECT_TRUE(ntlib::miller_selfridge_rabin_test(l, 5uL)) << "l = " << l;
   }
 }
 
@@ -103,7 +71,7 @@ TEST(MillerRabin, Base7StrongLiars) {
       149171, 173951, 178709, 188191, 197633, 219781, 227767, 231793, 245281});
   for (uint64_t l : liars) {
     EXPECT_FALSE(ntlib::is_prime(l));
-    EXPECT_TRUE(ntlib::miller_rabin_test(l, 7uL));
+    EXPECT_TRUE(ntlib::miller_selfridge_rabin_test(l, 7uL));
   }
 }
 

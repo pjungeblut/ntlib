@@ -13,7 +13,7 @@ static const std::size_t NUM_TESTS = 100'000;
 static void BM_is_prime_naive(benchmark::State &state) {
   for (auto _ : state) {
     for (uint64_t i = state.range(0); i <= state.range(0) + NUM_TESTS; ++i) {
-      benchmark::DoNotOptimize(ntlib::is_prime_naive(i));
+      benchmark::DoNotOptimize(ntlib::experiments::is_prime_naive(i));
     }
   }
 }
@@ -36,14 +36,15 @@ BENCHMARK(BM_is_prime_list)
     ->Arg(1'000'000)
     ->UNIT_MS;
 
-static void BM_is_prime_miller_rabin(benchmark::State &state) {
+static void BM_is_prime_miller_selfridge_rabin(benchmark::State &state) {
   for (auto _ : state) {
-    for (u128 i = state.range(0); i <= state.range(0) + NUM_TESTS; ++i) {
-      benchmark::DoNotOptimize(ntlib::experiments::is_prime_miller_rabin(i));
+    for (uint64_t i = state.range(0); i <= state.range(0) + NUM_TESTS; ++i) {
+      benchmark::DoNotOptimize(
+          ntlib::experiments::is_prime_miller_selfridge_rabin(i));
     }
   }
 }
-BENCHMARK(BM_is_prime_miller_rabin)
+BENCHMARK(BM_is_prime_miller_selfridge_rabin)
     ->Arg(0)
     ->Arg(1'000)
     ->Arg(1'000'000)
