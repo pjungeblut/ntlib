@@ -71,4 +71,33 @@ BENCHMARK(BM_is_prime_bpsw)
     ->Arg(1'000'000'000'000'000'000LL)
     ->UNIT_MS;
 
+static void BM32_is_prime_miller_selfridge_rabin(benchmark::State &state) {
+  for (auto _ : state) {
+    for (uint32_t i = state.range(0); i <= state.range(0) + NUM_TESTS; ++i) {
+      benchmark::DoNotOptimize(
+          ntlib::experiments::is_prime_miller_selfridge_rabin(i));
+    }
+  }
+}
+BENCHMARK(BM32_is_prime_miller_selfridge_rabin)
+    ->Arg(0)
+    ->Arg(1'000)
+    ->Arg(1'000'000)
+    ->Arg(1'000'000'000)
+    ->UNIT_MS;
+
+static void BM32_is_prime_forisek_jancina(benchmark::State &state) {
+  for (auto _ : state) {
+    for (uint32_t i = state.range(0); i <= state.range(0) + NUM_TESTS; ++i) {
+      benchmark::DoNotOptimize(ntlib::experiments::is_prime_forisek_jancina(i));
+    }
+  }
+}
+BENCHMARK(BM32_is_prime_forisek_jancina)
+    ->Arg(0)
+    ->Arg(1'000)
+    ->Arg(1'000'000)
+    ->Arg(1'000'000'000)
+    ->UNIT_MS;
+
 BENCHMARK_MAIN();

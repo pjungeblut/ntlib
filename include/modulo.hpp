@@ -52,7 +52,8 @@ template<typename T>
  */
 template<typename T>
 [[nodiscard]] constexpr T mod(T a, T m) noexcept {
-  return a - m * floor_div(a, m);
+  if constexpr (std::is_unsigned_v<T>) { return a % m; }
+  else { return a - m * floor_div(a, m); }
 }
 
 /**
