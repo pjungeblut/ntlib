@@ -21,7 +21,7 @@ static constexpr i128 max_int128 = (i128(1) << 126) - 1 + (i128(1) << 126);
 static constexpr u128 max_uint128 = (u128(1) << 127) - 1 + (u128(1) << 127);
 
 TEST(SmallPrimes, ListContainsOnlyPrimes) {
-  const auto sieve = ntlib::prime_sieve(ntlib::SMALL_PRIMES_UPPER_BOUND);
+  const auto sieve = ntlib::prime_sieve(ntlib::SMALL_PRIMES_BIGGEST);
   for (uint32_t p : ntlib::SMALL_PRIMES) {
     EXPECT_TRUE(sieve[p]);
   }
@@ -29,10 +29,10 @@ TEST(SmallPrimes, ListContainsOnlyPrimes) {
 
 TEST(SmallPrimes, ListComplete) {
   std::vector<uint32_t> primes;
-  ntlib::prime_sieve(ntlib::SMALL_PRIMES_UPPER_BOUND, primes);
+  ntlib::prime_sieve(ntlib::SMALL_PRIMES_BIGGEST, primes);
   // The `prime_sieve` method might return a larger sieve than requested.
   // In this case, we remove the additional primes in `primes`.
-  while (primes.back() >= ntlib::SMALL_PRIMES_UPPER_BOUND) {
+  while (primes.back() > ntlib::SMALL_PRIMES_BIGGEST) {
     primes.pop_back();
   }
   EXPECT_TRUE(std::ranges::equal(primes, ntlib::SMALL_PRIMES));
