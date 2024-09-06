@@ -38,10 +38,9 @@ TEST(TrialDivision, FirstN) {
 }
 
 TEST(TrialDivision, OutOfRangeUnknown) {
-  // Find smalles prime not in ntlib::SMALL_PRIMES.
+  // Find smallest prime not in ntlib::SMALL_PRIMES.
   const uint64_t largest = ntlib::SMALL_PRIMES_BIGGEST;
-  uint64_t prime_too_big = largest * largest + 1;
-  while (!ntlib::is_prime(prime_too_big)) { ++prime_too_big; }
+  const uint64_t prime_too_big = ntlib::next_prime(largest * largest);
 
   // Prime, too big to tell.
   const auto res1 = ntlib::is_prime_trial_division(
