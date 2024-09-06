@@ -3,12 +3,17 @@
 #include "rational.hpp"
 
 TEST(Initialization, ConstructionByValue) {
-  // General tests.
-  EXPECT_EQ(ntlib::rational(5), 5);
-  EXPECT_EQ(ntlib::rational(6, 2), 3);
+  ntlib::rational r1(5);
+  EXPECT_EQ(r1.get_numerator(), 5);
+  EXPECT_EQ(r1.get_denominator(), 1);
 
-  // Negative denominator.
-  EXPECT_EQ(ntlib::rational(4, -2), -2);
+  ntlib::rational r2(6, 2);
+  EXPECT_EQ(r2.get_numerator(), 3);
+  EXPECT_EQ(r2.get_denominator(), 1);
+
+  ntlib::rational r3(4, -2);
+  EXPECT_EQ(r3.get_numerator(), -2);
+  EXPECT_EQ(r3.get_denominator(), 1);
 }
 
 TEST(Output, StringRepresentation) {
@@ -52,14 +57,15 @@ TEST(Arithmetic, Addition) {
   ntlib::rational z(0, 2);
 
   EXPECT_EQ(a + z, a);
-  EXPECT_EQ(a + b, 6);
-  EXPECT_EQ(b + a, 6);
+  EXPECT_EQ(a + b, ntlib::rational{6});
+  EXPECT_EQ(b + a, ntlib::rational{6});
   a += b;
-  EXPECT_EQ(a, 6);
+  EXPECT_EQ(a, ntlib::rational{6});
   a += 5;
-  EXPECT_EQ(a, 11);
+  EXPECT_EQ(a, ntlib::rational{11});
+  ntlib::rational bb = b;
   b += z;
-  EXPECT_EQ(b, b);
+  EXPECT_EQ(bb, b);
 }
 
 TEST(Arithmetic, Subtraction) {
@@ -68,14 +74,15 @@ TEST(Arithmetic, Subtraction) {
   ntlib::rational z(0, 2);
 
   EXPECT_EQ(a - z, a);
-  EXPECT_EQ(a - b, -1);
-  EXPECT_EQ(b - a, 1);
+  EXPECT_EQ(a - b, ntlib::rational{-1});
+  EXPECT_EQ(b - a, ntlib::rational{1});
   a -= b;
-  EXPECT_EQ(a, -1);
+  EXPECT_EQ(a, ntlib::rational{-1});
   a -= 5;
-  EXPECT_EQ(a, -6);
+  EXPECT_EQ(a, ntlib::rational{-6});
+  ntlib::rational bb = b;
   b -= z;
-  EXPECT_EQ(b, b);
+  EXPECT_EQ(bb, b);
 }
 
 TEST(Arithmetic, Multiplication) {
@@ -83,13 +90,13 @@ TEST(Arithmetic, Multiplication) {
   ntlib::rational b(4, 5);
   ntlib::rational z(0, 2);
 
-  EXPECT_EQ(a * z, 0);
+  EXPECT_EQ(a * z, ntlib::rational{0});
   EXPECT_EQ(a * b, b * a);
-  EXPECT_EQ(a * b, 2);
+  EXPECT_EQ(a * b, ntlib::rational{2});
   a *= b;
-  EXPECT_EQ(a, 2);
+  EXPECT_EQ(a, ntlib::rational{2});
   b *= 10;
-  EXPECT_EQ(b, 8);
+  EXPECT_EQ(b, ntlib::rational{8});
   b *= z;
   EXPECT_EQ(b, z);
 }

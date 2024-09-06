@@ -8,6 +8,7 @@
 #include <compare>
 #include <ostream>
 #include <string>
+#include <type_traits>
 
 #include "base.hpp"
 
@@ -25,16 +26,18 @@ public:
    * @param n The numerator.
    * @param d The denominator. Defaults to 1.
    */
-  rational(T n = 0, T d = 1) {
-    assert(d != 0);
+  rational(T n = 0, T d = 1) noexcept {
+    assert(d != T{0});
 
     T f = gcd(n, d);
     numerator = n / f;
     denominator = d / f;
 
-    if (denominator < 0) {
-      denominator *= -1;
-      numerator *= -1;
+    if constexpr (std::is_signed_v<T>) {
+      if (denominator < T{0}) {
+        denominator *= T{-1};
+        numerator *= T{-1};
+      }
     }
   }
 
@@ -43,7 +46,8 @@ public:
    *
    * @return The numerator.
    */
-  T get_numerator() const {
+  [[nodiscard]]
+  T get_numerator() const noexcept{
     return numerator;
   }
 
@@ -52,7 +56,8 @@ public:
    *
    * @return The denominator.
    */
-  T get_denominator() const {
+  [[nodiscard]]
+  T get_denominator() const noexcept {
     return denominator;
   }
 
@@ -61,53 +66,9 @@ public:
    *
    * @return A string representation.
    */
-  std::string to_string() const {
+  [[nodiscard]]
+  std::string to_string() const noexcept {
     return std::to_string(numerator) + "/" + std::to_string(denominator);
-  }
-
-  /**
-   * Stream output.
-   *
-   * @param os The out stream.
-   * @param bu The rational to print.
-   * @return The out stream.
-   */
-  friend std::ostream& operator<<(std::ostream &os, const rational &r) {
-    os << r.to_string();
-    return os;
-  }
-
-  /**
-   * Equal operator.
-   *
-   * @param a The left hand side to compare.
-   * @param b The right hand side to compare.
-   * @return True, if and only if a == b.
-   */
-  bool operator==(const rational &other) const {
-    return numerator == other.numerator && denominator == other.denominator;
-  }
-
-  /**
-   * Three-way comparison.
-   *
-   * @param a The left hand side to compare.
-   * @param b The right hand side to compare.
-   * @return True, if and only if a <=> b.
-   */
-  std::strong_ordering operator<=>(const rational &other) const {
-    return numerator * other.denominator <=> other.numerator * denominator;
-  };
-
-  /**
-   * Unary minus to negate value.
-   *
-   * @return The rational with the same absolute value but opposite sign.
-   */
-  friend rational operator-(const rational &a) {
-    rational neg = a;
-    a.numerator *= -1;
-    return neg;
   }
 
   /**
@@ -117,7 +78,8 @@ public:
    * @param b The second summand.
    * @return The sum of a and b.
    */
-  friend rational operator+(const rational &a, const rational &b) {
+  [[nodiscard]]
+  friend rational operator+(const rational &a, const rational &b) noexcept {
     rational sum(0);
     add(a, b, sum);
     return sum;
@@ -130,7 +92,7 @@ public:
    * @return Reference to the current rational containing the sum of its
    *         previous value and other.
    */
-  rational& operator+=(const rational &other) {
+  rational& operator+=(const rational &other) noexcept {
     add(*this, other, *this);
     return *this;
   }
@@ -142,7 +104,8 @@ public:
    * @param b The subtrahend.
    * @return The difference of a and b.
    */
-  friend rational operator-(const rational &a, const rational &b) {
+  [[nodiscard]]
+  friend rational operator-(const rational &a, const rational &b) noexcept {
     rational difference;
     subtract(a, b, difference);
     return difference;
@@ -155,7 +118,7 @@ public:
    * @return Reference to the current rational containing the difference of its
    *         previous value and other.
    */
-  rational& operator-=(const rational &other) {
+  rational& operator-=(const rational &other) noexcept {
     subtract(*this, other, *this);
     return *this;
   }
@@ -167,7 +130,8 @@ public:
    * @param b The second factor.
    * @return The product of a and b.
    */
-  friend rational operator*(const rational &a, const rational &b) {
+  [[nodiscard]]
+  friend rational operator*(const rational &a, const rational &b) noexcept {
     rational product;
     multiply(a, b, product);
     return product;
@@ -180,7 +144,7 @@ public:
    * @return Reference to the current rational containing the product of its
    *         previous value and other.
    */
-  rational& operator*=(const rational &other) {
+  rational& operator*=(const rational &other) noexcept {
     multiply(*this, other, *this);
     return *this;
   }
@@ -192,8 +156,10 @@ public:
    * @param b The divisor.
    * @return The quotient of a and b.
    */
-  friend rational operator/(const rational &a, const rational &b) {
-    assert(b != 0);
+  [[nodiscard]]
+  friend rational operator/(const rational &a, const rational &b) noexcept {
+    assert(b != rational{0});
+
     rational quotient;
     divide(a, b, quotient);
     return quotient;
@@ -206,8 +172,9 @@ public:
    * @return Reference to the current rational containing the quotient of its
    *         previous value and other.
    */
-  rational& operator/=(const rational &other) {
-    assert(other != 0);
+  rational& operator/=(const rational &other) noexcept {
+    assert(other != rational{0});
+
     divide(*this, other, *this);
     return *this;
   }
@@ -215,7 +182,8 @@ public:
   /**
    * Cast to bool.
    */
-  explicit operator bool() const {
+  [[nodiscard]]
+  explicit operator bool() const noexcept{
     return numerator != 0;
   }
 
@@ -241,7 +209,7 @@ private:
     T numerator = fa * a.numerator + fb * b.numerator;
     T denominator = lcd;
     T g = gcd(numerator, denominator);
-    if (g != 1) {
+    if (g != T{1}) {
       numerator /= g;
       denominator /= g;
     }
@@ -264,7 +232,7 @@ private:
     T numerator = fa * a.numerator - fb * b.numerator;
     T denominator = lcd;
     T g = gcd(numerator, denominator);
-    if (g != 1) {
+    if (g != T{1}) {
       numerator /= g;
       denominator /= g;
     }
@@ -284,7 +252,7 @@ private:
     T numerator = a.numerator * b.numerator;
     T denominator = a.denominator * b.denominator;
     T g = gcd(numerator, denominator);
-    if (g != 1) {
+    if (g != T{1}) {
       numerator /= g;
       denominator /= g;
     }
@@ -304,17 +272,73 @@ private:
     T numerator = a.numerator * b.denominator;
     T denominator = a.denominator * b.numerator;
     T g = gcd(numerator, denominator);
-    if (g != 1) {
+    if (g != T{1}) {
       numerator /= g;
       denominator /= g;
     }
-    if (denominator < 0) {
-      numerator *= -1;
-      denominator *= -1;
+    if constexpr (std::is_signed_v<T>) {
+      if (denominator < T{0}) {
+        numerator *= T{-1};
+        denominator *= T{-1};
+      }
     }
     c.numerator = numerator;
     c.denominator = denominator;
   }
 };
+
+/**
+ * Stream output.
+ *
+ * @param os The out stream.
+ * @param bu The rational to print.
+ * @return The out stream.
+ */
+template<typename T>
+std::ostream& operator<<(std::ostream &os, const rational<T> &r) {
+  os << r.to_string();
+  return os;
+}
+
+/**
+ * Equal operator.
+ *
+ * @param a The left hand side to compare.
+ * @param b The right hand side to compare.
+ * @return True, if and only if a == b.
+ */
+template<typename T>
+[[nodiscard]]
+bool operator==(const rational<T> &a, const rational<T> &b) {
+  return a.get_numerator() == b.get_numerator() &&
+      a.get_denominator() == b.get_denominator();
+}
+
+/**
+ * Three-way comparison.
+ *
+ * @param a The left hand side to compare.
+ * @param b The right hand side to compare.
+ * @return True, if and only if a <=> b.
+ */
+template<typename T>
+[[nodiscard]]
+std::strong_ordering operator<=>(const rational<T> &a, const rational<T> &b) {
+  return a.get_numerator() * b.get_denominator() <=>
+      b.get_numerator() * a.get_denominator();
+};
+
+/**
+ * Unary minus to negate value.
+ *
+ * @param a The rational.
+ * @return The rational with the same absolute value but opposite sign.
+ */
+template<typename T>
+[[nodiscard]]
+rational<T> operator-(const rational<T> &a) {
+  rational<T> neg{-1 * a.get_numerator(), a.get_denominator()};
+  return neg;
+}
 
 }
