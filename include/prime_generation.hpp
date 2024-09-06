@@ -7,9 +7,11 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <type_traits>
 #include <vector>
 
 #include "base.hpp"
+#include "prime_test.hpp"
 #include "sieve_235.hpp"
 
 namespace ntlib {
@@ -163,6 +165,20 @@ template<
 SieveType prime_sieve(T N, std::vector<T> &primes) {
   return eratosthenes_segmented<T, Allocator, SieveType, SEGMENT_SIZE, true>(
       N, primes);
+}
+
+/**
+ * Given a number, finds the next bigger prime.
+ * 
+ * @param n The number to start from.
+ * @return The smallest prime `p` larget than `n`.
+ */
+template<typename T, typename S = std::make_signed_t<T>>
+[[nodiscard]] constexpr
+T next_prime(T n) noexcept {
+  T result{n + T{1}};
+  while (!is_prime<T,S>(result)) { ++result; }
+  return result;
 }
 
 }
