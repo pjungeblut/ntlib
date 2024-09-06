@@ -13,7 +13,7 @@
 namespace ntlib {
 
 /**
- * A list with all prime numbers up to SMALL_PRIMES_BIGGEST.
+ * A list with all prime numbers up to, SMALL_PRIMES_BIGGEST.
  * Useful as these are used frequently.
  */
 static constexpr auto SMALL_PRIMES = std::to_array<uint32_t>({
@@ -27,8 +27,9 @@ static constexpr auto SMALL_PRIMES = std::to_array<uint32_t>({
     613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701,
     709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811,
     821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911,
-    919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997});
-static constexpr uint32_t SMALL_PRIMES_BIGGEST = SMALL_PRIMES.back();
+    919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997, 1'009});
+static constexpr uint32_t SMALL_PRIMES_BIGGEST =
+    *std::ranges::max_element(SMALL_PRIMES);
 
 /**
  * Checks whether a number is odd.
