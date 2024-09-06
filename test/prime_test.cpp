@@ -27,7 +27,47 @@ static constexpr auto PRIMES = std::to_array<u128>({
     301'697'296'732'166'057LL
 });
 
-TEST(MillerRabin, Base2StrongLiars) {
+TEST(TrialDivision, FirstN) {
+  // Make sure to don't go out of the correct range for trial division.
+  const uint64_t largest = ntlib::SMALL_PRIMES_BIGGEST;
+  auto UPPER_BOUND = std::min(N, largest * largest);
+  for (uint64_t i = 0; i <= UPPER_BOUND; ++i) {
+    EXPECT_EQ(ntlib::is_prime_trial_division(i, ntlib::SMALL_PRIMES), SIEVE[i])
+        << "i = " << i;
+  }
+}
+
+TEST(TrialDivision, OutOfRangeUnknown) {
+  // Find smalles prime not in ntlib::SMALL_PRIMES.
+  const uint64_t largest = ntlib::SMALL_PRIMES_BIGGEST;
+  uint64_t prime_too_big = largest * largest + 1;
+  while (!ntlib::is_prime(prime_too_big)) { ++prime_too_big; }
+
+  // Prime, too big to tell.
+  const auto res1 = ntlib::is_prime_trial_division(
+      prime_too_big, ntlib::SMALL_PRIMES);
+  EXPECT_FALSE(res1.has_value());
+
+  // Composite, too big to tell.
+  const auto res2 = ntlib::is_prime_trial_division(
+      prime_too_big * prime_too_big, ntlib::SMALL_PRIMES);
+  EXPECT_FALSE(res2.has_value());
+}
+
+TEST(TrialDivision, OutOfRangeKnown) {
+  const auto res1 = ntlib::is_prime_trial_division(
+      2 * ntlib::SMALL_PRIMES_BIGGEST, ntlib::SMALL_PRIMES);
+  EXPECT_TRUE(res1.has_value());
+  EXPECT_FALSE(res1.value());
+
+  const auto res2 = ntlib::is_prime_trial_division(
+      ntlib::SMALL_PRIMES_BIGGEST * ntlib::SMALL_PRIMES_BIGGEST,
+      ntlib::SMALL_PRIMES);
+  EXPECT_TRUE(res2.has_value());
+  EXPECT_FALSE(res2.value());
+}
+
+TEST(MillerSelfridgeRabin, Base2StrongLiars) {
   // From: https://oeis.org/A001262
   constexpr auto liars = std::to_array<uint64_t>({2047, 3277, 4033, 4681, 8321,
       15841, 29341, 42799, 49141, 52633, 65281, 74665, 80581, 85489, 88357,
@@ -39,7 +79,7 @@ TEST(MillerRabin, Base2StrongLiars) {
   }
 }
 
-TEST(MillerRabin, Base3StrongLiars) {
+TEST(MillerSelfridgeRabin, Base3StrongLiars) {
   // From: https://oeis.org/A020229
   constexpr auto liars = std::to_array<uint64_t>({121, 703, 1891, 3281, 8401,
       8911, 10585, 12403, 16531, 18721, 19345, 23521, 31621, 44287, 47197,
@@ -51,7 +91,7 @@ TEST(MillerRabin, Base3StrongLiars) {
   }
 }
 
-TEST(MillerRabin, Base5StrongLiars) {
+TEST(MillerSelfridgeRabin, Base5StrongLiars) {
   // From: https://oeis.org/A020231
   constexpr auto liars = std::to_array<uint64_t>({781, 1541, 5461, 5611, 7813,
       13021, 14981, 15751, 24211, 25351, 29539, 38081, 40501, 44801, 53971,
@@ -63,7 +103,7 @@ TEST(MillerRabin, Base5StrongLiars) {
   }
 }
 
-TEST(MillerRabin, Base7StrongLiars) {
+TEST(MillerSelfridgeRabin, Base7StrongLiars) {
   // From: https://oeis.org/A020233
   constexpr auto liars = std::to_array<uint64_t>({25, 325, 703, 2101, 2353,
       4525, 11041, 14089, 20197, 29857, 29891, 39331, 49241, 58825, 64681,
@@ -72,6 +112,14 @@ TEST(MillerRabin, Base7StrongLiars) {
   for (uint64_t l : liars) {
     EXPECT_FALSE(ntlib::is_prime(l));
     EXPECT_TRUE(ntlib::miller_selfridge_rabin_test(l, 7uL));
+  }
+}
+
+TEST(ForisekJancina, FirstN) {
+  // Skip small numbers, as the function does not check base cases.
+  for (uint32_t i = 121; i <= N; i += 2) {
+    if (i % 2 == 0 || i % 3 == 0 || i % 5 == 0 || i % 7 == 0) { continue; }
+    EXPECT_EQ(ntlib::forisek_jancina_no_base_cases(i), SIEVE[i]) << "i = " << i;
   }
 }
 

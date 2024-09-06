@@ -54,14 +54,14 @@ BENCHMARK(BM_is_prime_miller_selfridge_rabin)
     ->Arg(1'000'000'000'000'000'000LL)
     ->UNIT_MS;
 
-static void BM_is_prime_bpsw(benchmark::State &state) {
+static void BM_is_prime_baillie_psw(benchmark::State &state) {
   for (auto _ : state) {
     for (u128 i = state.range(0); i <= state.range(0) + NUM_TESTS; ++i) {
-      benchmark::DoNotOptimize(ntlib::is_prime<u128, i128>(i));
+      benchmark::DoNotOptimize(ntlib::is_prime_baillie_psw<u128, i128>(i));
     }
   }
 }
-BENCHMARK(BM_is_prime_bpsw)
+BENCHMARK(BM_is_prime_baillie_psw)
     ->Arg(0)
     ->Arg(1'000)
     ->Arg(1'000'000)
@@ -101,6 +101,54 @@ BENCHMARK(BM32_is_prime_forisek_jancina)
     ->Arg(1'000)
     ->Arg(1'000'000)
     ->Arg(1'000'000'000)
+    ->UNIT_MS;
+
+static void BM32_is_prime_trial_division(benchmark::State &state) {
+  for (auto _ : state) {
+    for (uint32_t i = 1; i < NUM_TESTS; i += 2) {
+      uint32_t n = state.range(0) + i;
+      benchmark::DoNotOptimize(
+          ntlib::is_prime_trial_division(n, ntlib::SMALL_PRIMES));
+    }
+  }
+}
+BENCHMARK(BM32_is_prime_trial_division)
+    ->Arg(0)
+    ->Arg(1'000)
+    ->Arg(900'000)
+    ->UNIT_MS;
+
+static void BM32_is_prime(benchmark::State &state) {
+  for (auto _ : state) {
+    for (uint32_t i = 1; i < NUM_TESTS; i += 2) {
+      uint32_t n = state.range(0) + i;
+      benchmark::DoNotOptimize(ntlib::is_prime(n));
+    }
+  }
+}
+BENCHMARK(BM32_is_prime)
+    ->Arg(0)
+    ->Arg(1'000)
+    ->Arg(1'000'000)
+    ->Arg(1'000'000'000)
+    ->UNIT_MS;
+
+static void BM64_is_prime(benchmark::State &state) {
+  for (auto _ : state) {
+    for (uint64_t i = 1; i < NUM_TESTS; i += 2) {
+      uint64_t n = state.range(0) + i;
+      benchmark::DoNotOptimize(ntlib::is_prime(n));
+    }
+  }
+}
+BENCHMARK(BM64_is_prime)
+    ->Arg(0)
+    ->Arg(1'000)
+    ->Arg(1'000'000)
+    ->Arg(1'000'000'000)
+    ->Arg(1'000'000'000'000)
+    ->Arg(1'000'000'000'000'000)
+    ->Arg(1'000'000'000'000'000'000)
     ->UNIT_MS;
 
 BENCHMARK_MAIN();
