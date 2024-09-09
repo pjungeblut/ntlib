@@ -47,7 +47,7 @@ public:
    * @return The numerator.
    */
   [[nodiscard]]
-  T get_numerator() const noexcept{
+  T get_numerator() const noexcept {
     return numerator;
   }
 
@@ -92,7 +92,7 @@ public:
    * @return Reference to the current rational containing the sum of its
    *         previous value and other.
    */
-  rational& operator+=(const rational &other) noexcept {
+  rational &operator+=(const rational &other) noexcept {
     add(*this, other, *this);
     return *this;
   }
@@ -118,7 +118,7 @@ public:
    * @return Reference to the current rational containing the difference of its
    *         previous value and other.
    */
-  rational& operator-=(const rational &other) noexcept {
+  rational &operator-=(const rational &other) noexcept {
     subtract(*this, other, *this);
     return *this;
   }
@@ -144,7 +144,7 @@ public:
    * @return Reference to the current rational containing the product of its
    *         previous value and other.
    */
-  rational& operator*=(const rational &other) noexcept {
+  rational &operator*=(const rational &other) noexcept {
     multiply(*this, other, *this);
     return *this;
   }
@@ -172,7 +172,7 @@ public:
    * @return Reference to the current rational containing the quotient of its
    *         previous value and other.
    */
-  rational& operator/=(const rational &other) noexcept {
+  rational &operator/=(const rational &other) noexcept {
     assert(other != rational{0});
 
     divide(*this, other, *this);
@@ -183,7 +183,7 @@ public:
    * Cast to bool.
    */
   [[nodiscard]]
-  explicit operator bool() const noexcept{
+  explicit operator bool() const noexcept {
     return numerator != 0;
   }
 
@@ -295,7 +295,7 @@ private:
  * @return The out stream.
  */
 template<typename T>
-std::ostream& operator<<(std::ostream &os, const rational<T> &r) {
+std::ostream &operator<<(std::ostream &os, const rational<T> &r) {
   os << r.to_string();
   return os;
 }
@@ -311,7 +311,7 @@ template<typename T>
 [[nodiscard]]
 bool operator==(const rational<T> &a, const rational<T> &b) {
   return a.get_numerator() == b.get_numerator() &&
-      a.get_denominator() == b.get_denominator();
+         a.get_denominator() == b.get_denominator();
 }
 
 /**
@@ -325,7 +325,7 @@ template<typename T>
 [[nodiscard]]
 std::strong_ordering operator<=>(const rational<T> &a, const rational<T> &b) {
   return a.get_numerator() * b.get_denominator() <=>
-      b.get_numerator() * a.get_denominator();
+         b.get_numerator() * a.get_denominator();
 };
 
 /**

@@ -1,0 +1,34 @@
+# Options: https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+BasedOnStyle: Google
+
+# Indentation.
+IndentWidth: 2
+UseTab: Never
+
+# Error prevention.
+AllowShortIfStatementsOnASingleLine: false
+
+# Style.
+ColumnLimit: 80
+SpaceAfterCStyleCast: false 
+AlignTrailingComments: true
+SpacesBeforeTrailingComments: 3
+AlignAfterOpenBracket: DontAlign
+ContinuationIndentWidth: 4
+AllowShortBlocksOnASingleLine: Always
+BinPackArguments: true
+EmptyLineBeforeAccessModifier: Always
+IncludeBlocks: Preserve
+SortIncludes: CaseInsensitive
+PointerAlignment: Left
+ReferenceAlignment: Pointer
+SpaceAfterTemplateKeyword: false
+AccessModifierOffset: -2
+FixNamespaceComments: false
+
+# Macros.
+AlignConsecutiveMacros: Consecutive
+
+# use \n instead of \r\n
+UseCRLF: false
+InsertNewlineAtEOF: true
