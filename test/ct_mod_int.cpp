@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 
+#include "base.hpp"
 #include "ct_mod_int.hpp"
 
 // Must be at least 1.
@@ -181,4 +182,12 @@ TEST(Comparison, Inequality) {
   EXPECT_FALSE(a != a);
   EXPECT_TRUE(a != b);
   EXPECT_FALSE(a + a != b);
+}
+
+TEST(Inversion, All) {
+  for (uint32_t i = 0; i < MOD; ++i) {
+    ntlib::ct_mod_int<uint32_t, MOD> a(i);
+    if (ntlib::gcd(i, MOD) != 1) { continue; }
+    EXPECT_EQ(a * a.invert(), 1 % MOD);
+  }
 }

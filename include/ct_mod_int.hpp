@@ -15,7 +15,7 @@ namespace ntlib {
  * The underlying (unsigned) datatype needs to be big enough to hold
  * `modulus^2` to work correctly.
  */
-template <typename U, U modulus, typename S = std::make_signed<U>>
+template <typename U, U modulus, typename S = std::make_signed_t<U>>
 class ct_mod_int {
 public:
   /**
@@ -169,6 +169,16 @@ public:
    * @return Whether they are equal.
    */
   friend bool operator==(ct_mod_int lhs, ct_mod_int rhs) = default;
+
+  /**
+   * Finds the multiplicative inverse.
+   * 
+   * @return The multiplicative inverse in the range `[0,modulus)`.
+   */
+  [[nodiscard]]
+  ct_mod_int invert() const {
+    return ct_mod_int{mod_mult_inv<U,S>(value, modulus)};
+  }
 
 private:
   /**
