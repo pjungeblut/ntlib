@@ -6,6 +6,7 @@
  */
 
 #include <cassert>
+#include <tuple>
 
 #include "base.hpp"
 
@@ -19,7 +20,7 @@ namespace ntlib {
  *
  * @param a Parameter a.
  * @param b Parameter b, must be a multiple of a.
- * return The solution in x.
+ * @return The solution in x.
  */
 template<typename T>
 T diophantine_linear_univariate(const T &a, const T &b) {
