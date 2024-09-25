@@ -20,7 +20,7 @@ namespace ntlib {
  *
  * @param n The number n, to get the representation for sqrt(n). Must not be a
  *          perfect square.
- * @param The regular, periodic continued fraction representing sqrt(n). The
+ * @param cf The regular, periodic continued fraction representing sqrt(n). The
  *        first position gives the whole number part, the second until the last
  *        one form the period.
  * @return The period length.
