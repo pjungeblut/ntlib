@@ -56,28 +56,4 @@ void binom_table(T N, std::vector<std::vector<T>> &binoms) {
   }
 }
 
-/**
- * Computes a table of all binomial coefficients binom(i,j) mod m with
- * 0 <= i,j <= N.
- * Runtime: O(N^2)
- *
- * @param N The parameter N.
- * @param m The modulus.
- * @param binoms Two-dimensional vector to store the binomial coefficients.
- */
-template<typename T>
-void mod_binom_table(T N, T m, std::vector<std::vector<T>> &binoms) {
-  assert(N >= 0);
-  assert(m > 0);
-
-  binoms.assign(N + 1, std::vector<T>(N + 1, 0));
-  binoms[0][0] = 1;
-  for (T n = 1; n <= N; ++n) {
-    binoms[n][0] = 1;
-    for (T k = 1; k <= n; ++k) {
-      binoms[n][k] = (binoms[n - 1][k - 1] + binoms[n - 1][k]) % m;
-    }
-  }
-}
-
 }

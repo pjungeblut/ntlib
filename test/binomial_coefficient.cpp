@@ -34,18 +34,3 @@ TEST(BinomialCoefficient, Table) {
     }
   }
 }
-
-TEST(ModularBinomialCoefficient, Table) {
-  std::vector<std::vector<int32_t>> binoms;
-
-  // Test some values.
-  // N = 29 is the biggest value such that ntlib::binom(N,_) does not overflow.
-  const int32_t m = 509;
-  const int32_t N = 29;
-  ntlib::mod_binom_table(N, m, binoms);
-  for (int32_t n = 0; n <= N; ++n) {
-    for (int32_t k = 0; k <= n; ++k) {
-      EXPECT_EQ(binoms[n][k], ntlib::binom(n, k) % m);
-    }
-  }
-}
