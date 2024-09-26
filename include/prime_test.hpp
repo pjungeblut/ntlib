@@ -13,7 +13,7 @@
 #include "base.hpp"
 #include "int128.hpp"
 #include "lucas_sequence.hpp"
-#include "modulo.hpp"
+#include "mod_int.hpp"
 
 namespace ntlib {
 
@@ -29,12 +29,12 @@ template<typename T>
 std::optional<bool> is_prime_trial_division(T n,
     std::span<const uint32_t> primes) {
   // Trivial cases.
-  if (n <= 1) { return false; }
+  if (n <= T{1}) { return false; }
 
   // Trial division with some small prime factors.
   for (const auto p : primes) {
     if (n == p) { return true; }
-    if (n % p == 0) { return false; }
+    if (n % p == T{0}) { return false; }
     // Known: `n` is not divisible by any prime less than `p`.
     // Thus: All non-primes until p^2 have already been ruled out.
     if (n <= p * p) { return true; }
@@ -57,20 +57,20 @@ bool miller_selfridge_rabin_test(T n, T a) noexcept {
   assert(n > T{2});
   assert(is_odd(n));
 
-  // Handle bases with `a > n`.
-  a = mod(a, n);
-  if (a == T{0}) { return true; }
+  // Handle bases with `a < n`.
+  mod_int<T> a_mod_n(a, n);
+  if (a_mod_n.get() == T{0}) { return true; }
 
   // Decompose, such that `n-1 = o*2^e`.
-  auto [e, o] = odd_part(n - T{1});
+  auto n_minus_1 = n - T{1};
+  auto [e, o] = odd_part(n_minus_1);
 
-  const auto mod_n = [n](T x) { return mod(x, n); };
-  T p = mod_pow(a, o, mod_n);
+  auto p_mod_n = pow(a_mod_n, o, mod_int<T>{1, n});
 
-  if (p == T{1} || p == n - T{1}) { return true; }
-  for (T r = 1; r < e && p > T{1}; ++r) {
-    p = mod(p * p, n);
-    if (p == n - T{1}) { return true; }
+  if (p_mod_n.get() == T{1} || p_mod_n.get() == n_minus_1) { return true; }
+  for (T r = 1; r < e && p_mod_n.get() > T{1}; ++r) {
+    p_mod_n *= p_mod_n;
+    if (p_mod_n.get() == n_minus_1) { return true; }
   }
   return false;
 }
