@@ -381,7 +381,7 @@ public:
     assert(dim > 0);
 
     matrix id(dim, dim);
-    for (std::size_t i = 0; i < dim; ++i) id[i][i] = 1;
+    for (std::size_t i = 0; i < dim; ++i) { id[i][i] = T{1}; }
     return id;
   }
 

@@ -4,6 +4,7 @@
  * Implementations for prime number tests.
  */
 
+#include <array>
 #include <cstdint>
 #include <optional>
 #include <ranges>
@@ -119,7 +120,7 @@ bool forisek_jancina_no_base_cases(uint32_t n) {
 }
 
 /**
- * Prime test, optimized for 32-bit values, i.e., `n <= 2^32`.
+ * Prime test, optimized for 32-bit values, i.e., `n <= 2^32 - 1`.
  * Deterministic.
  * 
  * @param n The number to test for primality.
@@ -136,7 +137,7 @@ bool is_prime_32(uint32_t n) {
 }
 
 /**
- * Prime test, optimized for 64-bit values, i.e., `n <= 2^64`.
+ * Prime test, optimized for 64-bit values, i.e., `n <= 2^64 - 1`.
  * Deterministic.
  * 
  * @param n The number to test for primality.
@@ -162,7 +163,7 @@ bool is_prime_64(uint64_t n) {
  * Checks whether `n` is a Lucas probable prime.
  *
  * @param n The number to check.
- * @return `true` if n is a strong Lucas probable prime.
+ * @return `true` if and only if `n` is a strong Lucas probable prime.
  */
 template<typename U, typename S = std::make_signed_t<U>>
 [[nodiscard]] constexpr
@@ -170,25 +171,43 @@ bool is_strong_lucas_probable_prime(U n) noexcept {
   assert(n > U{2});
   assert(is_odd(n));
 
-  // Find parameters P, Q and D for Lucas sequences.
-  const std::size_t ITERATIONS_BEFORE_SQUARE_TEST = 10;
-  S D{5};
-  bool found_d = false;
-  for (std::size_t i = 0; i < ITERATIONS_BEFORE_SQUARE_TEST; ++i) {
-    if (jacobi(D, static_cast<S>(n)) == S{-1}) {
-      found_d = true;
-      break;
-    }
-    D = D > S{0} ? -(D + S{2}) : -(D - S{2});
-  }
-  // If no value for D was found yet, then it might be that n is a perfect
-  // square. In this case no D exists.
-  if (!found_d && is_square(n)) { return false; }
+  // Find a `D`, such that `jacobi(D,n) = -1`.
+  const auto find_D = [](U n) {
+    // Function to generate the next candidate value for `D`.
+    const auto next_D_candidate = [](S D) {
+      return D > S{0} ? S{-2} - D : S{2} - D;
+    };
 
-  // If n is not a perfect square we continue looking for a D. It must exist.
-  while (jacobi(D, static_cast<S>(n)) != S{-1}) {
-    D = D > S{0} ? -(D + S{2}) : -(D - S{2});
-  }
+    // Start by testing a few candidates.
+    const std::size_t ITERATIONS_BEFORE_SQUARE_TEST = 5;
+    S D{5};
+    bool found_d = false;
+    for (std::size_t i = 0; i < ITERATIONS_BEFORE_SQUARE_TEST; ++i) {
+      if (jacobi(D, static_cast<S>(n)) == S{-1}) {
+        found_d = true;
+        break;
+      }
+      D = next_D_candidate(D);
+    }
+
+    // If no value for `D` was found yet, then it might be that `n` is a perfect
+    // square. Then, no `D` exists.
+    if (!found_d && is_square(n)) { return std::optional<S>{}; }
+
+    // If `n` is not a perfect square we continue looking for a `D`.
+    // It must exist.
+    while (jacobi(D, static_cast<S>(n)) != S{-1}) {
+      D = next_D_candidate(D);
+    }
+
+    return std::optional<S>{D};
+  };
+
+  // Compute parameters `P`, `Q` and `D` for the Lucas sequence.
+  // If no suitable `D` exists, then `n` is composite.
+  const auto optional_D = find_D(n);
+  if (!optional_D.has_value()) { return false; }
+  const S D = optional_D.value();
   const S P{1};
   const S Q{(S{1} - D) / S{4}};
 
@@ -211,6 +230,54 @@ bool is_strong_lucas_probable_prime(U n) noexcept {
 
   return false;
 }
+
+// template<typename U, typename S = std::make_signed_t<U>>
+// [[nodiscard]] constexpr
+// bool is_strong_lucas_probable_prime(U n) noexcept {
+//   assert(n > U{2});
+//   assert(is_odd(n));
+
+//   // Find parameters P, Q and D for Lucas sequences.
+//   const std::size_t ITERATIONS_BEFORE_SQUARE_TEST = 10;
+//   S D{5};
+//   bool found_d = false;
+//   for (std::size_t i = 0; i < ITERATIONS_BEFORE_SQUARE_TEST; ++i) {
+//     if (jacobi(D, static_cast<S>(n)) == S{-1}) {
+//       found_d = true;
+//       break;
+//     }
+//     D = D > S{0} ? -(D + S{2}) : -(D - S{2});
+//   }
+//   // If no value for D was found yet, then it might be that n is a perfect
+//   // square. In this case no D exists.
+//   if (!found_d && is_square(n)) { return false; }
+
+//   // If n is not a perfect square we continue looking for a D. It must exist.
+//   while (jacobi(D, static_cast<S>(n)) != S{-1}) {
+//     D = D > S{0} ? -(D + S{2}) : -(D - S{2});
+//   }
+//   const S P{1};
+//   const S Q{(S{1} - D) / S{4}};
+
+//   // Decompose such that `n+1 = o*2^e`.
+//   auto [e, o] = odd_part(n + U{1});
+
+//   // Strong Lucas probable prime test.
+//   auto [u, v] = lucas_nth_term_mod(o, P, Q, static_cast<S>(n));
+//   if (u == S{0} || v == S{0}) { return true; }
+//   while (--e) {
+//     S uu = mod(u * v, static_cast<S>(n));
+//     S vv = v * v + D * u * u;
+//     if (is_odd(vv)) { vv += n; }
+//     vv /= S{2};
+//     vv = mod(vv, static_cast<S>(n));
+//     u = uu;
+//     v = vv;
+//     if (v == S{0}) { return true; }
+//   }
+
+//   return false;
+// }
 
 /**
  * Tests whether a given number `n` is (probable) prime.
