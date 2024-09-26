@@ -20,6 +20,19 @@ TEST(Construction, Simple) {
   EXPECT_EQ(a.get_modulus(), MOD);
 }
 
+TEST(Construction, WithoutModulus) {
+  ntlib::mod_int<uint32_t> a(0);
+  EXPECT_EQ(a.get(), 0);
+  EXPECT_EQ(a.get_modulus(), 1);
+
+  #ifndef NDEBUG
+  EXPECT_DEATH({
+    std::cerr << "Inside death test." << std::endl;
+    ntlib::mod_int<uint32_t> b(1);
+  }, "");
+  #endif
+}
+
 TEST(Construction, ByValue) {
   ntlib::mod_int<uint32_t> a(0, MOD);
   EXPECT_EQ(a.get(), 0);

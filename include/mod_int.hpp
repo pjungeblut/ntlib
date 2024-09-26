@@ -37,6 +37,20 @@ public:
   }
 
   /**
+   * Constructor for run-time modulus without a modulus.
+   * 
+   * This allows to create instances with `value` equal to `0` (independent
+   * of the modulus).
+   * Setting `modulus` to `1` makes sure that these instances will never have a
+   * value other than `0`. 
+   * 
+   * @param value Must be zero.
+   */
+  mod_int(U value) requires(MOD == 0) : modulus(U{1}), value(value) {
+    assert(value == 0);
+  }
+
+  /**
    * Constructor for run-time modulus.
    * 
    * @param value The initial value.
