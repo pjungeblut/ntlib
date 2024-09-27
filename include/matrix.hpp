@@ -375,13 +375,17 @@ public:
    * Returns a square identity matrix with the given dimensions.
    *
    * @param dim The dimension.
+   * @param multiplicative_neutral The multiplicative neutral element to use for
+   *     the main diagonal.
    * @return An identity matrix.
    */
-  static matrix get_identity(std::size_t dim) {
+  static matrix get_identity(std::size_t dim, T multiplicative_neutral = T{1}) {
     assert(dim > 0);
 
     matrix id(dim, dim);
-    for (std::size_t i = 0; i < dim; ++i) id[i][i] = 1;
+    for (std::size_t i = 0; i < dim; ++i) {
+      id[i][i] = multiplicative_neutral;
+    }
     return id;
   }
 
@@ -542,6 +546,22 @@ matrix<T> exec_each_element(matrix<T> &&m, F func) {
     }
   }
   return res;
+}
+
+/**
+ * Specialization for `get_multiplicative_neutral()`.
+ * 
+ * @param _ Instance of the type.
+ * @return Identity matrix of same dimension.
+ */
+template<typename T>
+[[nodiscard]] constexpr
+matrix<T> get_multiplicative_neutral(matrix<T> m) {
+  assert(m.get_rows() == m.get_columns());
+  assert(m.get_rows() > 0);
+
+  return matrix<T>::get_identity(
+      m.get_rows(), get_multiplicative_neutral(m[0][0]));
 }
 
 }

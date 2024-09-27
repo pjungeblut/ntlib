@@ -191,3 +191,11 @@ TEST(Inversion, All) {
     EXPECT_EQ(a * a.invert(), 1 % MOD);
   }
 }
+
+TEST(MultiplicativeNeutral, Compiletime) {
+  ntlib::mod_int<uint32_t, 10> a(5);
+  EXPECT_EQ(ntlib::get_multiplicative_neutral(a), 1);
+
+  ntlib::mod_int<uint32_t, 1> b(5);
+  EXPECT_EQ(ntlib::get_multiplicative_neutral(b), 0);
+}

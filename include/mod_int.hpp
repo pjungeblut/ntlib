@@ -219,7 +219,7 @@ private:
   /**
    * The modulus.
    */
-  const U modulus;
+  U modulus;
 
   /**
    * The value in the range `[0,modulus)`.
@@ -256,6 +256,25 @@ std::istream& operator>>(std::istream &is, mod_int<U, MOD, S> &obj)
   is >> tmp;
   obj.set(tmp);
   return is;
+}
+
+/**
+ * Specialization `get_multiplicative_neutral()`.
+ * 
+ * @param obj An instance of `mod_int`.
+ * @return The multiplicative unit. `1` whenever the modulus is greater than
+ *         `1`, and `0` if the modulus is `1`.
+ */
+template<typename U, U MOD = 0, typename S = std::make_signed_t<U>>
+[[nodiscard]] constexpr
+U get_multiplicative_neutral(mod_int<U, MOD, S> obj) {
+  if constexpr(MOD == 0) {
+    if (obj.get_modulus() > 1) { return U{1}; }
+    else { return U{0}; }
+  } else {
+    if constexpr (MOD > 1) { return U{1}; }
+    else { return U{0}; }
+  }
 }
 
 }
