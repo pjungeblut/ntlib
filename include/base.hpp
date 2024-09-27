@@ -146,6 +146,18 @@ template<typename T, typename S = std::make_signed_t<T>>
 }
 
 /**
+ * Returns the multiplicative neutral element `1` for arithmetic types.
+ * 
+ * @param _ Element of that type.
+ * @return The multiplicative neutral element of the type.
+ */
+template<typename T>
+[[nodiscard]] constexpr
+T get_multiplicative_neutral(T) requires (std::is_arithmetic_v<T>) {
+  return T{1};
+}
+
+/**
  * Computes a^b using binary exponentation.
  * Runtime: O(log b)
  *

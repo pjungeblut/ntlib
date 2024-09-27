@@ -4,6 +4,7 @@
 
 #include "base.hpp"
 #include "matrix.hpp"
+#include "mod_int.hpp"
 
 TEST(Construction, Default) {
   ntlib::matrix<int32_t> mat;
@@ -136,4 +137,26 @@ TEST(Identity, SmallValues) {
     const auto id = ntlib::matrix<int32_t>::get_identity(i);
     EXPECT_TRUE(is_id(id));
   }
+}
+
+TEST(MultiplicativeNeutral, Simple) {
+  ntlib::matrix<uint32_t> m(2, 2);
+  const auto nm = ntlib::get_multiplicative_neutral(m);
+  EXPECT_EQ(nm.get_columns(), 2);
+  EXPECT_EQ(nm.get_rows(), 2);
+  EXPECT_EQ(nm[0][0], 1);
+  EXPECT_EQ(nm[0][1], 0);
+  EXPECT_EQ(nm[1][0], 0);
+  EXPECT_EQ(nm[1][1], 1);
+}
+
+TEST(MultiplicativeNeutral, ModInt) {
+  ntlib::matrix<ntlib::mod_int<uint32_t, 10>> m(2, 2);
+  const auto nm = ntlib::get_multiplicative_neutral(m);
+  EXPECT_EQ(nm.get_columns(), 2);
+  EXPECT_EQ(nm.get_rows(), 2);
+  EXPECT_EQ(nm[0][0], 1);
+  EXPECT_EQ(nm[0][1], 0);
+  EXPECT_EQ(nm[1][0], 0);
+  EXPECT_EQ(nm[1][1], 1);
 }
