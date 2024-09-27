@@ -153,7 +153,8 @@ template<typename T, typename S = std::make_signed_t<T>>
  */
 template<typename T>
 [[nodiscard]] constexpr
-T get_multiplicative_neutral(T) requires (std::is_arithmetic_v<T>) {
+T get_multiplicative_neutral(T)
+    requires (std::is_arithmetic_v<T> && sizeof(T) <= 8) {
   return T{1};
 }
 
@@ -163,18 +164,17 @@ T get_multiplicative_neutral(T) requires (std::is_arithmetic_v<T>) {
  *
  * @param a The base.
  * @param b The exponent, non-negative.
- * @param unit The unit element of the group.
  * @return a^b
  */
 template<typename A, typename B>
-[[nodiscard]] constexpr A pow(A a, B b, A unit = A{1}) noexcept {
+[[nodiscard]] constexpr A pow(A a, B b) noexcept {
   assert(!(a == A{0} && b == B{0}));
   assert(b >= B{0});
 
-  if (b == B{0}) { return unit; }
+  if (b == B{0}) { return get_multiplicative_neutral(a); }
   else if (b == B{1}) { return a; }
-  else if (is_odd(b)) { return pow(a, b - B{1}, unit) * a; }
-  else { return pow(a * a, b / B{2}, unit); }
+  else if (is_odd(b)) { return pow(a, b - B{1}) * a; }
+  else { return pow(a * a, b / B{2}); }
 }
 
 /**

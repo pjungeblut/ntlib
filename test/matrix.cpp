@@ -102,8 +102,7 @@ TEST(Arithmetic, Multiplication) {
 TEST(Arithmetic, Exponentiation) {
   ntlib::matrix<int32_t> m({{1,1},{1,0}});
   ntlib::matrix<int32_t> f({{1},{0}});
-  auto unit = ntlib::matrix<int32_t>::get_identity(2);
-  m = ntlib::pow(m, 10, unit);
+  m = ntlib::pow(m, 10);
   auto fib = m * f;
   EXPECT_EQ(fib[0][0], 89); // 11th Fibonacci number
   EXPECT_EQ(fib[1][0], 55); // 10th Fibonacci number
