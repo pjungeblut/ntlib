@@ -189,6 +189,23 @@ TEST(ExtendedEuclid, CornerCases) {
   EXPECT_EQ(x2 * -max_int + y2 * 2, gcd2);
 }
 
+TEST(MultiplicativeNeutral, ArithmeticType) {
+  int32_t a = -5;
+  auto na = ntlib::get_multiplicative_neutral(a);
+  EXPECT_TRUE((std::is_same_v<decltype(na), int32_t>));
+  EXPECT_EQ(na, 1);
+
+  uint32_t b = 5;
+  auto nb = ntlib::get_multiplicative_neutral(b);
+  EXPECT_TRUE((std::is_same_v<decltype(nb), uint32_t>));
+  EXPECT_EQ(nb, 1);
+
+  double c = 3.14;
+  auto nc = ntlib::get_multiplicative_neutral(c);
+  EXPECT_TRUE((std::is_same_v<decltype(nc), double>));
+  EXPECT_EQ(nc, 1.0);
+}
+
 TEST(Exponentiation, BaseCases) {
   EXPECT_EQ(ntlib::pow(2, 0), 1);
   EXPECT_EQ(ntlib::pow(2, 1), 2);

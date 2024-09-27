@@ -341,4 +341,16 @@ rational<T> operator-(const rational<T> &a) {
   return neg;
 }
 
+/**
+ * Specialization for `get_multiplicative_neutral()`.
+ * 
+ * @param r Instance of the type.
+ * @return The multiplicative neutral `1/1`.
+ */
+template<typename T>
+[[nodiscard]] constexpr
+rational<T> get_multiplicative_neutral(rational<T> r) {
+  return rational{get_multiplicative_neutral(r.get_numerator())};
+}
+
 }

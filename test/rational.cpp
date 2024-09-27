@@ -113,3 +113,9 @@ TEST(Arithmetic, Division) {
   b /= 10;
   EXPECT_EQ(b, ntlib::rational(2, 25));
 }
+
+TEST(MultiplicativeNeutral, Simple) {
+  ntlib::rational a(5, 3);
+  auto na = ntlib::get_multiplicative_neutral(a);
+  EXPECT_EQ(na, ntlib::rational{1});
+}

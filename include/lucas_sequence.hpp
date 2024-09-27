@@ -30,7 +30,7 @@ std::pair<T, T> lucas_nth_term(std::size_t n, T p, T q) noexcept {
     return std::make_pair(T{1}, p);
   } else {
     matrix<T> mat({{p, -q}, {T{1}, T{0}}});
-    mat = ntlib::pow(mat, n - 1, matrix<T>::get_identity(2));
+    mat = ntlib::pow(mat, n - 1);
     matrix<T> u({{T(1)}, {T{0}}});
     matrix<T> v({{p}, {T{2}}});
     u = mat * u;
