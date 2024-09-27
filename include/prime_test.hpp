@@ -66,7 +66,7 @@ bool miller_selfridge_rabin_test(T n, T a) noexcept {
   auto n_minus_1 = n - T{1};
   auto [e, o] = odd_part(n_minus_1);
 
-  auto p_mod_n = pow(a_mod_n, o, mod_int<T>{1, n});
+  auto p_mod_n = pow(a_mod_n, o);
 
   if (p_mod_n.get() == T{1} || p_mod_n.get() == n_minus_1) { return true; }
   for (T r = 1; r < e && p_mod_n.get() > T{1}; ++r) {
