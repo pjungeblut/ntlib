@@ -46,7 +46,8 @@ public:
    * 
    * @param value Must be zero.
    */
-  mod_int(U value) requires(MOD == 0) : modulus(U{1}), value(value) {
+  explicit mod_int(U value = 0) requires(MOD == 0) :
+      modulus(U{1}), value(value) {
     assert(value == 0);
   }
 
@@ -205,6 +206,15 @@ public:
   }
 
   /**
+   * Unary minus operator.
+   * 
+   * @return The "negative" value, in the range `[0,modulus)`.
+   */
+  mod_int operator-() const {
+    return modulus - value;
+  }
+
+  /**
    * Equality comparison.
    * Compiler will automatically generate `operator!=`.
    * 
@@ -281,13 +291,14 @@ std::istream& operator>>(std::istream &is, mod_int<U, MOD, S> &obj)
  */
 template<typename U, U MOD = 0, typename S = std::make_signed_t<U>>
 [[nodiscard]] constexpr
-U get_multiplicative_neutral(mod_int<U, MOD, S> obj) {
+mod_int<U, MOD, S> get_multiplicative_neutral(mod_int<U, MOD, S> obj) {
   if constexpr(MOD == 0) {
-    if (obj.get_modulus() > 1) { return U{1}; }
-    else { return U{0}; }
+    if (obj.get_modulus() > 1) {
+      return mod_int<U, MOD, S>(1, obj.get_modulus());
+    } else { return mod_int<U, MOD, S>{0}; }
   } else {
-    if constexpr (MOD > 1) { return U{1}; }
-    else { return U{0}; }
+    if constexpr (MOD > 1) { return mod_int<U, MOD, S>{1}; }
+    else { return mod_int<U, MOD, S>{0}; }
   }
 }
 
