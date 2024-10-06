@@ -517,7 +517,7 @@ private:
 
     for (std::size_t r = 0; r < lhs.get_rows(); ++r) {
       for (std::size_t c = 0; c < rhs.get_columns(); ++c) {
-        product[r][c] = 0;
+        product[r][c] = T{0};
       }
     }
 
