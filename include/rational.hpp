@@ -68,7 +68,8 @@ public:
    */
   [[nodiscard]]
   std::string to_string() const noexcept {
-    return std::to_string(numerator) + "/" + std::to_string(denominator);
+    using std::to_string;
+    return to_string(numerator) + "/" + to_string(denominator);
   }
 
   /**

@@ -143,6 +143,8 @@ public:
    * @return String representation.
    */
   std::string to_string() const {
+    using std::to_string;
+
     std::string rep = "";
     rep += "{";
     for (std::size_t r = 0; r < get_rows(); ++r) {
@@ -150,7 +152,7 @@ public:
       rep += "{";
       for (std::size_t c = 0; c < get_columns(); ++c) {
         if (c) rep += ",";
-        rep += std::to_string(mat[r][c]);
+        rep += to_string(mat[r][c]);
       }
       rep += "}";
     }
