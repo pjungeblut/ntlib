@@ -63,7 +63,7 @@ bool miller_selfridge_rabin_test(T n, T a) noexcept {
   if (a_mod_n.get() == T{0}) { return true; }
 
   // Decompose, such that `n-1 = o*2^e`.
-  auto n_minus_1 = n - T{1};
+  T n_minus_1 = n - T{1};
   auto [e, o] = odd_part(n_minus_1);
 
   auto p_mod_n = pow(a_mod_n, o);
