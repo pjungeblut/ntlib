@@ -31,7 +31,7 @@ std::pair<T, T> lucas_nth_term(std::size_t n, T p, T q) noexcept {
   } else {
     matrix<T> mat({{p, -q}, {T{1}, T{0}}});
     mat = ntlib::pow(mat, n - 1);
-    matrix<T> u({{T(1)}, {T{0}}});
+    matrix<T> u({{T{1}}, {T{0}}});
     matrix<T> v({{p}, {T{2}}});
     u = mat * u;
     v = mat * v;
@@ -54,9 +54,11 @@ std::pair<T, T> lucas_nth_term(std::size_t n, T p, T q) noexcept {
 template <typename T>
 [[nodiscard]] constexpr
 std::pair<T, T> lucas_nth_term_mod(std::size_t n, T p, T q, T m) noexcept {
+  // Check that T is a signed type.
+  static_assert(T{-1} < T{1});
   assert(m > T{0});
 
-  if (n == T{0}) {
+  if (n == 0) {
     return std::make_pair(T{0}, mod(T{2}, m));
   } else if (n == 1) {
     return std::make_pair(T{1}, mod(p, m));
