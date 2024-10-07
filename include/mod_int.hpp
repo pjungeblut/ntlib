@@ -2,6 +2,7 @@
 
 #include <istream>
 #include <ostream>
+#include <string>
 #include <type_traits>
 
 #include "modulo.hpp"
@@ -299,6 +300,23 @@ mod_int<U, MOD, S> get_multiplicative_neutral(mod_int<U, MOD, S> obj) {
   } else {
     if constexpr (MOD > 1) { return mod_int<U, MOD, S>{1}; }
     else { return mod_int<U, MOD, S>{0}; }
+  }
+}
+
+/**
+ * Returns a string representation.
+ *
+ * @param obj An instance of `mod_int`.
+ * @return String representation.
+ */
+template<typename U, U MOD = 0, typename S = std::make_signed_t<U>>
+std::string to_string(mod_int<U, MOD, S> obj) {
+  using std::to_string;
+
+  if constexpr(MOD == 0) {
+    return to_string(obj.get()) + " (mod " + to_string(obj.get_modulus()) + ")";
+  } else {
+    return to_string(obj.jet()) + " (mod " + to_string(MOD) + ")";
   }
 }
 
