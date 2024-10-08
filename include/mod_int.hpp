@@ -2,6 +2,7 @@
 
 #include <istream>
 #include <ostream>
+#include <string>
 #include <type_traits>
 
 #include "modulo.hpp"
@@ -34,6 +35,21 @@ public:
   mod_int(U value = 0) requires(MOD != 0) :
       modulus(MOD), value(mod(value, modulus)) {
     static_assert(MOD > 0);
+  }
+
+  /**
+   * Constructor for run-time modulus without a modulus.
+   * 
+   * This allows to create instances with `value` equal to `0` (independent
+   * of the modulus).
+   * Setting `modulus` to `1` makes sure that these instances will never have a
+   * value other than `0`. 
+   * 
+   * @param value Must be zero.
+   */
+  explicit mod_int(U value = 0) requires(MOD == 0) :
+      modulus(U{1}), value(value) {
+    assert(value == 0);
   }
 
   /**
@@ -191,6 +207,15 @@ public:
   }
 
   /**
+   * Unary minus operator.
+   * 
+   * @return The "negative" value, in the range `[0,modulus)`.
+   */
+  mod_int operator-() const {
+    return modulus - value;
+  }
+
+  /**
    * Equality comparison.
    * Compiler will automatically generate `operator!=`.
    * 
@@ -267,13 +292,31 @@ std::istream& operator>>(std::istream &is, mod_int<U, MOD, S> &obj)
  */
 template<typename U, U MOD = 0, typename S = std::make_signed_t<U>>
 [[nodiscard]] constexpr
-U get_multiplicative_neutral(mod_int<U, MOD, S> obj) {
+mod_int<U, MOD, S> get_multiplicative_neutral(mod_int<U, MOD, S> obj) {
   if constexpr(MOD == 0) {
-    if (obj.get_modulus() > 1) { return U{1}; }
-    else { return U{0}; }
+    if (obj.get_modulus() > 1) {
+      return mod_int<U, MOD, S>(1, obj.get_modulus());
+    } else { return mod_int<U, MOD, S>{0}; }
   } else {
-    if constexpr (MOD > 1) { return U{1}; }
-    else { return U{0}; }
+    if constexpr (MOD > 1) { return mod_int<U, MOD, S>{1}; }
+    else { return mod_int<U, MOD, S>{0}; }
+  }
+}
+
+/**
+ * Returns a string representation.
+ *
+ * @param obj An instance of `mod_int`.
+ * @return String representation.
+ */
+template<typename U, U MOD = 0, typename S = std::make_signed_t<U>>
+std::string to_string(mod_int<U, MOD, S> obj) {
+  using std::to_string;
+
+  if constexpr(MOD == 0) {
+    return to_string(obj.get()) + " (mod " + to_string(obj.get_modulus()) + ")";
+  } else {
+    return to_string(obj.jet()) + " (mod " + to_string(MOD) + ")";
   }
 }
 

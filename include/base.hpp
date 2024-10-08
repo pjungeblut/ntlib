@@ -5,6 +5,7 @@
 #include <cassert>
 #include <climits>
 #include <cmath>
+#include <concepts>
 #include <functional>
 #include <numeric>
 #include <type_traits>
@@ -159,6 +160,14 @@ T get_multiplicative_neutral(T)
 }
 
 /**
+ * Concept for types with a multiplicative neutral.
+ */
+template<typename T>
+concept HasMultiplicativeNeutral = requires(T n) {
+    { get_multiplicative_neutral(n) } -> std::convertible_to<T>;
+};
+
+/**
  * Computes a^b using binary exponentation.
  * Runtime: O(log b)
  *
@@ -166,7 +175,7 @@ T get_multiplicative_neutral(T)
  * @param b The exponent, non-negative.
  * @return a^b
  */
-template<typename A, typename B>
+template<HasMultiplicativeNeutral A, typename B>
 [[nodiscard]] constexpr A pow(A a, B b) noexcept {
   assert(!(a == A{0} && b == B{0}));
   assert(b >= B{0});

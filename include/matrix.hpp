@@ -143,6 +143,8 @@ public:
    * @return String representation.
    */
   std::string to_string() const {
+    using std::to_string;
+
     std::string rep = "";
     rep += "{";
     for (std::size_t r = 0; r < get_rows(); ++r) {
@@ -150,7 +152,7 @@ public:
       rep += "{";
       for (std::size_t c = 0; c < get_columns(); ++c) {
         if (c) rep += ",";
-        rep += std::to_string(mat[r][c]);
+        rep += to_string(mat[r][c]);
       }
       rep += "}";
     }
@@ -517,7 +519,7 @@ private:
 
     for (std::size_t r = 0; r < lhs.get_rows(); ++r) {
       for (std::size_t c = 0; c < rhs.get_columns(); ++c) {
-        product[r][c] = 0;
+        product[r][c] = T{0};
       }
     }
 
@@ -534,18 +536,18 @@ private:
 /**
  * Executes a function an each element.
  * 
- * @param func The function to execute. Will be moved from.
+ * @param m The matrix.
+ * @param func The function to execute.
  * @return The new matrix.
  */
 template<typename T, typename F>
-matrix<T> exec_each_element(matrix<T> &&m, F func) {
-  matrix<T> res(std::forward<matrix<T>>(m));
-  for (std::size_t r = 0; r < res.get_rows(); ++r) {
-    for (std::size_t c = 0; c < res.get_columns(); ++c) {
-      res[r][c] = func(res[r][c]);
+matrix<T> exec_each_element(matrix<T> m, const F &func) {
+  for (std::size_t r = 0; r < m.get_rows(); ++r) {
+    for (std::size_t c = 0; c < m.get_columns(); ++c) {
+      m[r][c] = func(m[r][c]);
     }
   }
-  return res;
+  return m;
 }
 
 /**

@@ -74,18 +74,12 @@ A mod_pow(A a, B b, MF mod_func, A unit = A{1}) noexcept {
   assert(!(a == A{0} && b == B{0}));
   assert(b >= B{0});
 
-  if (b == B{0}) {
-    return unit;
-  } else if (b == B{1}) {
-    return mod_func(a);
-  } else if (is_odd(b)) {
-    // TODO: Check why this cannot be in one line.
-    auto no_mod = mod_pow(a, b - B{1}, mod_func, unit) * a;
-    return mod_func(no_mod);
+  if (b == B{0}) { return unit; }
+  else if (b == B{1}) { return mod_func(a); }
+  else if (is_odd(b)) {
+    return mod_func(mod_pow(a, b - B{1}, mod_func, unit) * a);
   } else {
-    // TODO: Check why this cannot be in one line.
-    auto a_squared = a * a;
-    return mod_pow(mod_func(a_squared), b / B{2}, mod_func, unit);
+    return mod_pow(mod_func(a * a), b / B{2}, mod_func, unit);
   }
 }
 

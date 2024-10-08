@@ -9,6 +9,8 @@
 
 #include "base.hpp"
 #include "int128.hpp"
+#include "matrix.hpp"
+#include "mod_int.hpp"
 #include "prime_generation.hpp"
 
 static constexpr int min_int = std::numeric_limits<int>::min();
@@ -17,8 +19,8 @@ static constexpr unsigned int max_uint =
     std::numeric_limits<unsigned int>::max();
 static constexpr int64_t max_int64 = std::numeric_limits<int64_t>::max();
 static constexpr uint64_t max_uint64 = std::numeric_limits<uint64_t>::max();
-static constexpr i128 max_int128 = (i128(1) << 126) - 1 + (i128(1) << 126);
-static constexpr u128 max_uint128 = (u128(1) << 127) - 1 + (u128(1) << 127);
+static constexpr i128 max_int128 = (i128{1} << 126) - 1 + (i128{1} << 126);
+static constexpr u128 max_uint128 = (u128{1} << 127) - 1 + (u128{1} << 127);
 
 TEST(SmallPrimes, ListContainsOnlyPrimes) {
   const auto sieve = ntlib::prime_sieve(ntlib::SMALL_PRIMES_BIGGEST);
@@ -223,6 +225,37 @@ TEST(Exponentiation, PowersOfMinus2) {
     int sign = e & 1 ? -1 : 1;
     EXPECT_EQ(ntlib::pow(-2, e), sign * (1 << e));
   }
+}
+
+TEST(Exponentiation, RuntimeModInt) {
+  ntlib::mod_int<uint32_t> a(2, 10);
+  EXPECT_EQ(ntlib::pow(a, 0), get_multiplicative_neutral(a));
+  EXPECT_EQ(ntlib::pow(a, 1).get(), 2);
+  EXPECT_EQ(ntlib::pow(a, 2).get(), 4);
+  EXPECT_EQ(ntlib::pow(a, 3).get(), 8);
+  EXPECT_EQ(ntlib::pow(a, 4).get(), 6);
+}
+
+TEST(Exponentiation, Matrix) {
+  ntlib::matrix<uint32_t> mat({{0, 1}, {2, 3}});
+  
+  auto p0 = ntlib::pow(mat, 0);
+  EXPECT_EQ(p0, get_multiplicative_neutral(mat));
+
+  auto p1 = ntlib::pow(mat, 1);
+  EXPECT_EQ(p1, mat);
+
+  auto p2 = ntlib::pow(mat, 2);
+  EXPECT_EQ(p2[0][0], 2);
+  EXPECT_EQ(p2[0][1], 3);
+  EXPECT_EQ(p2[1][0], 6);
+  EXPECT_EQ(p2[1][1], 11);
+
+  auto p3 = ntlib::pow(mat, 3);
+  EXPECT_EQ(p3[0][0], 6);
+  EXPECT_EQ(p3[0][1], 11);
+  EXPECT_EQ(p3[1][0], 22);
+  EXPECT_EQ(p3[1][1], 39);
 }
 
 TEST(IntegerLog2, Signed) {

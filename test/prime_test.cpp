@@ -129,7 +129,8 @@ TEST(StrongLucas, SmallValues) {
       24569, 25199, 40309, 58519, 75077, 97439, 100127, 113573, 115639, 130139,
       155819, 158399, 161027, 162133, 176399, 176471, 189419, 192509, 197801,
       224369, 230691, 231703, 243629, 253259, 268349, 288919, 313499, 324899});
-  const uint64_t M = std::min(N, *pseudo.rbegin());
+  const uint64_t MAX = *std::ranges::max_element(pseudo);
+  const uint64_t M = std::min(N, MAX);
   for (uint64_t n = 3; n <= M; n += 2) {
     if (pseudo.find(n) != pseudo.end()) {
       EXPECT_NE(ntlib::is_strong_lucas_probable_prime(n), SIEVE[n]);
