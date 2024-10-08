@@ -312,7 +312,7 @@ template<typename T>
  * @return The factorial n!.
  */
 template<typename T>
-[[nodiscard]] constexpr T factorial(T n) noexcept{
+[[nodiscard]] constexpr T factorial(T n) noexcept {
   assert(n >= T{0});
 
   T result{1};
