@@ -65,9 +65,8 @@ std::pair<T, T> lucas_nth_term_mod(std::size_t n, T p, T q, T m) noexcept {
   } else {
     matrix<T> mat({{mod(p, m), mod(-q, m)}, {T{1}, T{0}}});
 
-    const auto component_mod_m = [m](matrix<T> &x) {
-      const auto mod_m = [m](T y) { return mod(y, m); };
-      return exec_each_element(std::move(x), mod_m);
+    const auto component_mod_m = [m](const matrix<T> &x) {
+      return exec_each_element(x, [m](T y) { return mod(y, m); });
     };
     mat = ntlib::mod_pow(mat, n - 1, component_mod_m,
         matrix<T>::get_identity(2));
