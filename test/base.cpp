@@ -13,15 +13,16 @@
 #include "mod_int.hpp"
 #include "prime_generation.hpp"
 
-using std::numeric_limits;
-static constexpr int min_int = numeric_limits<int>::min();
-static constexpr int max_int = numeric_limits<int>::max();
+static constexpr int min_int = std::numeric_limits<int>::min();
+static constexpr int max_int = std::numeric_limits<int>::max();
 static constexpr unsigned int max_uint =
-    numeric_limits<unsigned int>::max();
-static constexpr int64_t max_int64 = numeric_limits<int64_t>::max();
-static constexpr uint64_t max_uint64 = numeric_limits<uint64_t>::max();
-static constexpr ntlib::i128 max_int128 = numeric_limits<ntlib::i128>::max();
-static constexpr ntlib::u128 max_uint128 = numeric_limits<ntlib::u128>::max();
+    std::numeric_limits<unsigned int>::max();
+static constexpr int64_t max_int64 = std::numeric_limits<int64_t>::max();
+static constexpr uint64_t max_uint64 = std::numeric_limits<uint64_t>::max();
+static constexpr ntlib::i128 max_int128 =
+    std::numeric_limits<ntlib::i128>::max();
+static constexpr ntlib::u128 max_uint128 =
+    std::numeric_limits<ntlib::u128>::max();
 
 TEST(SmallPrimes, ListContainsOnlyPrimes) {
   const auto sieve = ntlib::prime_sieve(ntlib::SMALL_PRIMES_BIGGEST);
