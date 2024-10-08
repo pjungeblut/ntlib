@@ -13,14 +13,15 @@
 #include "mod_int.hpp"
 #include "prime_generation.hpp"
 
-static constexpr int min_int = std::numeric_limits<int>::min();
-static constexpr int max_int = std::numeric_limits<int>::max();
+using std::numeric_limits;
+static constexpr int min_int = numeric_limits<int>::min();
+static constexpr int max_int = numeric_limits<int>::max();
 static constexpr unsigned int max_uint =
-    std::numeric_limits<unsigned int>::max();
-static constexpr int64_t max_int64 = std::numeric_limits<int64_t>::max();
-static constexpr uint64_t max_uint64 = std::numeric_limits<uint64_t>::max();
-static constexpr i128 max_int128 = (i128{1} << 126) - 1 + (i128{1} << 126);
-static constexpr u128 max_uint128 = (u128{1} << 127) - 1 + (u128{1} << 127);
+    numeric_limits<unsigned int>::max();
+static constexpr int64_t max_int64 = numeric_limits<int64_t>::max();
+static constexpr uint64_t max_uint64 = numeric_limits<uint64_t>::max();
+static constexpr ntlib::i128 max_int128 = numeric_limits<ntlib::i128>::max();
+static constexpr ntlib::u128 max_uint128 = numeric_limits<ntlib::u128>::max();
 
 TEST(SmallPrimes, ListContainsOnlyPrimes) {
   const auto sieve = ntlib::prime_sieve(ntlib::SMALL_PRIMES_BIGGEST);
@@ -275,8 +276,8 @@ TEST(IntegerLog2, Unsigned) {
 }
 
 TEST(IntegerLog2, NoBuiltin) {
-  for (u128 i = 1; i < 1'000'000; ++i) {
-    u128 cl2 = ntlib::ilog2(i);
+  for (ntlib::u128 i = 1; i < 1'000'000; ++i) {
+    ntlib::u128 cl2 = ntlib::ilog2(i);
     EXPECT_LE(1 << cl2, i);
     EXPECT_GT(1 << (cl2 + 1), i);
   }
@@ -298,8 +299,8 @@ TEST(IntegerSquareRoot, Integral) {
 }
 
 TEST(IntegerSquareRoot, NoBuiltin) {
-  for (u128 i = 0; i <= 1'000'000; ++i) {
-    u128 root = ntlib::isqrt(i);
+  for (ntlib::u128 i = 0; i <= 1'000'000; ++i) {
+    ntlib::u128 root = ntlib::isqrt(i);
     EXPECT_LE(root * root, i);
     EXPECT_GT((root + 1) * (root + 1), i);
   }
@@ -312,14 +313,14 @@ TEST(IntegerSquareRoot, CornerCases) {
   EXPECT_EQ(ntlib::isqrt(max_int64), 3'037'000'499LL);
   EXPECT_EQ(ntlib::isqrt(max_uint64), 4'294'967'295LL);
 
-  i128 iroot128_ntlib = ntlib::isqrt(max_int128);
-  i128 iroot128_expected =
-      i128(2) * 2 * 3 * 3 * 3 * 991 * 283'183 * 430'368'163;
+  ntlib::i128 iroot128_ntlib = ntlib::isqrt(max_int128);
+  ntlib::i128 iroot128_expected =
+      ntlib::i128(2) * 2 * 3 * 3 * 3 * 991 * 283'183 * 430'368'163;
   EXPECT_EQ(iroot128_ntlib, iroot128_expected);
 
-  u128 uroot128_ntlib = ntlib::isqrt(max_uint128);
-  u128 uroot128_expected =
-      u128(3) * 5 * 17 * 257 * 641 * 65537 * 6'700'417;
+  ntlib::u128 uroot128_ntlib = ntlib::isqrt(max_uint128);
+  ntlib::u128 uroot128_expected =
+      ntlib::u128(3) * 5 * 17 * 257 * 641 * 65537 * 6'700'417;
   EXPECT_EQ(uroot128_ntlib, uroot128_expected);
 }
 

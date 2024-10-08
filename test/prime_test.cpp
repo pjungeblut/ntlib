@@ -13,7 +13,7 @@ static constexpr uint64_t N = 1'000'000;
 static const auto SIEVE = ntlib::prime_sieve(N);
 
 // Large composites.
-static constexpr auto COMPOSITES = std::to_array<u128>({
+static constexpr auto COMPOSITES = std::to_array<ntlib::u128>({
     1'000'000'007LL * 1'000'000'007LL,
     4'120'038'565'055'551LL,
     2LL * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2,
@@ -21,7 +21,7 @@ static constexpr auto COMPOSITES = std::to_array<u128>({
 });
 
 // Large primes.
-static constexpr auto PRIMES = std::to_array<u128>({
+static constexpr auto PRIMES = std::to_array<ntlib::u128>({
     1'000'000'007,
     952'016'363'681'739'749LL,
     301'697'296'732'166'057LL
@@ -152,12 +152,12 @@ TEST(BailliePSW, NegativeValues) {
 
 TEST(BailliePSW, LargeComposites) {
   for (auto c : COMPOSITES) {
-    EXPECT_FALSE((ntlib::is_prime<u128, i128>(c)));
+    EXPECT_FALSE((ntlib::is_prime<ntlib::u128, ntlib::i128>(c)));
   }
 }
 
 TEST(BailliePSW, LargePrimes) {
   for (auto p : PRIMES) {
-    EXPECT_TRUE((ntlib::is_prime<u128, i128>(p)));
+    EXPECT_TRUE((ntlib::is_prime<ntlib::u128, ntlib::i128>(p)));
   }
 }
