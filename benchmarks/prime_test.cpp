@@ -56,8 +56,9 @@ BENCHMARK(BM_is_prime_miller_selfridge_rabin)
 
 static void BM_is_prime_baillie_psw(benchmark::State &state) {
   for (auto _ : state) {
-    for (u128 i = state.range(0); i <= state.range(0) + NUM_TESTS; ++i) {
-      benchmark::DoNotOptimize(ntlib::is_prime_baillie_psw<u128, i128>(i));
+    for (ntlib::u128 i = state.range(0); i <= state.range(0) + NUM_TESTS; ++i) {
+      benchmark::DoNotOptimize(
+          ntlib::is_prime_baillie_psw<ntlib::u128, ntlib::i128>(i));
     }
   }
 }

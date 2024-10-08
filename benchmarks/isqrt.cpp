@@ -47,7 +47,7 @@ BENCHMARK(BM_isqrt_int_binsearch)->Unit(benchmark::kMillisecond);
 
 static void BM_isqrt_int128(benchmark::State &state) {
   for (auto _ : state) {
-    for (i128 n = 1; n < N; ++n) {
+    for (ntlib::i128 n = 1; n < N; ++n) {
       benchmark::DoNotOptimize(ntlib::isqrt(n));
     }
   }

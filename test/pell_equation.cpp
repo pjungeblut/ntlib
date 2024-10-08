@@ -23,8 +23,8 @@ TEST(MinPellSolutions, SmallValues) {
 }
 
 TEST(MinPellSolutions, BiggerValues) {
-  const u128 N = 1'000;
-  for (u128 d = 2; d <= N; ++d) {
+  const ntlib::u128 N = 1'000;
+  for (ntlib::u128 d = 2; d <= N; ++d) {
     if (ntlib::is_square(d)) continue;
     const auto [x, y] = ntlib::min_pell_solution(d);
     EXPECT_EQ(x * x - d * y * y, 1);
@@ -32,16 +32,16 @@ TEST(MinPellSolutions, BiggerValues) {
 }
 
 TEST(NextPellSolution, SmallValues) {
-  const u128 N = 100;
-  const u128 M = 10;
-  for (u128 d = 2; d <= N; ++d) {
+  const ntlib::u128 N = 100;
+  const ntlib::u128 M = 10;
+  for (ntlib::u128 d = 2; d <= N; ++d) {
     if (ntlib::is_square(d)) continue;
     const auto s0 = ntlib::min_pell_solution(d);
     const auto [x0, y0] = s0;
     EXPECT_EQ(x0 * x0 - d * y0 * y0, 1);
 
     auto last = s0;
-    for (u128 i = 0; i < M; ++i) {
+    for (ntlib::u128 i = 0; i < M; ++i) {
       const auto si = ntlib::next_pell_solution(d, s0, last);
       const auto [xi, yi] = si;
       EXPECT_EQ(xi * xi - d * yi * yi, 1);
