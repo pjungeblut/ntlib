@@ -67,19 +67,45 @@ template<typename T>
 }
 
 /**
+ * Computes the sign (`-1`, `0` or `1`) of number.
+ * 
+ * @param n The number.
+ * @return The sign.
+ */
+template <typename T>
+[[nodiscard]] constexpr
+int sgn(T n) noexcept {
+    return (T{0} < n) - (n < T{0});
+}
+
+/**
  * Given a number n, computes (e, o), such that n=2^e*o.
  * 
  * @param n The number to decompose.
  * @return A pair with e and o. 
  */
 template<typename T>
-[[nodiscard]] constexpr std::pair<T,T> odd_part(T n) noexcept {
-  T e{0};
-  while (n != T{0} && is_even(n)) {
-    n /= T{2};
-    ++e;
-  }
-  return std::make_pair(e, n);
+[[nodiscard]] constexpr
+std::pair<T,T> odd_part(T n) noexcept {
+  constexpr auto odd_part_non_negative = [](T n) {
+    if constexpr (std::is_integral_v<T>) {
+      using U = std::make_unsigned_t<T>;
+      const T e = std::countr_zero(static_cast<U>(n)) * (n != 0);
+      const T o = n >> e;
+      return std::make_pair(e, o);
+    } else {
+      T e{0};
+      while (n >= T{1} && is_even(n)) {
+        n /= T{2};
+        ++e;
+      }
+      return std::make_pair(e, n);
+    }
+  };
+
+  auto res = odd_part_non_negative(abs(n));
+  res.second *= sgn(n);
+  return res;
 }
 
 /**
