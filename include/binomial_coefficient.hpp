@@ -80,7 +80,7 @@ T mod_p_binom(T n, T k, T p) noexcept {
  */
 template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
-T mod_pp_binom(T n, T k, T p, T e) noexcept {
+T mod_pp_binom(T n, T k, T p, T e) {
   assert(n >= T{0});
 
   // Compute the modulus `pp`.
