@@ -21,6 +21,12 @@ struct crt_congruence {
   T m;
 };
 
+/**
+ * Chinese remainder theorem for the special case that all moduli are coprime.
+ * 
+ * @param congruences The list of congruences.
+ * @return The unique solution (must exists).
+ */
 template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 T crt_coprime(const std::vector<crt_congruence<T>> &congurences) noexcept {
