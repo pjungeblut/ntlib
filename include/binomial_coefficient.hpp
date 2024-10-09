@@ -9,10 +9,13 @@
 
 #include <algorithm>
 #include <cassert>
+#include <map>
 #include <type_traits>
 #include <vector>
 
+#include "chinese_remainder.hpp"
 #include "modulo.hpp"
+#include "prime_decomposition.hpp"
 #include "prime_test.hpp"
 
 namespace ntlib {
@@ -120,6 +123,35 @@ T mod_pp_binom(T n, T k, T p, T e) {
   res = mod(res * mod_mult_inv<T,S>(g[k], pp), pp);
   res = mod(res * mod_mult_inv<T,S>(g[n - k], pp), pp);
   return res;
+}
+
+/**
+ * Computes the binomial coefficient `binom(n,k)` modulo an arbitrary
+ * number `m`.
+ * 
+ * @param n The size of the universe.
+ * @param k The size of the subsets.
+ * @param m The modulus.
+ * @return The binomial coefficient `binom(n,k)` modulo `m`.
+ */
+template<typename T, typename S = std::make_signed_t<T>>
+[[nodiscard]] constexpr
+T mod_binom(T n, T k, T m) {
+  // Find prime decomposition of modulus.
+  std::map<T,T> factors;
+  prime_decomposition(m, factors);
+
+  // Compute for each prime power individually.
+  std::vector<crt_congruence<T>> congruences;
+  congruences.reserve(factors.size());
+  for (const auto [p, e] : factors) {
+    const T pp = pow(p, e);
+    const T res_mod_pp = mod_pp_binom<T,S>(n, k, p, e);
+    congruences.push_back(crt_congruence {res_mod_pp, pp});
+  }
+
+  // Use Chinese remainder theorem to get the result.
+  return crt_coprime<T,S>(congruences);
 }
 
 /**
