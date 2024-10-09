@@ -146,12 +146,12 @@ T mod_binom(T n, T k, T m) {
   congruences.reserve(factors.size());
   for (const auto [p, e] : factors) {
     const T pp = pow(p, e);
-    const T res_mod_pp = mod_pp_binom(n, k, p, e);
+    const T res_mod_pp = mod_pp_binom<T,S>(n, k, p, e);
     congruences.push_back(crt_congruence {res_mod_pp, pp});
   }
 
   // Use Chinese remainder theorem to get the result.
-  return crt_coprime(congruences);
+  return crt_coprime<T,S>(congruences);
 }
 
 /**
