@@ -277,8 +277,8 @@ TEST(IntegerLog2, Unsigned) {
 }
 
 TEST(IntegerLog2, NoBuiltin) {
-  for (ntlib::u128 i = 1; i < 1'000'000; ++i) {
-    ntlib::u128 cl2 = ntlib::ilog2(i);
+  for (int i = 1; i < 1'000'000; ++i) {
+    int cl2 = ntlib::ilog2(static_cast<double>(i));
     EXPECT_LE(1 << cl2, i);
     EXPECT_GT(1 << (cl2 + 1), i);
   }
