@@ -63,8 +63,8 @@ T mod_p_binom(T n, T k, T p) noexcept {
   assert(p > std::max(k, n - k));
 
   T res = mod_factorial(n, p);
-  res = mod(res * mod_mult_inv(mod_factorial(k, p), p), p);
-  res = mod(res * mod_mult_inv(mod_factorial(n - k, p), p), p);
+  res = mod(res * mod_mult_inv<T,S>(mod_factorial(k, p), p), p);
+  res = mod(res * mod_mult_inv<T,S>(mod_factorial(n - k, p), p), p);
   return res;
 }
 
