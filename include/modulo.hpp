@@ -176,6 +176,23 @@ template<typename T>
 }
 
 /**
+ * Computes the factorial `n!` of a given number `n` modulo `m`.
+ * 
+ * @param n The given number.
+ * @param m The modulus.
+ * @return The factorial `n!` modulo `m`.
+ */
+template<typename T>
+[[nodiscard]] constexpr
+T mod_factorial(T n, T m) {
+  T res = mod(T{1}, m);
+  while (n > 1) {
+    res = mod(res * n--, m);
+  }
+  return res;
+}
+
+/**
  * Computes the Legendre Symbol (a/p).
  *
  * @param a An integer.
