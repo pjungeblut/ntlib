@@ -129,6 +129,13 @@ TEST(ModularSquareRoot, SmallValues) {
   }
 }
 
+TEST(ModularFactorial, SmallValues) {
+  const uint64_t m = 1009;
+  for (uint64_t n = 0; n <= 20; ++n) {
+    EXPECT_EQ(ntlib::mod(ntlib::factorial(n), m), ntlib::mod_factorial(n, m));
+  }
+}
+
 TEST(LegendreSymbol, Prime3) {
   const auto l = std::to_array<int32_t>({2, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1,
       0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0});
