@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <array>
+#include <bit>
 #include <cassert>
 #include <climits>
 #include <cmath>
@@ -196,19 +197,13 @@ template<typename T>
 [[nodiscard]] constexpr T ilog2(T n) noexcept {
   assert(n > T{0});
 
-  constexpr T length = sizeof(T) * CHAR_BIT;
-  if constexpr (std::is_same_v<T, unsigned int> ||
-      std::is_same_v<T, int>) {
-    return length - __builtin_clz(static_cast<unsigned int>(n)) - 1;
-  } else if constexpr (std::is_same_v<T, unsigned long> ||
-      std::is_same_v<T, long>) {
-    return length - __builtin_clzl(static_cast<unsigned long>(n)) - 1;
-  } else if constexpr (std::is_same_v<T, unsigned long long> ||
-      std::is_same_v<T, long long>) {
-    return length - __builtin_clzll(static_cast<unsigned long long>(n)) - 1;
+  if constexpr (std::is_integral_v<T>) {
+    using U = std::make_unsigned_t<T>;
+    constexpr std::size_t length = sizeof(T) * CHAR_BIT;
+    return static_cast<T>(length - std::countl_zero(static_cast<U>(n)) - 1);
   } else {
     T result{0};
-    while (n >>= T{1}) ++result;
+    while ((n /= T{2}) >= T{1}) { ++result; }
     return result;
   }
 }
