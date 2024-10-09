@@ -40,8 +40,15 @@ static constexpr uint32_t SMALL_PRIMES_BIGGEST =
  * @return Whether n is odd.
  */
 template<typename T>
-[[nodiscard]] constexpr bool is_odd(T n) noexcept {
-  return n & T{1};
+[[nodiscard]] constexpr
+bool is_odd(T n) noexcept {
+  if constexpr (requires(T n) { n & T{1}; }) {
+    return n & T{1};
+  } else if constexpr (requires(T n) { n % T{2}; }) {
+    return n % T{2};
+  } else {
+    return abs(std::fmod(n, 2.0)) == 1.0;
+  }
 }
 
 /**
