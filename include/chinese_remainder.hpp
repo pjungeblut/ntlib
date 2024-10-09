@@ -15,7 +15,7 @@ namespace ntlib {
 /**
  * Represents a single congruence `x = a mod m`.
  */
-template<typename T, typename S = std::make_signed_t<T>>
+template<typename T>
 struct crt_congruence {
   T a;
   T m;
