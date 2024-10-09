@@ -50,12 +50,37 @@ TEST(Odd, SmallValues) {
   EXPECT_FALSE(ntlib::is_odd(2));
 }
 
+TEST(Odd, IntegerFloats) {
+  EXPECT_FALSE(ntlib::is_odd(-2.0));
+  EXPECT_TRUE(ntlib::is_odd(-1.0));
+  EXPECT_FALSE(ntlib::is_odd(0.0));
+  EXPECT_TRUE(ntlib::is_odd(1.0));
+  EXPECT_FALSE(ntlib::is_odd(2.0));
+}
+
+TEST(Odd, FractionalFloats) {
+  EXPECT_FALSE(ntlib::is_odd(0.5));
+}
+
 TEST(Even, SmallValues) {
   EXPECT_TRUE(ntlib::is_even(-2));
   EXPECT_FALSE(ntlib::is_even(-1));
   EXPECT_TRUE(ntlib::is_even(0));
   EXPECT_FALSE(ntlib::is_even(1));
   EXPECT_TRUE(ntlib::is_even(2));
+}
+
+TEST(Signum, SmallValues) {
+  EXPECT_EQ(ntlib::sgn(-2), -1);
+  EXPECT_EQ(ntlib::sgn(-1), -1);
+  EXPECT_EQ(ntlib::sgn(0), 0);
+  EXPECT_EQ(ntlib::sgn(1), 1);
+  EXPECT_EQ(ntlib::sgn(2), 1);
+}
+
+TEST(Signum, ExtremalValues) {
+  EXPECT_EQ(ntlib::sgn(min_int), -1);
+  EXPECT_EQ(ntlib::sgn(max_int), 1);
 }
 
 TEST(OddPart, SmallValues) {
@@ -72,6 +97,16 @@ TEST(OddPart, PowersOfTwo) {
   for (uint32_t i = 0; i < 32; ++i) {
     EXPECT_EQ(ntlib::odd_part(1u << i), std::make_pair(i, 1u));
   }
+}
+
+TEST(OddPart, Floats) {
+  EXPECT_EQ(ntlib::odd_part(-3.0), std::make_pair(0.0, -3.0));
+  EXPECT_EQ(ntlib::odd_part(-2.0), std::make_pair(1.0, -1.0));
+  EXPECT_EQ(ntlib::odd_part(-1.0), std::make_pair(0.0, -1.0));
+  EXPECT_EQ(ntlib::odd_part(0.0), std::make_pair(0.0, 0.0));
+  EXPECT_EQ(ntlib::odd_part(1.0), std::make_pair(0.0, 1.0));
+  EXPECT_EQ(ntlib::odd_part(2.0), std::make_pair(1.0, 1.0));
+  EXPECT_EQ(ntlib::odd_part(3.0), std::make_pair(0.0, 3.0));
 }
 
 TEST(AbsoluteValue, SmallValues) {
