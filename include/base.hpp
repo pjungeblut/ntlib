@@ -47,6 +47,7 @@ bool is_odd(T n) noexcept {
   } else if constexpr (requires(T n) { n % T{2}; }) {
     return n % T{2};
   } else {
+    assert(round(n) == n);
     return abs(std::fmod(n, 2.0)) == 1.0;
   }
 }
@@ -58,7 +59,8 @@ bool is_odd(T n) noexcept {
  * @return Whether n is even.
  */
 template<typename T>
-[[nodiscard]] constexpr bool is_even(T n) noexcept {
+[[nodiscard]] constexpr
+bool is_even(T n) noexcept {
   return !is_odd(n);
 }
 
@@ -69,7 +71,8 @@ template<typename T>
  * @return The absolute value of n.
  */
 template<typename T>
-[[nodiscard]] constexpr T abs(T n) noexcept {
+[[nodiscard]] constexpr
+T abs(T n) noexcept {
   return n >= T{0} ? n : -n;
 }
 
@@ -128,7 +131,8 @@ std::pair<T,T> odd_part(T n) noexcept {
  * @return The greatest common divisor of a and b.
  */
 template<typename T>
-[[nodiscard]] constexpr T gcd(T a, T b) noexcept {
+[[nodiscard]] constexpr
+T gcd(T a, T b) noexcept {
   assert(!(a == T{0} && b == T{0}));
   return b == T{0} ? abs(a) : gcd(b, a % b);
 }
@@ -145,7 +149,8 @@ template<typename T>
  * @return The least common multiple of a and b.
  */
 template<typename T>
-[[nodiscard]] constexpr T lcm(T a, T b) noexcept {
+[[nodiscard]] constexpr
+T lcm(T a, T b) noexcept {
   assert(a != T{0});
   assert(b != T{0});
   return abs(a) * (abs(b) / gcd(a, b));
@@ -160,7 +165,8 @@ template<typename T>
  * @return Tuple (gcd(a,b), x, y).
  */
 template<typename T, typename S = std::make_signed_t<T>>
-[[nodiscard]] constexpr std::tuple<T, S, S> extended_euclid(T a, T b) noexcept {
+[[nodiscard]] constexpr
+std::tuple<T, S, S> extended_euclid(T a, T b) noexcept {
   assert(!(a == T{0} && b == T{0}));
 
   // Extended Euclidean algorithm for non-negative values.
@@ -210,7 +216,8 @@ concept HasMultiplicativeNeutral = requires(T n) {
  * @return a^b
  */
 template<HasMultiplicativeNeutral A, typename B>
-[[nodiscard]] constexpr A pow(A a, B b) noexcept {
+[[nodiscard]] constexpr
+A pow(A a, B b) noexcept {
   assert(!(a == A{0} && b == B{0}));
   assert(b >= B{0});
 
@@ -227,7 +234,8 @@ template<HasMultiplicativeNeutral A, typename B>
  * @return floor(log2(n))
  */
 template<typename T>
-[[nodiscard]] constexpr T ilog2(T n) noexcept {
+[[nodiscard]] constexpr
+T ilog2(T n) noexcept {
   assert(n > T{0});
 
   if constexpr (std::is_integral_v<T>) {
@@ -249,7 +257,8 @@ template<typename T>
  * @return isqrt(n)
  */
 template<typename T>
-[[nodiscard]] constexpr T isqrt(T n) noexcept {
+[[nodiscard]] constexpr
+T isqrt(T n) noexcept {
   assert(n >= T{0});
 
   if constexpr ((std::is_integral_v<T> && sizeof(T) <= 4) ||
@@ -287,7 +296,8 @@ template<typename T>
  * @return True, iff n is a perfect square.
  */
 template<typename T>
-[[nodiscard]] constexpr bool is_square(T n) noexcept {
+[[nodiscard]] constexpr
+bool is_square(T n) noexcept {
   if (n < T{0}) { return false; }
   if (n == T{0}) { return true; }
 
@@ -340,7 +350,8 @@ template<typename T>
  * @return The factorial n!.
  */
 template<typename T>
-[[nodiscard]] constexpr T factorial(T n) noexcept {
+[[nodiscard]] constexpr
+T factorial(T n) noexcept {
   assert(n >= T{0});
 
   T result{1};

@@ -58,10 +58,6 @@ TEST(Odd, IntegerFloats) {
   EXPECT_FALSE(ntlib::is_odd(2.0));
 }
 
-TEST(Odd, FractionalFloats) {
-  EXPECT_FALSE(ntlib::is_odd(0.5));
-}
-
 TEST(Even, SmallValues) {
   EXPECT_TRUE(ntlib::is_even(-2));
   EXPECT_FALSE(ntlib::is_even(-1));
