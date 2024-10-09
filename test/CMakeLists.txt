@@ -7,6 +7,7 @@ endfunction()
 
 add_unittest(base)
 add_unittest(binomial_coefficient)
+add_unittest(chinese_remainder)
 add_unittest(ct_mod_int)
 add_unittest(diophantine)
 add_unittest(int128)
