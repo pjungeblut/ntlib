@@ -1,10 +1,26 @@
 #include <gtest/gtest.h>
 
+#include <cassert>
 #include <vector>
 
 #include "binomial_coefficient.hpp"
+#include "modulo.hpp"
+#include "prime_test.hpp"
 
-TEST(BinomialCoefficient, SingleValue) {
+// Prime modulus.
+static constexpr uint32_t MOD_P = 1009;
+// Prime power modulus.
+static constexpr uint32_t BASE_PRIME = 2;
+static constexpr uint32_t EXPONENT = 10;
+static constexpr uint32_t MOD_PP = ntlib::pow(BASE_PRIME, EXPONENT);
+// Non-prime power modulus.
+static constexpr uint32_t MOD = 2 * 2 * 3 * 3;
+
+// Chosen such that `binom(n, k)` fits into a 32 bit integer for all
+// `n,k <= MAX_N`.
+static constexpr uint32_t MAX_N = 29;
+
+TEST(OneShot, SmallValues) {
   // Test some sample values.
   EXPECT_EQ(ntlib::binom(10, -1), 0);
   EXPECT_EQ(ntlib::binom(10, 0), 1);
@@ -21,16 +37,41 @@ TEST(BinomialCoefficient, SingleValue) {
   EXPECT_EQ(ntlib::binom(10, 11), 0);
 }
 
-TEST(BinomialCoefficient, Table) {
-  std::vector<std::vector<int32_t>> binoms;
+TEST(OneShot, ModuloLargePrime) {
+  static_assert(MOD_P > MAX_N);
 
-  // Test some values.
-  // N = 29 is the biggest value such that ntlib::binom(N,_) does not overflow.
-  const int32_t N = 29;
-  ntlib::binom_table(N, binoms);
-  for (int32_t n = 0; n <= N; ++n) {
-    for (int32_t k = 0; k <= n; ++k) {
+  for (uint32_t n = 0; n <= MAX_N; ++n) {
+    for (uint32_t k = 0; k <= MAX_N; ++k) {
+      EXPECT_EQ(ntlib::mod(ntlib::binom(n, k), MOD_P),
+          ntlib::mod_p_binom(n, k, MOD_P));
+    }
+  }
+}
+
+TEST(OneShot, ModuloPrimePower) {
+  for (uint32_t n = 0; n <= MAX_N; ++n) {
+    for (uint32_t k = 0; k <= MAX_N; ++k) {
+      EXPECT_EQ(ntlib::mod(ntlib::binom(n, k), MOD_PP),
+          ntlib::mod_pp_binom(n, k, BASE_PRIME, EXPONENT));
+    }
+  }
+}
+
+TEST(Table, SmallValues) {
+  const auto binoms = ntlib::binom_table(MAX_N);
+  for (uint32_t n = 0; n <= MAX_N; ++n) {
+    for (uint32_t k = 0; k <= n; ++k) {
       EXPECT_EQ(binoms[n][k], ntlib::binom(n, k));
+    }
+  }
+}
+
+TEST(Table, Modulo) {
+  const auto binoms = ntlib::binom_table(MAX_N);
+  const auto mod_binoms = ntlib::mod_binom_table(MAX_N, MOD);
+  for (uint32_t n = 0; n <= MAX_N; ++n) {
+    for (uint32_t k = 0; k <= n; ++k) {
+      EXPECT_EQ(ntlib::mod(binoms[n][k], MOD), mod_binoms[n][k]);
     }
   }
 }
