@@ -151,7 +151,7 @@ T mod_binom(T n, T k, T m) {
   }
 
   // Use Chinese remainder theorem to get the result.
-  return crt_coprime<T,S>(congruences);
+  return crt_coprime<T,S>(congruences).a;
 }
 
 /**
