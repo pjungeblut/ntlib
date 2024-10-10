@@ -216,12 +216,11 @@ TEST(JacobiSymbol, PrimeDenominator) {
 
 TEST(JacobiSymbol, PrimeDecompositoin) {
   for (int32_t n = 1; n <= 1'000; n += 2) {
-    std::map<int32_t, int32_t> factors;
-    ntlib::prime_decomposition(n, factors);
+    const auto factors = ntlib::prime_decomposition(n);
     for (int32_t k = 0; k <= 1'000; ++k) {
       int32_t prod = 1;
-      for (auto [f, m] : factors) {
-        while (m--) prod *= ntlib::legendre(k, f);
+      for (auto [p, e] : factors) {
+        while (e--) prod *= ntlib::legendre(k, p);
       }
       EXPECT_EQ(ntlib::jacobi(k, n), prod);
     }

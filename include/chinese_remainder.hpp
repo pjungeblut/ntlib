@@ -5,7 +5,6 @@
  */
 
 #include <algorithm>
-#include <map>
 #include <numeric>
 #include <optional>
 #include <tuple>
@@ -87,8 +86,7 @@ std::optional<crt_congruence<T>> crt(
   // powers.
   std::vector<pp_crt_congruence> pp_congruences;
   for (const auto c : congruences) {
-    std::map<T,T> factors;
-    prime_decomposition(c.m, primes, factors);
+    const auto factors = prime_decomposition_complete_list(c.m, primes);
     for (const auto [p, e] : factors) {
       pp_congruences.push_back(pp_crt_congruence {mod(c.a, pow(p, e)), p, e});
     }
