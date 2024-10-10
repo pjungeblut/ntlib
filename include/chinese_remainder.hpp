@@ -38,7 +38,8 @@ struct crt_congruence {
  */
 template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
-T crt_coprime(const std::vector<crt_congruence<T>> &congurences) noexcept {
+crt_congruence<T> crt_coprime(
+    const std::vector<crt_congruence<T>> &congurences) noexcept {
   const T M = std::accumulate(congurences.begin(), congurences.end(), T{1},
       [](T prod, crt_congruence<T> c) {
     return prod * c.m;
@@ -50,7 +51,7 @@ T crt_coprime(const std::vector<crt_congruence<T>> &congurences) noexcept {
     const T N_i = mod_mult_inv<T,S>(M_i, c.m);
     res = mod(res + mod(c.a * M_i, M) * N_i, M);
   }
-  return res;
+  return crt_congruence {res, M};
 }
 
 /**
@@ -65,13 +66,8 @@ T crt_coprime(const std::vector<crt_congruence<T>> &congurences) noexcept {
  */
 template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
-std::optional<T> crt(const std::vector<crt_congruence<T>> &congruences) {
-  // Find global modulus.
-  const T M = std::accumulate(congruences.begin(), congruences.end(), T{1},
-      [](T prod, crt_congruence<T> c) {
-    return lcm(prod, c.m);
-  });
-
+std::optional<crt_congruence<T>> crt(
+    const std::vector<crt_congruence<T>> &congruences) {
   // Build list of primes, large enough to factor all moduli.
   const T max_mod = std::max_element(congruences.begin(), congruences.end(),
       [](crt_congruence<T> c1, crt_congruence<T> c2) {
@@ -121,7 +117,7 @@ std::optional<T> crt(const std::vector<crt_congruence<T>> &congruences) {
     } else {
       // Dominated congruence. Check for inconsistency.
       if (mod(flattened.back().a, pp) != pp_c.a) {
-        return std::optional<T>();
+        return std::optional<crt_congruence<T>>();
       }
     }
   }
