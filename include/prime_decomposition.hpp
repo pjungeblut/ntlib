@@ -55,7 +55,8 @@ std::pair<std::vector<prime_power<T>>,T> prime_decomposition_list(
  * Similar to `prime_decomposition_list` but also adds the remainder to the
  * result (with an exponent of `1`).
  * 
- * In case that `primes` contains all prime factors, the result will be correct.
+ * If `primes` contains all prime factors up to `floor(sqrt(n))`, then the
+ * result will be correct.
  * 
  * @param n The number to decompose.
  * @return A prime decompositon of `n`, i.e., a vector of prime powers.
@@ -104,6 +105,7 @@ std::vector<prime_power<T>> prime_decomposition(T n) {
 
 /**
  * Generates a list of all divisors of a number `n`.
+ * TODO: Move this to `divisor_function.hpp
  *
  * @param factors The prime factorization of `n`.
  * @return All divisors of `n`.

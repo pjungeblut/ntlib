@@ -7,35 +7,32 @@ namespace ntlib {
 namespace experiments {
 
 /**
- * Pollard's Rho algorithm to compute the prime decomposition of a given number.
- *
- * @param n The number to decompose.
- * @param factors The prime factors.
+ * Given an odd composite number `n`, tries to find a non-trivial (possibly
+ * non-prime) factor of `n` using Pollard's rho algorithm.
+ * Cycle detection by using Floyd's algorithm.
+ * 
+ * A usual choice for the polynomial function `f` would be:
+ * `f(x) = (x^2 + 1) mod n`.
+ * 
+ * @param n The odd composite.
+ * @param f A polynomial function to generate a "pseudorandom" sequence.
+ * @param x Initial value for parameter `x`.
+ * @return If successful, a non-trivial factor.
  */
-template<typename T>
-void pollard_rho(T n, std::map<T, T> &factors) {
-  const std::function<T(T)> rho = [&rho](T k) {
-    if (~k & 1) return static_cast<T>(2);
-    T x = rand() % k;
-    T y = x;
-    T d = 1;
-    while (d == 1) {
-      x = (x * x + 1) % k;
-      y = (y * y + 1) % k;
-      y = (y * y + 1) % k;
-      d = ntlib::gcd(x - y, k);
-    }
-    return d == k ? rho(k) : d;
-  };
+template<typename T, typename F>
+[[nodiscard]] constexpr
+std::optional<T> factor_pollard_rho_floyd(T n, F f, T x) {
+  T y = x;
+  T g = 1;
 
-  if (n <= 1) return;
-  if (is_prime(n)) {
-    ++factors[n];
-    return;
+  while (d == 1) {
+    x = f(x);
+    y = f(f(y));
+    g = gcd(abs(x - y), n);
   }
-  T f = rho(n);
-  pollard_rho(n / f, factors);
-  pollard_rho(f, factors);
+
+  if (d == n) { return std::optional<T>(); }
+  else { return d; }
 }
 
 }
