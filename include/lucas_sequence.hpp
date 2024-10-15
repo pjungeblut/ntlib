@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cassert>
-#include <cstddef>
 #include <utility>
 
 #include "base.hpp"
@@ -11,22 +10,22 @@
 namespace ntlib {
 
 /**
- * Computes the n-th terms of the Lucas sequences U(P,Q) and V(P,Q) of the first
- * and second kind.
- * Runtime: O(log n)
+ * Computes the `n`-th terms of the Lucas sequences `U(P,Q)` and `V(P,Q)` of the
+ * first and second kind.
+ * Runtime: `O(log n)`
  *
  * @param n Which term to compute.
- * @param P Parameter P.
- * @param Q Parameter Q.
- * @return A pair with the U_n(P,Q) as the first element and V_n(P,Q) as the
- *         second element.
+ * @param P Parameter `P`.
+ * @param Q Parameter `Q`.
+ * @return A pair with `U_n(P,Q)` as the first element and `V_n(P,Q)` as the
+ *     second element.
  */
-template <typename T>
+template <typename N, typename T>
 [[nodiscard]] constexpr
-std::pair<T, T> lucas_nth_term(std::size_t n, T P, T Q) {
-  if (n == 0) {
+std::pair<T, T> lucas_nth_term(N n, T P, T Q) {
+  if (n == N{0}) {
     return std::make_pair(T{0}, T{2});
-  } else if (n == 1) {
+  } else if (n == N{1}) {
     return std::make_pair(T{1}, P);
   } else {
     matrix<T> mat({{P, -Q}, {T{1}, T{0}}});
@@ -40,27 +39,27 @@ std::pair<T, T> lucas_nth_term(std::size_t n, T P, T Q) {
 }
 
 /**
- * Computes the n-th terms of the Lucas sequences U(P,Q) and V(P,Q) of the first
- * and second kind modulo a fixed number.
+ * Computes the `n`-th terms of the Lucas sequences `U(P,Q)` and `V(P,Q)` of the
+ * first and second kind modulo a fixed number `m`.
  * Runtime: O(log n)
  *
  * @param n Which term to compute.
- * @param P Parameter P.
- * @param Q Parameter Q.
+ * @param P Parameter `P`.
+ * @param Q Parameter `Q`.
  * @param m The modulus.
- * @return A pair with the U_n(P,Q) as the first element and V_n(P,Q) as the
- *         second element modulo m.
+ * @return A pair with `U_n(P,Q)` as the first element and `V_n(P,Q)` as the
+ *         second element, both modulo `m`.
  */
-template <typename T>
+template <typename N, typename T>
 [[nodiscard]] constexpr
-std::pair<T, T> mod_lucas_nth_term(std::size_t n, T P, T Q, T m) {
+std::pair<T, T> mod_lucas_nth_term(N n, T P, T Q, T m) {
   // Check that T is a signed type.
   static_assert(T{-1} < T{1});
   assert(m > T{0});
 
-  if (n == 0) {
+  if (n == N{0}) {
     return std::make_pair(T{0}, mod(T{2}, m));
-  } else if (n == 1) {
+  } else if (n == N{1}) {
     return std::make_pair(T{1}, mod(P, m));
   } else {
     matrix<T> mat({{mod(P, m), mod(-Q, m)}, {T{1}, T{0}}});
