@@ -117,7 +117,7 @@ std::optional<T> find_factor_pollard_rho_mult(T n, F f, T x,
     for (std::size_t i = 0; i < MULTIPLICATIONS; ++i) {
       x = f(x);
       y = f(f(y));
-      prod = u128{prod} * distance(x, y) % n;
+      prod = u128{prod} * difference(x, y) % n;
     }
     g = gcd(prod, n);
   }
@@ -126,7 +126,7 @@ std::optional<T> find_factor_pollard_rho_mult(T n, F f, T x,
     do {
       xs = f(xs);
       ys = f(f(ys));
-      g = gcd(distance(xs, ys), n);
+      g = gcd(difference(xs, ys), n);
     } while (g == T{1});
   }
 

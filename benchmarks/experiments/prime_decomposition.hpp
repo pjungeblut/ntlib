@@ -20,7 +20,7 @@ std::optional<T> find_factor_pollard_rho(T n, F f, T x) {
   while (g == T{1}) {
     x = f(x);
     y = f(f(y));
-    g = gcd(distance(x, y), n);
+    g = gcd(difference(x, y), n);
   }
 
   if (g == n) { return std::optional<T>(); }
@@ -38,7 +38,7 @@ std::optional<T> find_factor_pollard_rho_brent(T n, F f, T x) {
   while (g == T{1}) {
     ++i;
     x = f(x);
-    g = gcd(distance(x, y), n);
+    g = gcd(difference(x, y), n);
     if (i == k) {
       y = x;
       k *= 2;
@@ -67,7 +67,7 @@ std::optional<T> find_factor_pollard_rho_cpalgos(T n, F f, T x) {
       xs = x;
       for (std::size_t i = 0; i < m && i < l - k; ++i) {
         x = f(x);
-        q = u128{q} * distance(x, y) % n;
+        q = u128{q} * difference(x, y) % n;
       }
       g = gcd(q, n);
       k += m;
@@ -78,7 +78,7 @@ std::optional<T> find_factor_pollard_rho_cpalgos(T n, F f, T x) {
   if (g == n) {
     do {
       xs = f(xs);
-      g = gcd(distance(xs, y), n);
+      g = gcd(difference(xs, y), n);
     } while (g == T{1});
   }
 
