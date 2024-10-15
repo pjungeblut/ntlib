@@ -98,20 +98,36 @@ std::vector<prime_power<T>> prime_decomposition_32(T n) {
  * @param n The odd composite.
  * @param f A polynomial function to generate a "pseudorandom" sequence.
  * @param x Initial value for parameter `x`.
+ * @param MULTIPLICATIONS The number of multiplications to do instead of
+ *     expensive gcd-calls.
  * @return If successful, a non-trivial factor.
  */
 template<typename T, typename F>
 [[nodiscard]] constexpr
-std::optional<T> factor_pollard_rho_floyd(T n, F f, T x) {
-  assert(!is_prime(n));
-
+std::optional<T> factor_pollard_rho_mult(T n, F f, T x,
+    const std::size_t MULTIPLICATIONS = 128) {
   T y = x;
   T g{1};
 
+  T xs, ys;
   while (g == T{1}) {
-    x = f(x);
-    y = f(f(y));
-    g = gcd(distance(x, y), n);
+    T prod{1};
+    xs = x;
+    ys = y;
+    for (std::size_t i = 0; i < MULTIPLICATIONS; ++i) {
+      x = f(x);
+      y = f(f(y));
+      prod = u128{prod} * distance(x, y) % n;
+    }
+    g = gcd(prod, n);
+  }
+
+  if (g == n) {
+    do {
+      xs = f(xs);
+      ys = f(f(ys));
+      g = gcd(distance(xs, ys), n);
+    } while (g == T{1});
   }
 
   if (g == n) { return std::optional<T>(); }
@@ -137,10 +153,10 @@ T find_factor(T n) {
   };
 
   T x0 = 2;
-  std::optional<T> res = factor_pollard_rho_floyd(n, poly, x0);
+  std::optional<T> res = factor_pollard_rho_mult(n, poly, x0);
   while (!res.has_value()) {
     ++x0;
-    res = factor_pollard_rho_floyd(n, poly, x0);
+    res = factor_pollard_rho_mult(n, poly, x0);
   }
   return res.value();
 }
