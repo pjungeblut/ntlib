@@ -22,9 +22,10 @@ static constexpr auto COMPOSITES = std::to_array<ntlib::u128>({
 
 // Large primes.
 static constexpr auto PRIMES = std::to_array<ntlib::u128>({
-    1'000'000'007,
-    952'016'363'681'739'749LL,
-    301'697'296'732'166'057LL
+    1'000'000'007ull,
+    952'016'363'681'739'749ull,
+    301'697'296'732'166'057ull,
+    9'223'372'036'854'775'783ull // = largest prime fitting into `int64_t`
 });
 
 TEST(TrialDivision, FirstN) {

@@ -118,6 +118,17 @@ TEST(AbsoluteValue, CornerCases) {
   EXPECT_EQ(ntlib::abs(max_uint), max_uint);
 }
 
+TEST(Distance, SmallValues) {
+  EXPECT_EQ(ntlib::distance(0, 0), 0);
+  EXPECT_EQ(ntlib::distance(0, 10), 10);
+  EXPECT_EQ(ntlib::distance(-10, 10), 20);
+}
+
+TEST(Distance, ExtremalValues) {
+  EXPECT_EQ(ntlib::distance(min_int, max_int), max_uint);
+  EXPECT_EQ(ntlib::distance(0u, max_uint), max_uint);
+}
+
 TEST(GreatestCommonDivisor, OneParameterZero) {
   EXPECT_EQ(ntlib::gcd(10, 0), 10);
   EXPECT_EQ(ntlib::gcd(0, 10), 10);

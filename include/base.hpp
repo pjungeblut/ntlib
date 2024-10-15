@@ -77,6 +77,21 @@ T abs(T n) noexcept {
 }
 
 /**
+ * Computes the distance between two numbers.
+ * For integral types this is safe against overflows.
+ * 
+ * @param a The first number.
+ * @param b The second number.
+ * @return The distance, i.e., `abs(a-b)`.
+ */
+template<typename T, typename U = std::make_unsigned_t<T>>
+[[nodiscard]] constexpr
+U distance(T a, T b) noexcept {
+  if (a > b) return static_cast<U>(a) - b;
+  else return static_cast<U>(b) - a;
+}
+
+/**
  * Computes the sign (`-1`, `0` or `1`) of number.
  * 
  * @param n The number.

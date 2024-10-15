@@ -1,41 +1,89 @@
 #pragma once
 
-#include "base.hpp"
+#include "../../include/int128.hpp"
+#include "../../include/prime_decomposition.hpp"
+#include "../../include/prime_list.hpp"
 #include "../../include/prime_test.hpp"
+#include "base.hpp"
 
 namespace ntlib {
 namespace experiments {
 
-/**
- * Pollard's Rho algorithm to compute the prime decomposition of a given number.
- *
- * @param n The number to decompose.
- * @param factors The prime factors.
- */
-template<typename T>
-void pollard_rho(T n, std::map<T, T> &factors) {
-  const std::function<T(T)> rho = [&rho](T k) {
-    if (~k & 1) return static_cast<T>(2);
-    T x = rand() % k;
-    T y = x;
-    T d = 1;
-    while (d == 1) {
-      x = (x * x + 1) % k;
-      y = (y * y + 1) % k;
-      y = (y * y + 1) % k;
-      d = ntlib::gcd(x - y, k);
-    }
-    return d == k ? rho(k) : d;
-  };
+template<typename T, typename F>
+[[nodiscard]] constexpr
+std::optional<T> find_factor_pollard_rho(T n, F f, T x) {
+  assert(!is_prime(n));
 
-  if (n <= 1) return;
-  if (is_prime(n)) {
-    ++factors[n];
-    return;
+  T y = x;
+  T g{1};
+
+  while (g == T{1}) {
+    x = f(x);
+    y = f(f(y));
+    g = gcd(distance(x, y), n);
   }
-  T f = rho(n);
-  pollard_rho(n / f, factors);
-  pollard_rho(f, factors);
+
+  if (g == n) { return std::optional<T>(); }
+  else { return g; }
+}
+
+template<typename T, typename F>
+[[nodiscard]] constexpr
+std::optional<T> find_factor_pollard_rho_brent(T n, F f, T x) {
+  T y = x;
+  T g{1};
+
+  std::size_t i = 1;
+  std::size_t k = 2;
+  while (g == T{1}) {
+    ++i;
+    x = f(x);
+    g = gcd(distance(x, y), n);
+    if (i == k) {
+      y = x;
+      k *= 2;
+    }
+  }
+
+  if (g == n) { return std::optional<T>(); }
+  else { return g; }
+}
+
+template<typename T, typename F>
+[[nodiscard]] constexpr
+std::optional<T> find_factor_pollard_rho_cpalgos(T n, F f, T x) {
+  T g{1};
+  T q{1};
+  T xs, y;
+
+  std::size_t m = 128;
+  std::size_t l = 1;
+
+  while (g == T{1}) {
+    y = x;
+    for (std::size_t i = 1; i < l; i++) { x = f(x); }
+    std::size_t k = 0;
+    while (k < l && g == T{1}) {
+      xs = x;
+      for (std::size_t i = 0; i < m && i < l - k; ++i) {
+        x = f(x);
+        q = u128{q} * distance(x, y) % n;
+      }
+      g = gcd(q, n);
+      k += m;
+    }
+    l *= 2;
+  }
+
+  if (g == n) {
+    do {
+      xs = f(xs);
+      g = gcd(distance(xs, y), n);
+    } while (g == T{1});
+  }
+
+  if (g == n) { return std::optional<T>(); }
+  else { return g; }
 }
 
 }
