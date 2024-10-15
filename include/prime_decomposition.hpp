@@ -101,8 +101,8 @@ std::vector<prime_power<T>> prime_decomposition_32(T n) {
  * @return If successful, a non-trivial factor.
  */
 template<typename T, typename F>
-[[nodiscard]] constexpr std::optional<T> factor_pollard_rho_floyd(
-    T n, F f, T x) {
+[[nodiscard]] constexpr
+std::optional<T> factor_pollard_rho_floyd(T n, F f, T x) {
   assert(!is_prime(n));
 
   T y = x;
@@ -114,11 +114,8 @@ template<typename T, typename F>
     g = gcd(distance(x, y), n);
   }
 
-  if (g == n) {
-    return std::optional<T>();
-  } else {
-    return g;
-  }
+  if (g == n) { return std::optional<T>(); }
+  else { return g; }
 }
 
 /**
