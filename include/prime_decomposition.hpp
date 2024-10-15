@@ -2,11 +2,13 @@
 
 #include <cstddef>
 #include <cstdlib>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
 #include "base.hpp"
 #include "prime_generation.hpp"
+#include "prime_list.hpp"
 #include "prime_test.hpp"
 
 namespace ntlib {
@@ -73,6 +75,114 @@ std::vector<prime_power<T>> prime_decomposition_complete_list(
 }
 
 /**
+ * Computes the prime decomposition of a 32 bit number `n`.
+ * 
+ * @param n The given number.
+ * @return A vector of prime powers.
+ */
+template<typename T>
+[[nodiscard]] constexpr
+std::vector<prime_power<T>> prime_decomposition_32(T n) {
+  static_assert(sizeof(T) <= 4);
+  return prime_decomposition_complete_list(n, PRIMES_BELOW_2_16);
+}
+
+/**
+ * Given an odd composite number `n`, tries to find a non-trivial (possibly
+ * non-prime) factor of `n` using Pollard's rho algorithm.
+ * Cycle detection by using Floyd's algorithm.
+ *
+ * A usual choice for the polynomial function `f` would be:
+ * `f(x) = (x^2 + 1) mod n`.
+ *
+ * @param n The odd composite.
+ * @param f A polynomial function to generate a "pseudorandom" sequence.
+ * @param x Initial value for parameter `x`.
+ * @return If successful, a non-trivial factor.
+ */
+template<typename T, typename F>
+[[nodiscard]] constexpr std::optional<T> factor_pollard_rho_floyd(
+    T n, F f, T x) {
+  assert(!is_prime(n));
+
+  T y = x;
+  T g{1};
+
+  while (g == T{1}) {
+    x = f(x);
+    y = f(f(y));
+    g = gcd(distance(x, y), n);
+  }
+
+  if (g == n) {
+    return std::optional<T>();
+  } else {
+    return g;
+  }
+}
+
+/**
+ * Given a composite number `n`, finds a non-trivial factor.
+ * 
+ * @param n The given number.
+ * @return A non-trivial factor.
+ */
+template<typename T>
+[[nodiscard]] constexpr
+T find_factor(T n) {
+  // A polynomial (modulo `n`) simulating a pseudorandom function.
+  const auto poly = [n](T x) {
+    if constexpr (std::is_integral_v<T> && sizeof(T) <= 8) {
+      return static_cast<T>((u128{x} * x + 1) % n);
+    } else {
+      return (x * x + 1) % n;
+    }
+  };
+
+  T x0 = 2;
+  std::optional<T> res = factor_pollard_rho_floyd(n, poly, x0);
+  while (!res.has_value()) {
+    ++x0;
+    res = factor_pollard_rho_floyd(n, poly, x0);
+  }
+  return res.value();
+}
+
+/**
+ * Decomposes a given number `n` into its prime decomposition.
+ * Does not use trial division with small prime factors.
+ * 
+ * @param n The given number.
+ * @return A vector of prime powers.
+ */
+template<typename T>
+[[nodiscard]] constexpr
+std::vector<prime_power<T>> prime_decomposition_large(T n) {
+  // Base cases.
+  if (is_prime(n)) { return {prime_power<T>{n, T{1}}}; }
+
+  // Find a non-trivial factor.
+  const T f = find_factor(n);
+  n /= f;
+
+  // Decompose factor and reduce `n` by all found prime factors.
+  std::vector<prime_power<T>> factors = prime_decomposition_large(f);
+  for (auto &[p, e] : factors) {
+    while (n % p == 0) {
+      n /= p;
+      ++e;
+    }
+  }
+  if (n == 1) { return factors; }
+
+  // Decompose remainder and add its prime factors to the result.
+  // No duplicate entries as remainder is coprime to all previous factors.
+  const std::vector<prime_power<T>> rem = prime_decomposition_large(n);
+  factors.insert(factors.end(), rem.begin(), rem.end());
+  return factors;
+}
+
+/**
  * Computes the prime decomposition of a given number `n`.
  *
  * @param n The given number.
@@ -81,26 +191,25 @@ std::vector<prime_power<T>> prime_decomposition_complete_list(
 template<typename T>
 [[nodiscard]] constexpr
 std::vector<prime_power<T>> prime_decomposition(T n) {
-  // Start by checking small prime factors without using a sieve.
-  auto res_list = prime_decomposition_list(n, SMALL_PRIMES);
-  auto factors{std::move(res_list.first)};
-  const T remainder = res_list.second;
-  if (remainder == 1) { return factors; }
-  if (is_prime(remainder)) {
-    factors.push_back(prime_power<T>{remainder, T{1}});
+  assert(n >= T{1});
+
+  if constexpr (std::is_integral_v<T> && sizeof(T) <= 4) {
+    return prime_decomposition_32(n);
+  } else {
+    // Start by trial division with small primes.
+    auto res_list = prime_decomposition_list(n, SMALL_PRIMES);
+    std::vector<prime_power<T>> factors{std::move(res_list.first)};
+    const T remainder = res_list.second;
+    if (remainder == 1) { return factors; }
+
+    // Continue with the remainder.
+    const std::vector<prime_power<uint64_t>> factors_rem =
+        prime_decomposition_large(remainder);
+
+    // Concatenate lists of prime powers.
+    factors.insert(factors.end(), factors_rem.begin(), factors_rem.end());
     return factors;
   }
-
-  // Continue with the remainder.
-  // All its prime factors must be bigger than `SMALL_PRIMES_BIGGEST`.
-  const T iroot = isqrt(remainder);
-  std::vector<T> primes;
-  prime_sieve(iroot, primes);
-  auto rem_list = prime_decomposition_complete_list(remainder, primes);
-
-  // Append factors of the remainder.
-  factors.insert(factors.end(), rem_list.begin(), rem_list.end());
-  return factors;
 }
 
 /**
