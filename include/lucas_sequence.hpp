@@ -23,7 +23,7 @@ namespace ntlib {
  */
 template <typename T>
 [[nodiscard]] constexpr
-std::pair<T, T> lucas_nth_term(std::size_t n, T p, T q) noexcept {
+std::pair<T, T> lucas_nth_term(std::size_t n, T p, T q) {
   if (n == 0) {
     return std::make_pair(T{0}, T{2});
   } else if (n == 1) {
@@ -53,7 +53,7 @@ std::pair<T, T> lucas_nth_term(std::size_t n, T p, T q) noexcept {
  */
 template <typename T>
 [[nodiscard]] constexpr
-std::pair<T, T> mod_lucas_nth_term(std::size_t n, T p, T q, T m) noexcept {
+std::pair<T, T> mod_lucas_nth_term(std::size_t n, T p, T q, T m) {
   // Check that T is a signed type.
   static_assert(T{-1} < T{1});
   assert(m > T{0});
