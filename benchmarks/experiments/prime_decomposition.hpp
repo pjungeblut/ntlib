@@ -11,7 +11,7 @@ namespace experiments {
 
 template<typename T, typename F>
 [[nodiscard]] constexpr
-std::optional<T> factor_pollard_rho(T n, F f, T x) {
+std::optional<T> find_factor_pollard_rho(T n, F f, T x) {
   assert(!is_prime(n));
 
   T y = x;
@@ -29,7 +29,7 @@ std::optional<T> factor_pollard_rho(T n, F f, T x) {
 
 template<typename T, typename F>
 [[nodiscard]] constexpr
-std::optional<T> factor_pollard_rho_brent(T n, F f, T x) {
+std::optional<T> find_factor_pollard_rho_brent(T n, F f, T x) {
   T y = x;
   T g{1};
 
@@ -51,7 +51,7 @@ std::optional<T> factor_pollard_rho_brent(T n, F f, T x) {
 
 template<typename T, typename F>
 [[nodiscard]] constexpr
-std::optional<T> factor_pollard_rho_cpalgos(T n, F f, T x) {
+std::optional<T> find_factor_pollard_rho_cpalgos(T n, F f, T x) {
   T g{1};
   T q{1};
   T xs, y;

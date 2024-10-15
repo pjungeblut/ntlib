@@ -104,8 +104,8 @@ std::vector<prime_power<T>> prime_decomposition_32(T n) {
  */
 template<typename T, typename F>
 [[nodiscard]] constexpr
-std::optional<T> factor_pollard_rho_mult(T n, F f, T x,
-    const std::size_t MULTIPLICATIONS = 128) {
+std::optional<T> find_factor_pollard_rho_mult(T n, F f, T x,
+    const std::size_t MULTIPLICATIONS = 128) noexcept {
   T y = x;
   T g{1};
 
@@ -142,7 +142,7 @@ std::optional<T> factor_pollard_rho_mult(T n, F f, T x,
  */
 template<typename T>
 [[nodiscard]] constexpr
-T find_factor(T n) {
+T find_factor(T n) noexcept {
   // A polynomial (modulo `n`) simulating a pseudorandom function.
   const auto poly = [n](T x) {
     if constexpr (std::is_integral_v<T> && sizeof(T) <= 8) {
@@ -153,10 +153,10 @@ T find_factor(T n) {
   };
 
   T x0 = 2;
-  std::optional<T> res = factor_pollard_rho_mult(n, poly, x0);
+  std::optional<T> res = find_factor_pollard_rho_mult(n, poly, x0);
   while (!res.has_value()) {
     ++x0;
-    res = factor_pollard_rho_mult(n, poly, x0);
+    res = find_factor_pollard_rho_mult(n, poly, x0);
   }
   return res.value();
 }

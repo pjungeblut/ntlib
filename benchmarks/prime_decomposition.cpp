@@ -73,7 +73,7 @@ static void BM_factor_pollard_rho(benchmark::State &state) {
     for (const uint64_t p : large_primes) {
       const uint64_t n = p * p;
       const auto f = [n](uint64_t x) { return (ntlib::u128{x} * x + 1) % n; };
-      auto res = ntlib::experiments::factor_pollard_rho(n, f, 2ul);
+      auto res = ntlib::experiments::find_factor_pollard_rho(n, f, 2ul);
       benchmark::DoNotOptimize(res);
     }
   }
@@ -86,7 +86,7 @@ static void BM_factor_pollard_rho_mult(benchmark::State &state) {
     for (const uint64_t p : large_primes) {
       const uint64_t n = p * p;
       const auto f = [n](uint64_t x) { return (ntlib::u128{x} * x + 1) % n; };
-      auto res = ntlib::factor_pollard_rho_mult(
+      auto res = ntlib::find_factor_pollard_rho_mult(
           n, f, 2ul, state.range(0));
       benchmark::DoNotOptimize(res);
     }
@@ -104,7 +104,7 @@ static void BM_factor_pollard_rho_brent(benchmark::State &state) {
     for (const uint64_t p : large_primes) {
       const uint64_t n = p * p;
       const auto f = [n](uint64_t x) { return (ntlib::u128{x} * x + 1) % n; };
-      auto res = ntlib::experiments::factor_pollard_rho_brent(n, f, 2ul);
+      auto res = ntlib::experiments::find_factor_pollard_rho_brent(n, f, 2ul);
       benchmark::DoNotOptimize(res);
     }
   }
@@ -117,7 +117,7 @@ static void BM_factor_pollard_rho_cpalgos(benchmark::State &state) {
     for (const uint64_t p : large_primes) {
       const uint64_t n = p * p;
       const auto f = [n](uint64_t x) { return (ntlib::u128{x} * x + 1) % n; };
-      auto res = ntlib::experiments::factor_pollard_rho_cpalgos(n, f, 2ul);
+      auto res = ntlib::experiments::find_factor_pollard_rho_cpalgos(n, f, 2ul);
       benchmark::DoNotOptimize(res);
     }
   }
