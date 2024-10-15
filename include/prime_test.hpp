@@ -215,7 +215,7 @@ bool is_strong_lucas_probable_prime(U n) noexcept {
   auto [e, o] = odd_part(n + U{1});
 
   // Strong Lucas probable prime test.
-  auto [u, v] = lucas_nth_term_mod(o, P, Q, static_cast<S>(n));
+  auto [u, v] = mod_lucas_nth_term(o, P, Q, static_cast<S>(n));
   if (u == S{0} || v == S{0}) { return true; }
   while (--e) {
     S uu = mod(u * v, static_cast<S>(n));

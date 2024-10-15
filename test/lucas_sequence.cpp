@@ -17,11 +17,11 @@ TEST(Lucas, BaseCases) {
       EXPECT_EQ(u1, 1);
       EXPECT_EQ(v1, p);
 
-      const auto [um0, vm0] = ntlib::lucas_nth_term_mod(0, p, q, 11);
+      const auto [um0, vm0] = ntlib::mod_lucas_nth_term(0, p, q, 11);
       EXPECT_EQ(um0, 0);
       EXPECT_EQ(vm0, 2);
 
-      const auto [um1, vm1] = ntlib::lucas_nth_term_mod(1, p, q, 11);
+      const auto [um1, vm1] = ntlib::mod_lucas_nth_term(1, p, q, 11);
       EXPECT_EQ(um1, 1);
       EXPECT_EQ(vm1, ntlib::mod(p, 11));
     }
@@ -49,7 +49,7 @@ TEST(Lucas, PQ_P1_N1) {
     EXPECT_EQ(un, u[n]);
     EXPECT_EQ(vn, v[n]);
 
-    const auto [um, vm] = ntlib::lucas_nth_term_mod(n, P, Q, MOD);
+    const auto [um, vm] = ntlib::mod_lucas_nth_term(n, P, Q, MOD);
     EXPECT_EQ(um, ntlib::mod(u[n], MOD));
     EXPECT_EQ(vm, ntlib::mod(v[n], MOD));
   }
@@ -75,7 +75,7 @@ TEST(Lucas, PQ_P4_N3) {
     EXPECT_EQ(un, u[n]);
     EXPECT_EQ(vn, v[n]);
 
-    const auto [um, vm] = ntlib::lucas_nth_term_mod(n, P, Q, MOD);
+    const auto [um, vm] = ntlib::mod_lucas_nth_term(n, P, Q, MOD);
     EXPECT_EQ(um, ntlib::mod(u[n], MOD));
     EXPECT_EQ(vm, ntlib::mod(v[n], MOD));
   }
@@ -101,7 +101,7 @@ TEST(Lucas, PQ_P3_N5) {
     EXPECT_EQ(un, u[n]);
     EXPECT_EQ(vn, v[n]);
 
-    const auto [um, vm] = ntlib::lucas_nth_term_mod(n, P, Q, MOD);
+    const auto [um, vm] = ntlib::mod_lucas_nth_term(n, P, Q, MOD);
     EXPECT_EQ(um, ntlib::mod(u[n], MOD));
     EXPECT_EQ(vm, ntlib::mod(v[n], MOD));
   }
@@ -129,7 +129,7 @@ TEST(Lucas, PQ_P6_P1) {
     EXPECT_EQ(un, u[n]);
     EXPECT_EQ(vn, v[n]);
 
-    const auto [um, vm] = ntlib::lucas_nth_term_mod(n, P, Q, MOD);
+    const auto [um, vm] = ntlib::mod_lucas_nth_term(n, P, Q, MOD);
     EXPECT_EQ(um, ntlib::mod(u[n], MOD));
     EXPECT_EQ(vm, ntlib::mod(v[n], MOD));
   }
@@ -155,7 +155,7 @@ TEST(Lucas, PQ_P1_P2) {
     EXPECT_EQ(un, u[n]);
     EXPECT_EQ(vn, v[n]);
 
-    const auto [um, vm] = ntlib::lucas_nth_term_mod(n, P, Q, MOD);
+    const auto [um, vm] = ntlib::mod_lucas_nth_term(n, P, Q, MOD);
     EXPECT_EQ(um, ntlib::mod(u[n], MOD));
     EXPECT_EQ(vm, ntlib::mod(v[n], MOD));
   }
