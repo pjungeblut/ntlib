@@ -15,7 +15,8 @@ namespace ntlib {
  * @return The number of divisors.
  */
 template<typename T>
-T count_divisors(const std::vector<prime_power<T>> &factors) {
+[[nodiscard]] constexpr
+T count_divisors(const std::vector<prime_power<T>> &factors) noexcept {
   return std::accumulate(factors.begin(), factors.end(), T{1},
       [](T res, prime_power<T> pp) {
     return res *= pp.e + 1;
@@ -31,7 +32,9 @@ T count_divisors(const std::vector<prime_power<T>> &factors) {
  * @return The value of d_x(n) = \sum_{d|n} d^x.
  */
 template<typename T>
-T divisor_function(const std::vector<prime_power<T>> &factors, T exponent) {
+[[nodiscard]] constexpr
+T divisor_function(
+    const std::vector<prime_power<T>> &factors, T exponent) noexcept {
   assert(exponent >= T{0});
 
   // General formula below requires `exponent > 0`, so we use `count_divisors`
