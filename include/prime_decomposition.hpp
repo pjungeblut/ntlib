@@ -225,28 +225,4 @@ std::vector<prime_power<T>> prime_decomposition(T n) {
   }
 }
 
-/**
- * Generates a list of all divisors of a number `n`.
- * TODO: Move this to `divisor_function.hpp
- *
- * @param factors The prime factorization of `n`.
- * @return All divisors of `n`.
- */
-template<typename T>
-[[nodiscard]] constexpr
-std::vector<T> enumerate_divisors(const std::vector<prime_power<T>> &factors) {
-  std::vector<T> divisors(1, T{1});
-  for (auto [p, e] : factors) {
-    const std::size_t cur_num_divisors = divisors.size();
-    T power = p;
-    while (e--) {
-      for (std::size_t i = 0; i < cur_num_divisors; ++i) {
-        divisors.push_back(divisors[i] * power);
-      }
-      power *= p;
-    }
-  }
-  return divisors;
-}
-
 }
