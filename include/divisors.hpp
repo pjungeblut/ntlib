@@ -27,25 +27,24 @@ T count_divisors(const std::vector<prime_power<T>> &factors) noexcept {
  * Computes the divisor function for a number `n`.
  *
  * @param factors The prime factorization of `n`.
- * @param exponent The power to which all divisors should be taken.
+ * @param x The power to which all divisors should be taken.
  *     Must be non-negative.
  * @return The value of d_x(n) = \sum_{d|n} d^x.
  */
 template<typename T>
 [[nodiscard]] constexpr
 T divisor_function(
-    const std::vector<prime_power<T>> &factors, T exponent) noexcept {
-  assert(exponent >= T{0});
+    const std::vector<prime_power<T>> &factors, T x) noexcept {
+  assert(x >= T{0});
 
-  // General formula below requires `exponent > 0`, so we use `count_divisors`
-  // instead.
-  if (exponent == 0) { return count_divisors(factors); }
+  // General formula below requires `x > 0`, so we use `count_divisors` instead.
+  if (x == 0) { return count_divisors(factors); }
 
   return std::accumulate(factors.begin(), factors.end(), T{1},
-      [exponent](T res, prime_power<T> pp) {
+      [x](T res, prime_power<T> pp) {
     T sum{1};
     for (T i{1}; i <= pp.e; ++i) {
-      sum += pow(pp.p, i * exponent);
+      sum += pow(pp.p, i * x);
     }
     return res *= sum;
   });
