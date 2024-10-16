@@ -78,3 +78,31 @@ TEST(DivisorFunction_E4, SmallValues) {
     EXPECT_EQ(ntlib::divisor_function(pd, 4u), sigma_4[i]);
   }
 }
+
+TEST(EnumerateDivisors, SmallValue1) {
+  const uint32_t n = 1;
+  const auto factors = ntlib::prime_decomposition(n);
+  const std::vector<uint32_t> truth = {1};
+  std::vector<uint32_t> divisors = ntlib::enumerate_divisors(factors);
+  std::ranges::sort(divisors);
+  EXPECT_EQ(divisors, truth);
+}
+
+TEST(EnumerateDivisors, SmallValue2) {
+  const uint32_t n = 10;
+  const auto factors = ntlib::prime_decomposition(n);
+  const std::vector<uint32_t> truth = {1, 2, 5, 10};
+  std::vector<uint32_t> divisors = ntlib::enumerate_divisors(factors);
+  std::ranges::sort(divisors);
+  EXPECT_EQ(divisors, truth);
+}
+
+TEST(EnumerateDivisors, SmallValue3) {
+  const uint32_t n = 60;
+  const auto factors = ntlib::prime_decomposition(n);
+  const std::vector<uint32_t> truth = {
+      1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60};
+  std::vector<uint32_t> divisors = ntlib::enumerate_divisors(factors);
+  std::ranges::sort(divisors);
+  EXPECT_EQ(divisors, truth);
+}
