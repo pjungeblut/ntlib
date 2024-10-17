@@ -7,9 +7,9 @@ project("NTLib - Number Theory Library" VERSION 0.9 LANGUAGES CXX)
 ################################################################################
 
 # Set the C++ version.
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED)
-set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Wextra -O2")
+set(CMAKE_CXX_FLAGS "-std=c++23 -Wall -Wextra -O2")
 
 # Include directories.
 include_directories(./include)
