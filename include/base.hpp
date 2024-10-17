@@ -7,6 +7,7 @@
 #include <climits>
 #include <cmath>
 #include <concepts>
+#include <cstdint>
 #include <functional>
 #include <numeric>
 #include <type_traits>
