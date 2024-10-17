@@ -1,14 +1,16 @@
-#pragma once
-
 /**
  * Algorithms to solve diophantine equations.
  * Preconditions are stated in the comments and must be checked by the caller.
  */
 
+module;
+
 #include <cassert>
 #include <tuple>
 
 import base;
+
+export module diophantine;
 
 namespace ntlib {
 
@@ -22,7 +24,7 @@ namespace ntlib {
  * @param b Parameter b, must be a multiple of a.
  * @return The solution in x.
  */
-template<typename T>
+export template<typename T>
 T diophantine_linear_univariate(const T &a, const T &b) {
   // If a = 0 then we must also have b = 0.
   // In this case, there are inifinitely many solutions and we return 0.
@@ -46,7 +48,7 @@ T diophantine_linear_univariate(const T &a, const T &b) {
  *         further solution via Bezout's Identity. In case a = b = 0, the third
  *         element is 0.
  */
-template<typename T>
+export template<typename T>
 std::tuple<T,T,T> diophantine_linear_bivariate(T a, T b, T c) {
   // Special case: a = 0 and b = 0.
   assert(a != 0 || b != 0 || c == 0);
