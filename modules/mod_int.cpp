@@ -1,4 +1,4 @@
-#pragma once
+module;
 
 #include <istream>
 #include <ostream>
@@ -7,9 +7,9 @@
 
 #include "modulo.hpp"
 
-namespace ntlib {
+export module mod_int;
 
-inline constexpr uint32_t runtime_modulus = 0;
+namespace ntlib {
 
 /**
  * Class to represent an element of residue class Z/modulusZ.
@@ -24,7 +24,7 @@ inline constexpr uint32_t runtime_modulus = 0;
  * The underlying (unsigned) datatype `U` needs to be big enough to hold
  * `modulus^2` to work correctly.
  */
-template <typename U, U MOD = 0, typename S = std::make_signed_t<U>>
+export template <typename U, U MOD = 0, typename S = std::make_signed_t<U>>
 class mod_int {
 public:
   /**
@@ -260,7 +260,7 @@ private:
  * @param obj Instance of a `mod_int`.
  * @return Reference to the output stream.
  */
-template<typename U, U MOD = 0, typename S = std::make_signed_t<U>>
+export template<typename U, U MOD = 0, typename S = std::make_signed_t<U>>
 std::ostream& operator<<(std::ostream &os, mod_int<U, MOD, S> obj) {
   os << obj.get();
   return os;
@@ -274,7 +274,7 @@ std::ostream& operator<<(std::ostream &os, mod_int<U, MOD, S> obj) {
  * @param obj Reference to the `ct_mod_int` to store the read value.
  * @return Reference to the input stream.
  */
-template<typename U, U MOD = 0, typename S = std::make_signed_t<U>>
+export template<typename U, U MOD = 0, typename S = std::make_signed_t<U>>
 std::istream& operator>>(std::istream &is, mod_int<U, MOD, S> &obj)
     requires(MOD != 0) {
   U tmp;
@@ -290,7 +290,7 @@ std::istream& operator>>(std::istream &is, mod_int<U, MOD, S> &obj)
  * @return The multiplicative unit. `1` whenever the modulus is greater than
  *         `1`, and `0` if the modulus is `1`.
  */
-template<typename U, U MOD = 0, typename S = std::make_signed_t<U>>
+export template<typename U, U MOD = 0, typename S = std::make_signed_t<U>>
 [[nodiscard]] constexpr
 mod_int<U, MOD, S> get_multiplicative_neutral(mod_int<U, MOD, S> obj) {
   if constexpr(MOD == 0) {
@@ -309,7 +309,7 @@ mod_int<U, MOD, S> get_multiplicative_neutral(mod_int<U, MOD, S> obj) {
  * @param obj An instance of `mod_int`.
  * @return String representation.
  */
-template<typename U, U MOD = 0, typename S = std::make_signed_t<U>>
+export template<typename U, U MOD = 0, typename S = std::make_signed_t<U>>
 std::string to_string(mod_int<U, MOD, S> obj) {
   using std::to_string;
 

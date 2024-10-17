@@ -6,16 +6,18 @@
 
 #include <algorithm>
 #include <array>
+#include <cassert>
 #include <cstdint>
 #include <optional>
 #include <span>
 #include <type_traits>
 
-#include "mod_int.hpp"
+#include "modulo.hpp"
 
 import base;
 import int128;
 import lucas_sequence;
+import mod_int;
 
 namespace ntlib {
 

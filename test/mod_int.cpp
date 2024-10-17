@@ -4,9 +4,8 @@
 #include <sstream>
 #include <string>
 
-#include "mod_int.hpp"
-
 import base;
+import mod_int;
 
 // Must be at least 1.
 static constexpr uint32_t MOD = 10;
