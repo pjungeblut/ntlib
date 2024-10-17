@@ -1,8 +1,8 @@
-#pragma once
-
 /**
  * Implementations to generate polygonal numbers.
  */
+
+export module polygonal_number;
 
 namespace ntlib {
 
@@ -12,7 +12,7 @@ namespace ntlib {
  * @param n Which triangle number to generate.
  * @return The n-th triangle number.
  */
-template<typename T>
+export template<typename T>
 T triangle_number(T n) {
   return n * (n + 1) / 2;
 }
@@ -23,7 +23,7 @@ T triangle_number(T n) {
  * @param n Which square number to generate.
  * @return The n-th square number.
  */
-template<typename T>
+export template<typename T>
 T square_number(T n) {
   return n * n;
 }
@@ -34,7 +34,7 @@ T square_number(T n) {
  * @param n Which pentagonal number to generate.
  * @return The n-th pentagonal number.
  */
-template<typename T>
+export template<typename T>
 T pentagonal_number(T n) {
   return n * (3 * n - 1) / 2;
 }
@@ -45,7 +45,7 @@ T pentagonal_number(T n) {
  * @param n Which hexagonal number to generate.
  * @return The n-th hexagonal number.
  */
-template<typename T>
+export template<typename T>
 T hexagonal_number(T n) {
   return n * (2 * n - 1);
 }
@@ -56,7 +56,7 @@ T hexagonal_number(T n) {
  * @param n Which heptagonal number to generate.
  * @return The n-th heptagonal number.
  */
-template<typename T>
+export template<typename T>
 T heptagonal_number(T n) {
   return n * (5 * n - 3) / 2;
 }
@@ -67,7 +67,7 @@ T heptagonal_number(T n) {
  * @param n Which octagonal number to generate.
  * @return The n-th octagonal number.
  */
-template<typename T>
+export template<typename T>
 T octagonal_number(T n) {
   return n * (3 * n - 2);
 }
@@ -78,7 +78,7 @@ T octagonal_number(T n) {
  * @param n Which tetrahedral number to generate.
  * @return The n-th tetrahedral number.
  */
-template<typename T>
+export template<typename T>
 T tetrahedral_number(T n) {
   return n * (n + 1) / 2 * (n + 2) / 3;
 }
@@ -89,7 +89,7 @@ T tetrahedral_number(T n) {
  * @param n Which cube number to generate.
  * @return The n-th cube number.
  */
-template<typename T>
+export template<typename T>
 T cube_number(T n) {
   return n * n * n;
 }
@@ -100,7 +100,7 @@ T cube_number(T n) {
  * @param n Which octahedral number to generate.
  * @return The n-th octahedral number.
  */
-template<typename T>
+export template<typename T>
 T octahedral_number(T n) {
   return n * (2 * n * n + 1) / 3;
 }
@@ -111,7 +111,7 @@ T octahedral_number(T n) {
  * @param n Which square pyramid number to gnerate.
  * @return The n-th square pyramid number.
  */
-template<typename T>
+export template<typename T>
 T square_pyramid_number(T n) {
   return n * (n + 1) / 2 * (2 * n + 1) / 3;
 }
@@ -122,9 +122,11 @@ T square_pyramid_number(T n) {
  * @param n Which centered square number to gnerate.
  * @return The n-th centered square number.
  */
-template<typename T>
+export template<typename T>
 T centered_square_number(T n) {
   return square_number(n) + square_number(n - 1);
 }
 
 }
+
+
