@@ -17,6 +17,8 @@ function(add_unittest name headers)
   add_test(NAME ${name} COMMAND ut_${name})
 endfunction()
 
+################################################################################
+
 set(base_headers
   ${PROJECT_SOURCE_DIR}/include/base.hpp
   ${PROJECT_SOURCE_DIR}/include/int128.hpp
@@ -26,6 +28,8 @@ set(base_headers
 )
 add_unittest(base ${base_headers})
 
+################################################################################
+
 set(binomial_coefficient_headers
   ${PROJECT_SOURCE_DIR}/include/binomial_coefficient.hpp
   ${PROJECT_SOURCE_DIR}/include/modulo.hpp
@@ -33,10 +37,14 @@ set(binomial_coefficient_headers
 )
 add_unittest(binomial_coefficient ${binomial_coefficient_headers})
 
+################################################################################
+
 set(chinese_remainder_headers
   ${PROJECT_SOURCE_DIR}/include/chinese_remainder.hpp
 )
 add_unittest(chinese_remainder ${chinese_remainder_headers})
+
+################################################################################
 
 set(ct_mod_int_headers
   ${PROJECT_SOURCE_DIR}/include/base.hpp
@@ -44,10 +52,14 @@ set(ct_mod_int_headers
 )
 add_unittest(ct_mod_int ${ct_mod_int_headers})
 
+################################################################################
+
 set(diophantine_headers
   ${PROJECT_SOURCE_DIR}/include/diophantine.hpp
 )
 add_unittest(diophantine ${diophantine_headers})
+
+################################################################################
 
 set(divisors_headers
   ${PROJECT_SOURCE_DIR}/include/divisors.hpp
@@ -55,10 +67,14 @@ set(divisors_headers
 )
 add_unittest(divisors ${divisors_headers})
 
+################################################################################
+
 set(int128_headers
   ${PROJECT_SOURCE_DIR}/include/int128.hpp
 )
 add_unittest(int128 ${int128_headers})
+
+################################################################################
 
 set(lucas_sequence_headers
   ${PROJECT_SOURCE_DIR}/include/int128.hpp
@@ -67,6 +83,8 @@ set(lucas_sequence_headers
 )
 add_unittest(lucas_sequence ${lucas_sequence_headers})
 
+################################################################################
+
 set(matrix_headers
   ${PROJECT_SOURCE_DIR}/include/base.hpp
   ${PROJECT_SOURCE_DIR}/include/matrix.hpp
@@ -74,17 +92,23 @@ set(matrix_headers
 )
 add_unittest(matrix ${matrix_headers})
 
+################################################################################
+
 set(mod_int_headers
   ${PROJECT_SOURCE_DIR}/include/base.hpp
   ${PROJECT_SOURCE_DIR}/include/mod_int.hpp
 )
 add_unittest(mod_int ${mod_int_headers})
 
+################################################################################
+
 set(modulo_headers
   ${PROJECT_SOURCE_DIR}/include/modulo.hpp
   ${PROJECT_SOURCE_DIR}/include/prime_decomposition.hpp
 )
 add_unittest(modulo ${modulo_headers})
+
+################################################################################
 
 set(pell_equation_headers
   ${PROJECT_SOURCE_DIR}/include/base.hpp
@@ -93,6 +117,8 @@ set(pell_equation_headers
 )
 add_unittest(pell_equation ${pell_equation_headers})
 
+################################################################################
+
 set(prime_decomposition_headers
   ${PROJECT_SOURCE_DIR}/include/base.hpp
   ${PROJECT_SOURCE_DIR}/include/prime_decomposition.hpp
@@ -100,11 +126,15 @@ set(prime_decomposition_headers
 )
 add_unittest(prime_decomposition ${prime_decomposition_headers})
 
+################################################################################
+
 set(prime_generation_headers
   ${PROJECT_SOURCE_DIR}/include/prime_generation.hpp
   ${PROJECT_SOURCE_DIR}/include/prime_test.hpp
 )
 add_unittest(prime_generation ${prime_generation_headers})
+
+################################################################################
 
 set(prime_test_headers
   ${PROJECT_SOURCE_DIR}/include/int128.hpp
@@ -113,25 +143,35 @@ set(prime_test_headers
 )
 add_unittest(prime_test ${prime_test_headers})
 
+################################################################################
+
 set(pythagorean_triple_headers
   ${PROJECT_SOURCE_DIR}/include/pythagorean_triple.hpp
 )
 add_unittest(pythagorean_triple ${pythagorean_triple_headers})
+
+################################################################################
 
 set(rational_headers
   ${PROJECT_SOURCE_DIR}/include/rational.hpp
 )
 add_unittest(rational ${rational_headers})
 
+################################################################################
+
 set(sieve_headers
   ${PROJECT_SOURCE_DIR}/include/sieve.hpp
 )
 add_unittest(sieve ${sieve_headers})
 
+################################################################################
+
 set(sieve_235_headers
   ${PROJECT_SOURCE_DIR}/include/sieve_235.hpp
 )
 add_unittest(sieve_235 ${sieve_235_headers})
+
+################################################################################
 
 set(turan_number_headers
   ${PROJECT_SOURCE_DIR}/include/turan_number.hpp
