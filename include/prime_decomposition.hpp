@@ -6,10 +6,11 @@
 #include <utility>
 #include <vector>
 
-#include "base.hpp"
 #include "prime_generation.hpp"
 #include "prime_list.hpp"
 #include "prime_test.hpp"
+
+import base;
 
 namespace ntlib {
 

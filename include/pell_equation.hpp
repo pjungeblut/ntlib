@@ -3,8 +3,9 @@
 #include <tuple>
 #include <vector>
 
-#include "base.hpp"
 #include "continued_fraction.hpp"
+
+import base;
 
 namespace ntlib {
 

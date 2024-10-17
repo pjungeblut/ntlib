@@ -3,8 +3,9 @@
 #include <numeric>
 #include <vector>
 
-#include "base.hpp"
 #include "prime_decomposition.hpp"
+
+import base;
 
 namespace ntlib {
 

@@ -3,9 +3,10 @@
 #include <cassert>
 #include <utility>
 
-#include "base.hpp"
 #include "matrix.hpp"
 #include "modulo.hpp"
+
+import base;
 
 namespace ntlib {
 

@@ -5,9 +5,10 @@
 #include <set>
 #include <vector>
 
-#include "base.hpp"
 #include "prime_decomposition.hpp"
 #include "prime_generation.hpp"
+
+import base;
 
 static constexpr auto composites = std::to_array<uint64_t>({
   1,

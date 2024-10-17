@@ -10,9 +10,10 @@
 #include <type_traits>
 #include <vector>
 
-#include "base.hpp"
 #include "prime_test.hpp"
 #include "sieve_235.hpp"
+
+import base;
 
 namespace ntlib {
 

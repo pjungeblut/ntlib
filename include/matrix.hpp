@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 
+import base;
+
 namespace ntlib {
 
 /**

@@ -28,13 +28,14 @@ endfunction()
 ################################################################################
 
 set(base_headers
-  ${PROJECT_SOURCE_DIR}/include/base.hpp
   ${PROJECT_SOURCE_DIR}/include/int128.hpp
   ${PROJECT_SOURCE_DIR}/include/matrix.hpp
   ${PROJECT_SOURCE_DIR}/include/mod_int.hpp
   ${PROJECT_SOURCE_DIR}/include/prime_generation.hpp
 )
-set(base_modlues "")
+set(base_modlues
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
+)
 add_unittest(base
   "${base_headers}"
   "${base_modlues}"
@@ -67,10 +68,11 @@ add_unittest(chinese_remainder
 ################################################################################
 
 set(ct_mod_int_headers
-  ${PROJECT_SOURCE_DIR}/include/base.hpp
   ${PROJECT_SOURCE_DIR}/include/mod_int.hpp
 )
-set(ct_mod_int_modules "")
+set(ct_mod_int_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
+)
 add_unittest(ct_mod_int
   "${ct_mod_int_headers}"
   "${ct_mod_int_modules}"
@@ -126,11 +128,12 @@ add_unittest(lucas_sequence
 ################################################################################
 
 set(matrix_headers
-  ${PROJECT_SOURCE_DIR}/include/base.hpp
   ${PROJECT_SOURCE_DIR}/include/matrix.hpp
   ${PROJECT_SOURCE_DIR}/include/mod_int.hpp
 )
-set(matrix_modules "")
+set(matrix_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
+)
 add_unittest(matrix
   "${matrix_headers}"
   "${matrix_modules}"
@@ -139,10 +142,11 @@ add_unittest(matrix
 ################################################################################
 
 set(mod_int_headers
-  ${PROJECT_SOURCE_DIR}/include/base.hpp
   ${PROJECT_SOURCE_DIR}/include/mod_int.hpp
 )
-set(mod_int_modules "")
+set(mod_int_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
+)
 add_unittest(mod_int
   "${mod_int_headers}"
   "${mod_int_modules}"
@@ -163,11 +167,12 @@ add_unittest(modulo
 ################################################################################
 
 set(pell_equation_headers
-  ${PROJECT_SOURCE_DIR}/include/base.hpp
   ${PROJECT_SOURCE_DIR}/include/int128.hpp
   ${PROJECT_SOURCE_DIR}/include/pell_equation.hpp
 )
-set(pell_equation_modules "")
+set(pell_equation_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
+)
 add_unittest(pell_equation
   "${pell_equation_headers}"
   "${pell_equation_modules}"
@@ -176,11 +181,12 @@ add_unittest(pell_equation
 ################################################################################
 
 set(prime_decomposition_headers
-  ${PROJECT_SOURCE_DIR}/include/base.hpp
   ${PROJECT_SOURCE_DIR}/include/prime_decomposition.hpp
   ${PROJECT_SOURCE_DIR}/include/prime_generation.hpp
 )
-set(prime_decomposition_modules "")
+set(prime_decomposition_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
+)
 add_unittest(prime_decomposition
   "${prime_decomposition_headers}"
   "${prime_decomposition_modules}"

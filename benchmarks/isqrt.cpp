@@ -3,9 +3,10 @@
 #include <cmath>
 #include <cstdint>
 
-#include "base.hpp"
 #include "experiments/isqrt.hpp"
 #include "int128.hpp"
+
+import base;
 
 static const int N = 1'000'000;
 

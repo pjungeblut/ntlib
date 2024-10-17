@@ -4,7 +4,7 @@
 #include <random>
 #include <type_traits>
 
-#include "base.hpp"
+import base;
 
 namespace ntlib {
 

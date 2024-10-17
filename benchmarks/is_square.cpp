@@ -2,8 +2,9 @@
 
 #include <cstdint>
 
-#include "base.hpp"
 #include "experiments/is_square.hpp"
+
+import base;
 
 #define UNIT_MS Unit(benchmark::kMillisecond)
 

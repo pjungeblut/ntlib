@@ -8,7 +8,7 @@
 #include <cassert>
 #include <tuple>
 
-#include "base.hpp"
+import base;
 
 namespace ntlib {
 

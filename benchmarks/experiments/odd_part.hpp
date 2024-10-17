@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#include "base.hpp"
+import base;
 
 namespace ntlib {
 namespace experiments {

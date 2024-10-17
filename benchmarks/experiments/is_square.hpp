@@ -1,6 +1,6 @@
 #pragma once
 
-#include "base.hpp"
+import base;
 
 namespace ntlib {
 namespace experiments {

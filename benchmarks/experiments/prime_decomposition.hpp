@@ -4,7 +4,8 @@
 #include "../../include/prime_decomposition.hpp"
 #include "../../include/prime_list.hpp"
 #include "../../include/prime_test.hpp"
-#include "base.hpp"
+
+import base;
 
 namespace ntlib {
 namespace experiments {
