@@ -2,8 +2,9 @@
 
 #include <cstdint>
 
-#include "divisors.hpp"
 #include "prime_decomposition.hpp"
+
+import divisors;
 
 // All sigma sequences below have been prefixed with a `0` element to make them
 // 1-indexed.
