@@ -4,10 +4,10 @@
  * Implementations for prime number tests.
  */
 
+#include <algorithm>
 #include <array>
 #include <cstdint>
 #include <optional>
-#include <ranges>
 #include <span>
 #include <type_traits>
 

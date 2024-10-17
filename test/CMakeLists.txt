@@ -48,7 +48,9 @@ set(binomial_coefficient_headers
   ${PROJECT_SOURCE_DIR}/include/prime_test.hpp
 )
 set(binomial_coefficient_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
   ${PROJECT_SOURCE_DIR}/modules/binomial_coefficient.cpp
+  ${PROJECT_SOURCE_DIR}/modules/chinese_remainder.cpp
 )
 add_unittest(binomial_coefficient
   "${binomial_coefficient_headers}"
@@ -59,6 +61,7 @@ add_unittest(binomial_coefficient
 
 set(chinese_remainder_headers "")
 set(chinese_remainder_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
   ${PROJECT_SOURCE_DIR}/modules/chinese_remainder.cpp
 )
 add_unittest(chinese_remainder
@@ -83,7 +86,9 @@ add_unittest(ct_mod_int
 set(diophantine_headers
   ${PROJECT_SOURCE_DIR}/include/diophantine.hpp
 )
-set(diophantine_modules "")
+set(diophantine_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
+)
 add_unittest(diophantine
   "${diophantine_headers}"
   "${diophantine_modules}"
@@ -95,7 +100,9 @@ set(divisors_headers
   ${PROJECT_SOURCE_DIR}/include/divisors.hpp
   ${PROJECT_SOURCE_DIR}/include/prime_decomposition.hpp
 )
-set(divisors_modules "")
+set(divisors_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
+)
 add_unittest(divisors
   "${divisors_headers}"
   "${divisors_modules}"
@@ -119,7 +126,9 @@ set(lucas_sequence_headers
   ${PROJECT_SOURCE_DIR}/include/lucas_sequence.hpp
   ${PROJECT_SOURCE_DIR}/include/modulo.hpp
 )
-set(lucas_sequence_modules "")
+set(lucas_sequence_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
+)
 add_unittest(lucas_sequence
   "${lucas_sequence_headers}"
   "${lucas_sequence_modules}"
@@ -158,7 +167,8 @@ set(modulo_headers
   ${PROJECT_SOURCE_DIR}/include/modulo.hpp
   ${PROJECT_SOURCE_DIR}/include/prime_decomposition.hpp
 )
-set(modulo_modules "")
+set(modulo_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp)
 add_unittest(modulo
   "${modulo_headers}"
   "${modulo_modules}"
@@ -198,7 +208,9 @@ set(prime_generation_headers
   ${PROJECT_SOURCE_DIR}/include/prime_generation.hpp
   ${PROJECT_SOURCE_DIR}/include/prime_test.hpp
 )
-set(prime_generation_modules "")
+set(prime_generation_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
+)
 add_unittest(prime_generation
   "${prime_generation_headers}"
   "${prime_generation_modules}"
@@ -211,7 +223,9 @@ set(prime_test_headers
   ${PROJECT_SOURCE_DIR}/include/prime_generation.hpp
   ${PROJECT_SOURCE_DIR}/include/prime_test.hpp
 )
-set(prime_test_modules "")
+set(prime_test_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
+)
 add_unittest(prime_test
   "${prime_test_headers}"
   "${prime_test_modules}"
@@ -222,7 +236,9 @@ add_unittest(prime_test
 set(pythagorean_triple_headers
   ${PROJECT_SOURCE_DIR}/include/pythagorean_triple.hpp
 )
-set(pythagorean_triple_modules "")
+set(pythagorean_triple_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
+)
 add_unittest(pythagorean_triple
   "${pythagorean_triple_headers}"
   "${pythagorean_triple_modules}"
@@ -233,7 +249,9 @@ add_unittest(pythagorean_triple
 set(rational_headers
   ${PROJECT_SOURCE_DIR}/include/rational.hpp
 )
-set(rational_modules "")
+set(rational_modules
+  ${PROJECT_SOURCE_DIR}/modules/base.cpp
+)
 add_unittest(rational
   "${rational_headers}"
   "${rational_modules}"

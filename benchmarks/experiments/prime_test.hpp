@@ -4,9 +4,10 @@
 #include <type_traits>
 #include <vector>
 
-#include "../../include/base.hpp"
 #include "../../include/prime_generation.hpp"
 #include "../../include/prime_test.hpp"
+
+import base;
 
 namespace ntlib {
 namespace experiments {

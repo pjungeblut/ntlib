@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
+#include <cstdint>
 #include <vector>
 
-// #include "chinese_remainder.hpp"
 import chinese_remainder;
 
 TEST(ChineseRemainder_Coprime, SmallValues1) {

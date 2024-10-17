@@ -1,5 +1,7 @@
 #include <cmath>
 
+import base;
+
 namespace ntlib {
 namespace experiments {
 
@@ -32,7 +34,7 @@ int isqrt_int_newton(int n) {
   unsigned int l = (log2(n) + !is_power_of_2 + 1) / 2;
   unsigned int r = (1U << (l - 1)) + (n >> (l + 1));
   unsigned int r_0 = 0;
-  for (int i = 0; i < 3 && abs(r - r_0) > 1; ++i) {
+  for (int i = 0; i < 3 && difference(r, r_0) > 1; ++i) {
     r_0 = r;
     r = (r + n / r) / 2;
   }
