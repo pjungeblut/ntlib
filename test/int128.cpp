@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "int128.hpp"
+import int128;
 
 TEST(MultiplicativeNeutral, Signed) {
   auto neutral = ntlib::get_multiplicative_neutral(ntlib::i128{-5});

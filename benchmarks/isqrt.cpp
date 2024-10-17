@@ -4,9 +4,9 @@
 #include <cstdint>
 
 #include "experiments/isqrt.hpp"
-#include "int128.hpp"
 
 import base;
+import int128;
 
 static const int N = 1'000'000;
 

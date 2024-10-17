@@ -3,10 +3,10 @@
 #include <cstdint>
 #include <tuple>
 
-#include "int128.hpp"
 #include "pell_equation.hpp"
 
 import base;
+import int128;
 
 TEST(MinPellSolutions, SmallValues) {
   const uint32_t values[][3] = {

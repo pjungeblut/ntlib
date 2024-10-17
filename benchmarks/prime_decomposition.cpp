@@ -6,9 +6,10 @@
 #include <cstdint>
 
 #include "experiments/prime_decomposition.hpp"
-#include "int128.hpp"
 #include "prime_decomposition.hpp"
 #include "prime_generation.hpp"
+
+import int128;
 
 // How many consecutive numbers to decompose.
 constexpr static uint64_t N = 10'000;

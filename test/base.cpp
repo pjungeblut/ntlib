@@ -7,12 +7,12 @@
 #include <set>
 #include <vector>
 
-#include "int128.hpp"
 #include "matrix.hpp"
 #include "mod_int.hpp"
 #include "prime_generation.hpp"
 
 import base;
+import int128;
 
 static constexpr int min_int = std::numeric_limits<int>::min();
 static constexpr int max_int = std::numeric_limits<int>::max();

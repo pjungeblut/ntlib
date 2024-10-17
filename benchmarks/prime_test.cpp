@@ -3,8 +3,9 @@
 #include <cstddef>
 
 #include "experiments/prime_test.hpp"
-#include "int128.hpp"
 #include "prime_test.hpp"
+
+import int128;
 
 #define UNIT_MS Unit(benchmark::kMillisecond)
 

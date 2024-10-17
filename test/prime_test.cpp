@@ -4,9 +4,10 @@
 #include <cstdint>
 #include <vector>
 
-#include "int128.hpp"
 #include "prime_generation.hpp"
 #include "prime_test.hpp"
+
+import int128;
 
 static constexpr uint64_t N = 1'000'000;
 static const auto SIEVE = ntlib::prime_sieve(N);
