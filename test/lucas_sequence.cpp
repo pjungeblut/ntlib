@@ -1,9 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "modulo.hpp"
-
 import int128;
 import lucas_sequence;
+import modulo;
 
 static constexpr int64_t MOD = 1'000'000'007; 
 

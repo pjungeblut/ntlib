@@ -2,8 +2,9 @@
 
 #include <bitset>
 
-#include "modulo.hpp"
 #include "prime_decomposition.hpp"
+
+import modulo;
 
 TEST(FloorDiv, SmallValues) {
   EXPECT_EQ(ntlib::floor_div(6, 2), 3);

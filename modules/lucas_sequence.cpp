@@ -3,12 +3,11 @@ module;
 #include <cassert>
 #include <utility>
 
-#include "modulo.hpp"
-
 export module lucas_sequence;
 
 import base;
 import matrix;
+import modulo;
 
 namespace ntlib {
 

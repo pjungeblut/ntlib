@@ -11,13 +11,13 @@ module;
 #include <type_traits>
 #include <vector>
 
-#include "modulo.hpp"
 #include "prime_decomposition.hpp"
 #include "prime_generation.hpp"
 
 export module chinese_remainder;
 
 import base;
+import modulo;
 
 namespace ntlib {
 

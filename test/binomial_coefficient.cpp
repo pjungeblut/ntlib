@@ -3,10 +3,10 @@
 #include <cassert>
 #include <vector>
 
-#include "modulo.hpp"
 #include "prime_test.hpp"
 
 import binomial_coefficient;
+import modulo;
 
 // Prime modulus.
 static constexpr uint64_t MOD_P = 1009;

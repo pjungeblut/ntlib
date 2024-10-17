@@ -1,13 +1,14 @@
 module;
 
+#include <cassert>
 #include <istream>
 #include <ostream>
 #include <string>
 #include <type_traits>
 
-#include "modulo.hpp"
-
 export module mod_int;
+
+import modulo;
 
 namespace ntlib {
 
