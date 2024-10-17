@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../include/prime_decomposition.hpp"
 #include "../../include/prime_list.hpp"
 #include "../../include/prime_test.hpp"
 
 import base;
 import int128;
+import prime_decomposition;
 
 namespace ntlib {
 namespace experiments {

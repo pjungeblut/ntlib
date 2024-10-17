@@ -12,13 +12,13 @@ module;
 #include <type_traits>
 #include <vector>
 
-#include "prime_decomposition.hpp"
 #include "prime_test.hpp"
 
 export module binomial_coefficient;
 
 import chinese_remainder;
 import modulo;
+import prime_decomposition;
 
 namespace ntlib {
 

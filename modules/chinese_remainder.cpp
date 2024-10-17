@@ -11,13 +11,13 @@ module;
 #include <type_traits>
 #include <vector>
 
-#include "prime_decomposition.hpp"
 #include "prime_generation.hpp"
 
 export module chinese_remainder;
 
 import base;
 import modulo;
+import prime_decomposition;
 
 namespace ntlib {
 
@@ -89,7 +89,7 @@ std::optional<crt_congruence<T>> crt(
   // powers.
   std::vector<pp_crt_congruence> pp_congruences;
   for (const auto c : congruences) {
-    const auto factors = prime_decomposition_complete_list(c.m, primes);
+    const auto factors = prime_decomposition_list(c.m, primes);
     for (const auto [p, e] : factors) {
       pp_congruences.push_back(pp_crt_congruence {mod(c.a, pow(p, e)), p, e});
     }

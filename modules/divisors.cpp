@@ -1,11 +1,11 @@
 module;
 
+#include <cassert>
 #include <numeric>
 #include <vector>
 
-#include "prime_decomposition.hpp"
-
 import base;
+import prime_decomposition;
 
 export module divisors;
 
