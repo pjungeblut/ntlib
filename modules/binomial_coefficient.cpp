@@ -1,5 +1,3 @@
-#pragma once
-
 /**
  * Implementations to compute binomial coefficients.
  * 
@@ -7,15 +5,20 @@
  * https://cp-algorithms.com/combinatorics/binomial-coefficients.html
  */
 
+module;
+
 #include <algorithm>
 #include <cassert>
 #include <type_traits>
 #include <vector>
 
-#include "chinese_remainder.hpp"
 #include "modulo.hpp"
 #include "prime_decomposition.hpp"
 #include "prime_test.hpp"
+
+export module binomial_coefficient;
+
+import chinese_remainder;
 
 namespace ntlib {
 
@@ -30,7 +33,7 @@ namespace ntlib {
  * @param k Size of the subsets.
  * @return The binomial coefficient `binom(n,k)`.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 T binom(T n, T k) noexcept {
   assert(n >= T{0});
@@ -54,7 +57,7 @@ T binom(T n, T k) noexcept {
  * @param p The modulus. Must be prime and sufficiently large.
  * @return The binomial coefficient `binom(n,k)` modulo `p`.
  */
-template<typename T, typename S = std::make_signed_t<T>>
+export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 T mod_p_binom(T n, T k, T p) noexcept {
   assert(n >= T{0});
@@ -80,7 +83,7 @@ T mod_p_binom(T n, T k, T p) noexcept {
  * @param e The exponent of the prime.
  * @return The binomial coefficient `binom(n,k)` modulo `pp`.
  */
-template<typename T, typename S = std::make_signed_t<T>>
+export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 T mod_pp_binom(T n, T k, T p, T e) {
   assert(n >= T{0});
@@ -133,7 +136,7 @@ T mod_pp_binom(T n, T k, T p, T e) {
  * @param m The modulus.
  * @return The binomial coefficient `binom(n,k)` modulo `m`.
  */
-template<typename T, typename S = std::make_signed_t<T>>
+export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 T mod_binom(T n, T k, T m) {
   // Find prime decomposition of modulus.
@@ -162,7 +165,7 @@ T mod_binom(T n, T k, T m) {
  * @param N The parameter N.
  * @return Two-dimensional vector containing the binomial coefficients.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 std::vector<std::vector<T>> binom_table(T N) {
   assert(N >= T{0});
@@ -188,7 +191,7 @@ std::vector<std::vector<T>> binom_table(T N) {
  * @param m The modulus.
  * @return Two-dimensional vector containing the binomial coefficients.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 std::vector<std::vector<T>> mod_binom_table(T N, T m) {
   assert(N >= T{0});
@@ -205,4 +208,4 @@ std::vector<std::vector<T>> mod_binom_table(T N, T m) {
   return binoms;
 }
 
-}
+};
