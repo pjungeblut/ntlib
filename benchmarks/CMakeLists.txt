@@ -1,9 +1,9 @@
 # Probably bad style, but really makes life easier.
-file(GLOB all_headers
+file(GLOB all_headers CONFIGURE_DEPENDS
   "${PROJECT_SOURCE_DIR}/include/*.hpp"
   "${PROJECT_SOURCE_DIR}/benchmarks/experiments/*.hpp"
 )
-file(GLOB all_modules
+file(GLOB all_modules CONFIGURE_DEPENDS
   "${PROJECT_SOURCE_DIR}/modules/*.cpp"
 )
 
