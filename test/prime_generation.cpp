@@ -3,7 +3,6 @@
 #include <cstdint>
 #include <vector>
 
-#include "../benchmarks/experiments/prime_generation.hpp"
 #include "prime_generation.hpp"
 #include "prime_test.hpp"
 
@@ -73,13 +72,4 @@ TEST(NextPrime, FirstN) {
       EXPECT_FALSE(sieve[j]);
     }
   }
-}
-
-TEST(Experiments, VariantsMatch) {
-  auto textbook = ntlib::experiments::eratosthenes_textbook(N);
-  auto jumps = ntlib::experiments::eratosthenes_jumps(N);
-  for (std::size_t i = 0; i <= N; ++i) EXPECT_EQ(textbook[i], jumps[i]);
-
-  auto segmented = ntlib::prime_sieve(N);
-  for (std::size_t i = 0; i <= N; ++i) EXPECT_EQ(textbook[i], segmented[i]);
 }

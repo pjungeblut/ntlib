@@ -4,7 +4,6 @@
 #include <cstdint>
 #include <vector>
 
-#include "../benchmarks/experiments/prime_test.hpp"
 #include "int128.hpp"
 #include "prime_generation.hpp"
 #include "prime_test.hpp"
