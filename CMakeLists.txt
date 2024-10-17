@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.16)
+cmake_minimum_required (VERSION 3.28)
 
 project("NTLib - Number Theory Library" VERSION 0.9 LANGUAGES CXX)
 
