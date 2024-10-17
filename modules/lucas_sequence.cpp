@@ -1,10 +1,12 @@
-#pragma once
+module;
 
 #include <cassert>
 #include <utility>
 
 #include "matrix.hpp"
 #include "modulo.hpp"
+
+export module lucas_sequence;
 
 import base;
 
@@ -21,7 +23,7 @@ namespace ntlib {
  * @return A pair with `U_n(P,Q)` as the first element and `V_n(P,Q)` as the
  *     second element.
  */
-template <typename N, typename T>
+export template <typename N, typename T>
 [[nodiscard]] constexpr
 std::pair<T, T> lucas_nth_term(N n, T P, T Q) {
   if (n == N{0}) {
@@ -51,7 +53,7 @@ std::pair<T, T> lucas_nth_term(N n, T P, T Q) {
  * @return A pair with `U_n(P,Q)` as the first element and `V_n(P,Q)` as the
  *         second element, both modulo `m`.
  */
-template <typename N, typename T>
+export template <typename N, typename T>
 [[nodiscard]] constexpr
 std::pair<T, T> mod_lucas_nth_term(N n, T P, T Q, T m) {
   // Check that T is a signed type.

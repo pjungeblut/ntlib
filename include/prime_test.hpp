@@ -11,11 +11,11 @@
 #include <span>
 #include <type_traits>
 
-#include "lucas_sequence.hpp"
 #include "mod_int.hpp"
 
 import base;
 import int128;
+import lucas_sequence;
 
 namespace ntlib {
 
