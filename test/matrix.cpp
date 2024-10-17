@@ -2,10 +2,10 @@
 
 #include <cstdint>
 
-#include "matrix.hpp"
 #include "mod_int.hpp"
 
 import base;
+import matrix;
 
 TEST(Construction, Default) {
   ntlib::matrix<int32_t> mat;
