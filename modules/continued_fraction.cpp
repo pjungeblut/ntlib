@@ -7,9 +7,10 @@ module;
 #include <cmath>
 #include <vector>
 
-#include "rational.hpp"
-
 export module continued_fraction;
+
+import base;
+import rational;
 
 namespace ntlib {
 

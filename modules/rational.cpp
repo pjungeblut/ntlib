@@ -1,14 +1,12 @@
-#pragma once
-
-/**
- * Implementations to easily work with rational numbers.
- */
+module;
 
 #include <cassert>
 #include <compare>
 #include <ostream>
 #include <string>
 #include <type_traits>
+
+export module rational;
 
 import base;
 
@@ -17,7 +15,7 @@ namespace ntlib {
 /**
  * Represents a rational number.
  */
-template<typename T>
+export template<typename T>
 class rational {
 public:
   /**
@@ -295,7 +293,7 @@ private:
  * @param bu The rational to print.
  * @return The out stream.
  */
-template<typename T>
+export template<typename T>
 std::ostream &operator<<(std::ostream &os, const rational<T> &r) {
   os << r.to_string();
   return os;
@@ -308,7 +306,7 @@ std::ostream &operator<<(std::ostream &os, const rational<T> &r) {
  * @param b The right hand side to compare.
  * @return True, if and only if a == b.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]]
 bool operator==(const rational<T> &a, const rational<T> &b) {
   return a.get_numerator() == b.get_numerator() &&
@@ -322,7 +320,7 @@ bool operator==(const rational<T> &a, const rational<T> &b) {
  * @param b The right hand side to compare.
  * @return True, if and only if a <=> b.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]]
 std::strong_ordering operator<=>(const rational<T> &a, const rational<T> &b) {
   return a.get_numerator() * b.get_denominator() <=>
@@ -335,7 +333,7 @@ std::strong_ordering operator<=>(const rational<T> &a, const rational<T> &b) {
  * @param a The rational.
  * @return The rational with the same absolute value but opposite sign.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]]
 rational<T> operator-(const rational<T> &a) {
   rational<T> neg{-1 * a.get_numerator(), a.get_denominator()};
@@ -348,7 +346,7 @@ rational<T> operator-(const rational<T> &a) {
  * @param r Instance of the type.
  * @return The multiplicative neutral `1/1`.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 rational<T> get_multiplicative_neutral(rational<T> r) {
   return rational{get_multiplicative_neutral(r.get_numerator())};

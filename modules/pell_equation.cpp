@@ -3,12 +3,11 @@ module;
 #include <tuple>
 #include <vector>
 
-#include "rational.hpp"
-
 export module pell_equation;
 
 import base;
 import continued_fraction;
+import rational;
 
 namespace ntlib {
 
