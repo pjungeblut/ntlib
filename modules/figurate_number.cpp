@@ -103,15 +103,15 @@ T decagonal_number(T n) noexcept {
 }
 
 /**
- * Computes the `n`-th tetrahedral number.
+ * Computes the `n`-th centered square number.
  *
- * @param n Which tetrahedral number to generate.
- * @return The `n`-th tetrahedral number.
+ * @param n Which centered square number to gnerate.
+ * @return The `n`-th centered square number.
  */
 export template<typename T>
 [[nodiscard]] constexpr
-T tetrahedral_number(T n) noexcept {
-  return n * (n + 1) / 2 * (n + 2) / 3;
+T centered_square_number(T n) noexcept {
+  return square_number(n + 1) + square_number(n);
 }
 
 /**
@@ -139,6 +139,42 @@ T octahedral_number(T n) noexcept {
 }
 
 /**
+ * Computes the `n`-th docecahedral number.
+ *
+ * @param n Which docecahedral number to generate.
+ * @return The `n`-th docecahedral number.
+ */
+export template<typename T>
+[[nodiscard]] constexpr
+T dodecahedral_number(T n) noexcept {
+  return n * (3 * n - 1) * (3 * n - 2) / 2;
+}
+
+/**
+ * Computes the `n`-th icosahedral number.
+ *
+ * @param n Which icosahedral number to generate.
+ * @return The `n`-th icosahedral number.
+ */
+export template<typename T>
+[[nodiscard]] constexpr
+T icosahedral_number(T n) noexcept {
+  return n * (5 * n * n - 5 * n + 2) / 2;
+}
+
+/**
+ * Computes the `n`-th tetrahedral number.
+ *
+ * @param n Which tetrahedral number to generate.
+ * @return The `n`-th tetrahedral number.
+ */
+export template<typename T>
+[[nodiscard]] constexpr
+T tetrahedral_number(T n) noexcept {
+  return n * (n + 1) / 2 * (n + 2) / 3;
+}
+
+/**
  * Computes the `n`-th square pyramid number.
  *
  * @param n Which square pyramid number to gnerate.
@@ -146,20 +182,8 @@ T octahedral_number(T n) noexcept {
  */
 export template<typename T>
 [[nodiscard]] constexpr
-T square_pyramidal_number(T n) noexcept{
+T square_pyramidal_number(T n) noexcept {
   return n * (n + 1) / 2 * (2 * n + 1) / 3;
-}
-
-/**
- * Computes the `n`-th centered square number.
- *
- * @param n Which centered square number to gnerate.
- * @return The `n`-th centered square number.
- */
-export template<typename T>
-[[nodiscard]] constexpr
-T centered_square_number(T n) noexcept {
-  return square_number(n + 1) + square_number(n);
 }
 
 }

@@ -116,7 +116,30 @@ TEST(OctahedralNumbers, SmallValues) {
       6181, 7106, 8119, 9224, 10425, 11726, 13131, 14644, 16269, 18010, 19871,
       21856, 23969, 26214, 28595, 31116, 33781, 36594, 39559, 42680});
   for (uint32_t i = 0; i < truth.size(); ++i) {
-    EXPECT_EQ(ntlib::octahedral_number(i), truth[i]) << i;
+    EXPECT_EQ(ntlib::octahedral_number(i), truth[i]);
+  }
+}
+
+TEST(DodecahedralNumbers, SmallValues) {
+  // https://oeis.org/A006566
+  constexpr auto truth = std::to_array<uint32_t>({0, 1, 20, 84, 220, 455, 816,
+      1330, 2024, 2925, 4060, 5456, 7140, 9139, 11480, 14190, 17296, 20825,
+      24804, 29260, 34220, 39711, 45760, 52394, 59640, 67525, 76076, 85320,
+      95284, 105995, 117480, 129766, 142880, 156849, 171700, 187460, 204156});
+  for (uint32_t i = 0; i < truth.size(); ++i) {
+    EXPECT_EQ(ntlib::dodecahedral_number(i), truth[i]);
+  }
+}
+
+TEST(IcosahedralNumbers, SmallValues) {
+  // https://oeis.org/A006564
+  constexpr auto truth = std::to_array<uint32_t>({0, 1, 12, 48, 124, 255, 456,
+      742, 1128, 1629, 2260, 3036, 3972, 5083, 6384, 7890, 9616, 11577, 13788,
+      16264, 19020, 22071, 25432, 29118, 33144, 37525, 42276, 47412, 52948,
+      58899, 65280, 72106, 79392, 87153, 95404, 104160, 113436, 123247,
+      133608});
+  for (uint32_t i = 0; i < truth.size(); ++i) {
+    EXPECT_EQ(ntlib::icosahedral_number(i), truth[i]);
   }
 }
 
