@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "rational.hpp"
+import rational;
 
 TEST(Initialization, ConstructionByValue) {
   ntlib::rational r1(5);

@@ -1,18 +1,20 @@
-#pragma once
-
 /**
  * Implemenatations to generate prime numbers.
  * Some functions generate sieves, some lists and some both.
  */
+
+module;
 
 #include <algorithm>
 #include <cstddef>
 #include <type_traits>
 #include <vector>
 
-#include "base.hpp"
-#include "prime_test.hpp"
-#include "sieve_235.hpp"
+export module prime_generation;
+
+import base;
+import prime_test;
+import sieve_235;
 
 namespace ntlib {
 
@@ -20,7 +22,7 @@ namespace ntlib {
  * Generates a prime sieve.
  * See other overload for documentation.
  */
-template<
+export template<
     typename T,
     typename Allocator,
     typename SieveType,
@@ -130,7 +132,7 @@ SieveType eratosthenes_segmented(T N, std::vector<T> &primes) {
  * @param N Generate a prime sieve with all values up to `N`.
  * @return The sieve.
  */
-template<
+export template<
     typename T,
     typename Allocator = std::allocator<T>,
     typename SieveType = ntlib::sieve_235<>,
@@ -157,7 +159,7 @@ SieveType prime_sieve(T N) {
  * @param primes A vector that will be filled with all primes up to N.
  * @return The sieve.
  */
-template<
+export template<
     typename T,
     typename Allocator = std::allocator<T>,
     typename SieveType = ntlib::sieve_235<>,
@@ -173,7 +175,7 @@ SieveType prime_sieve(T N, std::vector<T> &primes) {
  * @param n The number to start from.
  * @return The smallest prime `p` larget than `n`.
  */
-template<typename T, typename S = std::make_signed_t<T>>
+export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 T next_prime(T n) noexcept {
   T result{n + T{1}};

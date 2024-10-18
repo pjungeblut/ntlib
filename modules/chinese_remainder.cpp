@@ -1,8 +1,8 @@
-#pragma once
-
 /**
  * Chinese remainder theorem.
  */
+
+module;
 
 #include <algorithm>
 #include <numeric>
@@ -11,17 +11,19 @@
 #include <type_traits>
 #include <vector>
 
-#include "base.hpp"
-#include "modulo.hpp"
-#include "prime_decomposition.hpp"
-#include "prime_generation.hpp"
+export module chinese_remainder;
+
+import base;
+import modulo;
+import prime_decomposition;
+import prime_generation;
 
 namespace ntlib {
 
 /**
  * Represents a single congruence `x = a mod m`.
  */
-template<typename T>
+export template<typename T>
 struct crt_congruence {
   T a;
   T m;
@@ -35,7 +37,7 @@ struct crt_congruence {
  * @param congruences The list of congruences.
  * @return The unique solution.
  */
-template<typename T, typename S = std::make_signed_t<T>>
+export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 crt_congruence<T> crt_coprime(
     const std::vector<crt_congruence<T>> &congurences) noexcept {
@@ -63,7 +65,7 @@ crt_congruence<T> crt_coprime(
  * @param congruences The list of congruences.
  * @return The unique solution if it exists.
  */
-template<typename T, typename S = std::make_signed_t<T>>
+export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 std::optional<crt_congruence<T>> crt(
     const std::vector<crt_congruence<T>> &congruences) {
@@ -86,7 +88,7 @@ std::optional<crt_congruence<T>> crt(
   // powers.
   std::vector<pp_crt_congruence> pp_congruences;
   for (const auto c : congruences) {
-    const auto factors = prime_decomposition_complete_list(c.m, primes);
+    const auto factors = prime_decomposition_list(c.m, primes);
     for (const auto [p, e] : factors) {
       pp_congruences.push_back(pp_crt_congruence {mod(c.a, pow(p, e)), p, e});
     }
@@ -124,4 +126,4 @@ std::optional<crt_congruence<T>> crt(
   return crt_coprime(flattened);
 }
 
-};
+}

@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
 
+#include <cstdint>
 #include <vector>
 
-#include "chinese_remainder.hpp"
+import chinese_remainder;
 
 TEST(ChineseRemainder_Coprime, SmallValues1) {
   const std::vector<ntlib::crt_congruence<uint32_t>> congruences = {

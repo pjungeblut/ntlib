@@ -1,5 +1,3 @@
-#pragma once
-
 /**
  * A sieve similar to a std::bitset<N> with the additional property that all
  * strict multiples of 2, 3 and 5 are always zero.
@@ -12,15 +10,19 @@
  * or by a factor of 15/4 compared to a std::vector<bool>.
  */
 
+module;
+
 #include <climits>
 #include <cstddef>
 #include <cstring>
 #include <memory>
 #include <vector>
 
+export module sieve_235;
+
 namespace ntlib {
 
-template <class Allocator = std::allocator<std::byte>>
+export template <class Allocator = std::allocator<std::byte>>
 class sieve_235 {
   /**
    * The number of elements stored in a single byte.

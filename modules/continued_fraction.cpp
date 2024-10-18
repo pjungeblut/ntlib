@@ -1,13 +1,16 @@
-#pragma once
-
 /**
  * Contininued fraction expansion for quadratic irrationals.
  */
 
+module;
+
 #include <cmath>
 #include <vector>
 
-#include "rational.hpp"
+export module continued_fraction;
+
+import base;
+import rational;
 
 namespace ntlib {
 
@@ -25,7 +28,7 @@ namespace ntlib {
  *        one form the period.
  * @return The period length.
  */
-template<typename T>
+export template<typename T>
 T quadratic_irrational_cf(const T &n, std::vector<T> &cf) {
   const T m0 = 0;
   const T d0 = 1;
@@ -57,7 +60,7 @@ T quadratic_irrational_cf(const T &n, std::vector<T> &cf) {
  * @param cf The continued fraction representation of the quadratic irrational.
  * @return The numerator and denominator of the n-th convergent.
  */
-template<typename T>
+export template<typename T>
 rational<T> nth_convergent_quadratic_irrational_cf(T n,
     const std::vector<T> &cf) {
   T p[3];

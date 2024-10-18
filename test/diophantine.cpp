@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "diophantine.hpp"
+import base;
+import diophantine;
 
 TEST(LinearUnivariate, SmallValues) {
   // Special case 0x = 0.

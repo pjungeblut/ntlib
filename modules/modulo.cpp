@@ -1,10 +1,12 @@
-#pragma once
+module;
 
 #include <cassert>
 #include <random>
 #include <type_traits>
 
-#include "base.hpp"
+export module modulo;
+
+import base;
 
 namespace ntlib {
 
@@ -15,7 +17,7 @@ namespace ntlib {
  * @param b The divisor.
  * @return The quotient, rounded down.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr T floor_div(T a, T b) noexcept {
   assert(b != T{0});
 
@@ -31,7 +33,7 @@ template<typename T>
  * @param m The divisor.
  * @return The quotient, rounded up.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr T ceil_div(T a, T b) noexcept {
   assert(b != T{0});
 
@@ -50,7 +52,7 @@ template<typename T>
  * @return a mod m in the mathematical sense.
  *         If m is positive, then so is the result.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr T mod(T a, T m) noexcept {
   if constexpr (std::is_unsigned_v<T>) { return a % m; }
   else { return a - m * floor_div(a, m); }
@@ -68,7 +70,7 @@ template<typename T>
  * @param unit The unit element of the group.
  * @return a^b (mod m), in particular the return value is in [0,m-1].
  */
-template<typename A, typename B, typename MF>
+export template<typename A, typename B, typename MF>
 [[nodiscard]] constexpr
 A mod_pow(A a, B b, MF mod_func, A unit = A{1}) noexcept {
   assert(!(a == A{0} && b == B{0}));
@@ -91,7 +93,7 @@ A mod_pow(A a, B b, MF mod_func, A unit = A{1}) noexcept {
  * @param m The order of the group.
  * @return The multiplicative inverse of a (mod m).
  */
-template<typename T, typename S = std::make_signed_t<T>>
+export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr T mod_mult_inv(T a, T m) noexcept {
   assert(m > T{0});
 
@@ -111,7 +113,7 @@ template<typename T, typename S = std::make_signed_t<T>>
  * @param p The modulus. Must be prime.
  * @return True, if and only if there is an x, such that x^2 = a (mod p).
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr bool mod_is_square(T a, T p) noexcept {
   if (a == T{0}) { return true; }
   if (p == T{2}) { return true; }
@@ -130,7 +132,7 @@ template<typename T>
  *         There are two solutions, the other one is p-x.
  *         Returns the smaller one.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr T mod_sqrt(T n, T p) noexcept {
   const auto mod_p = [p](T x) { return mod(x, p); };
 
@@ -182,7 +184,7 @@ template<typename T>
  * @param m The modulus.
  * @return The factorial `n!` modulo `m`.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 T mod_factorial(T n, T m) {
   T res = mod(T{1}, m);
@@ -199,7 +201,7 @@ T mod_factorial(T n, T m) {
  * @param p An odd prime number.
  * @return The Legendre Symbol (a/p).
  */
-template<typename T, typename S = std::make_signed_t<T>>
+export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr S legendre(T a, T p) noexcept {
   assert(p != T{2});
 
@@ -215,7 +217,7 @@ template<typename T, typename S = std::make_signed_t<T>>
  * @param b The "denominator".
  * @return The Jacobi Symbol (a/b).
  */
-template<typename T, typename S = std::make_signed_t<T>>
+export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr S jacobi(T a, T b) noexcept {
   assert(b > T{0});
   assert(is_odd(b));

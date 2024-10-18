@@ -2,8 +2,9 @@
 
 #include <cstdint>
 
-#include "base.hpp"
 #include "experiments/odd_part.hpp"
+
+import base;
 
 static const uint32_t N = 1'000'000;
 

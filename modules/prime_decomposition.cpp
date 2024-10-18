@@ -1,22 +1,28 @@
-#pragma once
+module;
 
+#include <cassert>
 #include <cstddef>
 #include <cstdlib>
+#include <optional>
 #include <type_traits>
 #include <utility>
 #include <vector>
 
-#include "base.hpp"
-#include "prime_generation.hpp"
 #include "prime_list.hpp"
-#include "prime_test.hpp"
+
+export module prime_decomposition;
+
+import base;
+import int128;
+import prime_generation;
+import prime_test;
 
 namespace ntlib {
 
 /**
  * Represents a single prime power `p^e`.
  */
-template<typename T>
+export template<typename T>
 struct prime_power {
   T p;
   T e;
@@ -34,7 +40,7 @@ struct prime_power {
  */
 template<typename C, typename T = typename C::value_type>
 [[nodiscard]] constexpr
-std::pair<std::vector<prime_power<T>>,T> prime_decomposition_list(
+std::pair<std::vector<prime_power<T>>,T> prime_decomposition_list_remainder(
     T n, const C &primes) {
   assert(n > T{0});
 
@@ -54,8 +60,8 @@ std::pair<std::vector<prime_power<T>>,T> prime_decomposition_list(
 }
 
 /**
- * Similar to `prime_decomposition_list` but also adds the remainder to the
- * result (with an exponent of `1`).
+ * Similar to `prime_decomposition_list_remainder` but also adds the remainder
+ * to the result (with an exponent of `1`).
  * 
  * If `primes` contains all prime factors up to `floor(sqrt(n))`, then the
  * result will be correct.
@@ -63,11 +69,11 @@ std::pair<std::vector<prime_power<T>>,T> prime_decomposition_list(
  * @param n The number to decompose.
  * @return A prime decompositon of `n`, i.e., a vector of prime powers.
  */
-template<typename C, typename T = typename C::value_type>
+export template<typename C, typename T = typename C::value_type>
 [[nodiscard]] constexpr
-std::vector<prime_power<T>> prime_decomposition_complete_list(
+std::vector<prime_power<T>> prime_decomposition_list(
     T n, const C &primes) {
-  auto res_list = prime_decomposition_list(n, primes);
+  auto res_list = prime_decomposition_list_remainder(n, primes);
   if (res_list.second != 1) {
     res_list.first.push_back(prime_power<T>{res_list.second, T{1}});
   }
@@ -84,7 +90,7 @@ template<typename T>
 [[nodiscard]] constexpr
 std::vector<prime_power<T>> prime_decomposition_32(T n) {
   static_assert(sizeof(T) <= 4);
-  return prime_decomposition_complete_list(n, PRIMES_BELOW_2_16);
+  return prime_decomposition_list(n, PRIMES_BELOW_2_16);
 }
 
 /**
@@ -140,7 +146,7 @@ std::optional<T> find_factor_pollard_rho_mult(T n, F f, T x,
  * @param n The given number.
  * @return A non-trivial factor.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 T find_factor(T n) noexcept {
   // A polynomial (modulo `n`) simulating a pseudorandom function.
@@ -201,7 +207,7 @@ std::vector<prime_power<T>> prime_decomposition_large(T n) {
  * @param n The given number.
  * @return A vector of prime powers.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 std::vector<prime_power<T>> prime_decomposition(T n) {
   assert(n >= T{1});
@@ -210,7 +216,7 @@ std::vector<prime_power<T>> prime_decomposition(T n) {
     return prime_decomposition_32(n);
   } else {
     // Start by trial division with small primes.
-    auto res_list = prime_decomposition_list(n, SMALL_PRIMES);
+    auto res_list = prime_decomposition_list_remainder(n, SMALL_PRIMES);
     std::vector<prime_power<T>> factors{std::move(res_list.first)};
     const T remainder = res_list.second;
     if (remainder == 1) { return factors; }

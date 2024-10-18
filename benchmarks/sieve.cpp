@@ -4,8 +4,8 @@
 #include <cstddef>
 #include <vector>
 
-#include "sieve.hpp"
-#include "sieve_235.hpp"
+import sieve;
+import sieve_235;
 
 #define UNIT_MS Unit(benchmark::kMicrosecond)
 

@@ -6,9 +6,10 @@
 #include <cstdint>
 
 #include "experiments/prime_decomposition.hpp"
-#include "int128.hpp"
-#include "prime_decomposition.hpp"
-#include "prime_generation.hpp"
+
+import int128;
+import prime_decomposition;
+import prime_generation;
 
 // How many consecutive numbers to decompose.
 constexpr static uint64_t N = 10'000;
@@ -36,20 +37,6 @@ constexpr static auto large_primes = std::to_array<uint64_t>({
     4000002491, 4000002499, 4000002529, 4000002551, 4000002553, 4000002619,
     4000002647, 4000002659, 4000002667, 4000002673, 4000002679, 4000002689,
     4000002751, 4000002781, 4000002791, 4000002817, 4000002829, 4000002833});
-
-static void BM_prime_decomposition_32(benchmark::State &state) {
-  for (auto _ : state) {
-    for (uint32_t i = state.range(0); i < state.range(0) + N; ++i) {
-      const auto pd = ntlib::prime_decomposition_32(i);
-    }
-  }
-}
-BENCHMARK(BM_prime_decomposition_32)
-    ->Arg(1)
-    ->Arg(1'000)
-    ->Arg(1'000'000)
-    ->Arg(1'000'000'000)
-    ->Unit(benchmark::kMillisecond);
 
 static void BM_prime_decomposition_ntlib(benchmark::State &state) {
   for (auto _ : state) {
@@ -79,24 +66,6 @@ static void BM_factor_pollard_rho(benchmark::State &state) {
   }
 }
 BENCHMARK(BM_factor_pollard_rho)
-    ->Unit(benchmark::kMillisecond);
-
-static void BM_factor_pollard_rho_mult(benchmark::State &state) {
-  for (auto _ : state) {
-    for (const uint64_t p : large_primes) {
-      const uint64_t n = p * p;
-      const auto f = [n](uint64_t x) { return (ntlib::u128{x} * x + 1) % n; };
-      auto res = ntlib::find_factor_pollard_rho_mult(
-          n, f, 2ul, state.range(0));
-      benchmark::DoNotOptimize(res);
-    }
-  }
-}
-BENCHMARK(BM_factor_pollard_rho_mult)
-    ->Arg(32)
-    ->Arg(64)
-    ->Arg(128)
-    ->Arg(256)
     ->Unit(benchmark::kMillisecond);
 
 static void BM_factor_pollard_rho_brent(benchmark::State &state) {

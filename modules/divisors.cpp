@@ -1,10 +1,13 @@
-#pragma once
+module;
 
+#include <cassert>
 #include <numeric>
 #include <vector>
 
-#include "base.hpp"
-#include "prime_decomposition.hpp"
+import base;
+import prime_decomposition;
+
+export module divisors;
 
 namespace ntlib {
 
@@ -14,7 +17,7 @@ namespace ntlib {
  * @param factors The prime factorization of `n`.
  * @return The number of divisors.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 T count_divisors(const std::vector<prime_power<T>> &factors) noexcept {
   return std::accumulate(factors.begin(), factors.end(), T{1},
@@ -31,7 +34,7 @@ T count_divisors(const std::vector<prime_power<T>> &factors) noexcept {
  *     Must be non-negative.
  * @return The value of d_x(n) = \sum_{d|n} d^x.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 T divisor_function(
     const std::vector<prime_power<T>> &factors, T x) noexcept {
@@ -56,7 +59,7 @@ T divisor_function(
  * @param factors The prime factorization of `n`.
  * @return All divisors of `n`.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 std::vector<T> enumerate_divisors(const std::vector<prime_power<T>> &factors) {
   std::vector<T> divisors(1, T{1});

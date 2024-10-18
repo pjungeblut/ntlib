@@ -2,12 +2,14 @@
 
 #include <array>
 #include <cstdint>
+#include <numeric>
 #include <set>
 #include <vector>
 
-#include "base.hpp"
-#include "prime_decomposition.hpp"
-#include "prime_generation.hpp"
+import base;
+import prime_decomposition;
+import prime_generation;
+import prime_test;
 
 static constexpr auto composites = std::to_array<uint64_t>({
   1,
@@ -53,28 +55,18 @@ bool is_prime_decomposition(
 
 TEST(PrimeDecompositionList, Composites) {
   for (const uint64_t n : composites) {
+    if (n >= ntlib::SMALL_PRIMES_BIGGEST * ntlib::SMALL_PRIMES_BIGGEST) {
+      continue;
+    }
     const auto res = ntlib::prime_decomposition_list(n, ntlib::SMALL_PRIMES);
-    const auto decomposition = res.first;
-    const uint64_t remainder = res.second;
-    EXPECT_TRUE(n % remainder == 0);
-    const uint64_t m = n / remainder;
-    EXPECT_TRUE(is_prime_decomposition(m, decomposition));
+    EXPECT_TRUE(is_prime_decomposition(n, res));
   }
 }
 
 TEST(PrimeDecompositionList, Primes) {
   for (const uint64_t n : primes) {
     const auto res = ntlib::prime_decomposition_list(n, ntlib::SMALL_PRIMES);
-    const auto decomposition = res.first;
-    const uint64_t remainder = res.second;
-    EXPECT_TRUE(n % remainder == 0);
-
-    if (remainder == 1) {
-      EXPECT_EQ(decomposition.size(), 1);
-      EXPECT_TRUE(is_prime_decomposition(n, decomposition));
-    } else {
-      EXPECT_TRUE(ntlib::is_prime(remainder));
-    }
+    EXPECT_TRUE(is_prime_decomposition(n, res));
   }
 }
 

@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-#include "turan_number.hpp"
+import turan_number;
 
 TEST(TuranNumber, SingleValue) {
   // Small values.

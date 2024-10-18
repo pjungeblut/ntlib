@@ -1,4 +1,4 @@
-#pragma once
+module;
 
 #include <algorithm>
 #include <array>
@@ -7,10 +7,13 @@
 #include <climits>
 #include <cmath>
 #include <concepts>
+#include <cstdint>
 #include <functional>
 #include <numeric>
 #include <type_traits>
 #include <vector>
+
+export module base;
 
 namespace ntlib {
 
@@ -18,7 +21,7 @@ namespace ntlib {
  * A list with all prime numbers up to, SMALL_PRIMES_BIGGEST.
  * Useful as these are used frequently.
  */
-static constexpr auto SMALL_PRIMES = std::to_array<uint32_t>({
+export constexpr auto SMALL_PRIMES = std::to_array<uint32_t>({
     2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
     73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151,
     157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233,
@@ -30,7 +33,7 @@ static constexpr auto SMALL_PRIMES = std::to_array<uint32_t>({
     709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811,
     821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911,
     919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997, 1'009});
-static constexpr uint32_t SMALL_PRIMES_BIGGEST =
+export constexpr uint32_t SMALL_PRIMES_BIGGEST =
     *std::ranges::max_element(SMALL_PRIMES);
 
 /**
@@ -39,7 +42,7 @@ static constexpr uint32_t SMALL_PRIMES_BIGGEST =
  * @param n The number.
  * @return Whether n is odd.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 bool is_odd(T n) noexcept {
   if constexpr (requires(T n) { n & T{1}; }) {
@@ -48,7 +51,7 @@ bool is_odd(T n) noexcept {
     return n % T{2};
   } else {
     assert(round(n) == n);
-    return abs(std::fmod(n, 2.0)) == 1.0;
+    return std::abs(std::fmod(n, 2.0)) == 1.0;
   }
 }
 
@@ -58,7 +61,7 @@ bool is_odd(T n) noexcept {
  * @param n The number.
  * @return Whether n is even.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 bool is_even(T n) noexcept {
   return !is_odd(n);
@@ -70,7 +73,7 @@ bool is_even(T n) noexcept {
  * @param n The number to take the absolute value of.
  * @return The absolute value of n.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 T abs(T n) noexcept {
   return n >= T{0} ? n : -n;
@@ -84,7 +87,7 @@ T abs(T n) noexcept {
  * @param b The second number.
  * @return The difference, i.e., `abs(a-b)`.
  */
-template<typename T, typename U = std::make_unsigned_t<T>>
+export template<typename T, typename U = std::make_unsigned_t<T>>
 [[nodiscard]] constexpr
 U difference(T a, T b) noexcept {
   if (a > b) { return static_cast<U>(a) - b; }
@@ -97,7 +100,7 @@ U difference(T a, T b) noexcept {
  * @param n The number.
  * @return The sign.
  */
-template <typename T>
+export template <typename T>
 [[nodiscard]] constexpr
 int sgn(T n) noexcept {
     return (T{0} < n) - (n < T{0});
@@ -109,7 +112,7 @@ int sgn(T n) noexcept {
  * @param n The number to decompose.
  * @return A pair with e and o. 
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 std::pair<T,T> odd_part(T n) noexcept {
   constexpr auto odd_part_non_negative = [](T n) {
@@ -145,7 +148,7 @@ std::pair<T,T> odd_part(T n) noexcept {
  * @param b The second number.
  * @return The greatest common divisor of a and b.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 T gcd(T a, T b) noexcept {
   assert(!(a == T{0} && b == T{0}));
@@ -163,7 +166,7 @@ T gcd(T a, T b) noexcept {
  * @param b The second number.
  * @return The least common multiple of a and b.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 T lcm(T a, T b) noexcept {
   assert(a != T{0});
@@ -179,7 +182,7 @@ T lcm(T a, T b) noexcept {
  * @param b Parameter b
  * @return Tuple (gcd(a,b), x, y).
  */
-template<typename T, typename S = std::make_signed_t<T>>
+export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 std::tuple<T, S, S> extended_euclid(T a, T b) noexcept {
   assert(!(a == T{0} && b == T{0}));
@@ -207,7 +210,7 @@ std::tuple<T, S, S> extended_euclid(T a, T b) noexcept {
  * @param _ Element of that type.
  * @return The multiplicative neutral element of the type.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 T get_multiplicative_neutral(T)
     requires (std::is_arithmetic_v<T> && sizeof(T) <= 8) {
@@ -217,7 +220,7 @@ T get_multiplicative_neutral(T)
 /**
  * Concept for types with a multiplicative neutral.
  */
-template<typename T>
+export template<typename T>
 concept HasMultiplicativeNeutral = requires(T n) {
     { get_multiplicative_neutral(n) } -> std::convertible_to<T>;
 };
@@ -230,7 +233,7 @@ concept HasMultiplicativeNeutral = requires(T n) {
  * @param b The exponent, non-negative.
  * @return a^b
  */
-template<HasMultiplicativeNeutral A, typename B>
+export template<HasMultiplicativeNeutral A, typename B>
 [[nodiscard]] constexpr
 A pow(A a, B b) noexcept {
   assert(!(a == A{0} && b == B{0}));
@@ -248,7 +251,7 @@ A pow(A a, B b) noexcept {
  * @param n The number to compute the ceiling of the binary logarithm for.
  * @return floor(log2(n))
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 T ilog2(T n) noexcept {
   assert(n > T{0});
@@ -271,7 +274,7 @@ T ilog2(T n) noexcept {
  * @param n The number to compute the integer square root of. Non-negative.
  * @return isqrt(n)
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 T isqrt(T n) noexcept {
   assert(n >= T{0});
@@ -310,7 +313,7 @@ T isqrt(T n) noexcept {
  * @param n The number to test.
  * @return True, iff n is a perfect square.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 bool is_square(T n) noexcept {
   if (n < T{0}) { return false; }
@@ -364,7 +367,7 @@ bool is_square(T n) noexcept {
  * @param n The base.
  * @return The factorial n!.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 T factorial(T n) noexcept {
   assert(n >= T{0});

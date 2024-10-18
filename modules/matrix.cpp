@@ -1,4 +1,4 @@
-#pragma once
+module;
 
 #include <cassert>
 #include <cstddef>
@@ -8,12 +8,17 @@
 #include <string>
 #include <vector>
 
+export module matrix;
+
+import base;
+
 namespace ntlib {
 
 /**
  * Represents a RxC-matrix.
  */
-template<typename T, template <typename> typename Allocator = std::allocator>
+export template<typename T,
+    template <typename> typename Allocator = std::allocator>
 class matrix {
 public:
   /**
@@ -540,7 +545,7 @@ private:
  * @param func The function to execute.
  * @return The new matrix.
  */
-template<typename T, typename F>
+export template<typename T, typename F>
 matrix<T> exec_each_element(matrix<T> m, const F &func) {
   for (std::size_t r = 0; r < m.get_rows(); ++r) {
     for (std::size_t c = 0; c < m.get_columns(); ++c) {
@@ -556,7 +561,7 @@ matrix<T> exec_each_element(matrix<T> m, const F &func) {
  * @param _ Instance of the type.
  * @return Identity matrix of same dimension.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 matrix<T> get_multiplicative_neutral(matrix<T> m) {
   assert(m.get_rows() == m.get_columns());

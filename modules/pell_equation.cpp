@@ -1,10 +1,13 @@
-#pragma once
+module;
 
 #include <tuple>
 #include <vector>
 
-#include "base.hpp"
-#include "continued_fraction.hpp"
+export module pell_equation;
+
+import base;
+import continued_fraction;
+import rational;
 
 namespace ntlib {
 
@@ -15,7 +18,7 @@ namespace ntlib {
  * @param d Parameter d, must not be square.
  * @return Values for a and b, minimal in b.
  */
-template<typename T>
+export template<typename T>
 std::tuple<T,T> min_pell_solution(T d) {
   std::vector<T> cf;
   T period = ntlib::quadratic_irrational_cf(d, cf);
@@ -41,7 +44,7 @@ std::tuple<T,T> min_pell_solution(T d) {
  * @param current Any solution.
  * @return The next bigger solution than current (in x).
  */
-template<typename T>
+export template<typename T>
 std::tuple<T,T> next_pell_solution(T d, const std::tuple<T,T> &initial,
     const std::tuple<T,T> &current) {
   const auto &[ix, iy] = initial;

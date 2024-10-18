@@ -3,9 +3,10 @@
 #include <cassert>
 #include <vector>
 
-#include "binomial_coefficient.hpp"
-#include "modulo.hpp"
-#include "prime_test.hpp"
+import base;
+import binomial_coefficient;
+import modulo;
+import prime_test;
 
 // Prime modulus.
 static constexpr uint64_t MOD_P = 1009;

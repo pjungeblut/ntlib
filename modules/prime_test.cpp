@@ -1,20 +1,24 @@
-#pragma once
-
 /**
  * Implementations for prime number tests.
  */
 
+module;
+
+#include <algorithm>
 #include <array>
+#include <cassert>
 #include <cstdint>
 #include <optional>
-#include <ranges>
 #include <span>
 #include <type_traits>
 
-#include "base.hpp"
-#include "int128.hpp"
-#include "lucas_sequence.hpp"
-#include "mod_int.hpp"
+export module prime_test;
+
+import base;
+import int128;
+import lucas_sequence;
+import mod_int;
+import modulo;
 
 namespace ntlib {
 
@@ -25,7 +29,7 @@ namespace ntlib {
  * @param primes A list of small primes to divide by.
  * @return Whether `n` is prime (relative to all primes in `primes`).
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 std::optional<bool> is_prime_trial_division(T n,
     std::span<const uint32_t> primes) {
@@ -52,7 +56,7 @@ std::optional<bool> is_prime_trial_division(T n,
  * @param a The base to test with.
  * @return `true` if and only if the `n` is a strong probable prime to base `a`.
  */
-template<typename T>
+export template<typename T>
 [[nodiscard]] constexpr
 bool miller_selfridge_rabin_test(T n, T a) noexcept {
   assert(n > T{2});
@@ -86,7 +90,7 @@ bool miller_selfridge_rabin_test(T n, T a) noexcept {
  * @param n The number to test for primality.
  * @return Whether `n` is prime.
  */
-[[nodiscard]] constexpr
+export [[nodiscard]] constexpr
 bool forisek_jancina_no_base_cases(uint32_t n) {
   constexpr auto bases = std::to_array<uint64_t>({
       15591, 2018, 166, 7429, 8064, 16045, 10503, 4399, 1949, 1295, 2776, 3620,
@@ -165,7 +169,7 @@ bool is_prime_64(uint64_t n) {
  * @param n The number to check.
  * @return `true` if and only if `n` is a strong Lucas probable prime.
  */
-template<typename U, typename S = std::make_signed_t<U>>
+export template<typename U, typename S = std::make_signed_t<U>>
 [[nodiscard]] constexpr
 bool is_strong_lucas_probable_prime(U n) noexcept {
   assert(n > U{2});
@@ -238,7 +242,7 @@ bool is_strong_lucas_probable_prime(U n) noexcept {
  * @param n The number to test for primality.
  * @return Whether `n` is a prime number.
  */
-template<typename U, typename S = std::make_signed_t<U>>
+export template<typename U, typename S = std::make_signed_t<U>>
 [[nodiscard]] constexpr
 bool is_prime_baillie_psw(U n) noexcept {
   // Trivial cases.
@@ -266,7 +270,7 @@ bool is_prime_baillie_psw(U n) noexcept {
  * @param n The number to test for primality.
  * @return Whether `n` is prime.
  */
-template<typename T, typename S = std::make_signed_t<T>>
+export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 bool is_prime(T n) noexcept {
   if constexpr (std::is_integral_v<T> && sizeof(T) <= 4) {

@@ -1,6 +1,8 @@
-#pragma once
+module;
 
 #include <vector>
+
+export module euler_totient;
 
 namespace ntlib {
 
@@ -12,7 +14,7 @@ namespace ntlib {
  * @param N The number until which all values should be computed.
  * @param sieve The sieve to put the values into.
  */
-template<typename T>
+export template<typename T>
 void sieve_phi(T N, std::vector<T> &sieve) {
   sieve.resize(N + 1);
   for (T i = 1; i <= N; ++i) sieve[i] = i;

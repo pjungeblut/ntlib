@@ -1,9 +1,10 @@
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <cstdint>
 
-#include "divisors.hpp"
-#include "prime_decomposition.hpp"
+import divisors;
+import prime_decomposition;
 
 // All sigma sequences below have been prefixed with a `0` element to make them
 // 1-indexed.

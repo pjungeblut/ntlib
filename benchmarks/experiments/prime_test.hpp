@@ -1,12 +1,14 @@
 #pragma once
 
+#include <algorithm>
 #include <array>
 #include <type_traits>
 #include <vector>
 
-#include "../../include/base.hpp"
-#include "../../include/prime_generation.hpp"
-#include "../../include/prime_test.hpp"
+import base;
+import modulo;
+import prime_generation;
+import prime_test;
 
 namespace ntlib {
 namespace experiments {
@@ -79,7 +81,7 @@ bool is_prime_miller_selfridge_rabin(T n) noexcept {
   if (n < T{121}) { return n > T{1}; }
 
   // Possible bases.
-  return std::all_of(BASES.begin(), BASES.end(), [n](T a) {
+  return std::ranges::all_of(BASES, [n](T a) {
     T mod_base = mod(a, n);
     if (mod_base == 0) { return true; }
     else { return miller_selfridge_rabin_test(n, mod(a, n)); }
