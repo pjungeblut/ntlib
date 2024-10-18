@@ -6,10 +6,11 @@
 #include <set>
 #include <vector>
 
-#include "prime_generation.hpp"
+#include "prime_test.hpp"
 
 import base;
 import prime_decomposition;
+import prime_generation;
 
 static constexpr auto composites = std::to_array<uint64_t>({
   1,

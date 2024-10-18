@@ -6,10 +6,10 @@
 #include <cstdint>
 
 #include "experiments/prime_decomposition.hpp"
-#include "prime_generation.hpp"
 
 import int128;
 import prime_decomposition;
+import prime_generation;
 
 // How many consecutive numbers to decompose.
 constexpr static uint64_t N = 10'000;

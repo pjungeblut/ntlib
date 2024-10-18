@@ -6,13 +6,13 @@ module;
 #include <utility>
 #include <vector>
 
-#include "prime_generation.hpp"
 #include "prime_list.hpp"
 #include "prime_test.hpp"
 
 export module prime_decomposition;
 
 import base;
+import prime_generation;
 
 namespace ntlib {
 
