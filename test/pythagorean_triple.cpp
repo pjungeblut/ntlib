@@ -1,17 +1,15 @@
 #include <gtest/gtest.h>
 
 #include <cstdint>
-#include <tuple>
-#include <vector>
 
-#include "pythagorean_triple.hpp"
+import base;
+import pythagorean_triple;
 
 TEST(PythagoreanTriple, Primitive) {
-  const uint32_t maxi = 1000;
-  std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> triples;
-  ntlib::primitive_pythagorean_triples(maxi, triples);
+  const uint32_t N = 1'000;
+  auto triples = ntlib::primitive_pythagorean_triples(N);
 
-  for (const auto &[a,b,c] : triples) {
+  for (const auto [a,b,c] : triples) {
     // Check validity.
     EXPECT_EQ(a * a + b * b, c * c);
 
