@@ -4,10 +4,10 @@
 #include <cstdint>
 #include <vector>
 
-#include "prime_test.hpp"
-
+import base;
 import int128;
 import prime_generation;
+import prime_test;
 
 static constexpr uint64_t N = 1'000'000;
 static const auto SIEVE = ntlib::prime_sieve(N);

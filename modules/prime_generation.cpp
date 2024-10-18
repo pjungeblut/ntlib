@@ -10,12 +10,12 @@ module;
 #include <type_traits>
 #include <vector>
 
-#include "prime_test.hpp"
 #include "sieve_235.hpp"
 
 export module prime_generation;
 
 import base;
+import prime_test;
 
 namespace ntlib {
 

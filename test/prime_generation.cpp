@@ -3,9 +3,8 @@
 #include <cstdint>
 #include <vector>
 
-#include "prime_test.hpp"
-
 import prime_generation;
+import prime_test;
 
 const uint64_t N = 1'000'000;
 

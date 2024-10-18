@@ -1,18 +1,21 @@
 module;
 
+#include <cassert>
 #include <cstddef>
 #include <cstdlib>
+#include <optional>
 #include <type_traits>
 #include <utility>
 #include <vector>
 
 #include "prime_list.hpp"
-#include "prime_test.hpp"
 
 export module prime_decomposition;
 
 import base;
+import int128;
 import prime_generation;
+import prime_test;
 
 namespace ntlib {
 
