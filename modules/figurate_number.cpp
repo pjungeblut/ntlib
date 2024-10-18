@@ -1,8 +1,8 @@
 /**
- * Implementations to generate polygonal and polyhedral numbers.
+ * Implementations to generate figurate numbers.
  */
 
-export module polygonal_number;
+export module figurate_number;
 
 namespace ntlib {
 
@@ -76,6 +76,30 @@ export template<typename T>
 [[nodiscard]] constexpr
 T octagonal_number(T n) noexcept {
   return n * (3 * n - 2);
+}
+
+/**
+ * Computes the `n`-th nonagonal number.
+ *
+ * @param n Which nonagonal number to generate.
+ * @return The `n`-th nonagonal number.
+ */
+export template<typename T>
+[[nodiscard]] constexpr
+T nonagonal_number(T n) noexcept {
+  return (7 * n * n - 5 * n) / 2;
+}
+
+/**
+ * Computes the `n`-th decagonal number.
+ *
+ * @param n Which decagonal number to generate.
+ * @return The `n`-th decagonal number.
+ */
+export template<typename T>
+[[nodiscard]] constexpr
+T decagonal_number(T n) noexcept {
+  return 4 * n * n - 3 * n;
 }
 
 /**

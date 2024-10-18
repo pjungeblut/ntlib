@@ -3,7 +3,7 @@
 #include <array>
 #include <cstdint>
 
-import polygonal_number;
+import figurate_number;
 
 TEST(TriangleNumbers, SmallValues) {
   // https://oeis.org/A000217
@@ -66,6 +66,29 @@ TEST(OctagonalNumbers, SmallValues) {
       3400, 3605, 3816, 4033, 4256, 4485, 4720, 4961, 5208, 5461});
   for (uint32_t i = 0; i < truth.size(); ++i) {
     EXPECT_EQ(ntlib::octagonal_number(i), truth[i]);
+  }
+}
+
+TEST(NonagonalNumbers, SmallValues) {
+  // https://oeis.org/A001106
+  constexpr auto truth = std::to_array<uint32_t>({0, 1, 9, 24, 46, 75, 111, 154,
+      204, 261, 325, 396, 474, 559, 651, 750, 856, 969, 1089, 1216, 1350, 1491,
+      1639, 1794, 1956, 2125, 2301, 2484, 2674, 2871, 3075, 3286, 3504, 3729,
+      3961, 4200, 4446, 4699, 4959, 5226, 5500, 5781, 6069, 6364});
+  for (uint32_t i = 0; i < truth.size(); ++i) {
+    EXPECT_EQ(ntlib::nonagonal_number(i), truth[i]);
+  }
+}
+
+TEST(DecagonalNumbers, SmallValues) {
+  // https://oeis.org/A001107
+  constexpr auto truth = std::to_array<uint32_t>({0, 1, 10, 27, 52, 85, 126,
+      175, 232, 297, 370, 451, 540, 637, 742, 855, 976, 1105, 1242, 1387, 1540,
+      1701, 1870, 2047, 2232, 2425, 2626, 2835, 3052, 3277, 3510, 3751, 4000,
+      4257, 4522, 4795, 5076, 5365, 5662, 5967, 6280, 6601, 6930, 7267, 7612,
+      7965, 8326});
+  for (uint32_t i = 0; i < truth.size(); ++i) {
+    EXPECT_EQ(ntlib::decagonal_number(i), truth[i]);
   }
 }
 
