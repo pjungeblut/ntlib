@@ -11,6 +11,13 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_FLAGS "-std=c++23 -Wall -Wextra -O2")
 
+# Treat warnings as errors.
+if (MSVC)
+  add_compile_options(/W3 /WX)
+else()
+  add_compile_options(-W -Wall -Werror)
+endif()
+
 ################################################################################
 # Unit Tests.
 ################################################################################
