@@ -1,5 +1,5 @@
 /**
- * Implementations to generate polygonal numbers.
+ * Implementations to generate polygonal and polyhedral numbers.
  */
 
 export module polygonal_number;
