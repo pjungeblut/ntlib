@@ -1,17 +1,19 @@
-#pragma once
-
 /**
  * A sieve with a fixed capacity. Each entry is either `true` or `false` and
  * initially all values are `true`.
  */
 
+module;
+
 #include <cstddef>
 #include <memory>
 #include <vector>
 
+export module sieve;
+
 namespace ntlib {
 
-template <class Allocator = std::allocator<std::byte>>
+export template <class Allocator = std::allocator<std::byte>>
 class sieve {
   /**
    * Memory for the sieve.

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "sieve.hpp"
+import sieve;
 
 const static std::size_t capacity = 1'000;
 

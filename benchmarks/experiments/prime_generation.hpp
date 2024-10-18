@@ -5,9 +5,8 @@
 #include <utility>
 #include <vector>
 
-#include "sieve.hpp"
-
 import base;
+import sieve;
 
 namespace ntlib {
 namespace experiments {

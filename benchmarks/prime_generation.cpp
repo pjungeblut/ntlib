@@ -1,9 +1,9 @@
 #include <benchmark/benchmark.h>
 
 #include "experiments/prime_generation.hpp"
-#include "sieve.hpp"
 
 import prime_generation;
+import sieve;
 import sieve_235;
 
 #define UNIT_MS Unit(benchmark::kMillisecond)
