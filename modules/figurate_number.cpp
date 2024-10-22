@@ -7,111 +7,27 @@ export module figurate_number;
 namespace ntlib {
 
 /**
- * Computes the `n`-th triangle number.
- *
- * @param n Which triangle number to generate.
- * @return The `n`-th triangle number.
+ * Computes the `n`-th `k`-gonal number.
+ * 
+ * @param n Which `k`-gonal number to generate.
+ * @return The `n`-th `k`-gonal number.
  */
 export template<typename T>
 [[nodiscard]] constexpr
-T triangle_number(T n) noexcept {
-  return n * (n + 1) / 2;
+T k_gonal_number(T k, T n) noexcept {
+  return ((k - 2) * n * n - (k - 4) * n) / 2;
 }
 
 /**
- * Computes the `n`-th square number.
- *
- * @param n Which square number to generate.
- * @return The `n`-th square number.
+ * Computes the `n`-th centered `k`-gonal number.
+ * 
+ * @param n Which centered `k`-gonal number to generate.
+ * @return The `n`-th centered `k`-gonal number.
  */
 export template<typename T>
 [[nodiscard]] constexpr
-T square_number(T n) noexcept {
-  return n * n;
-}
-
-/**
- * Computes the `n`-th pentagonal number.
- *
- * @param n Which pentagonal number to generate.
- * @return The `n`-th pentagonal number.
- */
-export template<typename T>
-[[nodiscard]] constexpr
-T pentagonal_number(T n) noexcept {
-  return n * (3 * n - 1) / 2;
-}
-
-/**
- * Computes the `n`-th hexagonal number.
- *
- * @param n Which hexagonal number to generate.
- * @return The `n`-th hexagonal number.
- */
-export template<typename T>
-[[nodiscard]] constexpr
-T hexagonal_number(T n) noexcept {
-  return n * (2 * n - 1);
-}
-
-/**
- * Computes the `n`-th heptagonal number.
- *
- * @param n Which heptagonal number to generate.
- * @return The `n`-th heptagonal number.
- */
-export template<typename T>
-[[nodiscard]] constexpr
-T heptagonal_number(T n) noexcept {
-  return n * (5 * n - 3) / 2;
-}
-
-/**
- * Computes the `n`-th octagonal number.
- *
- * @param n Which octagonal number to generate.
- * @return The `n`-th octagonal number.
- */
-export template<typename T>
-[[nodiscard]] constexpr
-T octagonal_number(T n) noexcept {
-  return n * (3 * n - 2);
-}
-
-/**
- * Computes the `n`-th nonagonal number.
- *
- * @param n Which nonagonal number to generate.
- * @return The `n`-th nonagonal number.
- */
-export template<typename T>
-[[nodiscard]] constexpr
-T nonagonal_number(T n) noexcept {
-  return (7 * n * n - 5 * n) / 2;
-}
-
-/**
- * Computes the `n`-th decagonal number.
- *
- * @param n Which decagonal number to generate.
- * @return The `n`-th decagonal number.
- */
-export template<typename T>
-[[nodiscard]] constexpr
-T decagonal_number(T n) noexcept {
-  return 4 * n * n - 3 * n;
-}
-
-/**
- * Computes the `n`-th centered square number.
- *
- * @param n Which centered square number to gnerate.
- * @return The `n`-th centered square number.
- */
-export template<typename T>
-[[nodiscard]] constexpr
-T centered_square_number(T n) noexcept {
-  return square_number(n + 1) + square_number(n);
+T centered_k_gonal_number(T k, T n) noexcept {
+  return k * n * (n + 1) / 2 + 1;
 }
 
 /**
@@ -163,27 +79,75 @@ T icosahedral_number(T n) noexcept {
 }
 
 /**
- * Computes the `n`-th tetrahedral number.
+ * Computes the `n`-th centered tetrahedral number.
  *
- * @param n Which tetrahedral number to generate.
- * @return The `n`-th tetrahedral number.
+ * @param n Which centered tetrahedral number to generate.
+ * @return The `n`-th centered tetrahedral number.
  */
 export template<typename T>
 [[nodiscard]] constexpr
-T tetrahedral_number(T n) noexcept {
-  return n * (n + 1) / 2 * (n + 2) / 3;
+T centered_tetrahedral_number(T n) noexcept {
+  return (2 * n + 1) * (n * n + n + 3) / 3;
 }
 
 /**
- * Computes the `n`-th square pyramid number.
+ * Computes the `n`-th centered cube number.
  *
- * @param n Which square pyramid number to gnerate.
- * @return The `n`-th square pyramid number.
+ * @param n Which centered cube number to generate.
+ * @return The `n`-th centered cube number.
  */
 export template<typename T>
 [[nodiscard]] constexpr
-T square_pyramidal_number(T n) noexcept {
-  return n * (n + 1) / 2 * (2 * n + 1) / 3;
+T centered_cube_number(T n) noexcept {
+  return (2 * n + 1) * (n * n + n + 1);
+}
+
+/**
+ * Computes the `n`-th centered octahedral number.
+ *
+ * @param n Which centered octahedral number to generate.
+ * @return The `n`-th centered octahedral number.
+ */
+export template<typename T>
+[[nodiscard]] constexpr
+T centered_octahedral_number(T n) noexcept {
+  return (2 * n + 1) * (2 * n * n + 2 * n + 3) / 3;
+}
+
+/**
+ * Computes the `n`-th centered dodecahedral number.
+ *
+ * @param n Which centered dodecahedral number to generate.
+ * @return The `n`-th centered dodecahedral number.
+ */
+export template<typename T>
+[[nodiscard]] constexpr
+T centered_dodecahedral_number(T n) noexcept {
+  return (2 * n + 1) * (5 * n * n + 5 * n + 1);
+}
+
+/**
+ * Computes the `n`-th centered icosahedral number.
+ *
+ * @param n Which centered icosahedral number to generate.
+ * @return The `n`-th centered icosahedral number.
+ */
+export template<typename T>
+[[nodiscard]] constexpr
+T centered_icosahedral_number(T n) noexcept {
+  return (2 * n + 1) * (5 * n * n + 5 * n + 3) / 3;
+}
+
+/**
+ * Computes the `n`-th `k`-gonal pyramidal number.
+ * 
+ * @param n Which `k`-gonal pyramidal number to generate.
+ * @return The `n`-th `k`-gonal pyramidal number.
+ */
+export template<typename T>
+[[nodiscard]] constexpr
+T k_gonal_pyramidal_number(T k, T n) noexcept {
+  return (3 * n * n + n * n * n * (k - 2) - n * (k - 5)) / 6;
 }
 
 }
