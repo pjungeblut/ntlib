@@ -31,18 +31,6 @@ T centered_k_gonal_number(T k, T n) noexcept {
 }
 
 /**
- * Computes the `n`-th `k`-gonal pyramidal number.
- * 
- * @param n Which `k`-gonal pyramidal number to generate.
- * @return The `n`-th `k`-gonal pyramidal number.
- */
-export template<typename T>
-[[nodiscard]] constexpr
-T k_gonal_pyramidal_number(T k, T n) noexcept {
-  return (3 * n * n + n * n * n * (k - 2) - n * (k - 5)) / 6;
-}
-
-/**
  * Computes the `n`-th cube number.
  *
  * @param n Which cube number to generate.
@@ -148,6 +136,18 @@ export template<typename T>
 [[nodiscard]] constexpr
 T centered_icosahedral_number(T n) noexcept {
   return (2 * n + 1) * (5 * n * n + 5 * n + 3) / 3;
+}
+
+/**
+ * Computes the `n`-th `k`-gonal pyramidal number.
+ * 
+ * @param n Which `k`-gonal pyramidal number to generate.
+ * @return The `n`-th `k`-gonal pyramidal number.
+ */
+export template<typename T>
+[[nodiscard]] constexpr
+T k_gonal_pyramidal_number(T k, T n) noexcept {
+  return (3 * n * n + n * n * n * (k - 2) - n * (k - 5)) / 6;
 }
 
 }
