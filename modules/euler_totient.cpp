@@ -27,7 +27,20 @@ T euler_totient(const std::vector<prime_power<T>> &factors) {
 }
 
 /**
- * Computes Euler's totient function `phi(i)` for all integers smaller than a
+ * Computes Euler's totient function `phi(n)` for a given number `n`, i.e., the
+ * number of integers up to `n` coprime to `n`.
+ * 
+ * @param n The given number `n`.
+ * @return Euler's totient function `phi(n)`.
+ */
+export template<typename T>
+[[nodiscard]] constexpr
+T euler_totient(T n) {
+  return euler_totient(prime_decomposition(n));
+}
+
+/**
+ * Computes Euler's totient function `phi(n)` for all integers smaller than a
  * given number `N`.
  * 
  * Runtime: O(N log log N)

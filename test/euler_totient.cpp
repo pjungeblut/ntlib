@@ -4,7 +4,6 @@
 #include <cstdint>
 
 import euler_totient;
-import prime_decomposition;
 
 // https://oeis.org/A000010
 // Prefixed with `0` to be `1`-indexed.
@@ -16,8 +15,7 @@ constexpr auto truth = std::to_array<uint32_t>({0, 1, 1, 2, 2, 4, 2, 6, 4, 6, 4,
 
 TEST(OneShot, SmallValues) {
   for (uint32_t i = 1; i < truth.size(); ++i) {
-    const auto pd = ntlib::prime_decomposition(i);
-    EXPECT_EQ(ntlib::euler_totient(pd), truth[i]);
+    EXPECT_EQ(ntlib::euler_totient(i), truth[i]);
   }
 }
 
