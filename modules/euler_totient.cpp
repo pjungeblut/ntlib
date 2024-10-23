@@ -51,7 +51,7 @@ T euler_totient(T n) {
  */
 export template<typename T>
 [[nodiscard]]
-std::vector<T> euler_totient_sieve(T N) noexcept {
+std::vector<T> euler_totient_sieve(T N) {
   std::vector<T> sieve(N + 1);
   std::ranges::iota(sieve, 0);
   for (T i{2}; i <= N; ++i) {
