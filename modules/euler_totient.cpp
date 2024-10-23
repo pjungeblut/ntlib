@@ -54,7 +54,7 @@ export template<typename T>
 std::vector<T> euler_totient_sieve(T N) {
   std::vector<T> sieve(N + 1);
   std::ranges::iota(sieve, 0);
-  for (T i{2}; i <= N; ++i) {
+  for (std::size_t i = 2; i <= N; ++i) {
     if (sieve[i] == i) {
       for (T j = i; j <= N; j += i) {
         sieve[j] /= i;
