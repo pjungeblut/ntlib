@@ -13,10 +13,19 @@ constexpr auto truth = std::to_array<uint32_t>({0, 1, 1, 2, 2, 4, 2, 6, 4, 6, 4,
     32, 24, 52, 18, 40, 24, 36, 28, 58, 16, 60, 30, 36, 32, 48, 20, 66, 32, 44
 });
 
+constexpr uint64_t large_prime = 1'000'000'007;
+
 TEST(OneShot, SmallValues) {
   for (uint32_t i = 1; i < truth.size(); ++i) {
     EXPECT_EQ(ntlib::euler_totient(i), truth[i]);
   }
+}
+
+TEST(OneShot, BigExamples) {
+  EXPECT_EQ(ntlib::euler_totient(large_prime), large_prime - 1);
+  const uint64_t large_composite = large_prime * large_prime;
+  EXPECT_EQ(ntlib::euler_totient(large_composite),
+      large_prime * (large_prime - 1));
 }
 
 TEST(Sieve, SmallValues) {
