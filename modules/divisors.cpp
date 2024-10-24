@@ -4,10 +4,10 @@ module;
 #include <numeric>
 #include <vector>
 
+export module divisors;
+
 import base;
 import prime_decomposition;
-
-export module divisors;
 
 namespace ntlib {
 
