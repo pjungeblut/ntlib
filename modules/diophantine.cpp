@@ -8,9 +8,9 @@ module;
 #include <cassert>
 #include <tuple>
 
-import base;
-
 export module diophantine;
+
+import base;
 
 namespace ntlib {
 
