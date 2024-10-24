@@ -245,34 +245,20 @@ target_sources(ntlib_turan_number PUBLIC
 
 ################################################################################
 # Unit Tests.
+#
+# Workflow from:
+# https://github.com/google/googletest/blob/main/googletest/README.md
 ################################################################################
 
-# Download and unpack GoogleTest at configure time.
-configure_file(CMakeListsGoogleTest.txt googletest-download/CMakeLists.txt)
-execute_process(
-    COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-    RESULT_VARIABLE result
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  # Specify the commit you depend on and update it regularly.
+  URL https://github.com/google/googletest/archive/df1544bcee0c7ce35cd5ea0b3eb8cc81855a4140.zip
 )
-
-if(result)
-    message(FATAL_ERROR "CMake step for googletest failed: ${result}")
-endif()
-
-execute_process(
-    COMMAND ${CMAKE_COMMAND} --build .
-    RESULT_VARIABLE result
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download
-)
-
-if(result)
-    message(FATAL_ERROR "Build step for googletest failed: ${result}")
-endif()
-
-# Add googletest directly to the build.
-add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
-                 ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
-                 EXCLUDE_FROM_ALL)
+# For Windows: Prevent overriding the parent project's compiler/linker settings.
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
 
 # Build tests.
 enable_testing()
