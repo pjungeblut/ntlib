@@ -14,7 +14,7 @@ set(base_libs
     ntlib_base
     ntlib_int128
     ntlib_matrix
-    ntlib_mod_int
+    ntlib_modulo
     ntlib_prime_generation
 )
 add_unittest(base "${base_libs}")
@@ -36,7 +36,7 @@ add_unittest(chinese_remainder "${chinese_remainder_libs}")
 
 # Compile time integers in residue class.
 set(ct_mod_int_libs
-    ntlib_mod_int
+    ntlib_modulo
 )
 add_unittest(ct_mod_int "${ct_mod_int_libs}")
 
@@ -82,14 +82,14 @@ add_unittest(lucas_sequence "${lucas_sequence_libs}")
 set(matrix_libs
     ntlib_base
     ntlib_matrix
-    ntlib_mod_int
+    ntlib_modulo
 )
 add_unittest(matrix "${matrix_libs}")
 
 # Modular arithmetic.
 set(mod_int_libs
     ntlib_base
-    ntlib_mod_int
+    ntlib_modulo
 )
 add_unittest(mod_int "${mod_int_libs}")
 

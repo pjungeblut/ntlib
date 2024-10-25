@@ -46,6 +46,7 @@ target_sources(ntlib_modulo PUBLIC
     FILE_SET CXX_MODULES
     BASE_DIRS ${PROJECT_SOURCE_DIR}/modules
     FILES
+        ${PROJECT_SOURCE_DIR}/modules/mod_int.cpp
         ${PROJECT_SOURCE_DIR}/modules/modulo.cpp
 )
 target_link_libraries(ntlib_modulo PRIVATE
@@ -64,18 +65,6 @@ target_link_libraries(ntlib_matrix PRIVATE
     ntlib_base
 )
 
-# Integers in residue classes.
-add_library(ntlib_mod_int STATIC)
-target_sources(ntlib_mod_int PUBLIC
-    FILE_SET CXX_MODULES
-    BASE_DIRS ${PROJECT_SOURCE_DIR}/modules
-    FILES
-        ${PROJECT_SOURCE_DIR}/modules/mod_int.cpp
-)
-target_link_libraries(ntlib_mod_int PRIVATE
-    ntlib_modulo
-)
-
 # Prime test.
 add_library(ntlib_prime_test STATIC)
 target_sources(ntlib_prime_test PUBLIC
@@ -89,7 +78,6 @@ target_link_libraries(ntlib_prime_test PRIVATE
     ntlib_base
     ntlib_int128
     ntlib_matrix
-    ntlib_mod_int
     ntlib_modulo
 )
 
