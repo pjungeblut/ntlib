@@ -16,7 +16,7 @@ namespace ntlib {
  */
 export template<typename T>
 [[nodiscard]] constexpr
-T turan(T n, T k) noexcept {
+T turan_number(T n, T k) noexcept {
   assert(n >= T{0});
   assert(k > T{0});
 
