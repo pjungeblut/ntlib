@@ -11,7 +11,7 @@ TEST(TuranNumber, SingleValue) {
   uint32_t idx = 0;
   for (uint32_t n = 1; n <= 6; ++n) {
     for (uint32_t k = 1; k <= n; ++k) {
-      EXPECT_EQ(ntlib::turan(n, k), values[idx++]);
+      EXPECT_EQ(ntlib::turan_number(n, k), values[idx++]);
     }
   }
 }
