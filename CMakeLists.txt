@@ -252,10 +252,10 @@ target_sources(ntlib_turan_number PUBLIC
 
 include(FetchContent)
 FetchContent_Declare(
-  googletest
-  # Specify the commit you depend on and update it regularly.
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG df1544bcee0c7ce35cd5ea0b3eb8cc81855a4140
+    googletest
+    # Specify the commit you depend on and update it regularly.
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG df1544bcee0c7ce35cd5ea0b3eb8cc81855a4140
 )
 # For Windows: Prevent overriding the parent project's compiler/linker settings.
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
@@ -269,28 +269,13 @@ add_subdirectory(test)
 # Benchmarks.
 ################################################################################
 
-# Download and unpack GoogleBenchmark at configure time.
-configure_file(CMakeListsGoogleBenchmark.txt
-    googlebenchmark-download/CMakeLists.txt)
-execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-    RESULT_VARIABLE result
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googlebenchmark-download)
-if (result)
-  message(FATAL_ERROR "CMake step for googlebenchmark failed: ${result}")
-endif()
-execute_process(COMMAND ${CMAKE_COMMAND} --build .
-    RESULT_VARIABLE result
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googlebenchmark-download)
-if (result)
-  message(FATAL_ERROR "Build step for googlebenchmark failed: ${result}")
-endif()
-
-# Add googlebenchmark directly to the build.
-add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googlebenchmark-src
-                 ${CMAKE_CURRENT_BINARY_DIR}/googlebenchmark-build
-                 EXCLUDE_FROM_ALL)
+FetchContent_Declare(
+    googlebenchmark
+    # Specify the commit you depend on and update it regularly.
+    GIT_REPOSITORY https://github.com/google/benchmark.git
+    GIT_TAG 12235e24652fc7f809373e7c11a5f73c5763fc4c # version 1.9.0
+)
+FetchContent_MakeAvailable(googlebenchmark)
 
 # Build benchmarks.
-set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "no benchmark test" FORCE)
-set(BENCHMARK_ENABLE_GTEST_TESTS OFF CACHE BOOL "no gtest tests" FORCE)
 add_subdirectory(benchmarks)
