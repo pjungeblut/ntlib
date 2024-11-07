@@ -12,7 +12,6 @@ endfunction()
 # Base functionality.
 set(base_libs
     ntlib_base
-    ntlib_int128
     ntlib_matrix
     ntlib_modulo
     ntlib_prime_generation
@@ -67,13 +66,13 @@ add_unittest(figurate_number "${figurate_number_libs}")
 
 # 128 bit integers.
 set(int128_libs
-    ntlib_int128
+    ntlib_base
 )
 add_unittest(int128 "${int128_libs}")
 
 # Lucas sequences.
 set(lucas_sequence_libs
-    ntlib_int128
+    ntlib_base
     ntlib_prime_test
 )
 add_unittest(lucas_sequence "${lucas_sequence_libs}")
@@ -105,7 +104,6 @@ add_unittest(modulo "${modulo_libs}")
 set(pell_equation_libs
     ntlib_base
     ntlib_diophantine
-    ntlib_int128
 )
 add_unittest(pell_equation "${pell_equation_libs}")
 
@@ -128,7 +126,6 @@ add_unittest(prime_generation "${prime_generation_libs}")
 # Prime test.
 set(prime_test_libs
     ntlib_base
-    ntlib_int128
     ntlib_prime_generation
     ntlib_prime_test
 )

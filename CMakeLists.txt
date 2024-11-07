@@ -19,26 +19,19 @@ else()
 endif()
 
 ################################################################################
-# Build sub-libraries.
+# Build NTLib as a static library.
 ################################################################################
 
-# Basic functionality.
-add_library(ntlib_base STATIC)
-target_sources(ntlib_base PUBLIC
-    FILE_SET CXX_MODULES
-    BASE_DIRS ${PROJECT_SOURCE_DIR}/modules
-    FILES
-        ${PROJECT_SOURCE_DIR}/modules/base.cpp
+add_subdirectory(modules)
+
+add_library(ntlib STATIC
+    $<TARGET_OBJECTS:ntlib_base>
+    $<TARGET_OBJECTS:ntlib_diophantine>
 )
 
-# 128 bit integers.
-add_library(ntlib_int128 STATIC)
-target_sources(ntlib_int128 PUBLIC
-    FILE_SET CXX_MODULES
-    BASE_DIRS ${PROJECT_SOURCE_DIR}/modules
-    FILES
-        ${PROJECT_SOURCE_DIR}/modules/int128.cpp
-)
+################################################################################
+# Build sub-libraries.
+################################################################################
 
 # Modular arithmetic.
 add_library(ntlib_modulo STATIC)
@@ -76,7 +69,6 @@ target_sources(ntlib_prime_test PUBLIC
 )
 target_link_libraries(ntlib_prime_test PRIVATE
     ntlib_base
-    ntlib_int128
     ntlib_matrix
     ntlib_modulo
 )
@@ -112,7 +104,6 @@ target_sources(ntlib_prime_decomposition PUBLIC
 )
 target_link_libraries(ntlib_prime_decomposition PRIVATE
     ntlib_base
-    ntlib_int128
     ntlib_prime_generation
     ntlib_prime_test
 )
@@ -171,21 +162,6 @@ target_sources(ntlib_rational PUBLIC
 )
 target_link_libraries(ntlib_rational PRIVATE
     ntlib_base
-)
-
-# Diophantine equations.
-add_library(ntlib_diophantine STATIC)
-target_sources(ntlib_diophantine PUBLIC
-    FILE_SET CXX_MODULES
-    BASE_DIRS ${PROJECT_SOURCE_DIR}/modules
-    FILES
-        ${PROJECT_SOURCE_DIR}/modules/continued_fraction.cpp
-        ${PROJECT_SOURCE_DIR}/modules/diophantine.cpp
-        ${PROJECT_SOURCE_DIR}/modules/pell_equation.cpp
-)
-target_link_libraries(ntlib_diophantine PRIVATE
-    ntlib_base
-    ntlib_rational
 )
 
 # Divisors.
