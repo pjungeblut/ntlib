@@ -5,6 +5,7 @@ file(GLOB all_headers CONFIGURE_DEPENDS
 )
 file(GLOB all_modules CONFIGURE_DEPENDS
   "${PROJECT_SOURCE_DIR}/modules/*.cpp"
+  "${PROJECT_SOURCE_DIR}/modules/**/*.cpp"
 )
 
 # Function to create a benchmark.
@@ -16,15 +17,16 @@ function(add_benchmark name)
   add_executable(bm_${name})
   target_sources(bm_${name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/${name}.cpp)
   target_sources(bm_${name} PUBLIC
-    FILE_SET ntlb_headers TYPE HEADERS
+    FILE_SET HEADERS
     BASE_DIRS
       ${PROJECT_SOURCE_DIR}/include
       ${PROJECT_SOURCE_DIR}/benchmarks/experiments
     FILES ${all_headers}
   )
   target_sources(bm_${name} PUBLIC
-    FILE_SET ntlib_modules TYPE CXX_MODULES
-    BASE_DIRS ${PROJECT_SOURCE_DIR}/modules
+    FILE_SET CXX_MODULES
+    BASE_DIRS
+      ${PROJECT_SOURCE_DIR}/modules
     FILES ${all_modules}
   )
   set_target_properties(bm_${name} PROPERTIES OUTPUT_NAME ${name})
