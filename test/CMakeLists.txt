@@ -12,16 +12,16 @@ endfunction()
 # Base functionality.
 set(base_libs
     ntlib_base
-    ntlib_matrix
     ntlib_modulo
     ntlib_prime_generation
+    ntlib_types
 )
 add_unittest(base "${base_libs}")
 
 # Binomial coefficient.
 set(binomial_coefficient_libs
     ntlib_base
-    ntlib_binomial_coefficient
+    ntlib_combinatorics
     ntlib_modulo
     ntlib_prime_test
 )
@@ -47,20 +47,20 @@ add_unittest(diophantine "${diophantine_libs}")
 
 # Divisors.
 set(divisors_libs
-    ntlib_divisors
+    ntlib_arithmetic_functions
     ntlib_prime_decomposition
 )
 add_unittest(divisors "${divisors_libs}")
 
 # Euler's totient function.
 set(euler_totient_libs
-    ntlib_euler_totient
+    ntlib_arithmetic_functions
 )
 add_unittest(euler_totient "${euler_totient_libs}")
 
 # Figurate numbers.
 set(figurate_number_libs
-    ntlib_figurate_number
+    ntlib_combinatorics
 )
 add_unittest(figurate_number "${figurate_number_libs}")
 
@@ -80,8 +80,8 @@ add_unittest(lucas_sequence "${lucas_sequence_libs}")
 # Matrices.
 set(matrix_libs
     ntlib_base
-    ntlib_matrix
     ntlib_modulo
+    ntlib_types
 )
 add_unittest(matrix "${matrix_libs}")
 
@@ -134,13 +134,13 @@ add_unittest(prime_test "${prime_test_libs}")
 # Pythagorean triples.
 set(pythagorean_triple_libs
     ntlib_base
-    ntlib_pythagorean_triple
+    ntlib_combinatorics
 )
 add_unittest(pythagorean_triple "${pythagorean_triple_libs}")
 
 # Rational numbers.
 set(rational_libs
-    ntlib_rational
+    ntlib_types
 )
 add_unittest(rational "${rational_libs}")
 
@@ -158,6 +158,6 @@ add_unittest(sieve_235 "${sieve_235_libs}")
 
 # Turan number.
 set(turan_number_libs
-    ntlib_turan_number
+    ntlib_combinatorics
 )
 add_unittest(turan_number "${turan_number_libs}")

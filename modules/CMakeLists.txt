@@ -1,3 +1,10 @@
-# Inlcude sublibraries.
+add_subdirectory(arithmetic_functions)
 add_subdirectory(base)
+add_subdirectory(chinese_remainder)
+add_subdirectory(combinatorics)
 add_subdirectory(diophantine)
+add_subdirectory(modulo)
+add_subdirectory(prime_decomposition)
+add_subdirectory(prime_generation)
+add_subdirectory(prime_test)
+add_subdirectory(types)

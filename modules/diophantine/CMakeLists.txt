@@ -9,5 +9,5 @@ target_sources(ntlib_diophantine PUBLIC
 )
 target_link_libraries(ntlib_diophantine PRIVATE
     ntlib_base
-    ntlib_rational
+    ntlib_types
 )
