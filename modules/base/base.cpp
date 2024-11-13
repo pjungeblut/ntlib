@@ -1,8 +1,14 @@
 /**
- * @file
- * Basic functionality used frequently throught the whole library.
- * 
+ * @file base.cpp
+ */
+
+/**
  * @module base
+ * @brief Provides basic functionality used frequently throughout the whole
+ * library.
+ * 
+ * Functionality contained in this module has no further dependencies and only
+ * depends on the C++ standard library.
  */
 module;
 
@@ -24,8 +30,9 @@ export module base;
 namespace ntlib {
 
 /**
- * A list with all prime numbers up to, SMALL_PRIMES_BIGGEST.
- * Useful as these are used frequently.
+ * @brief A list with all prime numbers up to `ntlib::SMALL_PRIMES_BIGGEST`.
+ * 
+ * Can be used for trial division in primality tests and prime factorizations.
  */
 export constexpr auto SMALL_PRIMES = std::to_array<uint32_t>({
     2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
@@ -39,12 +46,20 @@ export constexpr auto SMALL_PRIMES = std::to_array<uint32_t>({
     709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811,
     821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911,
     919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997, 1'009});
+static_assert(std::ranges::is_sorted(SMALL_PRIMES),
+    "Some NTLIB-internal functions assume that the list is sorted.");
+
+/**
+ * @brief Helper constant to get the biggest among the small primes in
+ * `ntlib::SMALL_PRIMES`.
+ */
 export constexpr uint32_t SMALL_PRIMES_BIGGEST =
     *std::ranges::max_element(SMALL_PRIMES);
 
 /**
- * Checks whether a given number `n` is odd.
+ * @brief Checks whether a given number is odd.
  * 
+ * @tparam T An integer-like type.
  * @param n The given number.
  * @return Whether `n` is odd.
  */
@@ -62,10 +77,11 @@ bool is_odd(T n) noexcept {
 }
 
 /**
- * Checks whether a number is even.
+ * @brief Checks whether a given number is even.
  * 
- * @param n The number.
- * @return Whether n is even.
+ * @tparam T An integer-like type.
+ * @param n The given number.
+ * @return Whether `n` is even.
  */
 export template<typename T>
 [[nodiscard]] constexpr
@@ -74,10 +90,11 @@ bool is_even(T n) noexcept {
 }
 
 /**
- * Computes the absolute value of a number.
+ * @brief Computes the absolute value of a given number.
  *
- * @param n The number to take the absolute value of.
- * @return The absolute value of n.
+ * @tparam T An integer-like type.
+ * @param n The given number.
+ * @return The absolute value of `n`.
  */
 export template<typename T>
 [[nodiscard]] constexpr
@@ -86,9 +103,12 @@ T abs(T n) noexcept {
 }
 
 /**
- * Computes the difference between two numbers.
+ * @brief Computes the difference between two numbers.
+ * 
  * For integral types this is safe against overflows.
  * 
+ * @tparam T An integer-like type.
+ * @tparam U The unsigned-integer-like type corresponding to `T`. 
  * @param a The first number.
  * @param b The second number.
  * @return The difference, i.e., `abs(a-b)`.
@@ -101,10 +121,11 @@ U difference(T a, T b) noexcept {
 }
 
 /**
- * Computes the sign (`-1`, `0` or `1`) of number.
+ * @brief Computes the sign of a given number.
  * 
- * @param n The number.
- * @return The sign.
+ * @tparam T An integer-like type.
+ * @param n The given number.
+ * @return The sign. One of `-1`, `0` or `+1`.
  */
 export template <typename T>
 [[nodiscard]] constexpr
@@ -113,10 +134,12 @@ int sgn(T n) noexcept {
 }
 
 /**
- * Given a number n, computes (e, o), such that n=2^e*o.
+ * @brief Given a number `n`, computes a pair `(e, o)`, such that `n=2^e*o`.
  * 
- * @param n The number to decompose.
- * @return A pair with e and o. 
+ * @tparam T An integer-like type.
+ * @param n The number `n` to decompose.
+ * @return A pair with `e` and `o` as its first and second element,
+ *     respectively. 
  */
 export template<typename T>
 [[nodiscard]] constexpr
@@ -143,16 +166,18 @@ std::pair<T,T> odd_part(T n) noexcept {
 }
 
 /**
- * Computes the greatest common divisor of a and b.
- * Uses the Euclidean Algorithm.
- * Runtime: O(log a + log b).
+ * @brief Computes the greatest common divisor of two numbers using the
+ * Euclidean algorithm.
  *
- * The greatest common divisor of two numbers a and b (not both zero) is the
- * smallest positive number that divides both a and b.
+ * The greatest common divisor of two numbers `a` and `b` (not both zero) is the
+ * smallest positive number that divides both `a` and `b`.
+ * 
+ * Runtime: `O(log a + log b)`.
  *
+ * @tparam T An integer-like type.
  * @param a The first number.
  * @param b The second number.
- * @return The greatest common divisor of a and b.
+ * @return The greatest common divisor of `a` and `b`.
  */
 export template<typename T>
 [[nodiscard]] constexpr
@@ -162,15 +187,17 @@ T gcd(T a, T b) noexcept {
 }
 
 /**
- * Computes the least common multiple of a and b.
- * Runtime: O(log a + log b)
+ * @brief Computes the least common multiple of two numbers.
  *
- * The least common multiple of two non-zero integers a and b is the
- * smallest positive integer that can be divided by both a and b.
+ * The least common multiple of two non-zero integers `a` and `b` is the
+ * smallest positive integer that can be divided by both `a` and `b`.
+ * 
+ * Runtime: `O(log a + log b)`
  *
+ * @tparam T An integer-like type.
  * @param a The first number.
  * @param b The second number.
- * @return The least common multiple of a and b.
+ * @return The least common multiple of `a` and `b`.
  */
 export template<typename T>
 [[nodiscard]] constexpr
@@ -181,12 +208,16 @@ T lcm(T a, T b) noexcept {
 }
 
 /**
- * Extended Euclidean algorithm.
- * Finds whole number solutions for a*x + b*y = gcd(a,b).
+ * @brief Extended Euclidean algorithm.
  * 
- * @param a Parameter a
- * @param b Parameter b
- * @return Tuple (gcd(a,b), x, y).
+ * Given two integers `a` and `b`, finds whole number solutions for
+ * `a*x + b*y = ntlib::gcd(a,b)`.
+ * 
+ * @tparam T An integer-like type.
+ * @tparam S The signed-integer-like type corresponding to `T`.
+ * @param a The first number.
+ * @param b The second number.
+ * @return Tuple `(gcd(a,b), x, y)`.
  */
 export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
@@ -211,20 +242,25 @@ std::tuple<T, S, S> extended_euclid(T a, T b) noexcept {
 }
 
 /**
- * Returns the multiplicative neutral element `1` for arithmetic types.
+ * @brief Returns the multiplicative neutral element `1` for integral types.
  * 
- * @param _ Element of that type.
+ * @tparam T An integral type.
+ * @param n An element of type `T`.
  * @return The multiplicative neutral element of the type.
  */
-export template<typename T>
+export template<std::integral T>
 [[nodiscard]] constexpr
-T get_multiplicative_neutral(T)
-    requires (std::is_arithmetic_v<T> && sizeof(T) <= 8) {
+T get_multiplicative_neutral([[maybe_unused]] T n) noexcept
+    requires (sizeof(T) <= 8) {
   return T{1};
 }
 
 /**
- * Concept for types with a multiplicative neutral.
+ * @concept HasMultiplicativeNeutral
+ * @brief Restricts to types with a multiplicative neutral element.
+ * 
+ * @tparam T An integer-like type.
+ * @param n Element of type `T`.
  */
 export template<typename T>
 concept HasMultiplicativeNeutral = requires(T n) {
@@ -232,12 +268,16 @@ concept HasMultiplicativeNeutral = requires(T n) {
 };
 
 /**
- * Computes a^b using binary exponentation.
+ * @brief Binary exponentation.
+ * 
  * Runtime: O(log b)
  *
+ * @tparam A A type that is closed under multiplication and contains a
+ *     multiplicative neutral element.
+ * @tparam B An integer-like type.
  * @param a The base.
  * @param b The exponent, non-negative.
- * @return a^b
+ * @return The power `a^b`.
  */
 export template<HasMultiplicativeNeutral A, typename B>
 [[nodiscard]] constexpr
@@ -252,10 +292,12 @@ A pow(A a, B b) noexcept {
 }
 
 /**
- * Computes the integer part of the binary logarithm.
+ * @brief Computes the integer part of the binary logarithm of a given number.
  *
- * @param n The number to compute the ceiling of the binary logarithm for.
- * @return floor(log2(n))
+ * @tparam T An integer-like type.
+ * @param n The given number.
+ * @return The integer part of the binary logarithm of `n`, i.e.,
+ *     `floor(log2(n))`.
  */
 export template<typename T>
 [[nodiscard]] constexpr
@@ -274,11 +316,11 @@ T ilog2(T n) noexcept {
 }
 
 /**
- * Computes the integer square.
- * isqrt(n) := floor(sqrt(n))
+ * @brief Computes the integer square root of a given number.
  *
- * @param n The number to compute the integer square root of. Non-negative.
- * @return isqrt(n)
+ * @tparam T An integer-like type.
+ * @param n The given number. Must be non-negative.
+ * @return The integer square root of `n`, i.e., `floor(sqrt(n))`.
  */
 export template<typename T>
 [[nodiscard]] constexpr
@@ -309,15 +351,16 @@ T isqrt(T n) noexcept {
 }
 
 /**
- * Tests, if n is a perfect square.
+ * @brief Tests, if a given number is a perfect square.
+ *
+ * Uses ideas from this site:
+ * https://math.stackexchange.com/questions/131330/detecting-perfect-squares-faster-than-by-extracting-square-root/712818#712818
+ * 
  * Runtime: O(log n)
  *
- * Uses ideas from
- * https://math.stackexchange.com/questions/131330/detecting-perfect-squares-faster-than-by-extracting-square-root/712818#712818
- * to identify non-squares quickly.
- *
- * @param n The number to test.
- * @return True, iff n is a perfect square.
+ * @tparam T An integer-like type.
+ * @param n The given number.
+ * @return Whether `n` is a perfect square.
  */
 export template<typename T>
 [[nodiscard]] constexpr
@@ -368,10 +411,11 @@ bool is_square(T n) noexcept {
 }
 
 /**
- * Computes the factorial n!.
+ * @brief Computes the factorial of a given number.
  *
- * @param n The base.
- * @return The factorial n!.
+ * @tparam T An integer-like type.
+ * @param n The given number.
+ * @return The factorial of `n`, i.e, `n! = 1 * 2 * ... * n`.
  */
 export template<typename T>
 [[nodiscard]] constexpr
