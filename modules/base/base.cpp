@@ -1,3 +1,9 @@
+/**
+ * @file
+ * Basic functionality used frequently throught the whole library.
+ * 
+ * @module base
+ */
 module;
 
 #include <algorithm>
@@ -37,10 +43,10 @@ export constexpr uint32_t SMALL_PRIMES_BIGGEST =
     *std::ranges::max_element(SMALL_PRIMES);
 
 /**
- * Checks whether a number is odd.
+ * Checks whether a given number `n` is odd.
  * 
- * @param n The number.
- * @return Whether n is odd.
+ * @param n The given number.
+ * @return Whether `n` is odd.
  */
 export template<typename T>
 [[nodiscard]] constexpr
