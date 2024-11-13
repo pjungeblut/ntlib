@@ -30,11 +30,11 @@ template<typename T>
 [[nodiscard]] constexpr
 bool is_prime_naive(T n) noexcept {
   if (n < T{2}) { return false; }
-  for (const T p : SMALL_PRIMES) {
+  for (const T p : SMALL_PRIMES<T>) {
     if (p >= n) { return true; }
     else if (n % p == 0) { return false; }
   }
-  for (T i{ntlib::SMALL_PRIMES_BIGGEST + 1}; i * i <= n; i += T{2}) {
+  for (T i{ntlib::SMALL_PRIMES_BIGGEST<T> + 1}; i * i <= n; i += T{2}) {
     if (n % i == T{0}) { return false; }
   }
   return true;
