@@ -14,6 +14,9 @@ At the same time, this project allows me to try out the newest C++ features.
 * Compute binomial coefficients, polygonal numbers, Euler's totient function, divisor function and Turan numbers.
 * ...
 
+## Documentation
+See here for the [Doxygen documentation](https://pjungeblut.github.io/ntlib/).
+
 # Requirements
 NTLib uses several modern C++ features, in particular C++20 modules.
 This requires up to date tools to compile.
