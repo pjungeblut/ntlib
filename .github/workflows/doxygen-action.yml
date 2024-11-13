@@ -3,7 +3,9 @@ run-name: Build doxygen documentation triggered by @${{ github.actor }}
 
 on:
   push:
-    branches: [master]
+    branches: main
+  pull_request:
+    branches: main
 
 jobs:
   build-documentation:
