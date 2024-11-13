@@ -23,16 +23,21 @@ import modulo;
 namespace ntlib {
 
 /**
- * Prime test by trial division with a precomputed list of primes.
+ * @brief Primality test by trial division of a given number using a precomputed list
+ * of primes.
  * 
- * @param n The number to test for primality.
+ * Assumes that the list of primes is sorted and contains no holes.
+ * 
+ * @tparam C A container of primes of type `T`.
+ * @tparam T An integer-like type.
+ * @param n The given number.
  * @param primes A list of small primes to divide by.
  * @return Whether `n` is prime (relative to all primes in `primes`).
  */
-export template<typename T>
+export template<typename C, typename T = C::value_type>
 [[nodiscard]] constexpr
 std::optional<bool> is_prime_trial_division(T n,
-    std::span<const uint32_t> primes) {
+    const C &primes) {
   // Trivial cases.
   if (n <= T{1}) { return false; }
 
@@ -133,7 +138,8 @@ bool forisek_jancina_no_base_cases(uint32_t n) {
 [[nodiscard]] constexpr
 bool is_prime_32(uint32_t n) {
   // Handle small numbers by trial division.
-  std::optional<bool> trial_division = is_prime_trial_division(n, SMALL_PRIMES);
+  std::optional<bool> trial_division =
+      is_prime_trial_division(n, SMALL_PRIMES<uint32_t>);
   if (trial_division.has_value()) { return trial_division.value(); }
 
   // Use prime test by Forisek and Jancina for larger values.
@@ -150,7 +156,8 @@ bool is_prime_32(uint32_t n) {
 [[nodiscard]] constexpr
 bool is_prime_64(uint64_t n) {
   // Handle small numbers by trial division.
-  std::optional<bool> trial_division = is_prime_trial_division(n, SMALL_PRIMES);
+  std::optional<bool> trial_division =
+      is_prime_trial_division(n, SMALL_PRIMES<uint64_t>);
   if (trial_division.has_value()) { return trial_division.value(); }
 
   // Use deterministic Miller-Selfridge-Rabin test for larger values.
@@ -249,7 +256,7 @@ bool is_prime_baillie_psw(U n) noexcept {
   if (n <= U{1}) { return false; }
 
   // Trial division with some small prime factors.
-  auto trial_division = is_prime_trial_division(n, SMALL_PRIMES);
+  auto trial_division = is_prime_trial_division(n, SMALL_PRIMES<U>);
   if (trial_division.has_value()) { return trial_division.value(); }
 
   // Strong probable prime test for base 2.

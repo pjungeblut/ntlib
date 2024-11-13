@@ -55,32 +55,35 @@ bool is_prime_decomposition(
 
 TEST(PrimeDecompositionList, Composites) {
   for (const uint64_t n : composites) {
-    if (n >= ntlib::SMALL_PRIMES_BIGGEST * ntlib::SMALL_PRIMES_BIGGEST) {
+    const uint64_t biggest = ntlib::SMALL_PRIMES_BIGGEST<uint64_t>;
+    if (n >= biggest * biggest) {
       continue;
     }
-    const auto res = ntlib::prime_decomposition_list(n, ntlib::SMALL_PRIMES);
-    EXPECT_TRUE(is_prime_decomposition(n, res));
+    const auto pd =
+        ntlib::prime_decomposition_list(n, ntlib::SMALL_PRIMES<uint64_t>);
+    EXPECT_TRUE(is_prime_decomposition(n, pd));
   }
 }
 
 TEST(PrimeDecompositionList, Primes) {
   for (const uint64_t n : primes) {
-    const auto res = ntlib::prime_decomposition_list(n, ntlib::SMALL_PRIMES);
-    EXPECT_TRUE(is_prime_decomposition(n, res));
+    const auto pd =
+        ntlib::prime_decomposition_list(n, ntlib::SMALL_PRIMES<uint64_t>);
+    EXPECT_TRUE(is_prime_decomposition(n, pd));
   }
 }
 
 TEST(PrimeDecomposition, Composites) {
   for (const uint64_t n : composites) {
-    const auto res = ntlib::prime_decomposition(n);
-    EXPECT_TRUE(is_prime_decomposition(n, res));
+    const auto pd = ntlib::prime_decomposition(n);
+    EXPECT_TRUE(is_prime_decomposition(n, pd));
   }
 }
 
 TEST(PrimeDecomposition, Primes) {
   for (const uint64_t n : primes) {
-    const auto res = ntlib::prime_decomposition(n);
-    EXPECT_TRUE(is_prime_decomposition(n, res));
-    EXPECT_EQ(res.size(), 1);
+    const auto pd = ntlib::prime_decomposition(n);
+    EXPECT_TRUE(is_prime_decomposition(n, pd));
+    EXPECT_EQ(pd.size(), 1);
   }
 }
