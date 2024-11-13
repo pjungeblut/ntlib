@@ -219,12 +219,14 @@ requires (sizeof(T) &lt;= 8)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a4ecde2d75fbdb76f2112635d0d1ade53" id="r_a4ecde2d75fbdb76f2112635d0d1ade53"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4ecde2d75fbdb76f2112635d0d1ade53">ntlib::SMALL_PRIMES</a></td></tr>
-<tr class="memdesc:a4ecde2d75fbdb76f2112635d0d1ade53"><td class="mdescLeft">&#160;</td><td class="mdescRight">A list with all prime numbers up to <code><a class="el" href="#ac0d726e667a8d2f41c7ab8825427b98b" title="Helper constant to get the biggest among the small primes in ntlib::SMALL_PRIMES.">ntlib::SMALL_PRIMES_BIGGEST</a></code>.  <br /></td></tr>
-<tr class="separator:a4ecde2d75fbdb76f2112635d0d1ade53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0d726e667a8d2f41c7ab8825427b98b" id="r_ac0d726e667a8d2f41c7ab8825427b98b"><td class="memItemLeft" align="right" valign="top">constexpr uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0d726e667a8d2f41c7ab8825427b98b">ntlib::SMALL_PRIMES_BIGGEST</a></td></tr>
-<tr class="memdesc:ac0d726e667a8d2f41c7ab8825427b98b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper constant to get the biggest among the small primes in <code><a class="el" href="#a4ecde2d75fbdb76f2112635d0d1ade53" title="A list with all prime numbers up to ntlib::SMALL_PRIMES_BIGGEST.">ntlib::SMALL_PRIMES</a></code>.  <br /></td></tr>
-<tr class="separator:ac0d726e667a8d2f41c7ab8825427b98b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb55d56667aaaa7cbb319b9b0d1999bf" id="r_aeb55d56667aaaa7cbb319b9b0d1999bf"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aeb55d56667aaaa7cbb319b9b0d1999bf"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aeb55d56667aaaa7cbb319b9b0d1999bf">ntlib::SMALL_PRIMES</a></td></tr>
+<tr class="memdesc:aeb55d56667aaaa7cbb319b9b0d1999bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">A list with all prime numbers up to <code><a class="el" href="#a09ca98914193dcbcbae25a20dc76417a" title="Helper constant to get the biggest among the small primes in ntlib::SMALL_PRIMES.">ntlib::SMALL_PRIMES_BIGGEST</a></code>.  <br /></td></tr>
+<tr class="separator:aeb55d56667aaaa7cbb319b9b0d1999bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09ca98914193dcbcbae25a20dc76417a" id="r_a09ca98914193dcbcbae25a20dc76417a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a09ca98914193dcbcbae25a20dc76417a"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a09ca98914193dcbcbae25a20dc76417a">ntlib::SMALL_PRIMES_BIGGEST</a></td></tr>
+<tr class="memdesc:a09ca98914193dcbcbae25a20dc76417a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper constant to get the biggest among the small primes in <code><a class="el" href="#aeb55d56667aaaa7cbb319b9b0d1999bf" title="A list with all prime numbers up to ntlib::SMALL_PRIMES_BIGGEST.">ntlib::SMALL_PRIMES</a></code>.  <br /></td></tr>
+<tr class="separator:a09ca98914193dcbcbae25a20dc76417a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="adb88cd8b6061ece7fa88de34c20f5ece" name="adb88cd8b6061ece7fa88de34c20f5ece"></a>
@@ -896,11 +898,13 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="a4ecde2d75fbdb76f2112635d0d1ade53" name="a4ecde2d75fbdb76f2112635d0d1ade53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ecde2d75fbdb76f2112635d0d1ade53">&#9670;&#160;</a></span>SMALL_PRIMES</h2>
+<a id="aeb55d56667aaaa7cbb319b9b0d1999bf" name="aeb55d56667aaaa7cbb319b9b0d1999bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb55d56667aaaa7cbb319b9b0d1999bf">&#9670;&#160;</a></span>SMALL_PRIMES</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -915,7 +919,7 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::to_array&lt;uint32_t&gt;({</div>
+<b>Initial value:</b><div class="fragment"><div class="line">= std::to_array&lt;T&gt;({</div>
 <div class="line">    2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,</div>
 <div class="line">    73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151,</div>
 <div class="line">    157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233,</div>
@@ -928,22 +932,30 @@ template&lt;typename T &gt; </div>
 <div class="line">    821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911,</div>
 <div class="line">    919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997, 1&#39;009})</div>
 </div><!-- fragment -->
-<p>A list with all prime numbers up to <code><a class="el" href="#ac0d726e667a8d2f41c7ab8825427b98b" title="Helper constant to get the biggest among the small primes in ntlib::SMALL_PRIMES.">ntlib::SMALL_PRIMES_BIGGEST</a></code>. </p>
-<p>Can be used for trial division in primality tests and prime factorizations. </p>
+<p>A list with all prime numbers up to <code><a class="el" href="#a09ca98914193dcbcbae25a20dc76417a" title="Helper constant to get the biggest among the small primes in ntlib::SMALL_PRIMES.">ntlib::SMALL_PRIMES_BIGGEST</a></code>. </p>
+<p>Can be used for trial division in primality tests and prime factorizations.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>An integer-like type. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="ac0d726e667a8d2f41c7ab8825427b98b" name="ac0d726e667a8d2f41c7ab8825427b98b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0d726e667a8d2f41c7ab8825427b98b">&#9670;&#160;</a></span>SMALL_PRIMES_BIGGEST</h2>
+<a id="a09ca98914193dcbcbae25a20dc76417a" name="a09ca98914193dcbcbae25a20dc76417a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09ca98914193dcbcbae25a20dc76417a">&#9670;&#160;</a></span>SMALL_PRIMES_BIGGEST</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ntlib::SMALL_PRIMES_BIGGEST</td>
+          <td class="memname">T ntlib::SMALL_PRIMES_BIGGEST</td>
         </tr>
       </table>
   </td>
@@ -953,9 +965,15 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">    *std::ranges::max_element(SMALL_PRIMES)</div>
+<div class="line">    *std::ranges::max_element(SMALL_PRIMES&lt;T&gt;)</div>
 </div><!-- fragment -->
-<p>Helper constant to get the biggest among the small primes in <code><a class="el" href="#a4ecde2d75fbdb76f2112635d0d1ade53" title="A list with all prime numbers up to ntlib::SMALL_PRIMES_BIGGEST.">ntlib::SMALL_PRIMES</a></code>. </p>
+<p>Helper constant to get the biggest among the small primes in <code><a class="el" href="#aeb55d56667aaaa7cbb319b9b0d1999bf" title="A list with all prime numbers up to ntlib::SMALL_PRIMES_BIGGEST.">ntlib::SMALL_PRIMES</a></code>. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>An integer-like type. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
