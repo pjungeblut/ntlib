@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['data_0',['data',['../classntlib_1_1sieve.html#a1ed0e4563b92180c1c161e33ac2c7a5a',1,'ntlib::sieve::data() const noexcept'],['../classntlib_1_1sieve.html#a92eb8bd551c9ea8cc7d5e2e311ab545b',1,'ntlib::sieve::data() noexcept'],['../classntlib_1_1sieve__235.html#a1c30a7fcdc8497f2034504d9d2277b87',1,'ntlib::sieve_235::data() const noexcept'],['../classntlib_1_1sieve__235.html#a033cebe5f852703391446dd370180678',1,'ntlib::sieve_235::data() noexcept']]],
-  ['diophantine_1',['diophantine',['../module__diophantine.html',1,'']]],
-  ['disclaimer_2',['License &amp; Disclaimer',['../md_README.html#autotoc_md8',1,'']]],
-  ['documentation_3',['Documentation',['../md_README.html#autotoc_md2',1,'']]],
-  ['downloading_20ntlib_4',['Downloading NTLib',['../md_README.html#autotoc_md4',1,'']]]
+  ['chinese_5fremainder_0',['chinese_remainder',['../module__chinese__remainder.html',1,'']]],
+  ['combinatorics_1',['Combinatorics',['../index.html#autotoc_md6',1,'']]],
+  ['compiling_20ntlib_2',['Compiling NTLib',['../md_README.html#autotoc_md14',1,'']]],
+  ['continued_5ffraction_3',['continued_fraction',['../module__continued__fraction.html',1,'']]],
+  ['crt_5fcongruence_4',['crt_congruence',['../structntlib_1_1crt__congruence.html',1,'ntlib']]]
 ];

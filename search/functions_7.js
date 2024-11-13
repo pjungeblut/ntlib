@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['set_0',['set',['../classntlib_1_1mod__int.html#a12b661148efacd14dcd448c66c6838c1',1,'ntlib::mod_int']]],
-  ['sieve_1',['sieve',['../classntlib_1_1sieve.html#a3f798bbbeaa3f3803bb95f0d5628fbc2',1,'ntlib::sieve::sieve()=default'],['../classntlib_1_1sieve.html#aef6cab336af1a2bb8f29b50511b75905',1,'ntlib::sieve::sieve(std::size_t min_capacity)']]],
-  ['sieve_5f235_2',['sieve_235',['../classntlib_1_1sieve__235.html#a6e0ef27711ec99820b06563d5827d5fd',1,'ntlib::sieve_235::sieve_235()=default'],['../classntlib_1_1sieve__235.html#a64cf0c0805e926e9ffb29f0748ef5b26',1,'ntlib::sieve_235::sieve_235(std::size_t min_capacity)']]],
-  ['size_3',['size',['../classntlib_1_1sieve.html#aa0cdf7217e8241116a7022a285305307',1,'ntlib::sieve::size()'],['../classntlib_1_1sieve__235.html#ab55ea38e9f1ad57d111c147706900b41',1,'ntlib::sieve_235::size()']]]
+  ['matrix_0',['matrix',['../classntlib_1_1matrix.html#a7cc452e7708dd68ca3c8969c9916c416',1,'ntlib::matrix::matrix()'],['../classntlib_1_1matrix.html#a1806c59896c4cae028c1b737e658c1fe',1,'ntlib::matrix::matrix(T val)'],['../classntlib_1_1matrix.html#af13307fb9285bba7d9d35191a47e856f',1,'ntlib::matrix::matrix(std::size_t rows, std::size_t columns)'],['../classntlib_1_1matrix.html#ab8d17eae0453cc1fb891c91a683c4de0',1,'ntlib::matrix::matrix(std::initializer_list&lt; std::initializer_list&lt; T &gt; &gt; elements)']]],
+  ['mod_5fint_1',['mod_int',['../classntlib_1_1mod__int.html#ac105994fe445a425dd28af3e219fa4c6',1,'ntlib::mod_int::mod_int(U value=0)'],['../classntlib_1_1mod__int.html#a80b891800a58d3b17674f0adadd31f26',1,'ntlib::mod_int::mod_int(U value=0)'],['../classntlib_1_1mod__int.html#abafce5354022a32f46091c12e2c2296a',1,'ntlib::mod_int::mod_int(U value, U modulus)']]]
 ];

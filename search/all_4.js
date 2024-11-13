@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['features_20of_20ntlib_0',['Some Features of NTLib',['../md_README.html#autotoc_md1',1,'']]],
-  ['figurate_5fnumber_1',['figurate_number',['../module__figurate__number.html',1,'']]]
+  ['empty_0',['empty',['../classntlib_1_1sieve.html#a2a27e64b2031a55b4b51fba80b625d97',1,'ntlib::sieve::empty()'],['../classntlib_1_1sieve__235.html#a9ccc979d06036561d69f4c714526bd27',1,'ntlib::sieve_235::empty()']]],
+  ['equations_1',['Diophantine Equations',['../index.html#autotoc_md5',1,'']]],
+  ['extended_5feuclid_2',['extended_euclid',['../base_8cpp.html#a737f6ddbea5aa8554fbfcea214d5836f',1,'ntlib']]]
 ];

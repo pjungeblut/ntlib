@@ -26,7 +26,11 @@ var menudata={children:[
 {text:"Main Page",url:"index.html"},
 {text:"Related Pages",url:"pages.html"},
 {text:"Modules",url:"modules.html",children:[
-{text:"Modules List",url:"modules.html"}]},
+{text:"Modules List",url:"modules.html"},
+{text:"Module Members",url:"modulemembers.html",children:[
+{text:"All",url:"modulemembers.html"},
+{text:"Functions",url:"modulemembers_func.html"},
+{text:"Variables",url:"modulemembers_vars.html"}]}]},
 {text:"Concepts",url:"concepts.html"},
 {text:"Classes",url:"annotated.html",children:[
 {text:"Class List",url:"annotated.html"},

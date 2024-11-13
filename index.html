@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NTLib - Number Theory Library: Main Page</title>
+<title>NTLib - Number Theory Library: NTLib - Number Theory Library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -83,10 +90,66 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">NTLib - Number Theory Library Documentation</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">NTLib - Number Theory Library </div></div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><h1><a class="anchor" id="autotoc_md0"></a>
+Documentation</h1>
+<p>The <em>Number Theory Library</em>, or <em>NTLib</em> is a C++ library providing useful functions for number theoretic (and related) computations.</p>
+<p>It is written using modern C++. In particular, all functionality is provided as C++20 modules. Thus, building NTLib requires an up to date compiler and build system.</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Feature Overview</h1>
+<h2><a class="anchor" id="autotoc_md2"></a>
+Basic Functionality</h2>
+<ul>
+<li><a class="el" href="base_8cpp.html">base.cpp</a>: Several important primitives that used throughout the library, e.g., <code><a class="el" href="base_8cpp.html#a2fc8fbcd48d16222ceac636b4306d0da" title="Computes the greatest common divisor of two numbers using the Euclidean algorithm.">ntlib::gcd()</a></code> to compute the greatest common divisor. Code in this module must not depend on anything except for the C++ standard library.</li>
+<li>chinese_remainder.cpp: Solve systems of modular congruences using the Chinese remainder theorem.</li>
+<li>int128.cpp: Signed and unsigned 128 bit integer types.</li>
+<li>modulo.cpp: Compute several classical functions modulo some number $m$.</li>
+<li>mod_int.cpp: A type for integers modulo some number $m$. The modulus $m$ can either be provided at run time or at compile time, the latter allowing for compiler optimizations.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md3"></a>
+Prime Numbers</h2>
+<ul>
+<li>prime_decomposition.cpp: Decompose an integer into its prime factors and their multiplicities.</li>
+<li>prime_generation.cpp: Generate lists of primes.</li>
+<li>prime_test.cpp: Check whether an integer is prime, deterministically or probably.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md4"></a>
+Arithmetic Functions</h2>
+<ul>
+<li>divisors.cpp: Count and enumerate the divisors of an integer or compute its divisor function.</li>
+<li>euler_totient.cpp: Compute Euler's totient function \(\phi\).</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md5"></a>
+Diophantine Equations</h2>
+<ul>
+<li>diophantine_equation.cpp: Solve diophantine equations of different types.</li>
+<li>pell_equation.cpp: Solve Pell's equation.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md6"></a>
+Combinatorics</h2>
+<ul>
+<li>binomial_coefficient.cpp: Compute the binomial coefficient \({n \choose k}\), possibly modulo some number \(m\).</li>
+<li>figurate_number.cpp: Compute figurate numbers, e.g., polygonal numbers or polyhedral numbers.</li>
+<li>pythagorean_triple.cpp: Generate all primitive Pythagorean triples with entries up to some upper bound \(N\).</li>
+<li>turan_number.cpp: Compute the Turan number \(T(n,k)\).</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md7"></a>
+Types</h2>
+<ul>
+<li>matrix.cpp: Matrix of some type <code>T</code>.</li>
+<li>rational.cpp: Rational number with numerator and denominator of some type <code>T</code>.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md8"></a>
+Other</h2>
+<ul>
+<li>continued_fraction.cpp: Compute the continued fraction expansion of quadratic irrationals. This is mainly used as a subroutine in pell_equation.cpp.</li>
+<li>lucas_sequence.cpp: Compute the $n$-th terms of the Lucas sequences \(U_n(P,Q)\) and \(V_n(P,Q)\). This is mainly used as a subroutine in a Baillie-Pomerance-Selfridge-Wagstaff primality test.</li>
+<li>sieve.cpp and sieve_235.cpp: Integer sieves. These are mainly used for prime generation. </li>
+</ul>
+</div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
 <!-- start footer part -->

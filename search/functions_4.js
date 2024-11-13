@@ -1,5 +1,12 @@
 var searchData=
 [
-  ['matrix_0',['matrix',['../classntlib_1_1matrix.html#a7cc452e7708dd68ca3c8969c9916c416',1,'ntlib::matrix::matrix()'],['../classntlib_1_1matrix.html#a1806c59896c4cae028c1b737e658c1fe',1,'ntlib::matrix::matrix(T val)'],['../classntlib_1_1matrix.html#af13307fb9285bba7d9d35191a47e856f',1,'ntlib::matrix::matrix(std::size_t rows, std::size_t columns)'],['../classntlib_1_1matrix.html#ab8d17eae0453cc1fb891c91a683c4de0',1,'ntlib::matrix::matrix(std::initializer_list&lt; std::initializer_list&lt; T &gt; &gt; elements)']]],
-  ['mod_5fint_1',['mod_int',['../classntlib_1_1mod__int.html#ac105994fe445a425dd28af3e219fa4c6',1,'ntlib::mod_int::mod_int(U value=0)'],['../classntlib_1_1mod__int.html#a80b891800a58d3b17674f0adadd31f26',1,'ntlib::mod_int::mod_int(U value=0)'],['../classntlib_1_1mod__int.html#abafce5354022a32f46091c12e2c2296a',1,'ntlib::mod_int::mod_int(U value, U modulus)']]]
+  ['gcd_0',['gcd',['../base_8cpp.html#a2fc8fbcd48d16222ceac636b4306d0da',1,'ntlib']]],
+  ['get_1',['get',['../classntlib_1_1mod__int.html#a62e1dc72bdc40f1e173d248a9d99cd97',1,'ntlib::mod_int']]],
+  ['get_5fcolumns_2',['get_columns',['../classntlib_1_1matrix.html#a47c75cde20fa29099d112797dd135970',1,'ntlib::matrix']]],
+  ['get_5fdenominator_3',['get_denominator',['../classntlib_1_1rational.html#a41d1d8c00a437e563cb3823fa0dc0c8f',1,'ntlib::rational']]],
+  ['get_5fidentity_4',['get_identity',['../classntlib_1_1matrix.html#a304aed9a48df80420f91ea313af968bf',1,'ntlib::matrix']]],
+  ['get_5fmodulus_5',['get_modulus',['../classntlib_1_1mod__int.html#aa8567afc3de4a6e7460fbb5a890e81cb',1,'ntlib::mod_int']]],
+  ['get_5fmultiplicative_5fneutral_6',['get_multiplicative_neutral',['../base_8cpp.html#abf287d92a386731e783133dfcf8f0131',1,'ntlib']]],
+  ['get_5fnumerator_7',['get_numerator',['../classntlib_1_1rational.html#aef91d8baec880d8ef67813d776692971',1,'ntlib::rational']]],
+  ['get_5frows_8',['get_rows',['../classntlib_1_1matrix.html#ae14b2d61f0dbeee108cc341756d2126c',1,'ntlib::matrix']]]
 ];

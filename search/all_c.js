@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['rational_0',['rational',['../classntlib_1_1rational.html',1,'ntlib::rational&lt; T &gt;'],['../classntlib_1_1rational.html#ac6c838c93cf6d81c411a8332e27342fb',1,'ntlib::rational::rational()']]],
-  ['reference_1',['reference',['../classntlib_1_1matrix_1_1reference.html',1,'ntlib::matrix&lt; T, Allocator &gt;::reference'],['../classntlib_1_1sieve_1_1reference.html',1,'ntlib::sieve&lt; Allocator &gt;::reference'],['../classntlib_1_1sieve__235_1_1reference.html',1,'ntlib::sieve_235&lt; Allocator &gt;::reference']]],
-  ['requirements_2',['Requirements',['../md_README.html#autotoc_md3',1,'']]],
-  ['run_20performance_20benchmarks_3',['Run Performance Benchmarks',['../md_README.html#autotoc_md7',1,'']]],
-  ['run_20tests_4',['Run Tests',['../md_README.html#autotoc_md6',1,'']]]
+  ['performance_20benchmarks_0',['Run Performance Benchmarks',['../md_README.html#autotoc_md16',1,'']]],
+  ['pow_1',['pow',['../base_8cpp.html#a9493740aa48e914151a1049c96cbe16d',1,'ntlib']]],
+  ['prime_20numbers_2',['Prime Numbers',['../index.html#autotoc_md3',1,'']]],
+  ['prime_5fgeneration_3',['prime_generation',['../module__prime__generation.html',1,'']]],
+  ['prime_5fpower_4',['prime_power',['../structntlib_1_1prime__power.html',1,'ntlib']]],
+  ['prime_5ftest_5',['prime_test',['../module__prime__test.html',1,'']]],
+  ['pythagorean_5ftriple_6',['pythagorean_triple',['../module__pythagorean__triple.html',1,'']]]
 ];

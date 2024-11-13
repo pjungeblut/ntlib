@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -87,10 +94,10 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">Number Theory Library (NTLib)</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md9"></a></p>
 <p>NTLib is a C++ template library containing several common number theory implementations. The library contains modular implementations that can easily be combined to solve mathematical programming problems.</p>
 <p>My main motivation for NTLib was to have a generic library for <a href="https://projecteuler.net">Project Euler</a> problems. At the same time, this project allows me to try out the newest C++ features.</p>
-<h1><a class="anchor" id="autotoc_md1"></a>
+<h1><a class="anchor" id="autotoc_md10"></a>
 Some Features of NTLib</h1>
 <ul>
 <li>Basic number theoretic functions such as <code>gcd</code>, <code>lcm</code>, <code>isqrt</code>, ...</li>
@@ -100,10 +107,10 @@ Some Features of NTLib</h1>
 <li>Compute binomial coefficients, polygonal numbers, Euler's totient function, divisor function and Turan numbers.</li>
 <li>...</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<h1><a class="anchor" id="autotoc_md11"></a>
 Documentation</h1>
 <p>See here for the <a href="https://pjungeblut.github.io/ntlib/">Doxygen documentation</a>.</p>
-<h1><a class="anchor" id="autotoc_md3"></a>
+<h1><a class="anchor" id="autotoc_md12"></a>
 Requirements</h1>
 <p>NTLib uses several modern C++ features, in particular C++20 modules. This requires up to date tools to compile.</p>
 <p>Tested with:</p><ul>
@@ -112,10 +119,10 @@ Requirements</h1>
 <li>Ninja 1.11</li>
 <li>CMake and CTest 3.28</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md13"></a>
 Downloading NTLib</h1>
 <p>To download NTLib clone this repository: </p><div class="fragment"><div class="line">git clone --recurse-submodules https://github.com/pjungeblut/ntlib</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md14"></a>
 Compiling NTLib</h2>
 <p>Inside the <code>ntlib</code> directory, run the following to bulid all tests and benchmarks:</p>
 <div class="fragment"><div class="line">mkdir build</div>
@@ -123,14 +130,14 @@ Compiling NTLib</h2>
 <div class="line">cmake -DCMAKE_BUILD_TYPE=&lt;build-type&gt; -DCMAKE_CXX_COMPILER=clang++-18 .. -G Ninja</div>
 <div class="line">ninja</div>
 </div><!-- fragment --><p>Regarding <code>&lt;build-type&gt;</code>, choose <code>Debug</code> to run tests and <code>Release</code> to run benchmarks. Alternatively, create separate <code>debug</code> and <code>release</code> directories.</p>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md15"></a>
 Run Tests</h2>
 <p>NTLib comes with many unit tests to guarantee correctness. Inside the <code>build</code> directory, run <code>ctest</code> to execute all tests at once.</p>
 <p>You can also build and run specific sets of unit tests. For example, consider we want to test the basic functionality from <code>include/base.hpp</code>.</p><ul>
 <li>Run <code>ninja ut_base</code>. In general, all unit test targets are prefixed with <code>ut_</code>.</li>
 <li>Run <code>./test/base</code> to start the test.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md7"></a>
+<h2><a class="anchor" id="autotoc_md16"></a>
 Run Performance Benchmarks</h2>
 <p>Some components of the libary come with performance benchmarks to test their implementations agains others. All benchmark targets are prefixed with <code>bm_</code>.</p>
 <p>For example, to benchmark different implementations for prime generation, run (inside the <code>build</code> directory): </p><div class="fragment"><div class="line">ninja bm_prime_generation</div>
@@ -139,7 +146,7 @@ Run Performance Benchmarks</h2>
 <p><b>Note 2:</b> To get more consistent benchmarks CPU scaling should be disabled. This can for example be achieved by (source <a href="https://github.com/google/benchmark#disabling-cpu-frequency-scaling">here</a>): </p><div class="fragment"><div class="line">sudo cpupower frequency-set --governor performance</div>
 <div class="line">./benchmark/prime_generation</div>
 <div class="line">sudo cpupower frequency-set --governor powersave</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md8"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md17"></a>
 License &amp; Disclaimer</h1>
 <p>This software is licensed under the MIT license. See <code>LICENSE</code> for details. NTLib is still in development. Therefore, things could break and the API might change.</p>
 <p>Feedback is always welcome. </p>
