@@ -1,11 +1,11 @@
 /**
- * @file base.cpp
+ * @file
+ * @brief Basic functionality used frequently throughout the whole library
  */
 
 /**
  * @module base
- * @brief Provides basic functionality used frequently throughout the whole
- * library.
+ * @brief Basic functionality used frequently throughout the whole library.
  * 
  * Functionality contained in this module has no further dependencies and only
  * depends on the C++ standard library.
