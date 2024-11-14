@@ -5,6 +5,9 @@ var searchData=
   ['diophantine_2',['diophantine',['../module__diophantine.html',1,'']]],
   ['diophantine_20equations_3',['Diophantine Equations',['../index.html#autotoc_md5',1,'']]],
   ['disclaimer_4',['License &amp; Disclaimer',['../md_README.html#autotoc_md17',1,'']]],
-  ['documentation_5',['Documentation',['../index.html#autotoc_md0',1,'Documentation'],['../md_README.html#autotoc_md11',1,'Documentation']]],
-  ['downloading_20ntlib_6',['Downloading NTLib',['../md_README.html#autotoc_md13',1,'']]]
+  ['divisor_5ffunction_5',['divisor_function',['../divisors_8cpp.html#a03625781ea45c307bd5e58f28bb1803d',1,'ntlib']]],
+  ['divisors_6',['divisors',['../module__divisors.html',1,'']]],
+  ['divisors_2ecpp_7',['divisors.cpp',['../divisors_8cpp.html',1,'']]],
+  ['documentation_8',['Documentation',['../index.html#autotoc_md0',1,'Documentation'],['../md_README.html#autotoc_md11',1,'Documentation']]],
+  ['downloading_20ntlib_9',['Downloading NTLib',['../md_README.html#autotoc_md13',1,'']]]
 ];

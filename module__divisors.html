@@ -97,23 +97,33 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">divisors Module Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Function templates related to the divisors of an integer.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3de901c2808a3076b525000604c1e54a" id="r_a3de901c2808a3076b525000604c1e54a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a3de901c2808a3076b525000604c1e54a"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="divisors_8cpp.html#a3de901c2808a3076b525000604c1e54a">ntlib::count_divisors</a> (const std::vector&lt; prime_power&lt; T &gt; &gt; &amp;factors) noexcept</td></tr>
-<tr class="separator:a3de901c2808a3076b525000604c1e54a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d5b9f0cbd64818dfe32ddb08656452f" id="r_a4d5b9f0cbd64818dfe32ddb08656452f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a4d5b9f0cbd64818dfe32ddb08656452f"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="divisors_8cpp.html#a4d5b9f0cbd64818dfe32ddb08656452f">ntlib::divisor_function</a> (const std::vector&lt; prime_power&lt; T &gt; &gt; &amp;factors, T x) noexcept</td></tr>
-<tr class="separator:a4d5b9f0cbd64818dfe32ddb08656452f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44fccc30a23d17e2d2503e9571a8ec3d" id="r_a44fccc30a23d17e2d2503e9571a8ec3d"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a44fccc30a23d17e2d2503e9571a8ec3d"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="divisors_8cpp.html#a44fccc30a23d17e2d2503e9571a8ec3d">ntlib::enumerate_divisors</a> (const std::vector&lt; prime_power&lt; T &gt; &gt; &amp;factors)</td></tr>
-<tr class="separator:a44fccc30a23d17e2d2503e9571a8ec3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44553b4b70376495c6c4710121764875" id="r_a44553b4b70376495c6c4710121764875"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a44553b4b70376495c6c4710121764875"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="divisors_8cpp.html#a44553b4b70376495c6c4710121764875">ntlib::count_divisors</a> (const prime_factors&lt; T &gt; &amp;factors) noexcept</td></tr>
+<tr class="memdesc:a44553b4b70376495c6c4710121764875"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counts the number of divisors of a given number <code>n</code>.  <br /></td></tr>
+<tr class="separator:a44553b4b70376495c6c4710121764875"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03625781ea45c307bd5e58f28bb1803d" id="r_a03625781ea45c307bd5e58f28bb1803d"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a03625781ea45c307bd5e58f28bb1803d"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="divisors_8cpp.html#a03625781ea45c307bd5e58f28bb1803d">ntlib::divisor_function</a> (const prime_factors&lt; T &gt; &amp;factors, T x) noexcept</td></tr>
+<tr class="memdesc:a03625781ea45c307bd5e58f28bb1803d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the divisor function for a given number <code>n</code>.  <br /></td></tr>
+<tr class="separator:a03625781ea45c307bd5e58f28bb1803d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5588a05457960890ac667a93c1a7a43" id="r_aa5588a05457960890ac667a93c1a7a43"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aa5588a05457960890ac667a93c1a7a43"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="divisors_8cpp.html#aa5588a05457960890ac667a93c1a7a43">ntlib::enumerate_divisors</a> (const prime_factors&lt; T &gt; &amp;factors)</td></tr>
+<tr class="memdesc:aa5588a05457960890ac667a93c1a7a43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerates all divisors of a given number <code>n</code>.  <br /></td></tr>
+<tr class="separator:aa5588a05457960890ac667a93c1a7a43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Function templates related to the divisors of an integer. </p>
+<p>Count and enumerate divisors of integers or compute the divisor function. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/arithmetic_functions/<b>divisors.cpp</b></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/arithmetic_functions/<a class="el" href="divisors_8cpp.html">divisors.cpp</a></td></tr>
+<tr class="memdesc:divisors_8cpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary module interface unit for module <code>divisors</code>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

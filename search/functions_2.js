@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['empty_0',['empty',['../classntlib_1_1sieve.html#a2a27e64b2031a55b4b51fba80b625d97',1,'ntlib::sieve::empty()'],['../classntlib_1_1sieve__235.html#a9ccc979d06036561d69f4c714526bd27',1,'ntlib::sieve_235::empty()']]],
-  ['extended_5feuclid_1',['extended_euclid',['../base_8cpp.html#a737f6ddbea5aa8554fbfcea214d5836f',1,'ntlib']]]
+  ['data_0',['data',['../classntlib_1_1sieve.html#a1ed0e4563b92180c1c161e33ac2c7a5a',1,'ntlib::sieve::data() const noexcept'],['../classntlib_1_1sieve.html#a92eb8bd551c9ea8cc7d5e2e311ab545b',1,'ntlib::sieve::data() noexcept'],['../classntlib_1_1sieve__235.html#a1c30a7fcdc8497f2034504d9d2277b87',1,'ntlib::sieve_235::data() const noexcept'],['../classntlib_1_1sieve__235.html#a033cebe5f852703391446dd370180678',1,'ntlib::sieve_235::data() noexcept']]],
+  ['difference_1',['difference',['../base_8cpp.html#a20812657384d1d4eaa06fb8da9927ee9',1,'ntlib']]],
+  ['divisor_5ffunction_2',['divisor_function',['../divisors_8cpp.html#a03625781ea45c307bd5e58f28bb1803d',1,'ntlib']]]
 ];

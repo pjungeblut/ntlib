@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['data_0',['data',['../classntlib_1_1sieve.html#a1ed0e4563b92180c1c161e33ac2c7a5a',1,'ntlib::sieve::data() const noexcept'],['../classntlib_1_1sieve.html#a92eb8bd551c9ea8cc7d5e2e311ab545b',1,'ntlib::sieve::data() noexcept'],['../classntlib_1_1sieve__235.html#a1c30a7fcdc8497f2034504d9d2277b87',1,'ntlib::sieve_235::data() const noexcept'],['../classntlib_1_1sieve__235.html#a033cebe5f852703391446dd370180678',1,'ntlib::sieve_235::data() noexcept']]],
-  ['difference_1',['difference',['../base_8cpp.html#a20812657384d1d4eaa06fb8da9927ee9',1,'ntlib']]]
+  ['count_5fdivisors_0',['count_divisors',['../divisors_8cpp.html#a44553b4b70376495c6c4710121764875',1,'ntlib']]]
 ];
