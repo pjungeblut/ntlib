@@ -97,23 +97,34 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">euler_totient Module Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Compute Euler's totient function \(\phi\).  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a366b44affefd3dbf9821b0d8fd29faa6" id="r_a366b44affefd3dbf9821b0d8fd29faa6"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a366b44affefd3dbf9821b0d8fd29faa6"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="euler__totient_8cpp.html#a366b44affefd3dbf9821b0d8fd29faa6">ntlib::euler_totient</a> (const prime_factors&lt; T &gt; &amp;factors)</td></tr>
+<tr class="memdesc:a366b44affefd3dbf9821b0d8fd29faa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes Euler's totient function \(\phi(n)\) for a given number <code>n</code>.  <br /></td></tr>
 <tr class="separator:a366b44affefd3dbf9821b0d8fd29faa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5f9ce362c3d9da9d72b1c93050ac87a" id="r_af5f9ce362c3d9da9d72b1c93050ac87a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:af5f9ce362c3d9da9d72b1c93050ac87a"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="euler__totient_8cpp.html#af5f9ce362c3d9da9d72b1c93050ac87a">ntlib::euler_totient</a> (T n)</td></tr>
+<tr class="memdesc:af5f9ce362c3d9da9d72b1c93050ac87a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes Euler's totient function \(\phi(n)\) for a given number.  <br /></td></tr>
 <tr class="separator:af5f9ce362c3d9da9d72b1c93050ac87a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7388a2605f8d1e447acbd1eb8ce571dc" id="r_a7388a2605f8d1e447acbd1eb8ce571dc"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a7388a2605f8d1e447acbd1eb8ce571dc"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="euler__totient_8cpp.html#a7388a2605f8d1e447acbd1eb8ce571dc">ntlib::euler_totient_sieve</a> (T N)</td></tr>
+<tr class="memdesc:a7388a2605f8d1e447acbd1eb8ce571dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes Euler's totient function \(\phi(n)\) for all integers up to a given number <code>N</code>.  <br /></td></tr>
 <tr class="separator:a7388a2605f8d1e447acbd1eb8ce571dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Compute Euler's totient function \(\phi\). </p>
+<p>Euler's totient function counts the number of integers up to <code>n</code> that are coprime to <code>n</code>.</p>
+<p>The module provides function templates to compute Euler's totient function \(\phi\). Both, to compute \(\phi(n)\) for a single number \(n\) or by using a sieve for all \(n \leq N\). </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/arithmetic_functions/<b>euler_totient.cpp</b></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/arithmetic_functions/<a class="el" href="euler__totient_8cpp.html">euler_totient.cpp</a></td></tr>
+<tr class="memdesc:euler__totient_8cpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary module interfact unit for module <code>euler_totient</code>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

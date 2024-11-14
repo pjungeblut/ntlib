@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['figurate_5fnumber_0',['figurate_number',['../module__figurate__number.html',1,'']]]
+  ['euler_5ftotient_0',['euler_totient',['../module__euler__totient.html',1,'']]]
 ];

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['sieve_0',['sieve',['../module__sieve.html',1,'']]],
-  ['sieve_5f235_1',['sieve_235',['../module__sieve__235.html',1,'']]]
+  ['prime_5fgeneration_0',['prime_generation',['../module__prime__generation.html',1,'']]],
+  ['prime_5ftest_1',['prime_test',['../module__prime__test.html',1,'']]],
+  ['pythagorean_5ftriple_2',['pythagorean_triple',['../module__pythagorean__triple.html',1,'']]]
 ];
