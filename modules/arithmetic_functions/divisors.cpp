@@ -5,9 +5,10 @@
 
 /**
  * @module divisors
- * @brief Function templates related to the divisors of an integer.
+ * @brief Work with the divisors of an integer.
  * 
- * Count and enumerate divisors of integers or compute the divisor function.
+ * Provides function templates to count and enumerate divisors of integers or
+ * to compute the divisor function.
  */
 module;
 

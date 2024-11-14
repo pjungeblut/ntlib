@@ -1,3 +1,19 @@
+/**
+ * @file
+ * @brief Primary module interfact unit for module `euler_totient`.
+ */
+
+/**
+ * @module euler_totient
+ * @brief Compute Euler's totient function \f$\phi\f$.
+ * 
+ * Euler's totient function counts the number of integers up to `n` that are
+ * coprime to `n`.
+ * 
+ * The module provides function templates to compute Euler's totient function
+ * \f$\phi\f$. Both, to compute \f$\phi(n)\f$ for a single number \f$n\f$ or by
+ * using a sieve for all \f$n \leq N\f$.
+ */
 module;
 
 #include <algorithm>
@@ -12,11 +28,12 @@ import prime_decomposition;
 namespace ntlib {
 
 /**
- * Computes Euler's totient function `phi(n)` for a given number `n`, i.e., the
- * number of integers up to `n` coprime to `n`.
+ * @brief Computes Euler's totient function \f$\phi(n)\f$ for a given number
+ * `n`.
  * 
+ * @tparam T An integer-like type.
  * @param factors The prime decomposition of `n`.
- * @return Euler's totient function `phi(n)`.
+ * @return Euler's totient function \f$\phi(n)\f$.
  */
 export template<typename T>
 [[nodiscard]] constexpr
@@ -27,11 +44,11 @@ T euler_totient(const prime_factors<T> &factors) {
 }
 
 /**
- * Computes Euler's totient function `phi(n)` for a given number `n`, i.e., the
- * number of integers up to `n` coprime to `n`.
+ * @brief Computes Euler's totient function \f$\phi(n)\f$ for a given number.
  * 
- * @param n The given number `n`.
- * @return Euler's totient function `phi(n)`.
+ * @tparam T An integer-like type.
+ * @param n The given number.
+ * @return Euler's totient function \f$\phi(n)\f$.
  */
 export template<typename T>
 [[nodiscard]] constexpr
@@ -40,11 +57,12 @@ T euler_totient(T n) {
 }
 
 /**
- * Computes Euler's totient function `phi(n)` for all integers smaller than a
- * given number `N`.
+ * @brief Computes Euler's totient function \f$\phi(n)\f$ for all integers
+ * up to a given number `N`.
  * 
- * Runtime: O(N log log N)
+ * Runtime: \f$O(N \log(\log(N))\f$
  *
+ * @tparam T An integer-like type.
  * @param N The number until which all values should be computed.
  * @return A `std::vector<T>` containing all values. The element at index `0`
  *     will be set to `0`.
