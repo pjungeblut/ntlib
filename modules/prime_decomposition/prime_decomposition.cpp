@@ -29,6 +29,12 @@ struct prime_power {
 };
 
 /**
+ * Represents a prime factorization.
+ */
+export template<typename T>
+using prime_factors = std::vector<prime_power<T>>;
+
+/**
  * Computes the prime decomposition of a given number `n` with respect to a
  * given list `primes` of potential prime divisors.
  * 
@@ -40,11 +46,11 @@ struct prime_power {
  */
 template<typename C, typename T = typename C::value_type>
 [[nodiscard]] constexpr
-std::pair<std::vector<prime_power<T>>,T> prime_decomposition_list_remainder(
+std::pair<prime_factors<T>,T> prime_decomposition_list_remainder(
     T n, const C &primes) {
   assert(n > T{0});
 
-  std::vector<prime_power<T>> factors;
+  prime_factors<T> factors;
   for (const T p : primes) {
     if (p * p > n) { break; }
     if (n % p == 0) {
@@ -71,7 +77,7 @@ std::pair<std::vector<prime_power<T>>,T> prime_decomposition_list_remainder(
  */
 export template<typename C, typename T = typename C::value_type>
 [[nodiscard]] constexpr
-std::vector<prime_power<T>> prime_decomposition_list(
+prime_factors<T> prime_decomposition_list(
     T n, const C &primes) {
   auto res_list = prime_decomposition_list_remainder(n, primes);
   if (res_list.second != 1) {
@@ -88,7 +94,7 @@ std::vector<prime_power<T>> prime_decomposition_list(
  */
 template<typename T>
 [[nodiscard]] constexpr
-std::vector<prime_power<T>> prime_decomposition_32(T n) {
+prime_factors<T> prime_decomposition_32(T n) {
   static_assert(sizeof(T) <= 4);
   return prime_decomposition_list(n, PRIMES_BELOW_2_16);
 }
@@ -176,7 +182,7 @@ T find_factor(T n) noexcept {
  */
 template<typename T>
 [[nodiscard]] constexpr
-std::vector<prime_power<T>> prime_decomposition_large(T n) {
+prime_factors<T> prime_decomposition_large(T n) {
   // Base cases.
   if (is_prime(n)) { return {prime_power<T>{n, T{1}}}; }
 
@@ -185,7 +191,7 @@ std::vector<prime_power<T>> prime_decomposition_large(T n) {
   n /= f;
 
   // Decompose factor and reduce `n` by all found prime factors.
-  std::vector<prime_power<T>> factors = prime_decomposition_large(f);
+  prime_factors<T> factors = prime_decomposition_large(f);
   for (auto &[p, e] : factors) {
     while (n % p == 0) {
       n /= p;
@@ -196,7 +202,7 @@ std::vector<prime_power<T>> prime_decomposition_large(T n) {
 
   // Decompose remainder and add its prime factors to the result.
   // No duplicate entries as remainder is coprime to all previous factors.
-  const std::vector<prime_power<T>> rem = prime_decomposition_large(n);
+  const prime_factors<T> rem = prime_decomposition_large(n);
   factors.insert(factors.end(), rem.begin(), rem.end());
   return factors;
 }
@@ -209,7 +215,7 @@ std::vector<prime_power<T>> prime_decomposition_large(T n) {
  */
 export template<typename T>
 [[nodiscard]] constexpr
-std::vector<prime_power<T>> prime_decomposition(T n) {
+prime_factors<T> prime_decomposition(T n) {
   assert(n >= T{1});
 
   if constexpr (std::is_integral_v<T> && sizeof(T) <= 4) {
@@ -222,7 +228,7 @@ std::vector<prime_power<T>> prime_decomposition(T n) {
     if (remainder == 1) { return factors; }
 
     // Continue with the remainder.
-    const std::vector<prime_power<uint64_t>> factors_rem =
+    const prime_factors<T> factors_rem =
         prime_decomposition_large(remainder);
 
     // Concatenate lists of prime powers.

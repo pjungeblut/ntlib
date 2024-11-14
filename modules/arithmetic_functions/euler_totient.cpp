@@ -20,7 +20,7 @@ namespace ntlib {
  */
 export template<typename T>
 [[nodiscard]] constexpr
-T euler_totient(const std::vector<prime_power<T>> &factors) {
+T euler_totient(const prime_factors<T> &factors) {
   return std::ranges::fold_left(factors, T{1}, [](T prod, prime_power<T> pp) {
     return prod * pow(pp.p, pp.e - 1) * (pp.p - 1);
   });
