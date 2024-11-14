@@ -15,6 +15,7 @@ file(GLOB all_modules CONFIGURE_DEPENDS
 # name: The name of the benchmark. Must match the *.cpp file name.
 function(add_benchmark name)
   add_executable(bm_${name})
+  target_compile_features(bm_${name} PUBLIC cxx_std_23)
   target_sources(bm_${name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/${name}.cpp)
   target_sources(bm_${name} PUBLIC
     FILE_SET HEADERS
