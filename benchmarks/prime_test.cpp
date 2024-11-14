@@ -110,7 +110,7 @@ static void BM32_is_prime_trial_division(benchmark::State &state) {
     for (uint32_t i = 1; i < NUM_TESTS; i += 2) {
       uint32_t n = state.range(0) + i;
       benchmark::DoNotOptimize(
-          ntlib::is_prime_trial_division(n, ntlib::SMALL_PRIMES));
+          ntlib::is_prime_trial_division(n, ntlib::SMALL_PRIMES<uint32_t>));
     }
   }
 }

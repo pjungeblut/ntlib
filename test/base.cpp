@@ -25,21 +25,21 @@ static constexpr ntlib::u128 max_uint128 =
     std::numeric_limits<ntlib::u128>::max();
 
 TEST(SmallPrimes, ListContainsOnlyPrimes) {
-  const auto sieve = ntlib::prime_sieve(ntlib::SMALL_PRIMES_BIGGEST);
-  for (uint32_t p : ntlib::SMALL_PRIMES) {
+  const auto sieve = ntlib::prime_sieve(ntlib::SMALL_PRIMES_BIGGEST<uint32_t>);
+  for (uint32_t p : ntlib::SMALL_PRIMES<uint32_t>) {
     EXPECT_TRUE(sieve[p]);
   }
 }
 
 TEST(SmallPrimes, ListComplete) {
   std::vector<uint32_t> primes;
-  ntlib::prime_sieve(ntlib::SMALL_PRIMES_BIGGEST, primes);
+  ntlib::prime_sieve(ntlib::SMALL_PRIMES_BIGGEST<uint32_t>, primes);
   // The `prime_sieve` method might return a larger sieve than requested.
   // In this case, we remove the additional primes in `primes`.
-  while (primes.back() > ntlib::SMALL_PRIMES_BIGGEST) {
+  while (primes.back() > ntlib::SMALL_PRIMES_BIGGEST<uint32_t>) {
     primes.pop_back();
   }
-  EXPECT_TRUE(std::ranges::equal(primes, ntlib::SMALL_PRIMES));
+  EXPECT_TRUE(std::ranges::equal(primes, ntlib::SMALL_PRIMES<uint32_t>));
 }
 
 TEST(Odd, SmallValues) {
