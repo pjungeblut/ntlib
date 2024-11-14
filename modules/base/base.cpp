@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Basic functionality used frequently throughout the whole library
+ * @brief Primary module interface unit for module `base`.
  */
 
 /**
