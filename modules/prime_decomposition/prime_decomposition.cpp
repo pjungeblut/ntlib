@@ -222,8 +222,8 @@ prime_factors<T> prime_decomposition(T n) {
     return prime_decomposition_32(n);
   } else {
     // Start by trial division with small primes.
-    auto res_list = prime_decomposition_list_remainder(n, SMALL_PRIMES);
-    prime_factors<T> factors{std::move(res_list.first)};
+    auto res_list = prime_decomposition_list_remainder(n, SMALL_PRIMES<T>);
+    std::vector<prime_power<T>> factors{std::move(res_list.first)};
     const T remainder = res_list.second;
     if (remainder == 1) { return factors; }
 

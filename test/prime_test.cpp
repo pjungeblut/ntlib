@@ -30,39 +30,41 @@ static constexpr auto PRIMES = std::to_array<ntlib::u128>({
 
 TEST(TrialDivision, FirstN) {
   // Make sure to don't go out of the correct range for trial division.
-  const uint64_t largest = ntlib::SMALL_PRIMES_BIGGEST;
-  auto UPPER_BOUND = std::min(N, largest * largest);
+  const uint64_t largest = ntlib::SMALL_PRIMES_BIGGEST<uint64_t>;
+  const auto UPPER_BOUND = std::min(N, largest * largest);
   for (uint64_t i = 0; i <= UPPER_BOUND; ++i) {
-    EXPECT_EQ(ntlib::is_prime_trial_division(i, ntlib::SMALL_PRIMES), SIEVE[i])
-        << "i = " << i;
+    const auto res =
+        ntlib::is_prime_trial_division(i, ntlib::SMALL_PRIMES<uint64_t>);
+    EXPECT_TRUE(res.has_value());
+    EXPECT_EQ(res.value(), SIEVE[i]) << "i = " << i;
   }
 }
 
 TEST(TrialDivision, OutOfRangeUnknown) {
   // Find smallest prime not in ntlib::SMALL_PRIMES.
-  const uint64_t largest = ntlib::SMALL_PRIMES_BIGGEST;
+  const uint64_t largest = ntlib::SMALL_PRIMES_BIGGEST<uint64_t>;
   const uint64_t prime_too_big = ntlib::next_prime(largest * largest);
 
   // Prime, too big to tell.
   const auto res1 = ntlib::is_prime_trial_division(
-      prime_too_big, ntlib::SMALL_PRIMES);
+      prime_too_big, ntlib::SMALL_PRIMES<uint64_t>);
   EXPECT_FALSE(res1.has_value());
 
   // Composite, too big to tell.
   const auto res2 = ntlib::is_prime_trial_division(
-      prime_too_big * prime_too_big, ntlib::SMALL_PRIMES);
+      prime_too_big * prime_too_big, ntlib::SMALL_PRIMES<uint64_t>);
   EXPECT_FALSE(res2.has_value());
 }
 
 TEST(TrialDivision, OutOfRangeKnown) {
+  const auto biggest = ntlib::SMALL_PRIMES_BIGGEST<uint32_t>;
   const auto res1 = ntlib::is_prime_trial_division(
-      2 * ntlib::SMALL_PRIMES_BIGGEST, ntlib::SMALL_PRIMES);
+      2 * biggest, ntlib::SMALL_PRIMES<uint32_t>);
   EXPECT_TRUE(res1.has_value());
   EXPECT_FALSE(res1.value());
 
   const auto res2 = ntlib::is_prime_trial_division(
-      ntlib::SMALL_PRIMES_BIGGEST * ntlib::SMALL_PRIMES_BIGGEST,
-      ntlib::SMALL_PRIMES);
+     biggest * biggest, ntlib::SMALL_PRIMES<uint32_t>);
   EXPECT_TRUE(res2.has_value());
   EXPECT_FALSE(res2.value());
 }

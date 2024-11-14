@@ -5,7 +5,7 @@
 
 /**
  * @module base
- * @brief Basic functionality used frequently throughout the whole library.
+ * @brief Basic functionality used frequently throughout the whole library
  * 
  * Functionality contained in this module has no further dependencies and only
  * depends on the C++ standard library.
@@ -33,8 +33,11 @@ namespace ntlib {
  * @brief A list with all prime numbers up to `ntlib::SMALL_PRIMES_BIGGEST`.
  * 
  * Can be used for trial division in primality tests and prime factorizations.
+ * 
+ * @tparam T An integer-like type.
  */
-export constexpr auto SMALL_PRIMES = std::to_array<uint32_t>({
+export template<typename T>
+constexpr auto SMALL_PRIMES = std::to_array<T>({
     2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
     73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151,
     157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233,
@@ -46,15 +49,18 @@ export constexpr auto SMALL_PRIMES = std::to_array<uint32_t>({
     709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811,
     821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911,
     919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997, 1'009});
-static_assert(std::ranges::is_sorted(SMALL_PRIMES),
+static_assert(std::ranges::is_sorted(SMALL_PRIMES<uint32_t>),
     "Some NTLIB-internal functions assume that the list is sorted.");
 
 /**
  * @brief Helper constant to get the biggest among the small primes in
  * `ntlib::SMALL_PRIMES`.
+ * 
+ * @tparam T An integer-like type.
  */
-export constexpr uint32_t SMALL_PRIMES_BIGGEST =
-    *std::ranges::max_element(SMALL_PRIMES);
+export template<typename T>
+constexpr T SMALL_PRIMES_BIGGEST =
+    *std::ranges::max_element(SMALL_PRIMES<T>);
 
 /**
  * @brief Checks whether a given number is odd.
