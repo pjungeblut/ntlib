@@ -1,3 +1,14 @@
+/**
+ * @file
+ * @brief Primary module interface unit for module `base`.
+ */
+
+/**
+ * @module divisors
+ * @brief Function templates related to the divisors of an integer.
+ * 
+ * Count and enumerate divisors of integers or compute the divisor function.
+ */
 module;
 
 #include <cassert>
@@ -12,14 +23,15 @@ import prime_decomposition;
 namespace ntlib {
 
 /**
- * Counts the number of divisors of a given number `n`.
+ * @brief Counts the number of divisors of a given number `n`.
  *
+ * @tparam T An integer-like type.
  * @param factors The prime factorization of `n`.
  * @return The number of divisors.
  */
 export template<typename T>
 [[nodiscard]] constexpr
-T count_divisors(const std::vector<prime_power<T>> &factors) noexcept {
+T count_divisors(const prime_factors<T> &factors) noexcept {
   return std::accumulate(factors.begin(), factors.end(), T{1},
       [](T res, prime_power<T> pp) {
     return res *= pp.e + 1;
@@ -36,8 +48,7 @@ T count_divisors(const std::vector<prime_power<T>> &factors) noexcept {
  */
 export template<typename T>
 [[nodiscard]] constexpr
-T divisor_function(
-    const std::vector<prime_power<T>> &factors, T x) noexcept {
+T divisor_function(const prime_factors<T> &factors, T x) noexcept {
   assert(x >= T{0});
 
   // General formula below requires `x > 0`, so we use `count_divisors` instead.
@@ -61,7 +72,7 @@ T divisor_function(
  */
 export template<typename T>
 [[nodiscard]] constexpr
-std::vector<T> enumerate_divisors(const std::vector<prime_power<T>> &factors) {
+std::vector<T> enumerate_divisors(const prime_factors<T> &factors) {
   std::vector<T> divisors(1, T{1});
   for (auto [p, e] : factors) {
     const std::size_t cur_num_divisors = divisors.size();

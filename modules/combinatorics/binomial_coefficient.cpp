@@ -140,7 +140,7 @@ export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 T mod_binom(T n, T k, T m) {
   // Find prime decomposition of modulus.
-  const std::vector<prime_power<T>> factors = prime_decomposition(m);
+  const prime_factors<T> factors = prime_decomposition(m);
 
   // Compute for each prime power individually.
   std::vector<crt_congruence<T>> congruences;
