@@ -1,4 +1,5 @@
 add_library(ntlib_diophantine STATIC)
+target_compile_features(ntlib_diophantine PUBLIC cxx_std_23)
 target_sources(ntlib_diophantine PUBLIC
     FILE_SET CXX_MODULES
     BASE_DIRS ${PROJECT_SOURCE_DIR}/modules/diophantine

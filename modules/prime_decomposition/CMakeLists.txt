@@ -1,4 +1,5 @@
 add_library(ntlib_prime_decomposition STATIC)
+target_compile_features(ntlib_prime_decomposition PUBLIC cxx_std_23)
 target_sources(ntlib_prime_decomposition PUBLIC
     FILE_SET HEADERS
     BASE_DIRS ${PROJECT_SOURCE_DIR}/include

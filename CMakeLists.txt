@@ -6,10 +6,8 @@ project("NTLib - Number Theory Library" VERSION 0.9 LANGUAGES CXX)
 # General settings.
 ################################################################################
 
-# Set the C++ version.
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_CXX_FLAGS "-std=c++23 -Wall -Wextra -O2")
+# Set the C++ compiler flags.
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -O2")
 
 # Treat warnings as errors.
 if (MSVC)
@@ -36,6 +34,7 @@ add_library(ntlib STATIC
     $<TARGET_OBJECTS:ntlib_prime_test>
     $<TARGET_OBJECTS:ntlib_types>
 )
+target_compile_features(ntlib PUBLIC cxx_std_23)
 
 ################################################################################
 # Unit Tests.
