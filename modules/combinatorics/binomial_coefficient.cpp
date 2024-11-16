@@ -1,10 +1,7 @@
 /**
- * Implementations to compute binomial coefficients.
- * 
- * Code for one-shot computation modulo a number `m` is based on:
- * https://cp-algorithms.com/combinatorics/binomial-coefficients.html
+ * @file
+ * @brief Primary module interface unit for module `binomial_coefficient`.
  */
-
 module;
 
 #include <algorithm>
@@ -12,6 +9,18 @@ module;
 #include <type_traits>
 #include <vector>
 
+/**
+ * @module binomial_coefficient
+ * @brief Compute binomial coefficients.
+ * 
+ * Compute the binomial coefficient \f${n \choose k}\f$ for
+ * \f$0 \leq k \leq n\f$, possibly modulo some number \f$m\f$.
+ * The binomial coeffient counts the number of \f$k\f$-element subsets of an
+ * \f$n\f$-element universe.
+ * 
+ * Code for one-shot computation modulo a number \f$m\f$ is based on
+ * https://cp-algorithms.com/combinatorics/binomial-coefficients.html.
+ */
 export module binomial_coefficient;
 
 import base;
@@ -23,15 +32,16 @@ import prime_test;
 namespace ntlib {
 
 /**
- * Computes the binomial coefficient `binom(n,k)`, i.e., the number of
- * `k`-element subsets of an `n`-element universe.
- * Runtime: `O(k)`
+ * @brief Computes a single binomial coefficient.
  *
- * Intermediate results are at most `k` times as big as the result.
+ * Intermediate results are at most \f$k\f$ times as big as the result.
+ * 
+ * Runtime: \f$O(k)\f$
  *
+ * @tparam T An integer-like type.
  * @param n Size of universe.
  * @param k Size of the subsets.
- * @return The binomial coefficient `binom(n,k)`.
+ * @return The binomial coefficient \f${n \choose k}\f$.
  */
 export template<typename T>
 [[nodiscard]] constexpr
@@ -49,13 +59,17 @@ T binom(T n, T k) noexcept {
 }
 
 /**
- * Computes the binomial coefficient `binom(n,k)` modulo a sufficiently large
- * prime number `p` (needs `p > max(k, n-k)`).
+ * @brief Compute a single binomial coefficient module a sufficiently large
+ * prime.
  * 
+ * To compute \f${n \choose k} \mod p\f$ we need \f$p > \max\{k, n-k\}\f$.
+ * 
+ * @tparam T An integer-like type.
+ * @tparam S The signed type corresponding to `T`.
  * @param n Size of the universe.
  * @param k Size of the subsets.
  * @param p The modulus. Must be prime and sufficiently large.
- * @return The binomial coefficient `binom(n,k)` modulo `p`.
+ * @return The binomial coefficient \f${n \choose k} \mod p\f$.
  */
 export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
@@ -74,14 +88,18 @@ T mod_p_binom(T n, T k, T p) noexcept {
 }
 
 /**
- * Computes the binomial coefficient `binom(n,k)` modulo a prime power `pp`.
- * The prime power `pp` is given as `p^e`.
+ * @brief Computes a single binomial coefficient modulo a prime power.
+ * 
+ * For a prime \f$p\f$ and a positive integer \f$e\f$ this computes
+ * \f${n \choose k} \mod p^e\f$.
  *
+ * @tparam T An integer-like type.
+ * @tparam S The signed type corresponding to `T`.
  * @param n Size of universe.
  * @param k Size of the subsets.
- * @param p The prime.
+ * @param p A prime number.
  * @param e The exponent of the prime.
- * @return The binomial coefficient `binom(n,k)` modulo `pp`.
+ * @return The binomial coefficient \f${n \choose k} \mod p^e\f$.
  */
 export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
@@ -128,13 +146,14 @@ T mod_pp_binom(T n, T k, T p, T e) {
 }
 
 /**
- * Computes the binomial coefficient `binom(n,k)` modulo an arbitrary
- * number `m`.
+ * @brief Computes a single binomial coefficient modulo an arbitrary number.
  * 
+ * @tparam T An integer-like type.
+ * @tparam S The signed type corresponding to `T`.
  * @param n The size of the universe.
  * @param k The size of the subsets.
  * @param m The modulus.
- * @return The binomial coefficient `binom(n,k)` modulo `m`.
+ * @return The binomial coefficient \f${n \choose k} \mod m\f$.
  */
 export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
@@ -156,14 +175,18 @@ T mod_binom(T n, T k, T m) {
 }
 
 /**
- * Computes a table of all binomial coefficiets `binom(i,j)`
- * with `0 <= i,j <= N`.
+ * @brief Computes the first \f$N\f$ rows of Pascal's triangle.
  * 
- * Intermediate results do not exceed results.
- * Runtime: O(N^2)
+ * Computes a table of all binomial coefficiets \f${i \choose j}\f$ with
+ * \f$0 \leq i,j \leq N\f$.
+ * 
+ * Intermediate results do not exceed the final results.
+ * 
+ * Runtime: \f$O(N^2)\f$
  *
- * @param N The parameter N.
- * @return Two-dimensional vector containing the binomial coefficients.
+ * @tparam T An integer-like type.
+ * @param N The number of rows to compute.
+ * @return Two-dimensional `std::vector` containing the binomial coefficients.
  */
 export template<typename T>
 [[nodiscard]] constexpr
@@ -182,14 +205,18 @@ std::vector<std::vector<T>> binom_table(T N) {
 }
 
 /**
- * Computes a table of all binomial coefficiets `binom(i,j)`
- * with `0 <= i,j <= N` modulo `m`.
+ * @brief Computes the first \f$N\f$ rows of Pascal's triangle module some
+ * number \f$m\f$.
  * 
- * Runtime: O(N^2)
+ * Computes a table of all binomial coefficiets \f${i \choose j} \mod m\f$ with
+ * \f$0 \leq i,j \leq N\f$.
+ * 
+ * Runtime: \f$O(N^2)\f$
  *
- * @param N The parameter N.
+ * @tparam T An integer-like type.
+ * @param N The number of rows to compute.
  * @param m The modulus.
- * @return Two-dimensional vector containing the binomial coefficients.
+ * @return Two-dimensional `std::vector` containing the binomial coefficients.
  */
 export template<typename T>
 [[nodiscard]] constexpr
