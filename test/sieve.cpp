@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-import sieve;
+import prime_generation;
 
 const static std::size_t capacity = 1'000;
 

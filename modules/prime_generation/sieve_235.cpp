@@ -1,15 +1,8 @@
 /**
- * A sieve similar to a std::bitset<N> with the additional property that all
- * strict multiples of 2, 3 and 5 are always zero.
- * 2, 3 and 5 however are always true.
- *
- * This allows to optimize for space as from every 30 consecutive numbers only
- * the eight ones with residues 1, 7, 11, 13, 17, 19, 23, 29 modulo 30 need to
- * be stored explicitly. Those can be stored in a single byte resulting in a
- * memory improvement by a factor of 30 compared to a std::vector<std::byte>
- * or by a factor of 15/4 compared to a std::vector<bool>.
+ * @file
+ * @brief Module interface unit for module `prime_generation`, partition
+ * `sieve_235`.
  */
-
 module;
 
 #include <climits>
@@ -18,7 +11,20 @@ module;
 #include <memory>
 #include <vector>
 
-export module sieve_235;
+/**
+ * @brief A sieve of fixed capacity that stores all multiples of 2, 3 and 5
+ * only implicitly.
+ * 
+ * All strict multiples of 2, 3 and 5 are always zero while 2, 3 and 5 however
+ * are always true.
+ *
+ * This allows to optimize for space as from every 30 consecutive numbers only
+ * the eight ones with residues 1, 7, 11, 13, 17, 19, 23, 29 modulo 30 need to
+ * be stored explicitly. Those can be stored in a single byte resulting in a
+ * memory improvement by a factor of 30 compared to a `std::vector<std::byte>`
+ * or by a factor of 15/4 compared to a `std::vector<bool>`.
+ */
+export module prime_generation:sieve_235;
 
 namespace ntlib {
 

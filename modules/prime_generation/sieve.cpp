@@ -1,18 +1,29 @@
 /**
- * A sieve with a fixed capacity. Each entry is either `true` or `false` and
- * initially all values are `true`.
+ * @file
+ * @brief Module interface unit for module `prime_generation`, partition
+ * `sieve`.
  */
-
 module;
 
 #include <cstddef>
 #include <memory>
 #include <vector>
 
-export module sieve;
+/**
+ * @module prime_generation:sieve
+ * @brief A sieve with a fixes capacity.
+ * 
+ * Each entry is either `true` or `false` and initially all values are `true`.
+ */
+module prime_generation:sieve;
 
 namespace ntlib {
 
+/**
+ * @brief Represents a sieve of a fixed capacity.
+ * 
+ * @tparam Allocator The allocator to use internally.
+ */
 export template <class Allocator = std::allocator<std::byte>>
 class sieve {
   /**

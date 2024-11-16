@@ -4,8 +4,7 @@
 #include <cstddef>
 #include <vector>
 
-import sieve;
-import sieve_235;
+import prime_generation;
 
 #define UNIT_MS Unit(benchmark::kMicrosecond)
 
@@ -22,7 +21,7 @@ static void BM_set_all(benchmark::State &state) {
     }
   }
 }
-BENCHMARK_TEMPLATE(BM_set_all, ntlib::sieve<>)->UNIT_MS;
+// BENCHMARK_TEMPLATE(BM_set_all, ntlib::sieve<>)->UNIT_MS;
 BENCHMARK_TEMPLATE(BM_set_all, ntlib::sieve_235<>)->UNIT_MS;
 BENCHMARK_TEMPLATE(BM_set_all, std::vector<bool>)->UNIT_MS;
 BENCHMARK_TEMPLATE(BM_set_all, std::vector<unsigned char>)->UNIT_MS;
@@ -35,7 +34,7 @@ static void BM_init235(benchmark::State &state) {
     sieve.init235();
   }
 }
-BENCHMARK_TEMPLATE(BM_init235, ntlib::sieve<>)->UNIT_MS;
+// BENCHMARK_TEMPLATE(BM_init235, ntlib::sieve<>)->UNIT_MS;
 BENCHMARK_TEMPLATE(BM_init235, ntlib::sieve_235<>)->UNIT_MS;
 
 BENCHMARK_MAIN();
