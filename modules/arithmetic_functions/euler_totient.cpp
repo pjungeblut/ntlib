@@ -2,6 +2,11 @@
  * @file
  * @brief Primary module interfact unit for module `euler_totient`.
  */
+module;
+
+#include <algorithm>
+#include <numeric>
+#include <vector>
 
 /**
  * @module euler_totient
@@ -14,12 +19,6 @@
  * \f$\phi\f$. Both, to compute \f$\phi(n)\f$ for a single number \f$n\f$ or by
  * using a sieve for all \f$n \leq N\f$.
  */
-module;
-
-#include <algorithm>
-#include <numeric>
-#include <vector>
-
 export module euler_totient;
 
 import base;
