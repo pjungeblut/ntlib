@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-import sieve_235;
+import prime_generation;
 
 const static std::size_t min_capacity = 1'000;
 const static std::size_t capacity = (min_capacity + 29) / 30 * 30;

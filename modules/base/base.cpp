@@ -2,14 +2,6 @@
  * @file
  * @brief Primary module interface unit for module `base`.
  */
-
-/**
- * @module base
- * @brief Basic functionality used frequently throughout the whole library
- * 
- * Functionality contained in this module has no further dependencies and only
- * depends on the C++ standard library.
- */
 module;
 
 #include <algorithm>
@@ -25,6 +17,13 @@ module;
 #include <type_traits>
 #include <vector>
 
+/**
+ * @module base
+ * @brief Basic functionality used frequently throughout the whole library
+ * 
+ * Functionality contained in this module has no further dependencies and only
+ * depends on the C++ standard library.
+ */
 export module base;
 
 namespace ntlib {

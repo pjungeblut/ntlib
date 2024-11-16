@@ -6,7 +6,7 @@
 #include <vector>
 
 import base;
-import sieve;
+import prime_generation;
 
 namespace ntlib {
 namespace experiments {
@@ -20,7 +20,7 @@ inline void clear_multiples_unitl(SieveType &sieve, std::size_t p,
   }
 }
 
-template<typename SieveType = ntlib::sieve<>>
+template<typename SieveType>
 SieveType eratosthenes_textbook(std::size_t N) {
   N = N / 30 * 30 + 29;
   SieveType sieve(N + 1);
@@ -41,7 +41,7 @@ SieveType eratosthenes_textbook(std::size_t N) {
   return sieve;
 }
 
-template<typename SieveType = ntlib::sieve<>>
+template<typename SieveType>
 SieveType eratosthenes_jumps(std::size_t N) {
   N = N / 30 * 30 + 29;
   SieveType sieve(N + 1);

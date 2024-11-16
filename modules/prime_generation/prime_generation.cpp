@@ -1,8 +1,15 @@
 /**
- * Implemenatations to generate prime numbers.
- * Some functions generate sieves, some lists and some both.
+ * @file
+ * @brief Primary module interface unit for module `prime_generation`.
  */
 
+/**
+ * @module prime_generation
+ * @brief Generate prime numbers.
+ * 
+ * There are function templates to genrate single prime numbers, lists of primes
+ * and prime sieves.
+ */
 module;
 
 #include <algorithm>
@@ -14,7 +21,7 @@ export module prime_generation;
 
 import base;
 import prime_test;
-import sieve_235;
+export import :sieve_235;
 
 namespace ntlib {
 

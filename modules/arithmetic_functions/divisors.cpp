@@ -2,6 +2,11 @@
  * @file
  * @brief Primary module interface unit for module `divisors`.
  */
+module;
+
+#include <algorithm>
+#include <cassert>
+#include <vector>
 
 /**
  * @module divisors
@@ -10,12 +15,6 @@
  * Provides function templates to count and enumerate divisors of integers or
  * to compute the divisor function.
  */
-module;
-
-#include <algorithm>
-#include <cassert>
-#include <vector>
-
 export module divisors;
 
 import base;
