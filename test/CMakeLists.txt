@@ -144,12 +144,6 @@ set(rational_libs
 )
 add_unittest(rational "${rational_libs}")
 
-# # Normal sieve.
-# set(sieve_libs
-#     ntlib_prime_generation
-# )
-# add_unittest(sieve "${sieve_libs}")
-
 # 235-wheel sieve.
 set(sieve_235_libs
     ntlib_prime_generation

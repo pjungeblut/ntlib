@@ -14,7 +14,6 @@ static void BM_eratosthenes_textbook(benchmark::State &state) {
     ntlib::experiments::eratosthenes_textbook<SieveType>(N);
   }
 }
-// BENCHMARK_TEMPLATE(BM_eratosthenes_textbook, ntlib::sieve<>)->UNIT_MS;
 BENCHMARK_TEMPLATE(BM_eratosthenes_textbook, ntlib::sieve_235<>)->UNIT_MS;
 
 template<typename SieveType>
@@ -23,7 +22,6 @@ static void BM_eratosthenes_jumps(benchmark::State &state) {
     ntlib::experiments::eratosthenes_jumps<SieveType>(N);
   }
 }
-// BENCHMARK_TEMPLATE(BM_eratosthenes_jumps, ntlib::sieve<>)->UNIT_MS;
 BENCHMARK_TEMPLATE(BM_eratosthenes_jumps, ntlib::sieve_235<>)->UNIT_MS;
 
 template<typename SieveType>
@@ -32,7 +30,6 @@ static void BM_prime_sieve(benchmark::State &state) {
     ntlib::prime_sieve<uint64_t, std::allocator<uint64_t>, SieveType>(N);
   }
 }
-// BENCHMARK_TEMPLATE(BM_prime_sieve, ntlib::sieve<>)->UNIT_MS;
 BENCHMARK_TEMPLATE(BM_prime_sieve, ntlib::sieve_235<>)->UNIT_MS;
 
 template<std::size_t SEG_SIZE>
@@ -58,7 +55,6 @@ static void BM_prime_sieve_list(benchmark::State &state) {
         uint64_t, std::allocator<uint64_t>, SieveType>(N, primes);
   }
 }
-// BENCHMARK_TEMPLATE(BM_prime_sieve_list, ntlib::sieve<>)->UNIT_MS;
 BENCHMARK_TEMPLATE(BM_prime_sieve_list, ntlib::sieve_235<>)->UNIT_MS;
 
 template<typename SieveType>
@@ -71,7 +67,6 @@ static void BM_prime_sieve_lookup(benchmark::State &state) {
     }
   }
 }
-// BENCHMARK_TEMPLATE(BM_prime_sieve_lookup, ntlib::sieve<>)->UNIT_MS;
 BENCHMARK_TEMPLATE(BM_prime_sieve_lookup, ntlib::sieve_235<>)->UNIT_MS;
 
 BENCHMARK_MAIN();

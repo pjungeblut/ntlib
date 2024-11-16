@@ -73,7 +73,4 @@ Thus, building NTLib requires an up to date compiler and build system.
 * lucas_sequence.cpp:
   Compute the $n$-th terms of the Lucas sequences \f$U_n(P,Q)\f$ and \f$V_n(P,Q)\f$.
   This is mainly used as a subroutine in a Baillie-Pomerance-Selfridge-Wagstaff primality test.
-* sieve.cpp and sieve_235.cpp:
-  Integer sieves.
-  These are mainly used for prime generation.
 
