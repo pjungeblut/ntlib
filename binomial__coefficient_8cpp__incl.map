@@ -1,0 +1,33 @@
+<map id="modules/combinatorics/binomial_coefficient.cpp" name="modules/combinatorics/binomial_coefficient.cpp">
+<area shape="rect" id="Node000001" title="Primary module interface unit for module binomial_coefficient." alt="" coords="152,5,314,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,168,80,193"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,49,71,160,68,156,207,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="104,168,168,193"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="223,48,154,156,149,153,219,45"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="192,168,274,193"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="236,46,236,152,230,152,230,46"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="298,168,355,193"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="247,45,313,153,309,155,243,48"/>
+<area shape="rect" id="Node000006" href="$base_8cpp.html" title="Primary module interface unit for module base." alt="" coords="483,94,532,120"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="303,44,469,92,467,97,301,49"/>
+<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="483,114,324,134,96,170,95,165,323,128,483,108"/>
+<area shape="poly" id="edge9_Node000006_Node000003" title=" " alt="" coords="483,115,359,136,184,170,183,165,358,131,482,110"/>
+<area shape="poly" id="edge16_Node000006_Node000004" title=" " alt="" coords="484,117,289,167,288,162,482,112"/>
+<area shape="poly" id="edge17_Node000006_Node000005" title=" " alt="" coords="484,121,371,165,369,160,482,116"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="755,168,804,193"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="534,112,741,165,739,170,532,117"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="829,168,867,193"/>
+<area shape="poly" id="edge8_Node000006_Node000008" title=" " alt="" coords="533,109,651,128,731,144,815,165,813,170,730,149,650,133,533,114"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="892,168,951,193"/>
+<area shape="poly" id="edge10_Node000006_Node000009" title=" " alt="" coords="533,109,675,129,876,165,876,170,674,134,532,114"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="975,168,1032,193"/>
+<area shape="poly" id="edge11_Node000006_Node000010" title=" " alt="" coords="533,108,708,126,831,142,960,165,959,170,830,148,707,131,532,113"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="379,168,453,193"/>
+<area shape="poly" id="edge12_Node000006_Node000011" title=" " alt="" coords="494,122,445,160,441,156,491,118"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="478,168,538,193"/>
+<area shape="poly" id="edge13_Node000006_Node000012" title=" " alt="" coords="510,120,510,152,505,152,505,120"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="562,168,640,193"/>
+<area shape="poly" id="edge14_Node000006_Node000013" title=" " alt="" coords="525,118,575,156,572,160,522,122"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="664,168,731,193"/>
+<area shape="poly" id="edge15_Node000006_Node000014" title=" " alt="" coords="534,115,652,159,650,164,532,120"/>
+</map>

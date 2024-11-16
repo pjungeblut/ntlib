@@ -97,35 +97,46 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">binomial_coefficient Module Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Compute binomial coefficients.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a1fbf3ac3de362e80153e42d93c41aa20" id="r_a1fbf3ac3de362e80153e42d93c41aa20"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a1fbf3ac3de362e80153e42d93c41aa20"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="binomial__coefficient_8cpp.html#a1fbf3ac3de362e80153e42d93c41aa20">ntlib::binom</a> (T n, T k) noexcept</td></tr>
+<tr class="memdesc:a1fbf3ac3de362e80153e42d93c41aa20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a single binomial coefficient.  <br /></td></tr>
 <tr class="separator:a1fbf3ac3de362e80153e42d93c41aa20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb8ca895d496b5fd863155df8293e250" id="r_abb8ca895d496b5fd863155df8293e250"><td class="memTemplParams" colspan="2">template&lt;typename T , typename S  = std::make_signed_t&lt;T&gt;&gt; </td></tr>
 <tr class="memitem:abb8ca895d496b5fd863155df8293e250"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="binomial__coefficient_8cpp.html#abb8ca895d496b5fd863155df8293e250">ntlib::mod_p_binom</a> (T n, T k, T p) noexcept</td></tr>
+<tr class="memdesc:abb8ca895d496b5fd863155df8293e250"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute a single binomial coefficient module a sufficiently large prime.  <br /></td></tr>
 <tr class="separator:abb8ca895d496b5fd863155df8293e250"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59fd80cf26ed9a4cf144a43ab09d0265" id="r_a59fd80cf26ed9a4cf144a43ab09d0265"><td class="memTemplParams" colspan="2">template&lt;typename T , typename S  = std::make_signed_t&lt;T&gt;&gt; </td></tr>
 <tr class="memitem:a59fd80cf26ed9a4cf144a43ab09d0265"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="binomial__coefficient_8cpp.html#a59fd80cf26ed9a4cf144a43ab09d0265">ntlib::mod_pp_binom</a> (T n, T k, T p, T e)</td></tr>
+<tr class="memdesc:a59fd80cf26ed9a4cf144a43ab09d0265"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a single binomial coefficient modulo a prime power.  <br /></td></tr>
 <tr class="separator:a59fd80cf26ed9a4cf144a43ab09d0265"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a998112c7d16c9e712e91c6ecc6d21ef2" id="r_a998112c7d16c9e712e91c6ecc6d21ef2"><td class="memTemplParams" colspan="2">template&lt;typename T , typename S  = std::make_signed_t&lt;T&gt;&gt; </td></tr>
 <tr class="memitem:a998112c7d16c9e712e91c6ecc6d21ef2"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="binomial__coefficient_8cpp.html#a998112c7d16c9e712e91c6ecc6d21ef2">ntlib::mod_binom</a> (T n, T k, T m)</td></tr>
+<tr class="memdesc:a998112c7d16c9e712e91c6ecc6d21ef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a single binomial coefficient modulo an arbitrary number.  <br /></td></tr>
 <tr class="separator:a998112c7d16c9e712e91c6ecc6d21ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa056cc47747bb5fb5a6c114aabf7c541" id="r_aa056cc47747bb5fb5a6c114aabf7c541"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aa056cc47747bb5fb5a6c114aabf7c541"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::vector&lt; std::vector&lt; T &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="binomial__coefficient_8cpp.html#aa056cc47747bb5fb5a6c114aabf7c541">ntlib::binom_table</a> (T N)</td></tr>
+<tr class="memdesc:aa056cc47747bb5fb5a6c114aabf7c541"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the first \(N\) rows of Pascal's triangle.  <br /></td></tr>
 <tr class="separator:aa056cc47747bb5fb5a6c114aabf7c541"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c4e674021d6f2bc9c7b56440d5b94f5" id="r_a7c4e674021d6f2bc9c7b56440d5b94f5"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a7c4e674021d6f2bc9c7b56440d5b94f5"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::vector&lt; std::vector&lt; T &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="binomial__coefficient_8cpp.html#a7c4e674021d6f2bc9c7b56440d5b94f5">ntlib::mod_binom_table</a> (T N, T m)</td></tr>
+<tr class="memdesc:a7c4e674021d6f2bc9c7b56440d5b94f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the first \(N\) rows of Pascal's triangle module some number \(m\).  <br /></td></tr>
 <tr class="separator:a7c4e674021d6f2bc9c7b56440d5b94f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implementations to compute binomial coefficients.</p>
-<p>Code for one-shot computation modulo a number <code>m</code> is based on: <a href="https://cp-algorithms.com/combinatorics/binomial-coefficients.html">https://cp-algorithms.com/combinatorics/binomial-coefficients.html</a> </p>
+<div class="textblock"><p>Compute binomial coefficients. </p>
+<p>Compute the binomial coefficient \({n \choose k}\) for \(0 \leq k \leq n\), possibly modulo some number \(m\). The binomial coeffient counts the number of \(k\)-element subsets of an \(n\)-element universe.</p>
+<p>Code for one-shot computation modulo a number \(m\) is based on <a href="https://cp-algorithms.com/combinatorics/binomial-coefficients.html">https://cp-algorithms.com/combinatorics/binomial-coefficients.html</a>. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/combinatorics/<b>binomial_coefficient.cpp</b></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/combinatorics/<a class="el" href="binomial__coefficient_8cpp.html">binomial_coefficient.cpp</a></td></tr>
+<tr class="memdesc:binomial__coefficient_8cpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary module interface unit for module <code>binomial_coefficient</code>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
