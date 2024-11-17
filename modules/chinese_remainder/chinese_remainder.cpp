@@ -1,16 +1,38 @@
 /**
- * Chinese remainder theorem.
+ * @file
+ * @brief Primary module interface unit for module `chinese_remainder`.
  */
-
 module;
 
 #include <algorithm>
-#include <numeric>
 #include <optional>
+#include <ranges>
 #include <tuple>
 #include <type_traits>
 #include <vector>
 
+/**
+ * @module chinese_remainder
+ * @brief Solve systems of modular congruences using the Chinese remainder
+ * theorem.
+ * 
+ * Consider the following system of \f$k\f$ modular congruences:
+ * \f[
+ * \begin{cases}
+ * a = a_1 \mod m_1 \\
+ * a = a_2 \mod m_2 \\
+ * \hphantom{a}~\vdots \\
+ * a = a_k \mod m_k
+ * \end{cases}
+ * \f]
+ * 
+ * Assuming that the \f$m_i\f$ are pairwise coprime, the Chinese remainder
+ * theorem states that there is a unique solution \f$x\f$ modulo
+ * \f$M = \Pi_{i = 1}^k m_i\f$ solving all congruences simulatenously.
+ * 
+ * If the \f$m_i\f$ are not pairwise coprime, there is either no solution or
+ * a unique solution modulo \f$M = \mathrm{lcm}(m_1, \ldots, m_k)\f$.
+ */
 export module chinese_remainder;
 
 import base;
@@ -21,63 +43,80 @@ import prime_generation;
 namespace ntlib {
 
 /**
- * Represents a single congruence `x = a mod m`.
+ * @brief Represents a single congruence `x = a mod m`.
+ * 
+ * @tparam T An integer-like type.
  */
 export template<typename T>
 struct crt_congruence {
+  /**
+   * @brief The remainder.
+   */
   T a;
+
+  /**
+   * @brief The modulus.
+   */
   T m;
 };
 
 /**
- * Chinese remainder theorem for the special case that all moduli are coprime.
+ * @brief Solve a system of modular congruences for pairwise coprime moduli.
  * 
- * A solution always exists and is unique modulo `M = \Pi_i m_i`.
+ * Uses the Chinese remainder theorem in its classical form.
+ * A solution always exists and is unique modulo \f$M = \Pi_i m_i\f$.
  * 
+ * @tparam T An integer-like type.
+ * @tparam S The signed type corresponding to `T`.
  * @param congruences The list of congruences.
- * @return The unique solution.
+ * @return The unique solution as a `crt_congruence<T>`.
  */
 export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 crt_congruence<T> crt_coprime(
-    const std::vector<crt_congruence<T>> &congurences) noexcept {
-  const T M = std::accumulate(congurences.begin(), congurences.end(), T{1},
+    const std::vector<crt_congruence<T>> &congruences) noexcept {
+  const T M = std::ranges::fold_left(congruences, T{1},
       [](T prod, crt_congruence<T> c) {
     return prod * c.m;
   });
-  
-  T res = 0;
-  for (const auto &c : congurences) {
+
+  const T x = std::ranges::fold_left(congruences, T{0},
+      [M](T sum, crt_congruence<T> c) {
     const T M_i = M / c.m;
     const T N_i = mod_mult_inv<T,S>(M_i, c.m);
-    res = mod(res + mod(c.a * M_i, M) * N_i, M);
-  }
-  return crt_congruence {res, M};
+    return mod(sum + mod(c.a * M_i, M) * N_i, M);
+  });
+
+  return crt_congruence {x, M};
 }
 
 /**
- * Chinese remainder theorem for the general case in which the moduli do not
- * need to be coprime.
+ * @brief Solve a general system of modular congruences.
  * 
- * It is possible that no solution exists.
- * If a solution exists, it is unique modulo `M = \lcm_i m_i`. 
+ * Uses a generalization of the Chinese remainder theorem to handle non-coprime
+ * moduli.
+ * Either there is no solution, or there is a unique solution modulo
+ * \f$M = \mathrm{lcm}(m_1, \ldots, m_k)\f$. 
  * 
+ * @tparam T An integer-like type.
+ * @tparam S The signed type corresponding to `T`.
  * @param congruences The list of congruences.
- * @return The unique solution if it exists.
+ * @return A `std::optional` containing the unique solution if it exists.
  */
 export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 std::optional<crt_congruence<T>> crt(
     const std::vector<crt_congruence<T>> &congruences) {
-  // Build list of primes, large enough to factor all moduli.
-  const T max_mod = std::max_element(congruences.begin(), congruences.end(),
-      [](crt_congruence<T> c1, crt_congruence<T> c2) {
-    return std::tie(c1.m, c1.a) < std::tie(c2.m, c2.a);
-  })->m;
+  // Generate all primes necessary to efficiently factorize all moduli.
+  const auto ms = congruences |
+      std::ranges::views::transform(&crt_congruence<T>::m);
+  const T max_mod = *std::ranges::max_element(ms);
   const T iroot = isqrt(max_mod);
   std::vector<T> primes;
   prime_sieve(iroot, primes);
 
+  // Represents a single congruence `x = a mod p^e`, where `p^e` is a prime
+  // power.
   struct pp_crt_congruence {
     T a;
     T p;
