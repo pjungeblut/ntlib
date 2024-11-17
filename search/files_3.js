@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['prime_5fgeneration_2ecpp_0',['prime_generation.cpp',['../prime__generation_8cpp.html',1,'']]]
+  ['euler_5ftotient_2ecpp_0',['euler_totient.cpp',['../euler__totient_8cpp.html',1,'']]]
 ];

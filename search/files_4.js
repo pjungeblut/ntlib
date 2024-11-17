@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sieve_5f235_2ecpp_0',['sieve_235.cpp',['../sieve__235_8cpp.html',1,'']]]
+  ['prime_5fgeneration_2ecpp_0',['prime_generation.cpp',['../prime__generation_8cpp.html',1,'']]]
 ];

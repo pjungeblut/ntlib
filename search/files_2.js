@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['euler_5ftotient_2ecpp_0',['euler_totient.cpp',['../euler__totient_8cpp.html',1,'']]]
+  ['divisors_2ecpp_0',['divisors.cpp',['../divisors_8cpp.html',1,'']]]
 ];
