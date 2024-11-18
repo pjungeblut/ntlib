@@ -9,5 +9,6 @@ var searchData=
   ['divisors_6',['divisors',['../module__divisors.html',1,'']]],
   ['divisors_2ecpp_7',['divisors.cpp',['../divisors_8cpp.html',1,'']]],
   ['documentation_8',['Documentation',['../index.html#autotoc_md0',1,'Documentation'],['../md_README.html#autotoc_md11',1,'Documentation']]],
-  ['downloading_20ntlib_9',['Downloading NTLib',['../md_README.html#autotoc_md13',1,'']]]
+  ['dodecahedral_5fnumber_9',['dodecahedral_number',['../figurate__number_8cpp.html#a0284fd78c6b25ec6a3833141ca0795d3',1,'ntlib']]],
+  ['downloading_20ntlib_10',['Downloading NTLib',['../md_README.html#autotoc_md13',1,'']]]
 ];

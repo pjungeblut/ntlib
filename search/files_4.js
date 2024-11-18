@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['prime_5fgeneration_2ecpp_0',['prime_generation.cpp',['../prime__generation_8cpp.html',1,'']]]
+  ['figurate_5fnumber_2ecpp_0',['figurate_number.cpp',['../figurate__number_8cpp.html',1,'']]]
 ];
