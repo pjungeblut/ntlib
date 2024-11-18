@@ -97,21 +97,36 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">pythagorean_triple Module Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Generate primitive Pythagorean triples.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a964f287582daee6f425e736bacf83df3" id="r_a964f287582daee6f425e736bacf83df3"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a964f287582daee6f425e736bacf83df3"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::vector&lt; std::tuple&lt; T, T, T &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="pythagorean__triple_8cpp.html#a964f287582daee6f425e736bacf83df3">ntlib::primitive_pythagorean_triples</a> (T N)</td></tr>
+<tr class="memdesc:a964f287582daee6f425e736bacf83df3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates all primitive pythagorean triples \((a,b,c)\) with \(a \leq b \leq c \leq N\).  <br /></td></tr>
 <tr class="separator:a964f287582daee6f425e736bacf83df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implementations to generate pythagorean triples <code>(a,b,c)</code>, such that <code>a^2 + b^2 = c^2</code>. A triple is called primitive, if <code>gcd(a,b,c) = 1</code>.</p>
-<p>For any natural <code>u &gt; v &gt; 1</code> we get a pythagorean triple by setting <code>a := u^2 - v^2</code> <code>b := 2uv</code> <code>c := u^2 + v^2</code>. The smalles primitive triple is <code>(3,4,5)</code>, created by <code>u = 2</code> and <code>v = 1</code>.</p>
-<p><code>(a,b,c)</code> is primitive, if and only if <code>gcd(u,v) = 1</code> and at least one of them is even. Every primitive triple an be constructed by above formula. </p>
+<div class="textblock"><p>Generate primitive Pythagorean triples. </p>
+<p>Implementations to generate Pythagorean triples, i.e., triples \((a,b,c)\) such that \(a^2 + b^2 = c^2\). A triple is called primitive, if \(\mathrm{gcd}(a,b,c) = 1\).</p>
+<p>For all integers \(u &gt; v &gt; 1\) we get a Pythagorean triple by setting       </p><p class="formulaDsp">
+\[
+\begin{align}
+a &amp;\colon= u^2 - v^2 \\
+b &amp;\colon= 2uv \\
+c &amp;\colon= u^2 + v^2`
+\end{align}
+\]
+</p>
+<p> The smalles primitive triple is \((3,4,5)\), obtained by choosing \(u = 2\) and \(v = 1\).</p>
+<p>It holds that \((a,b,c)\) is primitive, if and only if \(\mathrm{gcd}(u,v) = 1\) and at least one of them is even. Every primitive Pythagorean triple an be constructed by above formula. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/combinatorics/<b>pythagorean_triple.cpp</b></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/combinatorics/<a class="el" href="pythagorean__triple_8cpp.html">pythagorean_triple.cpp</a></td></tr>
+<tr class="memdesc:pythagorean__triple_8cpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary module interface unit for module <code>pythagorean_triple</code>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
