@@ -1,24 +1,35 @@
 /**
- * Implementations to generate pythagorean triples `(a,b,c)`, such that
- * `a^2 + b^2 = c^2`.
- * A triple is called primitive, if `gcd(a,b,c) = 1`.
- *
- * For any natural `u > v > 1` we get a pythagorean triple by setting
- * `a := u^2 - v^2`
- * `b := 2uv`
- * `c := u^2 + v^2`.
- * The smalles primitive triple is `(3,4,5)`, created by `u = 2` and `v = 1`.
- *
- * `(a,b,c)` is primitive, if and only if `gcd(u,v) = 1` and at least one of
- * them is even. Every primitive triple an be constructed by above formula.
+ * @file
+ * @brief Primary module interface unit for module `pythagorean_triple`.
  */
-
 module;
 
 #include <algorithm>
 #include <tuple>
 #include <vector>
 
+/**
+ * @brief Generate primitive Pythagorean triples.
+ * 
+ * Implementations to generate Pythagorean triples, i.e., triples \f$(a,b,c)\f$
+ * such that \f$a^2 + b^2 = c^2\f$.
+ * A triple is called primitive, if \f$\mathrm{gcd}(a,b,c) = 1\f$.
+ *
+ * For all integers \f$u > v > 1\f$ we get a Pythagorean triple by setting
+ * \f[
+ * \begin{align}
+ * a &\colon= u^2 - v^2 \\
+ * b &\colon= 2uv \\
+ * c &\colon= u^2 + v^2`
+ * \end{align}
+ * \f]
+ * The smalles primitive triple is \f$(3,4,5)\f$, obtained by choosing
+ * \f$u = 2\f$ and \f$v = 1\f$.
+ *
+ * It holds that \f$(a,b,c)\f$ is primitive, if and only if
+ * \f$\mathrm{gcd}(u,v) = 1\f$ and at least one of them is even. Every primitive
+ * Pythagorean triple an be constructed by above formula.
+ */
 export module pythagorean_triple;
 
 import base;
@@ -26,10 +37,11 @@ import base;
 namespace ntlib {
 
 /**
- * Creates all primitive pythagorean triples `(a,b,c)` with `a <= b <= c <= N`.
+ * @brief Creates all primitive pythagorean triples \f$(a,b,c)\f$ with
+ * \f$a \leq b \leq c \leq N\f$.
  *
  * @param N The maximum value of any component.
- * @return triples The vector to push the triples into.
+ * @return triples A `std::vector` containing the triples.
  */
 export template<typename T>
 [[nodiscard]] constexpr
