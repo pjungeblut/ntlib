@@ -1,14 +1,21 @@
 /**
- * Implementations to generate figurate numbers.
+ * @file
+ * @brief Primary module interface unit for module `figurate_number`.
  */
 
+/**
+ * @module figurate_number
+ * @brief Computes figurate numbers in two and three dimensions.
+ */
 export module figurate_number;
 
 namespace ntlib {
 
 /**
- * Computes the `n`-th `k`-gonal number.
+ * @brief Computes the `n`-th `k`-gonal number.
  * 
+ * @tparam T An integer-like type.
+ * @param k The number of sides of the polygon.
  * @param n Which `k`-gonal number to generate.
  * @return The `n`-th `k`-gonal number.
  */
@@ -19,8 +26,10 @@ T k_gonal_number(T k, T n) noexcept {
 }
 
 /**
- * Computes the `n`-th centered `k`-gonal number.
+ * @brief Computes the `n`-th centered `k`-gonal number.
  * 
+ * @tparam T An integer-like type.
+ * @param k The number of sides of the polygon.
  * @param n Which centered `k`-gonal number to generate.
  * @return The `n`-th centered `k`-gonal number.
  */
@@ -31,8 +40,9 @@ T centered_k_gonal_number(T k, T n) noexcept {
 }
 
 /**
- * Computes the `n`-th cube number.
+ * @brief Computes the `n`-th cube number.
  *
+ * @tparam T An integer-like type.
  * @param n Which cube number to generate.
  * @return The `n`-th cube number.
  */
@@ -43,8 +53,9 @@ T cube_number(T n) noexcept {
 }
 
 /**
- * Computes the `n`-th octahedral number.
+ * @brief Computes the `n`-th octahedral number.
  *
+ * @tparam T An integer-like type.
  * @param n Which octahedral number to generate.
  * @return The `n`-th octahedral number.
  */
@@ -55,8 +66,9 @@ T octahedral_number(T n) noexcept {
 }
 
 /**
- * Computes the `n`-th docecahedral number.
+ * @brief Computes the `n`-th docecahedral number.
  *
+ * @tparam T An integer-like type.
  * @param n Which docecahedral number to generate.
  * @return The `n`-th docecahedral number.
  */
@@ -67,8 +79,9 @@ T dodecahedral_number(T n) noexcept {
 }
 
 /**
- * Computes the `n`-th icosahedral number.
+ * @brief Computes the `n`-th icosahedral number.
  *
+ * @tparam T An integer-like type.
  * @param n Which icosahedral number to generate.
  * @return The `n`-th icosahedral number.
  */
@@ -79,8 +92,9 @@ T icosahedral_number(T n) noexcept {
 }
 
 /**
- * Computes the `n`-th centered tetrahedral number.
+ * @brief Computes the `n`-th centered tetrahedral number.
  *
+ * @tparam T An integer-like type.
  * @param n Which centered tetrahedral number to generate.
  * @return The `n`-th centered tetrahedral number.
  */
@@ -91,8 +105,9 @@ T centered_tetrahedral_number(T n) noexcept {
 }
 
 /**
- * Computes the `n`-th centered cube number.
+ * @brief Computes the `n`-th centered cube number.
  *
+ * @tparam T An integer-like type.
  * @param n Which centered cube number to generate.
  * @return The `n`-th centered cube number.
  */
@@ -103,8 +118,9 @@ T centered_cube_number(T n) noexcept {
 }
 
 /**
- * Computes the `n`-th centered octahedral number.
+ * @brief Computes the `n`-th centered octahedral number.
  *
+ * @tparam T An integer-like type.
  * @param n Which centered octahedral number to generate.
  * @return The `n`-th centered octahedral number.
  */
@@ -115,8 +131,9 @@ T centered_octahedral_number(T n) noexcept {
 }
 
 /**
- * Computes the `n`-th centered dodecahedral number.
+ * @brief Computes the `n`-th centered dodecahedral number.
  *
+ * @tparam T An integer-like type.
  * @param n Which centered dodecahedral number to generate.
  * @return The `n`-th centered dodecahedral number.
  */
@@ -127,8 +144,9 @@ T centered_dodecahedral_number(T n) noexcept {
 }
 
 /**
- * Computes the `n`-th centered icosahedral number.
+ * @brief Computes the `n`-th centered icosahedral number.
  *
+ * @tparam T An integer-like type.
  * @param n Which centered icosahedral number to generate.
  * @return The `n`-th centered icosahedral number.
  */
@@ -139,8 +157,10 @@ T centered_icosahedral_number(T n) noexcept {
 }
 
 /**
- * Computes the `n`-th `k`-gonal pyramidal number.
+ * @brief Computes the `n`-th `k`-gonal pyramidal number.
  * 
+ * @tparam T An integer-like type.
+ * @param k The number of sides of the polygonal base.
  * @param n Which `k`-gonal pyramidal number to generate.
  * @return The `n`-th `k`-gonal pyramidal number.
  */
