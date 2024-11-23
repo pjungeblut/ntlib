@@ -7,7 +7,7 @@ import pythagorean_triple;
 
 TEST(PythagoreanTriple, Primitive) {
   const uint32_t N = 1'000;
-  auto triples = ntlib::primitive_pythagorean_triples(N);
+  const auto triples = ntlib::primitive_pythagorean_triples(N);
 
   for (const auto [a,b,c] : triples) {
     // Check validity.
