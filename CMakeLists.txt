@@ -1,6 +1,10 @@
 cmake_minimum_required (VERSION 3.28)
 
-project("NTLib - Number Theory Library" VERSION 0.9 LANGUAGES CXX)
+project(NTLib
+    VERSION 0.9
+    DESCRIPTION "NTLib - Number Theory Library"
+    LANGUAGES CXX
+  )
 
 ################################################################################
 # General settings.
@@ -37,38 +41,24 @@ add_library(ntlib STATIC
 target_compile_features(ntlib PUBLIC cxx_std_23)
 
 ################################################################################
-# Unit Tests.
-#
-# Workflow from:
-# https://github.com/google/googletest/blob/main/googletest/README.md
+# NTLib comes with tests and benchmarks.
+# By default, these are not bulid, except this file is at the root of the source
+# tree, i.e., NTLib is not included as a dependency but bulid by itself.
 ################################################################################
 
-include(FetchContent)
-FetchContent_Declare(
-    googletest
-    # Specify the commit you depend on and update it regularly.
-    GIT_REPOSITORY https://github.com/google/googletest.git
-    GIT_TAG df1544bcee0c7ce35cd5ea0b3eb8cc81855a4140
-)
-# For Windows: Prevent overriding the parent project's compiler/linker settings.
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
+# This evaluates to false if NTLib is included by another project.
+if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+  # Options.
+  option(NTLIB_BUILD_TESTS      "whether tests should be built"          ON)
+  option(NTLIB_BUILD_BENCHMARKS "whether benchmarks should be built"     ON)
 
-# Build tests.
-enable_testing()
-add_subdirectory(test)
+  # Tests.
+  if (NTLIB_BUILD_TESTS)
+    add_subdirectory(test)
+  endif()
 
-################################################################################
-# Benchmarks.
-################################################################################
-
-FetchContent_Declare(
-    googlebenchmark
-    # Specify the commit you depend on and update it regularly.
-    GIT_REPOSITORY https://github.com/google/benchmark.git
-    GIT_TAG 12235e24652fc7f809373e7c11a5f73c5763fc4c # version 1.9.0
-)
-FetchContent_MakeAvailable(googlebenchmark)
-
-# Build benchmarks.
-add_subdirectory(benchmarks)
+  # Benchmarks.
+  if (NTLIB_BUILD_BENCHMARKS)
+    add_subdirectory(benchmarks)
+  endif()
+endif()

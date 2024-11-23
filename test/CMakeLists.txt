@@ -1,3 +1,22 @@
+# Use GoogleTest for unit tests.
+#
+# Workflow from:
+# https://github.com/google/googletest/blob/main/googletest/README.md
+include(FetchContent)
+FetchContent_Declare(
+    googletest
+    # Specify the commit you depend on and update it regularly.
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG df1544bcee0c7ce35cd5ea0b3eb8cc81855a4140
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings.
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+# Enable tests for CTest.
+enable_testing()
+
+# Helper function to add unittests.
 function(add_unittest name libraries)
   add_executable(ut_${name})
   target_sources(ut_${name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/${name}.cpp)
