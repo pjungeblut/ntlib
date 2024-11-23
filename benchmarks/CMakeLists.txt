@@ -1,3 +1,12 @@
+# Use GoogleBenchmark for microbenchmarking.
+FetchContent_Declare(
+    googlebenchmark
+    # Specify the commit you depend on and update it regularly.
+    GIT_REPOSITORY https://github.com/google/benchmark.git
+    GIT_TAG 12235e24652fc7f809373e7c11a5f73c5763fc4c # version 1.9.0
+)
+FetchContent_MakeAvailable(googlebenchmark)
+
 # Probably bad style, but really makes life easier.
 file(GLOB all_headers CONFIGURE_DEPENDS
   "${PROJECT_SOURCE_DIR}/include/*.hpp"
