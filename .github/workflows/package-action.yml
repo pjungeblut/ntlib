@@ -12,7 +12,7 @@ jobs:
     steps:
       - run: echo "Buiding package contining just the source files."
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Create build environment
         run: cmake -E make_directory build
       - name: Configure
