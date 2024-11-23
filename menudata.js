@@ -43,7 +43,8 @@ var menudata={children:[
 {text:"n",url:"modulemembers.html#index_n"},
 {text:"o",url:"modulemembers.html#index_o"},
 {text:"p",url:"modulemembers.html#index_p"},
-{text:"s",url:"modulemembers.html#index_s"}]},
+{text:"s",url:"modulemembers.html#index_s"},
+{text:"t",url:"modulemembers.html#index_t"}]},
 {text:"Functions",url:"modulemembers_func.html",children:[
 {text:"a",url:"modulemembers_func.html#index_a"},
 {text:"b",url:"modulemembers_func.html#index_b"},
@@ -59,7 +60,8 @@ var menudata={children:[
 {text:"n",url:"modulemembers_func.html#index_n"},
 {text:"o",url:"modulemembers_func.html#index_o"},
 {text:"p",url:"modulemembers_func.html#index_p"},
-{text:"s",url:"modulemembers_func.html#index_s"}]},
+{text:"s",url:"modulemembers_func.html#index_s"},
+{text:"t",url:"modulemembers_func.html#index_t"}]},
 {text:"Variables",url:"modulemembers_vars.html"}]}]},
 {text:"Concepts",url:"concepts.html"},
 {text:"Classes",url:"annotated.html",children:[
