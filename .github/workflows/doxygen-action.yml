@@ -1,5 +1,5 @@
 name: Doxygen Action
-run-name: Build doxygen documentation triggered by @${{ github.actor }}
+run-name: Build doxygen documentation.
 
 on:
   push:
@@ -24,4 +24,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./html
-          destination_dir: ./docu

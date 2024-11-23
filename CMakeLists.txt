@@ -51,6 +51,7 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
   # Options.
   option(NTLIB_BUILD_TESTS      "whether tests should be built"          ON)
   option(NTLIB_BUILD_BENCHMARKS "whether benchmarks should be built"     ON)
+  option(NTLIB_BUILD_PACKAGE    "whether source package should be built" ON)
 
   # Tests.
   if (NTLIB_BUILD_TESTS)
@@ -60,5 +61,20 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
   # Benchmarks.
   if (NTLIB_BUILD_BENCHMARKS)
     add_subdirectory(benchmarks)
+  endif()
+
+  # Source package.
+  # This allows fast consumption via CMake's `FetchContent` command.
+  #
+  # See: https://www.foonathan.net/2022/06/cmake-fetchcontent/
+  if (NTLIB_BUILD_PACKAGE)
+    set(ntlib_package_files modules/ includes/ CMakeLists.txt LICENSE)
+    add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINART_DIR}/package/${PROJECT_NAME}-src.zip
+        COMMAND ${CMAKE_COMMAND} -E tar c ${CMAKE_CURRENT_BINART_DIR}/package/${PROJECT_NAME}-src.zip --format=zip -- ${ntlib_package_files}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        DEPENDS ${ntlib_package_files}
+    )
+    add_custom_target(${PROJECT_NAME}_package DEPENDS ${CMAKE_CURRENT_BINART_DIR}/package/${PROJECT_NAME}-src.zip)
   endif()
 endif()

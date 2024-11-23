@@ -1,0 +1,29 @@
+name: Package Action
+run-name: Create a package containing just the source files required to consume the library.
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  build-package:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Buiding package contining just the source files."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Create build environment
+        run: cmake -E make_directory build
+      - name: Configure
+        working-directory: build/
+        run: cmake $GITHUB_WORKSPACE
+      - name: Package source code
+        working-directory: build/
+        run: cmake --build . --target NTLib_package
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./package
+          destination_dir: ./sources
