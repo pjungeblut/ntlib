@@ -124,7 +124,11 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Generate prime numbers. </p>
-<p>There are function templates to genrate single prime numbers, lists of primes and prime sieves. </p>
+<p>A sieve of fixed capacity that stores all multiples of 2, 3 and 5 only implicitly.</p>
+<p>There are function templates to genrate single prime numbers, lists of primes and prime sieves.</p>
+<p>:sieve_235 </p>
+<p>All strict multiples of 2, 3 and 5 are always zero while 2, 3 and 5 however are always true.</p>
+<p>This allows to optimize for space as from every 30 consecutive numbers only the eight ones with residues 1, 7, 11, 13, 17, 19, 23, 29 modulo 30 need to be stored explicitly. Those can be stored in a single byte resulting in a memory improvement by a factor of 30 compared to a <code>std::vector&lt;std::byte&gt;</code> or by a factor of 15/4 compared to a <code>std::vector&lt;bool&gt;</code>. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
 Files</h2></td></tr>
