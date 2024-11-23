@@ -2,6 +2,12 @@
  * @file
  * @brief Primary module interface unit for module `prime_generation`.
  */
+module;
+
+#include <algorithm>
+#include <cstddef>
+#include <type_traits>
+#include <vector>
 
 /**
  * @module prime_generation
@@ -10,13 +16,6 @@
  * There are function templates to genrate single prime numbers, lists of primes
  * and prime sieves.
  */
-module;
-
-#include <algorithm>
-#include <cstddef>
-#include <type_traits>
-#include <vector>
-
 export module prime_generation;
 
 import base;

@@ -12,6 +12,7 @@ module;
 #include <vector>
 
 /**
+ * @module prime_generation:sieve_235
  * @brief A sieve of fixed capacity that stores all multiples of 2, 3 and 5
  * only implicitly.
  * 
@@ -28,6 +29,11 @@ export module prime_generation:sieve_235;
 
 namespace ntlib {
 
+/**
+ * Represents a 235-wheel optimized sieve.
+ * 
+ * @tparam Allocator The allocator to use for the sieve.
+ */
 export template <class Allocator = std::allocator<std::byte>>
 class sieve_235 {
   /**
