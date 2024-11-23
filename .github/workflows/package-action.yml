@@ -13,17 +13,13 @@ jobs:
       - run: echo "Buiding package contining just the source files."
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Create build environment
-        run: cmake -E make_directory build
-      - name: Configure
-        working-directory: build/
-        run: cmake $GITHUB_WORKSPACE
-      - name: Package source code
-        working-directory: build/
-        run: cmake --build . --target NTLib_package
+      - run: mkdir -p package
+      - run: cd package
+      - run: zip NTLib-src.zip ./modules ./include CMakeLists.txt LICENSE
+      - run: cd ..
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./package
-          destination_dir: ./sources
+          destination_dir: ./package
