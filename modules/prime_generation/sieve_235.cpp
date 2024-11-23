@@ -38,9 +38,10 @@ export template <class Allocator = std::allocator<std::byte>>
 class sieve_235 {
   /**
    * The number of elements stored in a single byte.
-   * Requires a byte to be 8 bits.
+   * Assumes that a byte consists of 8 bits.
    */
   static constexpr std::size_t PER_BYTE = 2 * 3 * 5;
+  static_assert(CHAR_BIT == 8);
 
   /**
    * Stores a bitmaks to access the sieve for each possible remainder
