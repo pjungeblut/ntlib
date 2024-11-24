@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
       - run: mkdir -p package
       - run: cd package
-      - run: zip NTLib-src.zip ./modules/**/* ./include/**/* CMakeLists.txt LICENSE
+      - run: zip -r NTLib-src.zip ./modules ./include CMakeLists.txt LICENSE
       - run: cd ..
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
