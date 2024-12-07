@@ -20,8 +20,8 @@ namespace ntlib {
  */
 export template<typename T>
 std::tuple<T,T> min_pell_solution(T d) {
-  std::vector<T> cf;
-  T period = ntlib::quadratic_irrational_cf(d, cf);
+  std::vector<T> cf = ntlib::quadratic_irrational_cf(d);
+  std::size_t period = cf.size() - 1;
   T n;
   if ((bool)(period & 1)) n = 2 * period - 1;
   else n = period - 1;
