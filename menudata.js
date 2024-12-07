@@ -43,6 +43,7 @@ var menudata={children:[
 {text:"n",url:"modulemembers.html#index_n"},
 {text:"o",url:"modulemembers.html#index_o"},
 {text:"p",url:"modulemembers.html#index_p"},
+{text:"q",url:"modulemembers.html#index_q"},
 {text:"s",url:"modulemembers.html#index_s"},
 {text:"t",url:"modulemembers.html#index_t"}]},
 {text:"Functions",url:"modulemembers_func.html",children:[
@@ -60,6 +61,7 @@ var menudata={children:[
 {text:"n",url:"modulemembers_func.html#index_n"},
 {text:"o",url:"modulemembers_func.html#index_o"},
 {text:"p",url:"modulemembers_func.html#index_p"},
+{text:"q",url:"modulemembers_func.html#index_q"},
 {text:"s",url:"modulemembers_func.html#index_s"},
 {text:"t",url:"modulemembers_func.html#index_t"}]},
 {text:"Variables",url:"modulemembers_vars.html"}]}]},

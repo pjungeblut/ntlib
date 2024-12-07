@@ -1,0 +1,31 @@
+<map id="modules/diophantine/continued_fraction.cpp" name="modules/diophantine/continued_fraction.cpp">
+<area shape="rect" id="Node000001" title="Primary module interface unit for module continued_fraction." alt="" coords="38,5,193,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,168,63,193"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,48,50,155,45,152,103,45"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="87,168,144,193"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="118,46,118,152,113,152,113,46"/>
+<area shape="rect" id="Node000004" href="$base_8cpp.html" title="Primary module interface unit for module base." alt="" coords="461,94,511,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="194,41,446,94,445,100,193,46"/>
+<area shape="poly" id="edge9_Node000004_Node000002" title=" " alt="" coords="461,113,304,132,194,149,78,170,77,165,193,144,303,127,460,108"/>
+<area shape="poly" id="edge15_Node000004_Node000003" title=" " alt="" coords="461,114,336,135,160,170,159,164,335,129,461,109"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="550,168,624,193"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="505,118,559,156,556,160,502,122"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="648,168,697,193"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="512,115,635,162,633,167,510,120"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="721,168,760,193"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="512,111,595,132,707,164,706,170,594,137,510,117"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="784,168,849,193"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="512,110,770,165,769,170,511,116"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="872,168,932,193"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="512,109,655,128,857,164,856,170,654,133,511,114"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="956,168,1030,193"/>
+<area shape="poly" id="edge10_Node000004_Node000010" title=" " alt="" coords="511,108,687,127,940,165,940,170,686,133,511,113"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="168,168,228,193"/>
+<area shape="poly" id="edge11_Node000004_Node000011" title=" " alt="" coords="462,117,244,170,243,164,460,111"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="253,168,330,193"/>
+<area shape="poly" id="edge12_Node000004_Node000012" title=" " alt="" coords="462,120,339,164,338,159,460,115"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="354,168,421,193"/>
+<area shape="poly" id="edge13_Node000004_Node000013" title=" " alt="" coords="471,122,418,161,414,156,468,118"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="445,168,527,193"/>
+<area shape="poly" id="edge14_Node000004_Node000014" title=" " alt="" coords="489,120,489,152,483,152,483,120"/>
+</map>

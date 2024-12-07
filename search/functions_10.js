@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['to_5fstring_0',['to_string',['../classntlib_1_1matrix.html#ae9f0ef03a3b4271ecf9f3b6c07f201cd',1,'ntlib::matrix::to_string()'],['../classntlib_1_1rational.html#a9f320caa237e9662dc1c20568c25974c',1,'ntlib::rational::to_string()']]],
-  ['turan_5fnumber_1',['turan_number',['../turan__number_8cpp.html#a686c79cda56a8db8c582800501800a0e',1,'ntlib']]]
+  ['set_0',['set',['../classntlib_1_1mod__int.html#a12b661148efacd14dcd448c66c6838c1',1,'ntlib::mod_int']]],
+  ['sgn_1',['sgn',['../base_8cpp.html#a0da3fec11ac16f272889ba76a1c2be6d',1,'ntlib']]],
+  ['sieve_5f235_2',['sieve_235',['../classntlib_1_1sieve__235.html#a6e0ef27711ec99820b06563d5827d5fd',1,'ntlib::sieve_235::sieve_235()=default'],['../classntlib_1_1sieve__235.html#a64cf0c0805e926e9ffb29f0748ef5b26',1,'ntlib::sieve_235::sieve_235(std::size_t min_capacity)']]],
+  ['size_3',['size',['../classntlib_1_1sieve__235.html#ab55ea38e9f1ad57d111c147706900b41',1,'ntlib::sieve_235']]]
 ];
