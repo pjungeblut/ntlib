@@ -18,9 +18,9 @@ TEST(Initialization, ConstructionByValue) {
 
 TEST(Output, StringRepresentation) {
   ntlib::rational a(5, 2);
-  EXPECT_EQ(a.to_string(), "5/2");
+  EXPECT_EQ(to_string(a), "5/2");
   ntlib::rational b(10, 2);
-  EXPECT_EQ(b.to_string(), "5/1");
+  EXPECT_EQ(to_string(b), "5/1");
 }
 
 TEST(Operators, Comparison) {
