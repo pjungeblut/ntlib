@@ -1,3 +1,7 @@
+/**
+ * @file
+ * @brief Primary module interface unit for module `rational`.
+ */
 module;
 
 #include <cassert>
@@ -6,6 +10,10 @@ module;
 #include <string>
 #include <type_traits>
 
+/**
+ * @module rational
+ * @brief Provides a class template for rational numbers.
+ */
 export module rational;
 
 import base;
@@ -13,18 +21,22 @@ import base;
 namespace ntlib {
 
 /**
- * Represents a rational number.
+ * @brief Represents a rational number.
+ * 
+ * @tparam T An integer-like type.
  */
 export template<typename T>
 class rational {
 public:
   /**
-   * Construct rational from a numerator and a denominator.
+   * @brief Construct rational from a numerator and a denominator.
    *
+   * This constructor allows implicit conversion from elements of type `T`.
+   * 
    * @param n The numerator.
    * @param d The denominator. Defaults to 1.
    */
-  rational(T n = 0, T d = 1) noexcept {
+  rational(T n, T d = 1) noexcept {
     assert(d != T{0});
 
     T f = gcd(n, d);
@@ -36,11 +48,12 @@ public:
         denominator *= T{-1};
         numerator *= T{-1};
       }
+      assert(denominator > 0);
     }
   }
 
   /**
-   * Returns the numerator.
+   * @brief Returns the numerator.
    *
    * @return The numerator.
    */
@@ -50,7 +63,7 @@ public:
   }
 
   /**
-   * Returns the denominator.
+   * @brief Returns the denominator.
    *
    * @return The denominator.
    */
@@ -60,126 +73,154 @@ public:
   }
 
   /**
-   * Creates a string "a/b" with reduced a and b.
-   *
-   * @return A string representation.
+   * @brief Compound assignment addition operator.
+   * 
+   * @param rhs The second summand.
+   * @return Reference to the result.
    */
-  [[nodiscard]]
-  std::string to_string() const noexcept {
-    using std::to_string;
-    return to_string(numerator) + "/" + to_string(denominator);
-  }
+  rational &operator+=(const rational &rhs) noexcept {
+    T l = lcm(denominator, rhs.denominator);
+    T f_lhs = l / denominator;
+    T f_rhs = l / rhs.denominator;
+    T new_numerator = f_lhs * numerator + f_rhs * rhs.numerator;
+    T new_denominator = l;
 
-  /**
-   * Addition for rationals.
-   *
-   * @param a The first summand.
-   * @param b The second summand.
-   * @return The sum of a and b.
-   */
-  [[nodiscard]]
-  friend rational operator+(const rational &a, const rational &b) noexcept {
-    rational sum(0);
-    add(a, b, sum);
-    return sum;
-  }
-
-  /**
-   * Adds another rational to the current one.
-   *
-   * @param other The other summand.
-   * @return Reference to the current rational containing the sum of its
-   *         previous value and other.
-   */
-  rational &operator+=(const rational &other) noexcept {
-    add(*this, other, *this);
+    T g = gcd(new_numerator, new_denominator);
+    if (g != T{1}) {
+      new_numerator /= g;
+      new_denominator /= g;
+    }
+    numerator = new_numerator;
+    denominator = new_denominator;
     return *this;
   }
 
   /**
-   * Subtraction for rationals.
+   * @brief Addition operator.
    *
-   * @param a The minuend.
-   * @param b The subtrahend.
-   * @return The difference of a and b.
+   * @param lhs The first summand.
+   * @param rhs The second summand.
+   * @return The sum of `lhs` and `rhs`.
    */
   [[nodiscard]]
-  friend rational operator-(const rational &a, const rational &b) noexcept {
-    rational difference;
-    subtract(a, b, difference);
-    return difference;
+  friend rational operator+(rational lhs, const rational &rhs) noexcept {
+    lhs += rhs;
+    return lhs;
   }
 
   /**
-   * Subtracts another rational from the current one.
+   * @brief Compound assignment subtraction operator.
    *
-   * @param other The subtrahend.
-   * @return Reference to the current rational containing the difference of its
-   *         previous value and other.
+   * @param rhs The subtrahend.
+   * @return Reference to the result.
    */
-  rational &operator-=(const rational &other) noexcept {
-    subtract(*this, other, *this);
+  rational &operator-=(const rational &rhs) noexcept {
+    T l = lcm(denominator, rhs.denominator);
+    T f_lhs = l / denominator;
+    T f_rhs = l / rhs.denominator;
+    T new_numerator = f_lhs * numerator - f_rhs * rhs.numerator;
+    T new_denominator = l;
+
+    T g = gcd(new_numerator, new_denominator);
+    if (g != T{1}) {
+      new_numerator /= g;
+      new_denominator /= g;
+    }
+    numerator = new_numerator;
+    denominator = new_denominator;
     return *this;
   }
 
   /**
-   * Multiplication for rationals.
+   * @brief Subtraction operator.
    *
-   * @param a The first factor.
-   * @param b The second factor.
-   * @return The product of a and b.
+   * @param lhs The minuend.
+   * @param rhs The subtrahend.
+   * @return The difference of `lhs` and `rhs`.
    */
   [[nodiscard]]
-  friend rational operator*(const rational &a, const rational &b) noexcept {
-    rational product;
-    multiply(a, b, product);
-    return product;
+  friend rational operator-(rational lhs, const rational &rhs) noexcept {
+    lhs -= rhs;
+    return lhs;
   }
 
-  /**
-   * Multiplies another rational to the current one.
+   /**
+   * @brief Compound assignment multiplication operator.
    *
-   * @param other The other factor.
-   * @return Reference to the current rational containing the product of its
-   *         previous value and other.
+   * @param rhs The second factor.
+   * @return Reference to the result.
    */
-  rational &operator*=(const rational &other) noexcept {
-    multiply(*this, other, *this);
+  rational &operator*=(const rational &rhs) noexcept {
+    numerator *= rhs.numerator;
+    denominator *= rhs.denominator;
+
+    T g = gcd(numerator, denominator);
+    if (g != T{1}) {
+      numerator /= g;
+      denominator /= g;
+    }
     return *this;
   }
 
   /**
-   * Division for rationals.
+   * @brief Multiplication operator.
    *
-   * @param a The dividend.
-   * @param b The divisor.
-   * @return The quotient of a and b.
+   * @param lhs The first factor.
+   * @param rhs The second factor.
+   * @return The product of `lhs` and `rhs`.
    */
   [[nodiscard]]
-  friend rational operator/(const rational &a, const rational &b) noexcept {
-    assert(b != rational{0});
-
-    rational quotient;
-    divide(a, b, quotient);
-    return quotient;
+  friend rational operator*(rational lhs, const rational &rhs) noexcept {
+    lhs *= rhs;
+    return lhs;
   }
 
   /**
-   * Divides another rational from the current one.
+   * @brief Compound assignment division operator.
    *
-   * @param other The divisor.
-   * @return Reference to the current rational containing the quotient of its
-   *         previous value and other.
+   * @param rhs The divisor.
+   * @return Reference to the result.
    */
-  rational &operator/=(const rational &other) noexcept {
-    assert(other != rational{0});
+  rational &operator/=(const rational &rhs) noexcept {
+    assert(rhs != rational{0});
 
-    divide(*this, other, *this);
+    numerator *= rhs.denominator;
+    denominator *= rhs.numerator;
+
+    T g = gcd(numerator, denominator);
+    if (g != T{1}) {
+      numerator /= g;
+      denominator /= g;
+    }
+
+    if constexpr (std::is_signed_v<T>) {
+      if (denominator < T{0}) {
+        numerator *= T{-1};
+        denominator *= T{-1};
+      }
+      assert(denominator > 0);
+    }
+
     return *this;
   }
 
   /**
-   * Cast to bool.
+   * @brief Division operator.
+   *
+   * @param lhs The dividend.
+   * @param rhs The divisor.
+   * @return The quotient of `lhs` and `rhs`.
+   */
+  [[nodiscard]]
+  friend rational operator/(rational lhs, const rational &rhs) noexcept {
+    lhs /= rhs;
+    return lhs;
+  }
+
+  /**
+   * @brief Cast to bool.
+   * 
+   * @return Whether the rational is not equal to zero.
    */
   [[nodiscard]]
   explicit operator bool() const noexcept {
@@ -192,133 +233,59 @@ private:
    */
   T numerator;
   T denominator;
-
-  /**
-   * Adds two rationals into a third.
-   * Parameters a and c may be the same for a += b.
-   *
-   * @param a The first summand.
-   * @param b The second summand.
-   * @param c The sum a + b.
-   */
-  static void add(const rational &a, const rational &b, rational &c) {
-    T lcd = lcm(a.denominator, b.denominator);
-    T fa = lcd / a.denominator;
-    T fb = lcd / b.denominator;
-    T numerator = fa * a.numerator + fb * b.numerator;
-    T denominator = lcd;
-    T g = gcd(numerator, denominator);
-    if (g != T{1}) {
-      numerator /= g;
-      denominator /= g;
-    }
-    c.numerator = numerator;
-    c.denominator = denominator;
-  }
-
-  /**
-   * Subtracts two rationals into a third.
-   * Parameters a and c may be the same for a -= b.
-   *
-   * @param a The minuend.
-   * @param b The subtrahend.
-   * @param c The difference a - b.
-   */
-  static void subtract(const rational &a, const rational &b, rational &c) {
-    T lcd = lcm(a.denominator, b.denominator);
-    T fa = lcd / a.denominator;
-    T fb = lcd / b.denominator;
-    T numerator = fa * a.numerator - fb * b.numerator;
-    T denominator = lcd;
-    T g = gcd(numerator, denominator);
-    if (g != T{1}) {
-      numerator /= g;
-      denominator /= g;
-    }
-    c.numerator = numerator;
-    c.denominator = denominator;
-  }
-
-  /**
-   * Multiplies two rationals into a third.
-   * Parameters a and c may be the same for a *= b.
-   *
-   * @param a The first factor.
-   * @param b The second factor.
-   * @param c The product a * b.
-   */
-  static void multiply(const rational &a, const rational &b, rational &c) {
-    T numerator = a.numerator * b.numerator;
-    T denominator = a.denominator * b.denominator;
-    T g = gcd(numerator, denominator);
-    if (g != T{1}) {
-      numerator /= g;
-      denominator /= g;
-    }
-    c.numerator = numerator;
-    c.denominator = denominator;
-  }
-
-  /**
-   * Divides two rationals into a third.
-   * Parameters a and c may be the same for a /= b.
-   *
-   * @param a The dividend.
-   * @param b The divisor. Must not be zero.
-   * @param c The quotient a / b.
-   */
-  static void divide(const rational &a, const rational &b, rational &c) {
-    T numerator = a.numerator * b.denominator;
-    T denominator = a.denominator * b.numerator;
-    T g = gcd(numerator, denominator);
-    if (g != T{1}) {
-      numerator /= g;
-      denominator /= g;
-    }
-    if constexpr (std::is_signed_v<T>) {
-      if (denominator < T{0}) {
-        numerator *= T{-1};
-        denominator *= T{-1};
-      }
-    }
-    c.numerator = numerator;
-    c.denominator = denominator;
-  }
 };
 
 /**
- * Stream output.
+ * @brief Creates a string "a/b" where `a` and `b` are coprime.
  *
- * @param os The out stream.
- * @param bu The rational to print.
- * @return The out stream.
+ * @tparam T An integer-like type.
+ * @param r A rational.
+ * @return A string representation.
+ */
+export template<typename T>
+[[nodiscard]]
+std::string to_string(const rational<T> &r) {
+  using std::to_string;
+  return to_string(r.get_numerator()) + "/" + to_string(r.get_denominator());
+}
+
+/**
+ * @brief Stream insertion operator.
+ *
+ * @tparam T An integer-like type.
+ * @param os The output stream.
+ * @param r The rational.
+ * @return The output stream.
  */
 export template<typename T>
 std::ostream &operator<<(std::ostream &os, const rational<T> &r) {
-  os << r.to_string();
+  os << to_string(r);
   return os;
 }
 
 /**
- * Equal operator.
+ * @brief Equality operator.
  *
- * @param a The left hand side to compare.
- * @param b The right hand side to compare.
- * @return True, if and only if a == b.
+ * @param lhs The left hand side to compare.
+ * @param rhs The right hand side to compare.
+ * @return True, if and only if `lhs` is equal to `rhs`.
  */
 export template<typename T>
 [[nodiscard]]
-bool operator==(const rational<T> &a, const rational<T> &b) {
-  return a.get_numerator() == b.get_numerator() &&
-         a.get_denominator() == b.get_denominator();
+bool operator==(const rational<T> &lhs, const rational<T> &rhs) {
+  return lhs.get_numerator() == rhs.get_numerator() &&
+         lhs.get_denominator() == rhs.get_denominator();
 }
 
 /**
- * Three-way comparison.
+ * @brief Three-way comparison operator.
  *
- * @param a The left hand side to compare.
- * @param b The right hand side to compare.
- * @return True, if and only if a <=> b.
+ * @tparam T An integer-like type.
+ * @param lhs The left hand side to compare.
+ * @param rhs The right hand side to compare.
+ * @retval <0 If `lhs < rhs`.
+ * @retval 0 If `lhs == rhs`.
+ * @retval >0 If `lhs > rhs`.
  */
 export template<typename T>
 [[nodiscard]]
@@ -328,27 +295,31 @@ std::strong_ordering operator<=>(const rational<T> &a, const rational<T> &b) {
 };
 
 /**
- * Unary minus to negate value.
+ * @brief Unary minus operator.
  *
- * @param a The rational.
+ * @tparam T An integer-like type.
+ * @param r The rational.
  * @return The rational with the same absolute value but opposite sign.
  */
 export template<typename T>
 [[nodiscard]]
-rational<T> operator-(const rational<T> &a) {
-  rational<T> neg{-1 * a.get_numerator(), a.get_denominator()};
+rational<T> operator-(const rational<T> &r) {
+  static_assert(std::is_signed_v<T>);
+
+  rational<T> neg{T{-1} * r.get_numerator(), r.get_denominator()};
   return neg;
 }
 
 /**
- * Specialization for `get_multiplicative_neutral()`.
+ * @brief Specialization for `get_multiplicative_neutral()`.
  * 
+ * @tparam T An integer-like type.
  * @param r Instance of the type.
  * @return The multiplicative neutral `1/1`.
  */
 export template<typename T>
 [[nodiscard]] constexpr
-rational<T> get_multiplicative_neutral(rational<T> r) {
+rational<T> get_multiplicative_neutral(const rational<T> &r) {
   return rational{get_multiplicative_neutral(r.get_numerator())};
 }
 
