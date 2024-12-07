@@ -289,9 +289,10 @@ bool operator==(const rational<T> &lhs, const rational<T> &rhs) {
  */
 export template<typename T>
 [[nodiscard]]
-std::strong_ordering operator<=>(const rational<T> &a, const rational<T> &b) {
-  return a.get_numerator() * b.get_denominator() <=>
-         b.get_numerator() * a.get_denominator();
+std::strong_ordering operator<=>(
+    const rational<T> &lhs, const rational<T> &rhs) {
+  return lhs.get_numerator() * rhs.get_denominator() <=>
+         rhs.get_numerator() * lhs.get_denominator();
 };
 
 /**
