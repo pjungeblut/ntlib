@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rational_0',['rational',['../classntlib_1_1rational.html#ac6c838c93cf6d81c411a8332e27342fb',1,'ntlib::rational']]]
+  ['rational_0',['rational',['../classntlib_1_1rational.html#a01974d998601167751587de968563047',1,'ntlib::rational']]]
 ];

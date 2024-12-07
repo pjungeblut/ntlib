@@ -98,34 +98,50 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">rational Module Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Provides a class template for rational numbers.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classntlib_1_1rational.html">ntlib::rational&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a rational number.  <a href="classntlib_1_1rational.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a7f196ddbc27630394f521d4c8955c398" id="r_a7f196ddbc27630394f521d4c8955c398"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a7f196ddbc27630394f521d4c8955c398"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="rational_8cpp.html#a7f196ddbc27630394f521d4c8955c398">ntlib::to_string</a> (const rational&lt; T &gt; &amp;r)</td></tr>
+<tr class="memdesc:a7f196ddbc27630394f521d4c8955c398"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a string "a/b" where <code>a</code> and <code>b</code> are coprime.  <br /></td></tr>
+<tr class="separator:a7f196ddbc27630394f521d4c8955c398"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab273b4a9af6185be9f1a73dfffafa33e" id="r_ab273b4a9af6185be9f1a73dfffafa33e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ab273b4a9af6185be9f1a73dfffafa33e"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="rational_8cpp.html#ab273b4a9af6185be9f1a73dfffafa33e">ntlib::operator&lt;&lt;</a> (std::ostream &amp;os, const rational&lt; T &gt; &amp;r)</td></tr>
+<tr class="memdesc:ab273b4a9af6185be9f1a73dfffafa33e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stream insertion operator.  <br /></td></tr>
 <tr class="separator:ab273b4a9af6185be9f1a73dfffafa33e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5077b9ce1f3082dde0764ad1fb32174b" id="r_a5077b9ce1f3082dde0764ad1fb32174b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a5077b9ce1f3082dde0764ad1fb32174b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="rational_8cpp.html#a5077b9ce1f3082dde0764ad1fb32174b">ntlib::operator==</a> (const rational&lt; T &gt; &amp;a, const rational&lt; T &gt; &amp;b)</td></tr>
-<tr class="separator:a5077b9ce1f3082dde0764ad1fb32174b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2c40dab8df4979d738d5f14dc75e3e1" id="r_af2c40dab8df4979d738d5f14dc75e3e1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:af2c40dab8df4979d738d5f14dc75e3e1"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="rational_8cpp.html#af2c40dab8df4979d738d5f14dc75e3e1">ntlib::operator==</a> (const rational&lt; T &gt; &amp;lhs, const rational&lt; T &gt; &amp;rhs)</td></tr>
+<tr class="memdesc:af2c40dab8df4979d738d5f14dc75e3e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality operator.  <br /></td></tr>
+<tr class="separator:af2c40dab8df4979d738d5f14dc75e3e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af86d722f0876a453ce86f7f0cacf3cf9" id="r_af86d722f0876a453ce86f7f0cacf3cf9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:af86d722f0876a453ce86f7f0cacf3cf9"><td class="memTemplItemLeft" align="right" valign="top">std::strong_ordering&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="rational_8cpp.html#af86d722f0876a453ce86f7f0cacf3cf9">ntlib::operator&lt;=&gt;</a> (const rational&lt; T &gt; &amp;a, const rational&lt; T &gt; &amp;b)</td></tr>
+<tr class="memdesc:af86d722f0876a453ce86f7f0cacf3cf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Three-way comparison operator.  <br /></td></tr>
 <tr class="separator:af86d722f0876a453ce86f7f0cacf3cf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a243ea002d7c1390748f830b6bed36d5b" id="r_a243ea002d7c1390748f830b6bed36d5b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a243ea002d7c1390748f830b6bed36d5b"><td class="memTemplItemLeft" align="right" valign="top">rational&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="rational_8cpp.html#a243ea002d7c1390748f830b6bed36d5b">ntlib::operator-</a> (const rational&lt; T &gt; &amp;a)</td></tr>
-<tr class="separator:a243ea002d7c1390748f830b6bed36d5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31b2bf68668d8acba56dd45bb1818030" id="r_a31b2bf68668d8acba56dd45bb1818030"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a31b2bf68668d8acba56dd45bb1818030"><td class="memTemplItemLeft" align="right" valign="top">constexpr rational&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="rational_8cpp.html#a31b2bf68668d8acba56dd45bb1818030">ntlib::get_multiplicative_neutral</a> (rational&lt; T &gt; r)</td></tr>
-<tr class="separator:a31b2bf68668d8acba56dd45bb1818030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac4c8405b2a9d577c96c7b69e987fc9d" id="r_aac4c8405b2a9d577c96c7b69e987fc9d"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aac4c8405b2a9d577c96c7b69e987fc9d"><td class="memTemplItemLeft" align="right" valign="top">rational&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="rational_8cpp.html#aac4c8405b2a9d577c96c7b69e987fc9d">ntlib::operator-</a> (const rational&lt; T &gt; &amp;r)</td></tr>
+<tr class="memdesc:aac4c8405b2a9d577c96c7b69e987fc9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unary minus operator.  <br /></td></tr>
+<tr class="separator:aac4c8405b2a9d577c96c7b69e987fc9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9793be0d7e3497d8a4674e3d558bb1e6" id="r_a9793be0d7e3497d8a4674e3d558bb1e6"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a9793be0d7e3497d8a4674e3d558bb1e6"><td class="memTemplItemLeft" align="right" valign="top">constexpr rational&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="rational_8cpp.html#a9793be0d7e3497d8a4674e3d558bb1e6">ntlib::get_multiplicative_neutral</a> (const rational&lt; T &gt; &amp;r)</td></tr>
+<tr class="memdesc:a9793be0d7e3497d8a4674e3d558bb1e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization for <code><a class="el" href="base_8cpp.html#abf287d92a386731e783133dfcf8f0131" title="Returns the multiplicative neutral element 1 for integral types.">get_multiplicative_neutral()</a></code>.  <br /></td></tr>
+<tr class="separator:a9793be0d7e3497d8a4674e3d558bb1e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Provides a class template for rational numbers. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/types/<b>rational.cpp</b></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/types/<a class="el" href="rational_8cpp.html">rational.cpp</a></td></tr>
+<tr class="memdesc:rational_8cpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary module interface unit for module <code>rational</code>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
