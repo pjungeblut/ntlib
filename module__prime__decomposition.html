@@ -99,34 +99,45 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">prime_decomposition Module Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Function templates to decompose a natural number into its unique prime decomposition.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structntlib_1_1prime__power.html">ntlib::prime_power&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a single prime power.  <a href="structntlib_1_1prime__power.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a8a9cd3211947fb7b14dacb7db6b4a232" id="r_a8a9cd3211947fb7b14dacb7db6b4a232"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a8a9cd3211947fb7b14dacb7db6b4a232"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__decomposition_8cpp.html#a8a9cd3211947fb7b14dacb7db6b4a232">ntlib::prime_factors</a> = std::vector&lt;prime_power&lt;T&gt;&gt;</td></tr>
+<tr class="memdesc:a8a9cd3211947fb7b14dacb7db6b4a232"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a prime factorization.  <br /></td></tr>
 <tr class="separator:a8a9cd3211947fb7b14dacb7db6b4a232"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a74664a0975d26fbbf2ca79c0dadd5bce" id="r_a74664a0975d26fbbf2ca79c0dadd5bce"><td class="memTemplParams" colspan="2">template&lt;typename C , typename T  = typename C::value_type&gt; </td></tr>
 <tr class="memitem:a74664a0975d26fbbf2ca79c0dadd5bce"><td class="memTemplItemLeft" align="right" valign="top">constexpr prime_factors&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__decomposition_8cpp.html#a74664a0975d26fbbf2ca79c0dadd5bce">ntlib::prime_decomposition_list</a> (T n, const C &amp;primes)</td></tr>
+<tr class="memdesc:a74664a0975d26fbbf2ca79c0dadd5bce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a prime decomposition of a given number using a provided list of potential prime divisors.  <br /></td></tr>
 <tr class="separator:a74664a0975d26fbbf2ca79c0dadd5bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9241800f908902b82fe4de50372d0d9" id="r_aa9241800f908902b82fe4de50372d0d9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aa9241800f908902b82fe4de50372d0d9"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__decomposition_8cpp.html#aa9241800f908902b82fe4de50372d0d9">ntlib::find_factor</a> (T n) noexcept</td></tr>
+<tr class="memdesc:aa9241800f908902b82fe4de50372d0d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a non-trivial factor of a given composite number.  <br /></td></tr>
 <tr class="separator:aa9241800f908902b82fe4de50372d0d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4acaba006b0c7a90e2c412847bd40333" id="r_a4acaba006b0c7a90e2c412847bd40333"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a4acaba006b0c7a90e2c412847bd40333"><td class="memTemplItemLeft" align="right" valign="top">constexpr prime_factors&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__decomposition_8cpp.html#a4acaba006b0c7a90e2c412847bd40333">ntlib::prime_decomposition</a> (T n)</td></tr>
+<tr class="memdesc:a4acaba006b0c7a90e2c412847bd40333"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the prime decomposition of a given number.  <br /></td></tr>
 <tr class="separator:a4acaba006b0c7a90e2c412847bd40333"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Function templates to decompose a natural number into its unique prime decomposition. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/prime_decomposition/<b>prime_decomposition.cpp</b></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/prime_decomposition/<a class="el" href="prime__decomposition_8cpp.html">prime_decomposition.cpp</a></td></tr>
+<tr class="memdesc:prime__decomposition_8cpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary module interface unit for module <code>prime_decomposition</code>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

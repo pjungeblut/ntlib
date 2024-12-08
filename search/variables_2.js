@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['small_5fprimes_0',['SMALL_PRIMES',['../base_8cpp.html#aeb55d56667aaaa7cbb319b9b0d1999bf',1,'ntlib']]],
-  ['small_5fprimes_5fbiggest_1',['SMALL_PRIMES_BIGGEST',['../base_8cpp.html#a09ca98914193dcbcbae25a20dc76417a',1,'ntlib']]]
+  ['m_0',['m',['../structntlib_1_1crt__congruence.html#a17c2a5b93c220b00393051ec6f0c062f',1,'ntlib::crt_congruence']]]
 ];

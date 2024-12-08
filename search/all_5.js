@@ -5,7 +5,9 @@ var searchData=
   ['features_20of_20ntlib_2',['Some Features of NTLib',['../md_README.html#autotoc_md10',1,'']]],
   ['figurate_5fnumber_3',['figurate_number',['../module__figurate__number.html',1,'']]],
   ['figurate_5fnumber_2ecpp_4',['figurate_number.cpp',['../figurate__number_8cpp.html',1,'']]],
-  ['floor_5fdiv_5',['floor_div',['../modulo_8cpp.html#a5f9b09cdaa3e63bb5f17e3d3b4c00f44',1,'ntlib']]],
-  ['functionality_6',['Basic Functionality',['../index.html#autotoc_md2',1,'']]],
-  ['functions_7',['Arithmetic Functions',['../index.html#autotoc_md4',1,'']]]
+  ['find_5ffactor_5',['find_factor',['../prime__decomposition_8cpp.html#aa9241800f908902b82fe4de50372d0d9',1,'ntlib']]],
+  ['find_5ffactor_5fpollard_5frho_5fmult_6',['find_factor_pollard_rho_mult',['../prime__decomposition_8cpp.html#a984ba8a812b83960a5dba521a86fe028',1,'ntlib']]],
+  ['floor_5fdiv_7',['floor_div',['../modulo_8cpp.html#a5f9b09cdaa3e63bb5f17e3d3b4c00f44',1,'ntlib']]],
+  ['functionality_8',['Basic Functionality',['../index.html#autotoc_md2',1,'']]],
+  ['functions_9',['Arithmetic Functions',['../index.html#autotoc_md4',1,'']]]
 ];

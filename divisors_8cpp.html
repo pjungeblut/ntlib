@@ -106,58 +106,86 @@ $(function(){ initResizable(false); });
 <div class="textblock"><code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;cassert&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
-<code>import prime_decomposition;</code><br />
+<code>import <a class="el" href="prime__decomposition_8cpp.html">prime_decomposition</a>;</code><br />
 <code>import <a class="el" href="base_8cpp.html">base</a>;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for divisors.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="divisors_8cpp__incl.png" border="0" usemap="#amodules_2arithmetic__functions_2divisors_8cpp" alt=""/></div>
 <map name="amodules_2arithmetic__functions_2divisors_8cpp" id="amodules_2arithmetic__functions_2divisors_8cpp">
-<area shape="rect" title="Primary module interface unit for module divisors." alt="" coords="109,5,264,46"/>
-<area shape="rect" title=" " alt="" coords="5,168,80,193"/>
-<area shape="poly" title=" " alt="" coords="170,48,66,158,62,154,166,44"/>
-<area shape="rect" title=" " alt="" coords="104,168,168,193"/>
-<area shape="poly" title=" " alt="" coords="183,47,147,154,142,152,178,45"/>
-<area shape="rect" title=" " alt="" coords="192,168,250,193"/>
-<area shape="poly" title=" " alt="" coords="193,46,218,152,212,153,188,47"/>
-<area shape="rect" href="base_8cpp.html" title="Primary module interface unit for module base." alt="" coords="415,94,464,120"/>
-<area shape="poly" title=" " alt="" coords="251,44,401,91,400,96,249,49"/>
-<area shape="poly" title=" " alt="" coords="415,115,283,136,95,170,94,165,282,131,414,109"/>
-<area shape="poly" title=" " alt="" coords="415,116,184,170,182,165,414,111"/>
-<area shape="poly" title=" " alt="" coords="416,119,266,168,264,162,414,114"/>
-<area shape="rect" title=" " alt="" coords="274,168,323,193"/>
-<area shape="poly" title=" " alt="" coords="417,123,337,163,335,158,415,118"/>
-<area shape="rect" title=" " alt="" coords="347,168,386,193"/>
-<area shape="poly" title=" " alt="" coords="430,122,391,159,388,155,426,118"/>
-<area shape="rect" title=" " alt="" coords="410,168,470,193"/>
-<area shape="poly" title=" " alt="" coords="442,120,442,152,437,152,437,120"/>
-<area shape="rect" title=" " alt="" coords="494,168,551,193"/>
-<area shape="poly" title=" " alt="" coords="456,118,499,155,495,159,452,122"/>
-<area shape="rect" title=" " alt="" coords="575,168,649,193"/>
-<area shape="poly" title=" " alt="" coords="466,116,570,159,568,164,464,121"/>
-<area shape="rect" title=" " alt="" coords="674,168,734,193"/>
-<area shape="poly" title=" " alt="" coords="466,112,659,164,658,170,464,118"/>
-<area shape="rect" title=" " alt="" coords="758,168,836,193"/>
-<area shape="poly" title=" " alt="" coords="465,110,743,164,742,170,464,115"/>
-<area shape="rect" title=" " alt="" coords="860,168,927,193"/>
-<area shape="poly" title=" " alt="" coords="465,108,621,128,844,165,844,170,621,133,464,114"/>
-<area shape="rect" title=" " alt="" coords="951,168,1032,193"/>
-<area shape="poly" title=" " alt="" coords="465,108,657,127,793,144,936,165,935,170,792,149,656,132,465,113"/>
+<area shape="rect" title="Primary module interface unit for module divisors." alt="" coords="575,5,729,46"/>
+<area shape="rect" title=" " alt="" coords="875,315,949,341"/>
+<area shape="poly" title=" " alt="" coords="699,44,739,65,786,92,832,126,873,166,893,198,906,234,912,269,915,299,909,300,907,270,900,235,888,200,869,169,828,130,783,97,737,70,696,49"/>
+<area shape="rect" title=" " alt="" coords="5,315,70,341"/>
+<area shape="poly" title=" " alt="" coords="575,37,482,52,371,77,253,116,196,141,142,170,119,186,103,201,74,243,59,272,48,302,43,300,54,270,70,240,99,197,115,182,139,165,193,136,251,111,369,72,481,47,574,32"/>
+<area shape="rect" title=" " alt="" coords="973,315,1030,341"/>
+<area shape="poly" title=" " alt="" coords="717,44,769,65,821,92,874,124,913,153,946,189,980,240,993,270,1000,299,995,301,988,272,975,243,942,192,910,157,871,129,819,96,767,70,715,49"/>
+<area shape="rect" href="prime__decomposition_8cpp.html" title="Primary module interface unit for module prime_decomposition." alt="" coords="443,94,587,120"/>
+<area shape="poly" title=" " alt="" coords="619,49,550,88,547,84,617,44"/>
+<area shape="rect" href="base_8cpp.html" title="Primary module interface unit for module base." alt="" coords="514,241,564,267"/>
+<area shape="poly" title=" " alt="" coords="645,48,554,228,549,226,640,45"/>
+<area shape="poly" title=" " alt="" coords="442,110,383,114,315,124,245,142,180,170,139,199,104,235,75,272,54,303,50,300,71,268,100,232,136,195,178,165,244,137,314,119,382,109,442,105"/>
+<area shape="poly" title=" " alt="" coords="588,112,746,131,820,147,872,165,912,195,945,231,971,268,991,300,986,302,967,271,941,234,908,199,870,170,819,152,745,137,587,117"/>
+<area shape="rect" title=" " alt="" coords="828,241,892,267"/>
+<area shape="poly" title=" " alt="" coords="588,109,660,115,736,126,803,142,829,153,847,166,857,179,863,195,866,225,860,226,857,196,852,182,844,170,827,158,802,147,735,131,659,121,587,114"/>
+<area shape="rect" title=" " alt="" coords="212,168,271,193"/>
+<area shape="poly" title=" " alt="" coords="467,123,287,169,286,164,466,118"/>
+<area shape="rect" title=" " alt="" coords="295,168,348,193"/>
+<area shape="poly" title=" " alt="" coords="483,123,363,167,362,162,481,118"/>
+<area shape="rect" title=" " alt="" coords="372,168,439,193"/>
+<area shape="poly" title=" " alt="" coords="498,122,438,161,435,157,495,118"/>
+<area shape="rect" title=" " alt="" coords="770,315,852,341"/>
+<area shape="poly" title=" " alt="" coords="530,118,606,183,714,265,778,305,775,309,711,269,603,187,526,122"/>
+<area shape="rect" title=" " alt="" coords="462,168,514,193"/>
+<area shape="poly" title=" " alt="" coords="513,121,500,154,495,152,508,119"/>
+<area shape="rect" href="prime__list_8hpp_source.html" title=" " alt="" coords="126,241,227,267"/>
+<area shape="poly" title=" " alt="" coords="442,116,375,123,304,134,242,149,218,159,202,170,192,182,186,196,179,227,174,226,180,194,188,179,198,166,216,154,240,144,303,129,374,118,442,110"/>
+<area shape="rect" href="prime__generation_8cpp.html" title="Primary module interface unit for module prime_generation." alt="" coords="689,168,810,193"/>
+<area shape="poly" title=" " alt="" coords="555,118,696,160,694,165,554,123"/>
+<area shape="poly" title=" " alt="" coords="520,120,528,167,537,226,532,226,523,168,514,120"/>
+<area shape="rect" title=" " alt="" coords="178,315,228,341"/>
+<area shape="poly" title=" " alt="" coords="183,266,196,299,191,301,178,268"/>
+<area shape="rect" title=" " alt="" coords="94,315,154,341"/>
+<area shape="poly" title=" " alt="" coords="170,269,144,304,140,301,165,266"/>
+<area shape="poly" title=" " alt="" coords="752,193,757,229,763,248,774,265,788,276,809,287,861,307,859,312,807,292,785,280,770,269,759,250,752,230,747,194"/>
+<area shape="poly" title=" " alt="" coords="758,192,781,228,798,248,817,265,959,311,957,316,815,269,794,252,777,231,753,195"/>
+<area shape="poly" title=" " alt="" coords="770,192,830,230,827,235,767,196"/>
+<area shape="poly" title=" " alt="" coords="742,195,723,229,720,248,724,266,742,288,767,305,764,310,739,292,719,268,714,248,718,227,737,193"/>
+<area shape="poly" title=" " alt="" coords="794,164,822,167,832,172,836,181,828,192,809,197,808,191,825,188,831,180,828,176,821,172,793,170"/>
+<area shape="poly" title=" " alt="" coords="715,196,579,242,578,237,713,191"/>
+<area shape="poly" title=" " alt="" coords="564,257,688,278,860,312,859,317,687,284,563,262"/>
+<area shape="poly" title=" " alt="" coords="514,260,339,279,215,295,85,317,85,312,214,290,338,274,514,255"/>
+<area shape="poly" title=" " alt="" coords="564,255,726,274,840,290,958,312,957,317,839,295,726,279,564,260"/>
+<area shape="poly" title=" " alt="" coords="565,259,584,264,756,309,754,314,582,270,563,265"/>
+<area shape="poly" title=" " alt="" coords="514,262,401,283,243,317,242,312,400,278,513,257"/>
+<area shape="poly" title=" " alt="" coords="514,261,372,281,170,317,169,312,371,276,513,256"/>
+<area shape="rect" title=" " alt="" coords="445,315,483,341"/>
+<area shape="poly" title=" " alt="" coords="528,269,489,306,486,302,524,266"/>
+<area shape="rect" title=" " alt="" coords="508,315,567,341"/>
+<area shape="poly" title=" " alt="" coords="541,267,541,299,535,299,536,267"/>
+<area shape="rect" title=" " alt="" coords="592,315,649,341"/>
+<area shape="poly" title=" " alt="" coords="554,266,597,303,593,307,551,270"/>
+<area shape="rect" title=" " alt="" coords="672,315,747,341"/>
+<area shape="poly" title=" " alt="" coords="565,264,668,306,666,311,563,268"/>
+<area shape="rect" title=" " alt="" coords="252,315,330,341"/>
+<area shape="poly" title=" " alt="" coords="514,265,345,314,344,309,513,260"/>
+<area shape="rect" title=" " alt="" coords="353,315,420,341"/>
+<area shape="poly" title=" " alt="" coords="515,270,427,311,425,306,513,265"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a44553b4b70376495c6c4710121764875" id="r_a44553b4b70376495c6c4710121764875"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a44553b4b70376495c6c4710121764875"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a44553b4b70376495c6c4710121764875">ntlib::count_divisors</a> (const prime_factors&lt; T &gt; &amp;factors) noexcept</td></tr>
+<tr class="memitem:a44553b4b70376495c6c4710121764875"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a44553b4b70376495c6c4710121764875">ntlib::count_divisors</a> (const <a class="el" href="prime__decomposition_8cpp.html#a8a9cd3211947fb7b14dacb7db6b4a232">prime_factors</a>&lt; T &gt; &amp;factors) noexcept</td></tr>
 <tr class="memdesc:a44553b4b70376495c6c4710121764875"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counts the number of divisors of a given number <code>n</code>.  <br /></td></tr>
 <tr class="separator:a44553b4b70376495c6c4710121764875"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03625781ea45c307bd5e58f28bb1803d" id="r_a03625781ea45c307bd5e58f28bb1803d"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a03625781ea45c307bd5e58f28bb1803d"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a03625781ea45c307bd5e58f28bb1803d">ntlib::divisor_function</a> (const prime_factors&lt; T &gt; &amp;factors, T x) noexcept</td></tr>
+<tr class="memitem:a03625781ea45c307bd5e58f28bb1803d"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a03625781ea45c307bd5e58f28bb1803d">ntlib::divisor_function</a> (const <a class="el" href="prime__decomposition_8cpp.html#a8a9cd3211947fb7b14dacb7db6b4a232">prime_factors</a>&lt; T &gt; &amp;factors, T x) noexcept</td></tr>
 <tr class="memdesc:a03625781ea45c307bd5e58f28bb1803d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the divisor function for a given number <code>n</code>.  <br /></td></tr>
 <tr class="separator:a03625781ea45c307bd5e58f28bb1803d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5588a05457960890ac667a93c1a7a43" id="r_aa5588a05457960890ac667a93c1a7a43"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aa5588a05457960890ac667a93c1a7a43"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aa5588a05457960890ac667a93c1a7a43">ntlib::enumerate_divisors</a> (const prime_factors&lt; T &gt; &amp;factors)</td></tr>
+<tr class="memitem:aa5588a05457960890ac667a93c1a7a43"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aa5588a05457960890ac667a93c1a7a43">ntlib::enumerate_divisors</a> (const <a class="el" href="prime__decomposition_8cpp.html#a8a9cd3211947fb7b14dacb7db6b4a232">prime_factors</a>&lt; T &gt; &amp;factors)</td></tr>
 <tr class="memdesc:aa5588a05457960890ac667a93c1a7a43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerates all divisors of a given number <code>n</code>.  <br /></td></tr>
 <tr class="separator:aa5588a05457960890ac667a93c1a7a43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -178,7 +206,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">T ntlib::count_divisors </td>
           <td>(</td>
-          <td class="paramtype">const prime_factors&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>factors</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="prime__decomposition_8cpp.html#a8a9cd3211947fb7b14dacb7db6b4a232">prime_factors</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>factors</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -220,7 +248,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">T ntlib::divisor_function </td>
           <td>(</td>
-          <td class="paramtype">const prime_factors&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>factors</em></span>, </td>
+          <td class="paramtype">const <a class="el" href="prime__decomposition_8cpp.html#a8a9cd3211947fb7b14dacb7db6b4a232">prime_factors</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>factors</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -268,7 +296,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">std::vector&lt; T &gt; ntlib::enumerate_divisors </td>
           <td>(</td>
-          <td class="paramtype">const prime_factors&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>factors</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="prime__decomposition_8cpp.html#a8a9cd3211947fb7b14dacb7db6b4a232">prime_factors</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>factors</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>

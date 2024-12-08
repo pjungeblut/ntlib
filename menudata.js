@@ -66,7 +66,8 @@ var menudata={children:[
 {text:"q",url:"modulemembers_func.html#index_q"},
 {text:"s",url:"modulemembers_func.html#index_s"},
 {text:"t",url:"modulemembers_func.html#index_t"}]},
-{text:"Variables",url:"modulemembers_vars.html"}]}]},
+{text:"Variables",url:"modulemembers_vars.html"},
+{text:"Typedefs",url:"modulemembers_type.html"}]}]},
 {text:"Concepts",url:"concepts.html"},
 {text:"Classes",url:"annotated.html",children:[
 {text:"Class List",url:"annotated.html"},
@@ -80,6 +81,7 @@ var menudata={children:[
 {text:"i",url:"functions.html#index_i"},
 {text:"m",url:"functions.html#index_m"},
 {text:"o",url:"functions.html#index_o"},
+{text:"p",url:"functions.html#index_p"},
 {text:"r",url:"functions.html#index_r"},
 {text:"s",url:"functions.html#index_s"},
 {text:"t",url:"functions.html#index_t"}]},
