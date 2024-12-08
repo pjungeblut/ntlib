@@ -150,7 +150,7 @@ Friends</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename U, U MOD = 0, typename S = std::make_signed_t&lt;U&gt;&gt;<br />
 class ntlib::mod_int&lt; U, MOD, S &gt;</div><p>Class to represent an element of residue class Z/modulusZ.</p>
-<p>The non-type template parameter <code>MOD</code> can be used if the modulus is known at compile-time. In that case, the compiler can replace the costly division operations needed for <code>mod()</code>-calls by cheaper multiplication.</p>
+<p>The non-type template parameter <code>MOD</code> can be used if the modulus is known at compile-time. In that case, the compiler can replace the costly division operations needed for <code><a class="el" href="modulo_8cpp.html#ab11afb456eb969b2c041a515fcbe83d2" title="The mathematical modulo operation.">mod()</a></code>-calls by cheaper multiplication.</p>
 <p>Setting <code>MOD = 0</code> denotes that the modulus must be provided to the constructor at run-time.</p>
 <p>The underlying (unsigned) datatype <code>U</code> needs to be big enough to hold <code>modulus^2</code> to work correctly. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>

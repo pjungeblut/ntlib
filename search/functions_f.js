@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rational_0',['rational',['../classntlib_1_1rational.html#a01974d998601167751587de968563047',1,'ntlib::rational']]]
+  ['quadratic_5firrational_5fcf_0',['quadratic_irrational_cf',['../continued__fraction_8cpp.html#aa823178826f48842614c5e7549b0f68c',1,'ntlib']]]
 ];

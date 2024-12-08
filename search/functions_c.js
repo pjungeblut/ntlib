@@ -1,19 +1,5 @@
 var searchData=
 [
-  ['octahedral_5fnumber_0',['octahedral_number',['../figurate__number_8cpp.html#afc97c159ce7e38f31c62014001e7eb66',1,'ntlib']]],
-  ['odd_5fpart_1',['odd_part',['../base_8cpp.html#afb0f452e412b657c8f8c15df8326c62b',1,'ntlib']]],
-  ['operator_20bool_2',['operator bool',['../classntlib_1_1sieve__235_1_1reference.html#aff1da94e66e4d62a225c591c5b610d1e',1,'ntlib::sieve_235::reference::operator bool()'],['../classntlib_1_1rational.html#a2701185606199eec04ae847e6bb8e1af',1,'ntlib::rational::operator bool()']]],
-  ['operator_25_3d_3',['operator%=',['../classntlib_1_1matrix.html#a699ddd643eccc581ecde7057db0175bf',1,'ntlib::matrix']]],
-  ['operator_2a_3d_4',['operator*=',['../classntlib_1_1mod__int.html#a06f816fe63b3cf3f4223576c1c0ee79f',1,'ntlib::mod_int::operator*=()'],['../classntlib_1_1matrix.html#aa62edb72ed1bdee988bdc88df6f66553',1,'ntlib::matrix::operator*=(S rhs)'],['../classntlib_1_1matrix.html#a95294312f7cb29a328029f64312fb84c',1,'ntlib::matrix::operator*=(const matrix &amp;rhs)'],['../classntlib_1_1rational.html#a2ee39e9b6591601e8332cb7249c7fa02',1,'ntlib::rational::operator*=()']]],
-  ['operator_2b_2b_5',['operator++',['../classntlib_1_1mod__int.html#a818c362476279acefc04431dc32b2341',1,'ntlib::mod_int::operator++()'],['../classntlib_1_1mod__int.html#ad1d6dbed040087cce4ff6dc1c0b930a3',1,'ntlib::mod_int::operator++(int)']]],
-  ['operator_2b_3d_6',['operator+=',['../classntlib_1_1mod__int.html#a24b2e54cc56910b8f76ca504d2e65d87',1,'ntlib::mod_int::operator+=()'],['../classntlib_1_1matrix.html#ad2400d30b86a50d7d50e35b8914ecc31',1,'ntlib::matrix::operator+=()'],['../classntlib_1_1rational.html#a7d2d8a35abbe30ab94606bd6115e66c0',1,'ntlib::rational::operator+=()']]],
-  ['operator_2d_7',['operator-',['../classntlib_1_1mod__int.html#a64b6ef7805301d3bc89a2858b586fc83',1,'ntlib::mod_int::operator-()'],['../rational_8cpp.html#aac4c8405b2a9d577c96c7b69e987fc9d',1,'ntlib::operator-()']]],
-  ['operator_2d_2d_8',['operator--',['../classntlib_1_1mod__int.html#a642a5b42a019eb3bfad671b272ac9fcb',1,'ntlib::mod_int::operator--()'],['../classntlib_1_1mod__int.html#af3cbb2fba65e27476b719c5a3ba898db',1,'ntlib::mod_int::operator--(int)']]],
-  ['operator_2d_3d_9',['operator-=',['../classntlib_1_1mod__int.html#abcbdf6d16ab6d9fdfbf75534ad6fd036',1,'ntlib::mod_int::operator-=()'],['../classntlib_1_1matrix.html#af51519ef323c79e914c08ff08f7a34de',1,'ntlib::matrix::operator-=()'],['../classntlib_1_1rational.html#af61d08dbe62586b430ee841356509763',1,'ntlib::rational::operator-=()']]],
-  ['operator_2f_3d_10',['operator/=',['../classntlib_1_1matrix.html#a319326f0a3efd0e6a3c1dc6848faf74e',1,'ntlib::matrix::operator/=()'],['../classntlib_1_1rational.html#aa20c6552aad21aeeee136262d52466a7',1,'ntlib::rational::operator/=()']]],
-  ['operator_3c_3c_11',['operator&lt;&lt;',['../rational_8cpp.html#ab273b4a9af6185be9f1a73dfffafa33e',1,'ntlib']]],
-  ['operator_3c_3d_3e_12',['operator&lt;=&gt;',['../rational_8cpp.html#adc3952c37458709b0cc88be6d6d58dd1',1,'ntlib']]],
-  ['operator_3d_13',['operator=',['../classntlib_1_1sieve__235_1_1reference.html#ad9510111f6ad6675f90d0d33c6674731',1,'ntlib::sieve_235::reference']]],
-  ['operator_3d_3d_14',['operator==',['../classntlib_1_1matrix.html#af9b615c492d795c43a5369b5114ff6f6',1,'ntlib::matrix::operator==()'],['../rational_8cpp.html#af2c40dab8df4979d738d5f14dc75e3e1',1,'ntlib::operator==()']]],
-  ['operator_5b_5d_15',['operator[]',['../classntlib_1_1sieve__235.html#aa29a5dbe1982c2edae76841b34e35333',1,'ntlib::sieve_235::operator[](std::size_t idx) const'],['../classntlib_1_1sieve__235.html#a011ab8fe5ce0aa138146e980ea85b324',1,'ntlib::sieve_235::operator[](std::size_t idx)'],['../classntlib_1_1matrix_1_1reference.html#afd55ceebbef962eb797e5006cd570a39',1,'ntlib::matrix::reference::operator[]()'],['../classntlib_1_1matrix.html#abfa8644314261cbf91d40379e76e7058',1,'ntlib::matrix::operator[](std::size_t row_idx)'],['../classntlib_1_1matrix.html#a6c74365a3eed4c4dd9c3ff7447b7b2e7',1,'ntlib::matrix::operator[](std::size_t row_idx) const']]]
+  ['next_5fprime_0',['next_prime',['../prime__generation_8cpp.html#aeec5186f51aaee09f35aa65075938a02',1,'ntlib']]],
+  ['nth_5fconvergent_5fquadratic_5firrational_5fcf_1',['nth_convergent_quadratic_irrational_cf',['../continued__fraction_8cpp.html#a060b7d2d133865906eecea5eae96f540',1,'ntlib']]]
 ];
