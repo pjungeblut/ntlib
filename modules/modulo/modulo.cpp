@@ -1,9 +1,17 @@
+/**
+ * @file
+ * @brief Primary module interface unit for module `modulo`.
+ */
 module;
 
 #include <cassert>
 #include <random>
 #include <type_traits>
 
+/**
+ * @module modulo
+ * @brief Function templates for modular arithmetic.
+ */
 export module modulo;
 
 import base;
@@ -11,8 +19,9 @@ import base;
 namespace ntlib {
 
 /**
- * Returns the quotient of a/b rounded down.
+ * @brief Returns the rounded down quotient of two given numbers.
  *
+ * @tparam T An integer-like type.
  * @param a The dividend.
  * @param b The divisor.
  * @return The quotient, rounded down.
@@ -22,15 +31,16 @@ export template<typename T>
   assert(b != T{0});
 
   T quotient = a / b;
-  if (((a < T{0}) ^ (b < T{0})) && a % b != T{0}) --quotient;
+  if (((a < T{0}) ^ (b < T{0})) && a % b != T{0}) { --quotient; }
   return quotient;
 }
 
 /**
- * Returns the quotient of a/b rounded up.
+ * @brief Returns the rounded up quotient of two given numbers.
  *
+ * @tparam T An integer-like type.
  * @param a The dividend.
- * @param m The divisor.
+ * @param b The divisor.
  * @return The quotient, rounded up.
  */
 export template<typename T>
@@ -45,30 +55,41 @@ export template<typename T>
 }
 
 /**
- * The mathematical modulo operation.
+ * @brief The mathematical modulo operation.
+ * 
+ * If the modulus \f$m\f$ is positive, then so is the result.
  *
- * @param a The number to take modulo.
+ * @tparam T An integer-like type.
+ * @param a The number to take modulo \f$m\f$.
  * @param m The modulus.
- * @return a mod m in the mathematical sense.
- *         If m is positive, then so is the result.
+ * @return \f$a \mod m\f$ in the mathematical sense.
  */
 export template<typename T>
 [[nodiscard]] constexpr T mod(T a, T m) noexcept {
-  if constexpr (std::is_unsigned_v<T>) { return a % m; }
-  else { return a - m * floor_div(a, m); }
+  if constexpr (std::is_unsigned_v<T>) {
+    return a % m;
+  } else {
+    return a - m * ntlib::floor_div(a, m);
+  }
 }
 
 /**
- * Computes a^b mod m using binary exponentation.
- * Runtime: O(log b)
+ * @brief Binary exponentiation with a custom mod-function.
+ * 
+ * Let \f$\mathrm{mod\_func}\f$ be a mod-function.
+ * Computes \f$\mathrm{mod\_func}(a^b)\f$ using binary exponentation.
+ * 
+ * Runtime: \f$O(\log(b))\f$ calls to \f$\mathrm{mod\_func}\f$.
  *
- * Caution: m^2 must be small enough to fit into type T.
- *
+ * @tparam A Multiplicative monoid.
+ * @tparam B An integer-like type.
+ * @tparam MF Function object.
  * @param a The base.
  * @param b The exponent, must be non-negative.
- * @param m The modulus, must be positive.
- * @param unit The unit element of the group.
- * @return a^b (mod m), in particular the return value is in [0,m-1].
+ * @param mod_func The mod-function.
+ * @param unit The multiplicative unit of `A`.
+ * @return The result of \f$\mathrm{mod\_func}\f$ applied to the power
+ *     \f$a^b\f$.
  */
 export template<typename A, typename B, typename MF>
 [[nodiscard]] constexpr
@@ -78,70 +99,82 @@ A mod_pow(A a, B b, MF mod_func, A unit = A{1}) noexcept {
 
   if (b == B{0}) { return unit; }
   else if (b == B{1}) { return mod_func(a); }
-  else if (is_odd(b)) {
-    return mod_func(mod_pow(a, b - B{1}, mod_func, unit) * a);
+  else if (ntlib::is_odd(b)) {
+    return mod_func(ntlib::mod_pow(a, b - B{1}, mod_func, unit) * a);
   } else {
-    return mod_pow(mod_func(a * a), b / B{2}, mod_func, unit);
+    return ntlib::mod_pow(mod_func(a * a), b / B{2}, mod_func, unit);
   }
 }
 
 /**
- * Computes the multiplicative inverse of a (mod m).
- * Only exists, if gcd(a, m) = 1.
+ * @brief Computes the multiplicative inverse.
+ * 
+ * Let \f$m \in \mathbb{N}\f$ and \f$a \in \mathbb{Z}/m\mathbb{Z}\f$ such that
+ * \f$\mathrm{gcd}(a, m) = 1\f$.
+ * Computes the multiplicative inverse of \f$a \mod m\f$.
  *
+ * @tparam T A integer-like type.
+ * @tparam S The signed type corresponding to `T`
  * @param a The number to invert.
- * @param m The order of the group.
- * @return The multiplicative inverse of a (mod m).
+ * @param m The order of the group \f$a \in \mathbb{Z}/m\mathbb{Z}\f$.
+ * @return The multiplicative inverse of \f$a\f$ modulo \f$m\f$.
  */
 export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr T mod_mult_inv(T a, T m) noexcept {
   assert(m > T{0});
 
-  auto [gcd, x, y] = extended_euclid<T, S>(a, m);
+  const auto [gcd, x, y] = ntlib::extended_euclid<T, S>(a, m);
   assert(gcd == T{1});
 
   return x >= S{0}
-      ? mod(static_cast<T>(x), m)
-      : m - (mod(static_cast<T>(-x), m));
+      ? ntlib::mod(static_cast<T>(x), m)
+      : m - (ntlib::mod(static_cast<T>(-x), m));
 }
 
 /**
- * Tests, if a is a quadratic residue modulo p.
- * Uses Euler's criterion to compute Legendre Symbol (a/p).
+ * @brief Test whether a given number is a quadratic residue module a prime.
+ * 
+ * For \f$a, p \in \mathbb{N}\f$ where \f$p\f$ is prime, checks whether \f$a\f$
+ * is a quadratic residue modulo \f$p\f$, i.e., if there is an \f$x\f$ such that
+ * \f$x^2 = a \mod p\f$.
  *
+ * @tparam T An integer-like type.
  * @param a The number to test.
  * @param p The modulus. Must be prime.
- * @return True, if and only if there is an x, such that x^2 = a (mod p).
+ * @return Whether \f$a\f$ is a quadratic residue modulo \f$p\f$.
  */
 export template<typename T>
 [[nodiscard]] constexpr bool mod_is_square(T a, T p) noexcept {
   if (a == T{0}) { return true; }
   if (p == T{2}) { return true; }
-  const auto mod_p = [p](T n) { return mod(n, p); };
-  return mod_pow(a, (p - T{1}) / T{2}, mod_p) == T{1};
+  const auto mod_p = [p](T n) { return ntlib::mod(n, p); };
+  return ntlib::mod_pow(a, (p - T{1}) / T{2}, mod_p) == T{1};
 }
 
 /**
- * Computes square roots modular a prime number, that is an integer solution for
- * x in the equation x^2 = a mod p.
- * Uses the Tonelli-Shankes algorithm.
+ * @brief Computes square roots moduolo an odd prime.
+ * 
+ * Given \f$n \in \mathbb{N}\f$ and an odd prime \f$p\f$, uses the Tonelli-Shankes
+ * algorithm to compute an \f$x\f$ such that \f$x^2 = n \mod p\f$.
+ * 
+ * For every solution \f$0 \leq x < p\f$, there is a second solution
+ * \f$p - x\f$. Returns the smaller one.
  *
- * @param a Parameter a. 0 <= a < p.
- * @param p Odd prime number p > 2.
- * @return 0 <= x < p such that x^2 = a mod p.
- *         There are two solutions, the other one is p-x.
- *         Returns the smaller one.
+ * @tparam T An integer-like type.
+ * @param n Parameter \f$n\f$. Must be \f$0 \leq n < p\f$.
+ * @param p Odd prime number.
+ * @return The smaller of two solutions \f$x\f$ to \f$x^2 = n \mod p\f$.
  */
 export template<typename T>
 [[nodiscard]] constexpr T mod_sqrt(T n, T p) noexcept {
-  const auto mod_p = [p](T x) { return mod(x, p); };
+  const auto mod_p = [p](T x) { return ntlib::mod(x, p); };
 
   // Find q, s with p-1 = q*2^s.
-  auto [s, q] = odd_part(p - T{1});
+  const auto [s, q] = ntlib::odd_part(p - T{1});
 
   // If and only if s == 1, we have p = 3 (mod 4).
   // In this case we can compute root x directly.
-  if (s == T{1}) { return mod_pow(n, (p + T{1}) / T{4}, mod_p); }
+  if (s == T{1}) { return ntlib::mod_pow(n, (p + T{1}) / T{4}, mod_p); }
 
   // Find a quadratic non-residue z.
   // Half the numbers in 1, ..., p-1 are, so we randomly guess.
@@ -150,11 +183,11 @@ export template<typename T>
   std::mt19937 gen(rd());
   std::uniform_int_distribution<T> dis(T{1}, p - T{1});
   T z{dis(gen)};
-  while (mod_is_square(z, p)) z = dis(gen);
+  while (ntlib::mod_is_square(z, p)) z = dis(gen);
 
-  T c = mod_pow(z, q, mod_p);
-  T x = mod_pow(n, (q + T{1}) / T{2}, mod_p);
-  T t = mod_pow(n, q, mod_p);
+  T c = ntlib::mod_pow(z, q, mod_p);
+  T x = ntlib::mod_pow(n, (q + T{1}) / T{2}, mod_p);
+  T t = ntlib::mod_pow(n, q, mod_p);
   T m = s;
 
   while (t % p != T{1}) {
@@ -167,7 +200,7 @@ export template<typename T>
     }
 
     T cexp = T{1} << (m - i - T{1});
-    T b = mod_pow(c, cexp, mod_p);
+    T b = ntlib::mod_pow(c, cexp, mod_p);
     x = x * b % p;
     t = t * b % p * b % p;
     c = b * b % p;
@@ -178,61 +211,74 @@ export template<typename T>
 }
 
 /**
- * Computes the factorial `n!` of a given number `n` modulo `m`.
+ * @brief Computes a factorial modulo a given number.
  * 
+ * For \f$n, m \in \mathbb{N}\f$, computes \f$n! \mod m\f$.
+ * 
+ * @tparam T An integer-like type.
  * @param n The given number.
  * @param m The modulus.
- * @return The factorial `n!` modulo `m`.
+ * @return The factorial \f$n!\f$ modulo \f$m\f$.
  */
 export template<typename T>
 [[nodiscard]] constexpr
 T mod_factorial(T n, T m) {
-  T res = mod(T{1}, m);
+  T res = ntlib::mod(T{1}, m);
   while (n > 1) {
-    res = mod(res * n--, m);
+    res = ntlib::mod(res * n--, m);
   }
   return res;
 }
 
 /**
- * Computes the Legendre Symbol (a/p).
+ * @brief Computes the Legendre Symbol.
+ * 
+ * For an integer \f$a\f$ and an odd prime \f$p\f$, the Legendre Symbol
+ * \f$\left(\frac{a}{p}\right)\f$ determines whether \f$a\f$ is a quadratic
+ * residue modulo \f$p\f$.
  *
+ * @tparam T An integer-like type.
+ * @tparam S The signed type corresponding to `T`.
  * @param a An integer.
- * @param p An odd prime number.
- * @return The Legendre Symbol (a/p).
+ * @param p An odd prime.
+ * @return The Legendre Symbol \f$\left(\frac{a}{p}\right)\f$.
  */
 export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr S legendre(T a, T p) noexcept {
   assert(p != T{2});
 
-  const auto mod_p = [&p](T n) { return mod(n, p); };
-  T rem = mod_pow(a, (p - T{1}) / T{2}, mod_p);
+  const auto mod_p = [&p](T n) { return ntlib::mod(n, p); };
+  T rem = ntlib::mod_pow(a, (p - T{1}) / T{2}, mod_p);
   return rem <= T{1} ? static_cast<S>(rem) : S{-1};
 }
 
 /**
- * Computes the Jacobi Symbol (a/b).
+ * @brief Computes the Jacobi Symbol \f$\left(\frac{a}{p}\right)\f$.
  *
+ * @tparam T An integer-like type.
+ * @tparam S The signed type corresponding to `T`.
  * @param a The "numerator".
  * @param b The "denominator".
- * @return The Jacobi Symbol (a/b).
+ * @return The Jacobi Symbol \f$\left(\frac{a}{p}\right)\f$.
  */
 export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr S jacobi(T a, T b) noexcept {
   assert(b > T{0});
-  assert(is_odd(b));
+  assert(ntlib::is_odd(b));
 
-  a = mod(a, b);
+  using std::swap;
+
+  a = ntlib::mod(a, b);
   S t{1};
   while (a != T{0}) {
-    auto [s, aa] = odd_part(a);
+    auto [s, aa] = ntlib::odd_part(a);
     a = aa;
 
-    if (is_odd(s) && (b % T{8} == T{3} || b % T{8} == T{5})) { t = -t; }
+    if (ntlib::is_odd(s) && (b % T{8} == T{3} || b % T{8} == T{5})) { t = -t; }
 
-    std::swap(a, b);
+    swap(a, b);
     if (a % T{4} == T{3} && b % T{4} == T{3}) { t = -t; }
-    a = mod(a, b);
+    a = ntlib::mod(a, b);
   }
   if (b == T{1}) return t;
   else return S{0};
