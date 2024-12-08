@@ -20,6 +20,16 @@ else()
   add_compile_options(-W -Wall -Werror)
 endif()
 
+# Colored compiler output.
+option (FORCE_COLORED_OUTPUT "Always produce ANSI-colored output (GNU/Clang only)." FALSE)
+if (${FORCE_COLORED_OUTPUT})
+  if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    add_compile_options(-fdiagnostics-color=always)
+  elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    add_compile_options(-fcolor-diagnostics)
+  endif()
+endif()
+
 ################################################################################
 # Build NTLib as a static library.
 ################################################################################
@@ -60,6 +70,8 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
 
   # Benchmarks.
   if (NTLIB_BUILD_BENCHMARKS)
+    set(BENCHMARK_ENABLE_GTEST_TESTS OFF
+        CACHE INTERNAL "don't build tests for Google Benchmark")
     add_subdirectory(benchmarks)
   endif()
 
