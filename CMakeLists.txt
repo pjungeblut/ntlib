@@ -65,13 +65,19 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
 
   # Tests.
   if (NTLIB_BUILD_TESTS)
+    # Enable testing for CTest.
+    # Needs to be in the top level CMakeLists.txt file.
+    enable_testing()
+
     add_subdirectory(test)
   endif()
 
   # Benchmarks.
   if (NTLIB_BUILD_BENCHMARKS)
+    # Don't build tests for Google Benchmark.
     set(BENCHMARK_ENABLE_GTEST_TESTS OFF
         CACHE INTERNAL "don't build tests for Google Benchmark")
+
     add_subdirectory(benchmarks)
   endif()
 

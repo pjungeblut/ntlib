@@ -13,9 +13,6 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-# Enable tests for CTest.
-enable_testing()
-
 # Helper function to add unittests.
 function(add_unittest name libraries)
   add_executable(ut_${name})
