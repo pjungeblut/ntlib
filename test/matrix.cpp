@@ -41,7 +41,7 @@ TEST(ArraySubscript, LValue) {
 
 TEST(Output, StringRepresentation) {
   ntlib::matrix<int32_t> mat({{1,2,3},{4,5,6}});
-  std::string rep = mat.to_string();
+  std::string rep = to_string(mat);
   EXPECT_EQ("{{1,2,3},{4,5,6}}", rep);
 }
 

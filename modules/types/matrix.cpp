@@ -1,6 +1,11 @@
+/**
+ * @file
+ * @brief Primary module interface unit for module `matrix`.
+ */
 module;
 
 #include <cassert>
+#include <concepts>
 #include <cstddef>
 #include <initializer_list>
 #include <memory>
@@ -8,6 +13,10 @@ module;
 #include <string>
 #include <vector>
 
+/**
+ * @module matrix
+ * @brief Represents a matrix with runtime provided dimensions.
+ */
 export module matrix;
 
 import base;
@@ -15,62 +24,66 @@ import base;
 namespace ntlib {
 
 /**
- * Represents a RxC-matrix.
+ * @brief Represents a matrix with a given number of rows and colums.
+ * 
+ * The dimensions of the matrix are set at runtime.
+ * 
+ * @tparam T The element type.
  */
-export template<typename T,
-    template <typename> typename Allocator = std::allocator>
+export template<std::regular T>
 class matrix {
 public:
   /**
-   * Default construction for an empty matrix.
+   * @brief Default constructor. Creates 0x0-matrix.
    */
   matrix() : rows(0), columns(0) {};
 
   /**
-   * Constructs a 1x1 matrix from a single value.
+   * @brief Constructs a 1x1 matrix from a given value.
    *
-   * @param val The single value.
+   * @param val The given value.
    */
   explicit matrix(T val) : rows(1), columns(1) {
-    mat.resize(rows, std::vector<T, Allocator<T>>(columns));
+    mat.resize(rows, std::vector<T>(columns));
     mat[0][0] = val;
   }
 
   /**
-   * Constructs a new matrix of the given dimensions with the values default
-   * initialized.
+   * @brief Constructs a new matrix of the given dimensions,
+   * 
+   * Elements will be default initialized.
    *
    * @param rows The number of rows.
    * @param columns The number of columns.
    */
   matrix(std::size_t rows, std::size_t columns) : rows(rows), columns(columns) {
-    mat.resize(rows, std::vector<T, Allocator<T>>(columns));
+    mat.resize(rows, std::vector<T>(columns));
   }
 
   /**
-   * Constructs a new matrix from a given 2D initializer list.
-   * Elements are given line by line.
+   * @brief Constructs a new matrix from a given 2D initializer list.
+   * 
+   * The 2D initializer list shall be a list of lines.
    *
    * @param elements The elements of the matrix.
    */
   matrix(std::initializer_list<std::initializer_list<T>> elements) {
     rows = elements.size();
-    columns = rows ? elements.begin()->size() : 0;
-    mat.resize(rows, std::vector<T, Allocator<T>>(columns));
+    if (rows == 0) { return; }
+
+    columns = elements.begin()->size();
+    mat.resize(rows, std::vector<T>(columns));
 
     std::size_t r = 0;
     for (const auto &line : elements) {
-      std::size_t c = 0;
-      for (const auto &e : line) {
-        mat[r][c] = e;
-        ++c;
-      }
+      assert(line.size() == columns);
+      mat[r] = line;
       ++r;
     }
   }
 
   /**
-   * Returns the number of rows.
+   * @brief Returns the number of rows.
    *
    * @return The number of rows.
    */
@@ -79,7 +92,7 @@ public:
   }
 
   /**
-   * Returns the number of columns.
+   * @brief Returns the number of columns.
    *
    * @return The number of columns.
    */
@@ -88,39 +101,53 @@ public:
   }
 
   /**
-   * A proxy class to provide an lvalue that can be returned from operator[]
-   * so that values can be changed but for example dimensions cannot.
+   * @brief A proxy class to provide an lvalue that can be returned from
+   * `matrix<T>::operator[]`.
+   * 
+   * This is necessary so that values can be changed but for example dimensions
+   * cannot.
    */
   class reference {
     friend class matrix;
 
     /**
-     * Constant pointer to the queried row.
+     * @brief Constant pointer to the queried row.
      */
-    std::vector<T, Allocator<T>>* const row;
+    std::vector<T>* const row;
 
     /**
-     * Constructs the reference.
+     * @brief Constructs the reference.
      *
-     * @param row_idx The index of the row to access.
+     * @param row Pointer to the accessed row.
      */
-    reference(std::vector<T, Allocator<T>>* const row) : row(row) {};
+    reference(std::vector<T>* const row) : row(row) {};
 
   public:
     /**
-     * Array subscript operator to access the row.
+     * @brief Array subscript operator to access the column.
      *
      * @param col_idx The index of the column to access.
-     * @return The value in row `row_idx` and column `col_idx`.
+     * @return The value in the referenced row and column `col_idx`.
      */
     [[nodiscard]]
     T& operator[](std::size_t col_idx) {
       return (*row)[col_idx];
     }
+
+    /**
+     * @brief Constant array subscript operator to access the column.
+     * 
+     * @param col_idx The index of the column to access.
+     * @return The value in the referenced tow and column `col_idx`.
+     */
+    [[nodiscard]]
+    const T& operator[](std::size_t col_idx) const {
+      return (*row)[col_idx];
+    }
   };
 
   /**
-   * Array subscript operator.
+   * @brief Array subscript operator.
    *
    * @param row_idx The index of the row to access.
    * @return A reference to the vector containing the entries of the queried
@@ -132,256 +159,126 @@ public:
   }
 
   /**
-   * Constant array subscript operator.
+   * @brief Constant array subscript operator.
    *
    * @param row_idx The index of the row to access.
    * @return A constant reference to the vector containing the entries of the
    *         queried row.
    */
-  const std::vector<T, Allocator<T>>& operator[](std::size_t row_idx) const {
+  const std::vector<T>& operator[](std::size_t row_idx) const {
     return mat[row_idx];
   }
 
   /**
-   * Converts matrix into a string representation.
-   *
-   * @return String representation.
-   */
-  std::string to_string() const {
-    using std::to_string;
-
-    std::string rep = "";
-    rep += "{";
-    for (std::size_t r = 0; r < get_rows(); ++r) {
-      if (r) rep += ",";
-      rep += "{";
-      for (std::size_t c = 0; c < get_columns(); ++c) {
-        if (c) rep += ",";
-        rep += to_string(mat[r][c]);
-      }
-      rep += "}";
-    }
-    rep += "}";
-    return rep;
-  }
-
-  /**
-   * Writes a text representation of the matrix to the given out stream.
-   * Output is formatted line by line.
-   *
-   * @param os The out stream to write to.
-   * @param obj
-   * @return Reference to the out stream.
-   */
-  friend std::ostream& operator<<(std::ostream &os, const matrix &m) {
-    os << m.to_string();
-    return os;
-  }
-
-  /**
-   * Matrix addition.
-   *
-   * @param lhs The first summand.
+   * @brief Compound plus operator for matrix addition.
+   * 
    * @param rhs The second summand.
-   * @return The sum of `lhs` and `rhs`.
-   */
-  friend matrix operator+(const matrix &lhs, const matrix &rhs) {
-    matrix sum(lhs.get_rows(), lhs.get_columns());
-    add(lhs, rhs, sum);
-    return sum;
-  }
-
-  /**
-   * Compound matrix addition.
-   *
-   * @param rhs The other matrix to add to the current one.
-   * @return Reference to this matrix.
+   * @return Reference to the result.
    */
   matrix& operator+=(const matrix &rhs) {
-    add(*this, rhs, *this);
+    assert(rows == rhs.rows);
+    assert(columns == rhs.columns);
+
+    for (std::size_t r = 0; r < rows; ++r) {
+      for (std::size_t c = 0; c < columns; ++c) {
+        mat[r][c] += rhs[r][c];
+      }
+    }
     return *this;
   }
 
   /**
-   * Matrix subtraction.
+   * @brief Compound minus operator for matrix subtraction.
    *
-   * @param lhs The minuend.
    * @param rhs The subtrahend.
-   * @return The difference of `lhs` and `rhs`.
-   */
-  friend matrix operator-(const matrix &lhs, const matrix &rhs) {
-    matrix difference(lhs.get_rows(), lhs.get_columns());
-    subtract(lhs, rhs, difference);
-    return difference;
-  }
-
-  /**
-   * Compound matrix subtraction.
-   *
-   * @param rhs The subtrahend to subtract from the current matrix.
-   * @return Reference to this matrix.
+   * @return Reference to the result.
    */
   matrix& operator-=(const matrix &rhs) {
-    subtract(*this, rhs, *this);
+    assert(rows == rhs.rows);
+    assert(columns == rhs.columns);
+
+    for (std::size_t r = 0; r < rows; ++r) {
+      for (std::size_t c = 0; c < columns; ++c) {
+        mat[r][c] -= rhs[r][c];
+      }
+    }
     return *this;
   }
 
   /**
-   * Scalar multiplicatoin.
-   *
-   * @param lhs The first factor. A matrix.
-   * @param rhs The second factor. A scalar.
-   * @return The product.
-   */
-  template<typename S>
-  friend matrix operator*(const matrix &lhs, S rhs) {
-    matrix product(lhs.get_rows(), lhs.get_columns());
-    scalar_multiply(lhs, rhs, product);
-    return product;
-  }
-
-  /**
-   * Scalar multiplicatoin.
-   *
-   * @param lhs The first factor. A scalar.
-   * @param rhs The second factor. A matrix.
-   * @return The product.
-   */
-  template<typename S>
-  friend matrix operator*(S lhs, const matrix &rhs) {
-    matrix product(rhs.get_rows(), rhs.get_columns());
-    scalar_multiply(rhs, lhs, product);
-    return product;
-  }
-
-  /**
-   * Compound scalar multiplication.
+   * @brief Compound times operator for right scalar multiplication.
    *
    * @param rhs The second factor. A scalar.
-   * @return Reference to this matrix.
+   * @return Reference to the result.
    */
   template<typename S>
   matrix& operator*=(S rhs) {
-    scalar_multiply(*this, rhs, *this);
+    for (std::size_t r = 0; r < rows; ++r) {
+      for (std::size_t c = 0; c < columns; ++c) {
+        mat[r][c] *= rhs;
+      }
+    }
     return *this;
   }
 
   /**
-   * Division by scalar.
-   *
-   * @param lhs The dividend. A matrix.
-   * @param rhs The divisor. A scalar.
-   * @return The quotient matrix.
-   */
-  template<typename S>
-  friend matrix operator/(const matrix &lhs, S rhs) {
-    matrix quotient(lhs.get_rows(), lhs.get_columns());
-    scalar_divide(lhs, rhs, quotient);
-    return quotient;
-  }
-
-  /**
-   * Compound division by a scalar.
+   * @brief Compound divides operator for scalar division.
    *
    * @param rhs The divisor. A scalar.
    * @return Reference to this matrix.
    */
   template<typename S>
   matrix& operator/=(S rhs) {
-    scalar_divide(*this, rhs, *this);
+    assert(rhs != S{0});
+
+    for (std::size_t r = 0; r < rows; ++r) {
+      for (std::size_t c = 0; c < columns; ++c) {
+        mat[r][c] /= rhs;
+      }
+    }
     return *this;
   }
 
   /**
-   * Elementwise modulo.
-   *
-   * @param lhs The dividend. A matrix.
+   * @brief Compound modulo operator for elementwise modulo by a scalar.
+   * 
    * @param rhs The divisor. A scalar.
-   * @return A matrix with every element being the remainder of the
-   *         corresponding element in `lhs` after divison by `rhs`.
-   */
-  template<typename S>
-  friend matrix operator%(const matrix &lhs, S rhs) {
-    matrix remainder(lhs.get_rows(), lhs.get_columns());
-    modulo(lhs, rhs, remainder);
-    return remainder;
-  }
-
-  /**
-   * Compound elementwise modulo.
-   *
-   * @param rhs The divisor. A scalar.
-   * @return Reference to this matrix.
+   * @return Reference to the result.
    */
   template<typename S>
   matrix& operator%=(S rhs) {
-    modulo(*this, rhs, *this);
-    return *this;
-  }
+    assert(rhs != S{0});
 
-  /**
-   * Matrix multiplication.
-   *
-   * @param lhs The first factor.
-   * @param rhs The second factor.
-   * @return The product.
-   */
-  friend matrix operator*(const matrix &lhs, const matrix &rhs) {
-    matrix product(lhs.get_rows(), rhs.get_columns());
-    multiply(lhs, rhs, product);
-    return product;
-  }
-
-  /**
-   * Compound matrix multiplication.
-   *
-   * @param rhs The second factor.
-   * @return Reference to this matrix.
-   */
-  matrix& operator*=(const matrix &rhs) {
-    matrix product(get_rows(), rhs.get_columns());
-    multiply(*this, rhs, product);
-    *this = std::move(product);
-    return *this;
-  }
-
-  /**
-   * Unary plus operator. Does nothing.
-   *
-   * @param rhs The matrix to do nothing on.
-   * @return A copy of the old matrix.
-   */
-  friend matrix operator+(const matrix &rhs) {
-    return rhs;
-  }
-
-  /**
-   * Unary minus operator.
-   *
-   * @param rhs The matrix to negate.
-   * @return A matrix with all elements negated.
-   */
-  friend matrix operator-(const matrix &rhs) {
-    matrix negated(rhs.get_rows(), rhs.get_columns());
-    for (std::size_t r = 0; r < rhs.get_rows(); ++r) {
-      for (std::size_t c = 0; c < rhs.get_columns(); ++c) {
-        negated[r][c] = -rhs[r][c];
+    for (std::size_t r = 0; r < rows; ++r) {
+      for (std::size_t c = 0; c < columns; ++c) {
+        mat[r][c] %= rhs;
       }
     }
-    return negated;
+    return *this;
   }
 
   /**
-   * Default equality comparison.
+   * @brief Compound times operator for matrix multiplication.
+   *
+   * @param rhs The second factor.
+   * @return Reference to the result.
+   */
+  matrix& operator*=(const matrix &rhs) {
+    *this = *this * rhs;
+    return *this;
+  }
+
+  /**
+   * @brief Default equality operator.
    *
    * @return Whether two matrices are equal.
    */
-  bool operator==(const matrix&) const = default;
+  friend bool operator==(const matrix&, const matrix&) = default;
 
   /**
-   * Returns a square identity matrix with the given dimensions.
+   * @brief Returns a square identity matrix with the given dimensions.
    *
-   * @param dim The dimension.
+   * @param dim The dimensions, i.e., the number of rows and columns.
    * @param multiplicative_neutral The multiplicative neutral element to use for
    *     the main diagonal.
    * @return An identity matrix.
@@ -398,174 +295,246 @@ public:
 
 private:
   /**
-   * Number of rows and columns.
+   * @brief Number of rows.
    */
   std::size_t rows;
+
+  /**
+   * @brief Number of columns.
+   */
   std::size_t columns;
 
   /**
-   * The entries of the matrix.
+   * @brief The entries of the matrix.
    */
-  std::vector<
-      std::vector<T, Allocator<T>>,
-      Allocator<std::vector<T, Allocator<T>>>> mat;
-
-  /**
-   * Adds two matrices into a third.
-   * The dimensions of all three parameters must be the same.
-   *
-   * @param lhs The first summand.
-   * @param rhs The second summand.
-   * @param sum The sum. May be the same as `lhs`.
-   */
-  static void add(const matrix &lhs, const matrix &rhs, matrix &sum) {
-    assert(lhs.get_rows() == rhs.get_rows());
-    assert(lhs.get_rows() == sum.get_rows());
-    assert(lhs.get_columns() == rhs.get_columns());
-    assert(lhs.get_columns() == sum.get_columns());
-
-    for (std::size_t r = 0; r < lhs.get_rows(); ++r) {
-      for (std::size_t c = 0; c < lhs.get_columns(); ++c) {
-        sum[r][c] = lhs[r][c] + rhs[r][c];
-      }
-    }
-  }
-
-  /**
-   * Subtracts two matrices into a thrid.
-   *
-   * @param lhs The minuend.
-   * @param rhs The subtrahend.
-   * @param difference The difference. May be the same as `lhs`.
-   */
-  static void subtract(const matrix &lhs, const matrix &rhs, matrix &difference) {
-    assert(lhs.get_rows() == rhs.get_rows());
-    assert(lhs.get_rows() == difference.get_rows());
-    assert(lhs.get_columns() == rhs.get_columns());
-    assert(lhs.get_columns() == difference.get_columns());
-
-    for (std::size_t r = 0; r < lhs.get_rows(); ++r) {
-      for (std::size_t c = 0; c < lhs.get_columns(); ++c) {
-        difference[r][c] = lhs[r][c] - rhs[r][c];
-      }
-    }
-  }
-
-  /**
-   * Scalar multiplication.
-   *
-   * @param lhs The first factor. A matrix.
-   * @param rhs The second factor. A scalar.
-   * @param product The product. May be the same a `lhs`.
-   */
-  template<typename S>
-  static void scalar_multiply(const matrix &lhs, S rhs, matrix &product) {
-    assert(lhs.get_rows() == product.get_rows());
-    assert(lhs.get_columns() == product.get_columns());
-
-    for (std::size_t r = 0; r < lhs.get_rows(); ++r) {
-      for (std::size_t c = 0; c < lhs.get_columns(); ++c) {
-        product[r][c] = lhs[r][c] * rhs;
-      }
-    }
-  }
-
-  /**
-   * Scalar division.
-   *
-   * @param lhs The dividend. A matrix.
-   * @param rhs The divisor. A scalar.
-   * @param quotient The quotient. May be the same as `lhs`.
-   */
-  template<typename S>
-  static void scalar_divide(const matrix &lhs, S rhs, matrix &quotient) {
-    assert(rhs != 0);
-    assert(lhs.get_rows() == quotient.get_rows());
-    assert(lhs.get_columns() == quotient.get_columns());
-
-    for (std::size_t r = 0; r < lhs.get_rows(); ++r) {
-      for (std::size_t c = 0; c < lhs.get_columns(); ++c) {
-        quotient[r][c] = lhs[r][c] / rhs;
-      }
-    }
-  }
-
-  /**
-   * Elementwise modulo.
-   *
-   * @param lhs The dividend. A matrix.
-   * @param rhs The divisor. A scalar.
-   * @param remainder The remainder. May be the same as `lhs`.
-   */
-  template<typename S>
-  static void modulo(const matrix &lhs, S rhs, matrix &remainder) {
-    assert(rhs != 0);
-    assert(lhs.get_rows() == remainder.get_rows());
-    assert(lhs.get_columns() == remainder.get_columns());
-
-    for (std::size_t r = 0; r < lhs.get_rows(); ++r) {
-      for (std::size_t c = 0; c < lhs.get_columns(); ++c) {
-        remainder[r][c] = lhs[r][c] % rhs;
-      }
-    }
-  }
-
-  /**
-   * Matrix multiplication.
-   *
-   * @param lhs The first factor.
-   * @param rhs The second factor.
-   * @param product The product. May not be the same as `lhs` or `rhs`.
-   */
-  static void multiply(const matrix &lhs, const matrix &rhs, matrix &product) {
-    assert(lhs.get_columns() == rhs.get_rows());
-    assert(lhs.get_rows() == product.get_rows());
-    assert(rhs.get_columns() == product.get_columns());
-
-    for (std::size_t r = 0; r < lhs.get_rows(); ++r) {
-      for (std::size_t c = 0; c < rhs.get_columns(); ++c) {
-        product[r][c] = T{0};
-      }
-    }
-
-    for (std::size_t r = 0; r < lhs.get_rows(); ++r) {
-      for (std::size_t k = 0; k < lhs.get_columns(); ++k) {
-        for (std::size_t c = 0; c < rhs.get_columns(); ++c) {
-          product[r][c] += lhs[r][k] * rhs[k][c];
-        }
-      }
-    }
-  }
+  std::vector<std::vector<T>> mat;
 };
 
 /**
- * Executes a function an each element.
+ * @brief Converts a given matrix into a human readable string representation.
  * 
+ * For example, the matrix
+ * \f[
+ * \begin{pmatrix}
+ * a & b \\
+ * c & d
+ * \end{pmatrix}
+ * \f]
+ * will be converted into "{{a,b},{c,d}}".
+ *
+ * @tparam T The element type.
+ * @param mat The given matrix.
+ * @return A string representation of the given matrix.
+ */
+export template<std::regular T>
+std::string to_string(matrix<T> mat) {
+  using std::to_string;
+
+  std::string rep = "";
+  rep += "{";
+  for (std::size_t r = 0; r < mat.get_rows(); ++r) {
+    if (r) rep += ",";
+    rep += "{";
+    for (std::size_t c = 0; c < mat.get_columns(); ++c) {
+      if (c) rep += ",";
+      rep += to_string(mat[r][c]);
+    }
+    rep += "}";
+  }
+  rep += "}";
+
+  return rep;
+}
+
+/**
+ * @brief Writes a string representation of a given matrix to a given output
+ * stream.
+ *
+ * @tparam T The element type.
+ * @param os The given output stream.
+ * @param m The given matrix.
+ * @return Reference to the output stream.
+ */
+export template<std::regular T>
+std::ostream& operator<<(std::ostream &os, const matrix<T> &m) {
+  os << ntlib::to_string(m);
+  return os;
+}
+
+/**
+ * @brief Plus operator for matrix addition.
+ *
+ * @tparam T The element type.
+ * @param lhs The first summand.
+ * @param rhs The second summand.
+ * @return The sum of `lhs` and `rhs`.
+ */
+export template<std::regular T>
+[[nodiscard]]
+matrix<T> operator+(matrix<T> lhs, const matrix<T> &rhs) {
+  lhs += rhs;
+  return lhs;
+}
+
+/**
+ * @brief Minus operator for matrix subtraction.
+ *
+ * @tparam T The element type.
+ * @param lhs The minuend.
+ * @param rhs The subtrahend.
+ * @return The difference of `lhs` and `rhs`.
+ */
+export template<std::regular T>
+matrix<T> operator-(matrix<T> lhs, const matrix<T> &rhs) {
+  lhs -= rhs;
+  return lhs;
+}
+
+/**
+ * @brief Times operator for right scalar multiplicatoin.
+ *
+ * @tparam T The element type.
+ * @tparam S The scalar type.
+ * @param lhs The first factor, a matrix.
+ * @param rhs The second factor, a scalar.
+ * @return The product of `lhs` and `rhs`.
+ */
+export template<std::regular T, typename S>
+matrix<T> operator*(matrix<T> lhs, S rhs) {
+  lhs *= rhs;
+  return lhs;
+}
+
+/**
+ * @brief Times operator for left scalar multiplicatoin.
+ *
+ * @tparam T The element type.
+ * @tparam S The scalar type.
+ * @param lhs The first factor, a scalar.
+ * @param rhs The second factor, a matrix.
+ * @return The product of `lhs` and `rhs`.
+ */
+export template<std::regular T, typename S>
+matrix<T> operator*(S lhs, matrix<T> rhs) {
+  // This uses commutativiy of scalar multiplication.
+  // Depending on T this might not be true.
+  rhs *= lhs;
+  return rhs;
+}
+
+/**
+ * @brief Divides operator for scalar division.
+ *
+ * @tparam T The element type.
+ * @tparam S The scalar type.
+ * @param lhs The dividend. A matrix.
+ * @param rhs The divisor. A scalar.
+ * @return The quotient matrix.
+ */
+export template<std::regular T, typename S>
+matrix<T> operator/(matrix<T> lhs, S rhs) {
+  lhs /= rhs;
+  return lhs;
+}
+
+/**
+ * @brief Modulo operator for elementwise modulo by a scalar.
+ *
+ * @tparam T The element type.
+ * @tparam S The scalar type.
+ * @param lhs The dividend. A matrix.
+ * @param rhs The divisor. A scalar.
+ * @return A matrix with every element being the remainder of the
+ *     corresponding element in `lhs` after divison by `rhs`.
+ */
+export template<std::regular T, typename S>
+matrix<T> operator%(matrix<T> lhs, S rhs) {
+  lhs %= rhs;
+  return lhs;
+}
+
+/**
+ * @brief Unary plus operator. Does nothing.
+ *
+ * @param rhs The matrix..
+ * @return A copy of the old matrix.
+ */
+export template<std::regular T>
+matrix<T> operator+(const matrix<T> &rhs) {
+  return rhs;
+}
+
+/**
+ * @brief Unary minus operator.
+ *
+ * @param rhs The matrix.
+ * @return A matrix with all elements negated.
+ */
+export template<std::regular T>
+matrix<T> operator-(const matrix<T> &rhs) {
+  matrix<T> negated(rhs.get_rows(), rhs.get_columns());
+  for (std::size_t r = 0; r < rhs.get_rows(); ++r) {
+    for (std::size_t c = 0; c < rhs.get_columns(); ++c) {
+      negated[r][c] = -rhs[r][c];
+    }
+  }
+  return negated;
+}
+
+/**
+ * @brief Times operator for matrix multiplication.
+ * 
+ * @param lhs The first factor.
+ * @param rhs The second factor.
+ * @return The matrix product of `lhs` and `rhs`.
+ */
+export template<std::regular T>
+matrix<T> operator*(const matrix<T> &lhs, const matrix<T> &rhs) {
+  assert(lhs.get_columns() == rhs.get_rows());
+
+  matrix<T> product(lhs.get_rows(), rhs.get_columns());
+  for (std::size_t r = 0; r < lhs.get_rows(); ++r) {
+    for (std::size_t k = 0; k < lhs.get_columns(); ++k) {
+      for (std::size_t c = 0; c < rhs.get_columns(); ++c) {
+        product[r][c] += lhs[r][k] * rhs[k][c];
+      }
+    }
+  }
+  return product;
+}
+
+/**
+ * @brief Executes a function an each element.
+ * 
+ * @tparam T The element type.
+ * @tparam F A function object.
  * @param m The matrix.
  * @param func The function to execute.
  * @return The new matrix.
  */
 export template<typename T, typename F>
-matrix<T> exec_each_element(matrix<T> m, const F &func) {
+matrix<T> exec_each_element(const matrix<T> &m, const F &func) {
+  matrix<T> res(m.get_rows(), m.get_columns());
   for (std::size_t r = 0; r < m.get_rows(); ++r) {
     for (std::size_t c = 0; c < m.get_columns(); ++c) {
-      m[r][c] = func(m[r][c]);
+      res[r][c] = func(m[r][c]);
     }
   }
-  return m;
+  return res;
 }
 
 /**
- * Specialization for `get_multiplicative_neutral()`.
+ * @brief Specialization for `get_multiplicative_neutral()`.
  * 
- * @param _ Instance of the type.
+ * @tparam T The element type.
+ * @param m Instance of the type.
  * @return Identity matrix of same dimension.
  */
 export template<typename T>
 [[nodiscard]] constexpr
-matrix<T> get_multiplicative_neutral(matrix<T> m) {
-  assert(m.get_rows() == m.get_columns());
+matrix<T> get_multiplicative_neutral(const matrix<T> &m) {
   assert(m.get_rows() > 0);
+  assert(m.get_columns() > 0);
 
   return matrix<T>::get_identity(
       m.get_rows(), get_multiplicative_neutral(m[0][0]));
