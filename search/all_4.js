@@ -8,5 +8,6 @@ var searchData=
   ['euler_5ftotient_5',['euler_totient',['../module__euler__totient.html',1,'euler_totient module'],['../euler__totient_8cpp.html#a366b44affefd3dbf9821b0d8fd29faa6',1,'ntlib::euler_totient(const prime_factors&lt; T &gt; &amp;factors)'],['../euler__totient_8cpp.html#af5f9ce362c3d9da9d72b1c93050ac87a',1,'ntlib::euler_totient(T n)']]],
   ['euler_5ftotient_2ecpp_6',['euler_totient.cpp',['../euler__totient_8cpp.html',1,'']]],
   ['euler_5ftotient_5fsieve_7',['euler_totient_sieve',['../euler__totient_8cpp.html#a7388a2605f8d1e447acbd1eb8ce571dc',1,'ntlib']]],
-  ['extended_5feuclid_8',['extended_euclid',['../base_8cpp.html#a737f6ddbea5aa8554fbfcea214d5836f',1,'ntlib']]]
+  ['exec_5feach_5felement_8',['exec_each_element',['../matrix_8cpp.html#a85ff7e35ad7dbc03333e44230401e6cc',1,'ntlib']]],
+  ['extended_5feuclid_9',['extended_euclid',['../base_8cpp.html#a737f6ddbea5aa8554fbfcea214d5836f',1,'ntlib']]]
 ];

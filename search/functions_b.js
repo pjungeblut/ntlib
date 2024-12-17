@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['matrix_0',['matrix',['../classntlib_1_1matrix.html#a7cc452e7708dd68ca3c8969c9916c416',1,'ntlib::matrix::matrix()'],['../classntlib_1_1matrix.html#a1806c59896c4cae028c1b737e658c1fe',1,'ntlib::matrix::matrix(T val)'],['../classntlib_1_1matrix.html#af13307fb9285bba7d9d35191a47e856f',1,'ntlib::matrix::matrix(std::size_t rows, std::size_t columns)'],['../classntlib_1_1matrix.html#ab8d17eae0453cc1fb891c91a683c4de0',1,'ntlib::matrix::matrix(std::initializer_list&lt; std::initializer_list&lt; T &gt; &gt; elements)']]],
+  ['matrix_0',['matrix',['../classntlib_1_1matrix.html#ac6defaf2324c0dc0acfd02058c62d62c',1,'ntlib::matrix::matrix()'],['../classntlib_1_1matrix.html#afa03bf408a4fd239da014ef4042787f0',1,'ntlib::matrix::matrix(T val)'],['../classntlib_1_1matrix.html#aecfcbe99678df84ccfc7976ea3defe15',1,'ntlib::matrix::matrix(std::size_t rows, std::size_t columns)'],['../classntlib_1_1matrix.html#a7b3b3e2b72f525c2076792fbea24b528',1,'ntlib::matrix::matrix(std::initializer_list&lt; std::initializer_list&lt; T &gt; &gt; elements)']]],
   ['mod_1',['mod',['../modulo_8cpp.html#ab11afb456eb969b2c041a515fcbe83d2',1,'ntlib']]],
   ['mod_5fbinom_2',['mod_binom',['../binomial__coefficient_8cpp.html#a998112c7d16c9e712e91c6ecc6d21ef2',1,'ntlib']]],
   ['mod_5fbinom_5ftable_3',['mod_binom_table',['../binomial__coefficient_8cpp.html#a7c4e674021d6f2bc9c7b56440d5b94f5',1,'ntlib']]],

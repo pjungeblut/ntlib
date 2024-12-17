@@ -1,10 +1,8 @@
 var searchData=
 [
-  ['operator_25_0',['operator%',['../classntlib_1_1matrix.html#a57953fc09d828e0c5dc09c8c3fb64751',1,'ntlib::matrix']]],
-  ['operator_2a_1',['operator*',['../classntlib_1_1mod__int.html#a914292b701e540dd88aad6e183c24886',1,'ntlib::mod_int::operator*'],['../classntlib_1_1matrix.html#af79abae5361d93bd05087eb61000f83c',1,'ntlib::matrix::operator*'],['../classntlib_1_1matrix.html#a1758abef93b3b04d1d6f50106a916259',1,'ntlib::matrix::operator*'],['../classntlib_1_1matrix.html#a85dbf182a7747be873dc288072460cc4',1,'ntlib::matrix::operator*'],['../classntlib_1_1rational.html#a473400811e3448fe020c422fc4f58064',1,'ntlib::rational::operator*']]],
-  ['operator_2b_2',['operator+',['../classntlib_1_1mod__int.html#a46102d654f0b40ef9edaf2014a7a5633',1,'ntlib::mod_int::operator+'],['../classntlib_1_1matrix.html#a7ed6f58da0dc10a0aa323b7f1beb30f8',1,'ntlib::matrix::operator+'],['../classntlib_1_1matrix.html#a5d9a517aa6c6662a220742d8eb0c8b9f',1,'ntlib::matrix::operator+'],['../classntlib_1_1rational.html#aaf6d1ba9007fd28eb41ef1065de561bf',1,'ntlib::rational::operator+']]],
-  ['operator_2d_3',['operator-',['../classntlib_1_1mod__int.html#acbdbcca7e10fa41bb1fcc4f18ad0d420',1,'ntlib::mod_int::operator-'],['../classntlib_1_1matrix.html#af405c915a89a4913acadc421fadea3d8',1,'ntlib::matrix::operator-'],['../classntlib_1_1matrix.html#a259f3399ba34add11855966d4b8d78d6',1,'ntlib::matrix::operator-'],['../classntlib_1_1rational.html#a14b2f5f4271f17e96fb7caf468e69db3',1,'ntlib::rational::operator-']]],
-  ['operator_2f_4',['operator/',['../classntlib_1_1matrix.html#af129d9a6321dbeb21c4a612910b986eb',1,'ntlib::matrix::operator/'],['../classntlib_1_1rational.html#adb51ccca50eea1bdb5a9ad7a0070524e',1,'ntlib::rational::operator/']]],
-  ['operator_3c_3c_5',['operator&lt;&lt;',['../classntlib_1_1matrix.html#a3d61d0efa79c5e52a7a5b22bfd140571',1,'ntlib::matrix']]],
-  ['operator_3d_3d_6',['operator==',['../classntlib_1_1mod__int.html#af227d0bf268655aa29ba36ec4928912d',1,'ntlib::mod_int']]]
+  ['operator_2a_0',['operator*',['../classntlib_1_1mod__int.html#a914292b701e540dd88aad6e183c24886',1,'ntlib::mod_int::operator*'],['../classntlib_1_1rational.html#a473400811e3448fe020c422fc4f58064',1,'ntlib::rational::operator*']]],
+  ['operator_2b_1',['operator+',['../classntlib_1_1mod__int.html#a46102d654f0b40ef9edaf2014a7a5633',1,'ntlib::mod_int::operator+'],['../classntlib_1_1rational.html#aaf6d1ba9007fd28eb41ef1065de561bf',1,'ntlib::rational::operator+']]],
+  ['operator_2d_2',['operator-',['../classntlib_1_1mod__int.html#acbdbcca7e10fa41bb1fcc4f18ad0d420',1,'ntlib::mod_int::operator-'],['../classntlib_1_1rational.html#a14b2f5f4271f17e96fb7caf468e69db3',1,'ntlib::rational::operator-']]],
+  ['operator_2f_3',['operator/',['../classntlib_1_1rational.html#adb51ccca50eea1bdb5a9ad7a0070524e',1,'ntlib::rational']]],
+  ['operator_3d_3d_4',['operator==',['../classntlib_1_1mod__int.html#af227d0bf268655aa29ba36ec4928912d',1,'ntlib::mod_int::operator=='],['../classntlib_1_1matrix.html#a574548c40458da0d7877da751ec9d963',1,'ntlib::matrix::operator==']]]
 ];
