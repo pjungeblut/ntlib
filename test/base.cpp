@@ -285,16 +285,16 @@ TEST(Exponentiation, Matrix) {
   EXPECT_EQ(p1, mat);
 
   auto p2 = ntlib::pow(mat, 2);
-  EXPECT_EQ(p2[0][0], 2);
-  EXPECT_EQ(p2[0][1], 3);
-  EXPECT_EQ(p2[1][0], 6);
-  EXPECT_EQ(p2[1][1], 11);
+  EXPECT_EQ((p2[0, 0]), 2);
+  EXPECT_EQ((p2[0, 1]), 3);
+  EXPECT_EQ((p2[1, 0]), 6);
+  EXPECT_EQ((p2[1, 1]), 11);
 
   auto p3 = ntlib::pow(mat, 3);
-  EXPECT_EQ(p3[0][0], 6);
-  EXPECT_EQ(p3[0][1], 11);
-  EXPECT_EQ(p3[1][0], 22);
-  EXPECT_EQ(p3[1][1], 39);
+  EXPECT_EQ((p3[0, 0]), 6);
+  EXPECT_EQ((p3[0, 1]), 11);
+  EXPECT_EQ((p3[1, 0]), 22);
+  EXPECT_EQ((p3[1, 1]), 39);
 }
 
 TEST(IntegerLog2, Signed) {
