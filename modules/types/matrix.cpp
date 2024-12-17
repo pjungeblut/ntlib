@@ -101,72 +101,15 @@ public:
   }
 
   /**
-   * @brief A proxy class to provide an lvalue that can be returned from
-   * `matrix<T>::operator[]`.
+   * @brief Two dimensional array subscript operator.
    * 
-   * This is necessary so that values can be changed but for example dimensions
-   * cannot.
+   * @param self Explicity object parameter.
+   * @param r The row.
+   * @param c The column.
+   * @return (Constant) reference to the element at the given position.
    */
-  class reference {
-    friend class matrix;
-
-    /**
-     * @brief Constant pointer to the queried row.
-     */
-    std::vector<T>* const row;
-
-    /**
-     * @brief Constructs the reference.
-     *
-     * @param row Pointer to the accessed row.
-     */
-    reference(std::vector<T>* const row) : row(row) {};
-
-  public:
-    /**
-     * @brief Array subscript operator to access the column.
-     *
-     * @param col_idx The index of the column to access.
-     * @return The value in the referenced row and column `col_idx`.
-     */
-    [[nodiscard]]
-    T& operator[](std::size_t col_idx) {
-      return (*row)[col_idx];
-    }
-
-    /**
-     * @brief Constant array subscript operator to access the column.
-     * 
-     * @param col_idx The index of the column to access.
-     * @return The value in the referenced tow and column `col_idx`.
-     */
-    [[nodiscard]]
-    const T& operator[](std::size_t col_idx) const {
-      return (*row)[col_idx];
-    }
-  };
-
-  /**
-   * @brief Array subscript operator.
-   *
-   * @param row_idx The index of the row to access.
-   * @return A reference to the vector containing the entries of the queried
-   *         row.
-   */
-  [[nodiscard]]
-  reference operator[](std::size_t row_idx) {
-    return reference(&mat[row_idx]);
-  }
-
-  /**
-   * @brief Constant array subscript operator.
-   *
-   * @param row_idx The index of the row to access.
-   * @return A constant reference to the vector containing the entries of the
-   *         queried row.
-   */
-  const std::vector<T>& operator[](std::size_t row_idx) const {
-    return mat[row_idx];
+  decltype(auto) operator[](this auto& self, std::size_t r, std::size_t c) {
+    return self.mat[r][c];
   }
 
   /**
@@ -181,7 +124,7 @@ public:
 
     for (std::size_t r = 0; r < rows; ++r) {
       for (std::size_t c = 0; c < columns; ++c) {
-        mat[r][c] += rhs[r][c];
+        mat[r][c] += rhs[r, c];
       }
     }
     return *this;
@@ -199,7 +142,7 @@ public:
 
     for (std::size_t r = 0; r < rows; ++r) {
       for (std::size_t c = 0; c < columns; ++c) {
-        mat[r][c] -= rhs[r][c];
+        mat[r][c] -= rhs[r, c];
       }
     }
     return *this;
@@ -288,7 +231,7 @@ public:
 
     matrix id(dim, dim);
     for (std::size_t i = 0; i < dim; ++i) {
-      id[i][i] = multiplicative_neutral;
+      id[i, i] = multiplicative_neutral;
     }
     return id;
   }
@@ -337,7 +280,7 @@ std::string to_string(matrix<T> mat) {
     rep += "{";
     for (std::size_t c = 0; c < mat.get_columns(); ++c) {
       if (c) rep += ",";
-      rep += to_string(mat[r][c]);
+      rep += to_string(mat[r, c]);
     }
     rep += "}";
   }
@@ -475,7 +418,7 @@ matrix<T> operator-(const matrix<T> &rhs) {
   matrix<T> negated(rhs.get_rows(), rhs.get_columns());
   for (std::size_t r = 0; r < rhs.get_rows(); ++r) {
     for (std::size_t c = 0; c < rhs.get_columns(); ++c) {
-      negated[r][c] = -rhs[r][c];
+      negated[r, c] = -rhs[r, c];
     }
   }
   return negated;
@@ -496,7 +439,7 @@ matrix<T> operator*(const matrix<T> &lhs, const matrix<T> &rhs) {
   for (std::size_t r = 0; r < lhs.get_rows(); ++r) {
     for (std::size_t k = 0; k < lhs.get_columns(); ++k) {
       for (std::size_t c = 0; c < rhs.get_columns(); ++c) {
-        product[r][c] += lhs[r][k] * rhs[k][c];
+        product[r, c] += lhs[r, k] * rhs[k, c];
       }
     }
   }
@@ -517,7 +460,7 @@ matrix<T> exec_each_element(const matrix<T> &m, const F &func) {
   matrix<T> res(m.get_rows(), m.get_columns());
   for (std::size_t r = 0; r < m.get_rows(); ++r) {
     for (std::size_t c = 0; c < m.get_columns(); ++c) {
-      res[r][c] = func(m[r][c]);
+      res[r, c] = func(m[r, c]);
     }
   }
   return res;
@@ -537,7 +480,7 @@ matrix<T> get_multiplicative_neutral(const matrix<T> &m) {
   assert(m.get_columns() > 0);
 
   return matrix<T>::get_identity(
-      m.get_rows(), get_multiplicative_neutral(m[0][0]));
+      m.get_rows(), get_multiplicative_neutral(m[0,0]));
 }
 
 }

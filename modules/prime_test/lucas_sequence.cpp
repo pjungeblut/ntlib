@@ -47,7 +47,7 @@ std::pair<S,S> lucas_nth_term(N n, S P, S Q) {
     matrix<S> v({{P}, {S{2}}});
     u = mat * u;
     v = mat * v;
-    return std::make_pair(u[0][0], v[0][0]);
+    return std::make_pair(u[0, 0], v[0, 0]);
   }
 }
 
@@ -90,7 +90,7 @@ std::pair<S,S> mod_lucas_nth_term(N n, S P, S Q, S m) {
     matrix<S> v({{mod(P, m)}, {S{mod(S{2}, m)}}});
     u = mat * u;
     v = mat * v;
-    return std::make_pair(mod(u[0][0], m), mod(v[0][0], m));
+    return std::make_pair(mod(u[0, 0], m), mod(v[0, 0], m));
   }
 }
 

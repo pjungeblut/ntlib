@@ -20,7 +20,7 @@ TEST(Construction, ByDimensions) {
   EXPECT_EQ(mat.get_columns(), columns);
   for (int32_t r = 0; r < rows; ++r) {
     for (int32_t c = 0; c < columns; ++c) {
-      EXPECT_EQ(mat[r][c], 0);
+      EXPECT_EQ((mat[r, c]), 0);
     }
   }
 }
@@ -33,8 +33,8 @@ TEST(ArraySubscript, LValue) {
   EXPECT_EQ(mat.get_columns(), columns);
   for (int32_t r = 0; r < rows; ++r) {
     for (int32_t c = 0; c < columns; ++c) {
-      mat[r][c] = r * c;
-      EXPECT_EQ(mat[r][c], r * c);
+      mat[r, c] = r * c;
+      EXPECT_EQ((mat[r, c]), r * c);
     }
   }
 }
@@ -104,8 +104,8 @@ TEST(Arithmetic, Exponentiation) {
   ntlib::matrix<int32_t> f({{1},{0}});
   m = ntlib::pow(m, 10);
   auto fib = m * f;
-  EXPECT_EQ(fib[0][0], 89); // 11th Fibonacci number
-  EXPECT_EQ(fib[1][0], 55); // 10th Fibonacci number
+  EXPECT_EQ((fib[0, 0]), 89); // 11th Fibonacci number
+  EXPECT_EQ((fib[1, 0]), 55); // 10th Fibonacci number
 }
 
 TEST(UnaryOperators, Minus) {
@@ -126,7 +126,7 @@ TEST(Identity, SmallValues) {
   const auto is_id = [](auto m) {
     for (std::size_t r = 0; r < m.get_rows(); ++r) {
       for (std::size_t c = 0; c < m.get_columns(); ++c) {
-        if (m[r][c] != (r == c)) return false;
+        if (m[r, c] != (r == c)) return false;
       }
     }
     return true;
@@ -143,10 +143,10 @@ TEST(MultiplicativeNeutral, Simple) {
   const auto nm = ntlib::get_multiplicative_neutral(m);
   EXPECT_EQ(nm.get_columns(), 2);
   EXPECT_EQ(nm.get_rows(), 2);
-  EXPECT_EQ(nm[0][0], 1);
-  EXPECT_EQ(nm[0][1], 0);
-  EXPECT_EQ(nm[1][0], 0);
-  EXPECT_EQ(nm[1][1], 1);
+  EXPECT_EQ((nm[0, 0]), 1);
+  EXPECT_EQ((nm[0, 1]), 0);
+  EXPECT_EQ((nm[1, 0]), 0);
+  EXPECT_EQ((nm[1, 1]), 1);
 }
 
 TEST(MultiplicativeNeutral, ModInt) {
@@ -154,8 +154,8 @@ TEST(MultiplicativeNeutral, ModInt) {
   const auto nm = ntlib::get_multiplicative_neutral(m);
   EXPECT_EQ(nm.get_columns(), 2);
   EXPECT_EQ(nm.get_rows(), 2);
-  EXPECT_EQ(nm[0][0], 1);
-  EXPECT_EQ(nm[0][1], 0);
-  EXPECT_EQ(nm[1][0], 0);
-  EXPECT_EQ(nm[1][1], 1);
+  EXPECT_EQ((nm[0, 0]), 1);
+  EXPECT_EQ((nm[0, 1]), 0);
+  EXPECT_EQ((nm[1, 0]), 0);
+  EXPECT_EQ((nm[1, 1]), 1);
 }
