@@ -199,3 +199,9 @@ TEST(MultiplicativeNeutral, Compiletime) {
   ntlib::mod_int<uint32_t, 1> b(5);
   EXPECT_EQ(ntlib::get_multiplicative_neutral(b).get(), 0);
 }
+
+TEST(StringRepresentation, ToString) {
+  ntlib::mod_int<uint32_t, 10> a(5);
+  using std::to_string;
+  EXPECT_EQ(to_string(a), "5 (mod 10)");
+}
