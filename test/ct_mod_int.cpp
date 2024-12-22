@@ -1,207 +1,329 @@
 #include <gtest/gtest.h>
 
 #include <cstdint>
-#include <sstream>
-#include <string>
+#include <memory>
+#include <type_traits>
+#include <utility>
 
 import base;
 import mod_int;
+import modulo;
 
-// Must be at least 1.
-static constexpr uint32_t MOD = 10;
+using Types = ::testing::Types<int8_t, uint8_t, int16_t, uint16_t, int32_t,
+    uint32_t, int64_t, uint64_t>;
 
-TEST(Check, CompileTimeContants) {
-  static_assert(MOD > 0);
+template<typename T>
+class CompileTimeModInt : public testing::Test {};
+
+TYPED_TEST_SUITE(CompileTimeModInt, Types);
+
+TYPED_TEST(CompileTimeModInt, ClassLayout) {
+  static_assert(sizeof(ntlib::ct_mod_int<TypeParam, 10>) == sizeof(TypeParam));
 }
 
-TEST(Construction, Default) {
-  ntlib::mod_int<uint32_t, MOD> a;
-  EXPECT_EQ(a.get(), 0);
+TYPED_TEST(CompileTimeModInt, DefaultConstruction) {
+  static_assert(
+      std::is_default_constructible_v<ntlib::ct_mod_int<TypeParam, 10>>);
+  EXPECT_NO_THROW((ntlib::ct_mod_int<TypeParam, 10>{}));
 }
 
-TEST(Construction, ByValue) {
-  ntlib::mod_int<uint32_t, MOD> a(0);
-  EXPECT_EQ(a.get(), 0);
+TYPED_TEST(CompileTimeModInt, ConstructionByValueAndModulus) {
+  const ntlib::ct_mod_int<TypeParam, 10> a {5};
+  EXPECT_EQ(static_cast<TypeParam>(a), 5);
+  EXPECT_EQ(a.get_modulus(), 10);
 
-  ntlib::mod_int<uint32_t, MOD> b(MOD - 1);
-  EXPECT_EQ(b.get(), MOD - 1);
+  const ntlib::ct_mod_int<TypeParam, 10> b {10};
+  EXPECT_EQ(static_cast<TypeParam>(b), 0);
+  EXPECT_EQ(b.get_modulus(), 10);
 
-  ntlib::mod_int<uint32_t, MOD> c(MOD);
-  EXPECT_EQ(c.get(), 0);
+  const ntlib::ct_mod_int<TypeParam, 10> c {15};
+  EXPECT_EQ(static_cast<TypeParam>(c), 5);
+  EXPECT_EQ(c.get_modulus(), 10);
 
-  ntlib::mod_int<int32_t, MOD> d(-MOD);
-  EXPECT_EQ(d.get(), 0);
-
-  ntlib::mod_int<int32_t, MOD> e(1 - MOD);
-  EXPECT_EQ(e.get(), 1 % MOD);
-}
-
-TEST(Streaming, Insertion) {
-  ntlib::mod_int<uint32_t, MOD> a(5), b(MOD - 1), c(MOD);
-  std::string result =
-      std::to_string(5 % MOD) + " " + std::to_string(MOD - 1) + " 0";
-  std::ostringstream out;
-  out << a << " " << b << " " << c;
-  EXPECT_EQ(out.str(), result);
-}
-
-TEST(Streaming, Extraction) {
-  std::istringstream in(
-      "5 " + std::to_string(MOD - 1) + " " + std::to_string(MOD));
-  ntlib::mod_int<uint32_t, MOD> a, b, c;
-  in >> a >> b >> c;
-  EXPECT_EQ(a.get(), 5 % MOD);
-  EXPECT_EQ(b.get(), MOD - 1);
-  EXPECT_EQ(c.get(), 0);
-}
-
-TEST(Increment, Prefix) {
-  ntlib::mod_int<uint32_t, MOD> a(0);
-  EXPECT_EQ((++a).get(), 1 % MOD);
-  EXPECT_EQ(a.get(), 1 % MOD);
-
-  ntlib::mod_int<uint32_t, MOD> b(MOD - 1);
-  EXPECT_EQ((++b).get(), 0);
-  EXPECT_EQ(b.get(), 0);
-}
-
-TEST(Increment, Postfix) {
-  ntlib::mod_int<uint32_t, MOD> a(0);
-  EXPECT_EQ((a++).get(), 0);
-  EXPECT_EQ(a.get(), 1);
-
-  ntlib::mod_int<uint32_t, MOD> b(MOD - 1);
-  EXPECT_EQ((b++).get(), MOD - 1);
-  EXPECT_EQ(b.get(), 0);
-}
-
-TEST(Decrement, Prefix) {
-  ntlib::mod_int<uint32_t, MOD> a(0);
-  EXPECT_EQ((--a).get(), MOD - 1);
-  EXPECT_EQ(a.get(), MOD - 1);
-
-  ntlib::mod_int<uint32_t, MOD> b(1);
-  EXPECT_EQ((--b).get(), 0);
-  EXPECT_EQ(b.get(), 0);
-}
-
-TEST(Decrement, Postfix) {
-  ntlib::mod_int<uint32_t, MOD> a(0);
-  EXPECT_EQ((a--).get(), 0);
-  EXPECT_EQ(a.get(), MOD - 1);
-
-  ntlib::mod_int<uint32_t, MOD> b(1);
-  EXPECT_EQ((b--).get(), 1 % MOD);
-  EXPECT_EQ(b.get(), 0);
-}
-
-TEST(Addition, Compound) {
-  ntlib::mod_int<uint32_t, MOD> a(0), b(1);
-  EXPECT_EQ((a += b).get(), 1 % MOD);
-  EXPECT_EQ(a.get(), 1 % MOD);
-}
-
-TEST(Addition, Symmetric) {
-  ntlib::mod_int<uint32_t, MOD> a(1), b(2);
-  EXPECT_EQ((a + b).get(), (b + a).get());
-}
-
-TEST(Addition, Chained) {
-  ntlib::mod_int<uint32_t, MOD> a(1), b(2), c(3);
-  EXPECT_EQ((a + b + c).get(), 6 % MOD);
-}
-
-TEST(Addition, WithInts) {
-  ntlib::mod_int<uint32_t, MOD> a(1);
-  EXPECT_EQ((a + 4).get(), 5 % MOD);
-  EXPECT_EQ((4 + a).get(), 5 % MOD);
-}
-
-TEST(Subtraction, Compound) {
-  ntlib::mod_int<uint32_t, MOD> a(0), b(1);
-  EXPECT_EQ((a -= b).get(), MOD - 1);
-  EXPECT_EQ(a.get(), MOD - 1);
-
-  ntlib::mod_int<uint32_t, MOD> c(MOD - 1), d(1);
-  EXPECT_EQ((c -= d).get(), (2 * MOD - 2) % MOD);
-  EXPECT_EQ(c.get(), (2 * MOD - 2) % MOD);
-}
-
-TEST(Subtraction, Basic) {
-  ntlib::mod_int<uint32_t, MOD> a(1), b(2);
-  EXPECT_EQ((a - b).get(), MOD - 1);
-  EXPECT_EQ((b - a).get(), 1 % MOD);
-}
-
-TEST(Subtraction, Chained) {
-  static_assert(MOD > 6);
-  ntlib::mod_int<uint32_t, MOD> a(1), b(2), c(3);
-  EXPECT_EQ((a - b - c).get(), 6);
-}
-
-TEST(Subtraction, WithInts) {
-  static_assert(MOD > 7);
-  ntlib::mod_int<uint32_t, MOD> a(1);
-  EXPECT_EQ((a - 4).get(), 7);
-  EXPECT_EQ((4 - a).get(), 3 % MOD);
-}
-
-TEST(Multiplication, Compound) {
-  ntlib::mod_int<uint32_t, MOD> a(2), b(3);
-  EXPECT_EQ((a *= b).get(), 6 % MOD);
-  EXPECT_EQ(a.get(), 6 % MOD);
-}
-
-TEST(Multiplication, Symmetric) {
-  ntlib::mod_int<uint32_t, MOD> a(2), b(3);
-  EXPECT_EQ((a * b).get(), (b * a).get());
-}
-
-TEST(Multiplication, Chained) {
-  ntlib::mod_int<uint32_t, MOD> a(2), b(3), c(4);
-  EXPECT_EQ((a * b * c).get(), 24 % MOD);
-}
-
-TEST(Multiplication, WithInts) {
-  ntlib::mod_int<uint32_t, MOD> a(2);
-  EXPECT_EQ((a * 3).get(), 6 % MOD);
-  EXPECT_EQ((3 * a).get(), 6 % MOD);
-}
-
-TEST(Comparison, Equality) {
-  static_assert(MOD > 2);
-  ntlib::mod_int<uint32_t, MOD> a(1), b(2);
-  EXPECT_TRUE(a == a);
-  EXPECT_FALSE(a == b);
-  EXPECT_TRUE(a + a == b);
-}
-
-TEST(Comparison, Inequality) {
-  static_assert(MOD > 2);
-  ntlib::mod_int<uint32_t, MOD> a(1), b(2);
-  EXPECT_FALSE(a != a);
-  EXPECT_TRUE(a != b);
-  EXPECT_FALSE(a + a != b);
-}
-
-TEST(Inversion, All) {
-  for (uint32_t i = 0; i < MOD; ++i) {
-    ntlib::mod_int<uint32_t, MOD> a(i);
-    if (ntlib::gcd(i, MOD) != 1) { continue; }
-    EXPECT_EQ(a * a.invert(), 1 % MOD);
+  if constexpr (std::is_signed_v<TypeParam>) {
+    const ntlib::ct_mod_int<TypeParam, 10> d {-5};
+    EXPECT_EQ(static_cast<TypeParam>(d), 5);
+    EXPECT_EQ(d.get_modulus(), 10);
   }
 }
 
-TEST(MultiplicativeNeutral, Compiletime) {
-  ntlib::mod_int<uint32_t, 10> a(5);
-  EXPECT_EQ(ntlib::get_multiplicative_neutral(a).get(), 1);
-
-  ntlib::mod_int<uint32_t, 1> b(5);
-  EXPECT_EQ(ntlib::get_multiplicative_neutral(b).get(), 0);
+TYPED_TEST(CompileTimeModInt, CopyConstruction) {
+  const ntlib::ct_mod_int<TypeParam, 10> a {5};
+  const auto b {a};
+  EXPECT_EQ(static_cast<TypeParam>(b), 5);
+  EXPECT_EQ(b.get_modulus(), 10);
 }
 
-TEST(StringRepresentation, ToString) {
-  ntlib::mod_int<uint32_t, 10> a(5);
-  using std::to_string;
-  EXPECT_EQ(to_string(a), "5 (mod 10)");
+TYPED_TEST(CompileTimeModInt, CopyAssignment) {
+  static_assert(std::is_same_v<
+      decltype(
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>() =
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>()),
+      ntlib::ct_mod_int<TypeParam, 10>&>);
+
+  const ntlib::ct_mod_int<TypeParam, 10> a {5};
+  const auto b = a;
+  EXPECT_EQ(static_cast<TypeParam>(b), 5);
+  EXPECT_EQ(b.get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, MoveConstruction) {
+  ntlib::ct_mod_int<TypeParam, 10> a {5};
+  const auto b {std::move(a)};
+  EXPECT_EQ(static_cast<TypeParam>(b), 5);
+  EXPECT_EQ(b.get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, MoveAssignment) {
+  static_assert(std::is_same_v<
+      decltype(
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>() =
+          std::move(std::declval<ntlib::ct_mod_int<TypeParam, 10>>())),
+      ntlib::ct_mod_int<TypeParam, 10>&>);
+
+  ntlib::ct_mod_int<TypeParam, 10> a {5};
+  const auto b = std::move(a);
+  EXPECT_EQ(static_cast<TypeParam>(b), 5);
+  EXPECT_EQ(b.get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, EqualityComparision) {
+  static_assert(std::is_same_v<
+      decltype(
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>() ==
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>()),
+      bool>);
+
+  const ntlib::ct_mod_int<TypeParam, 10> a {5};
+  const ntlib::ct_mod_int<TypeParam, 10> b {5};
+  const ntlib::ct_mod_int<TypeParam, 10> c {6};
+
+  EXPECT_EQ(a, a);
+  EXPECT_EQ(a, b);
+  EXPECT_NE(a, c);
+}
+
+TYPED_TEST(CompileTimeModInt, PrefixIncrement) {
+  static_assert(std::is_same_v<
+      decltype(++std::declval<ntlib::ct_mod_int<TypeParam, 10>>()),
+      ntlib::ct_mod_int<TypeParam, 10>&>);
+
+  ntlib::ct_mod_int<TypeParam, 10> a {8};
+
+  EXPECT_EQ(static_cast<TypeParam>(++a), 9);
+  EXPECT_EQ(a.get_modulus(), 10);
+
+  EXPECT_EQ(static_cast<TypeParam>(++a), 0);
+  EXPECT_EQ(a.get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, PostfixIncrement) {
+  static_assert(std::is_same_v<
+      decltype(std::declval<ntlib::ct_mod_int<TypeParam, 10>>()++),
+      ntlib::ct_mod_int<TypeParam, 10>>);
+
+  ntlib::ct_mod_int<TypeParam, 10> a {8};
+  
+  EXPECT_EQ(static_cast<TypeParam>(a++), 8);
+  EXPECT_EQ(static_cast<TypeParam>(a), 9);
+  EXPECT_EQ(a.get_modulus(), 10);
+
+  EXPECT_EQ(static_cast<TypeParam>(a++), 9);
+  EXPECT_EQ(static_cast<TypeParam>(a), 0);
+  EXPECT_EQ(a.get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, PrefixDecrement) {
+  static_assert(std::is_same_v<
+      decltype(--std::declval<ntlib::ct_mod_int<TypeParam, 10>>()),
+      ntlib::ct_mod_int<TypeParam, 10>&>);
+
+  ntlib::ct_mod_int<TypeParam, 10> a {1};
+
+  EXPECT_EQ(static_cast<TypeParam>(--a), 0);
+  EXPECT_EQ(a.get_modulus(), 10);
+
+  EXPECT_EQ(static_cast<TypeParam>(--a), 9);
+  EXPECT_EQ(a.get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, PostfixDecrement) {
+  static_assert(std::is_same_v<
+      decltype(std::declval<ntlib::ct_mod_int<TypeParam, 10>>()--),
+      ntlib::ct_mod_int<TypeParam, 10>>);
+
+  ntlib::ct_mod_int<TypeParam, 10> a {1};
+  
+  EXPECT_EQ(static_cast<TypeParam>(a--), 1);
+  EXPECT_EQ(static_cast<TypeParam>(a), 0);
+  EXPECT_EQ(a.get_modulus(), 10);
+
+  EXPECT_EQ(static_cast<TypeParam>(a--), 0);
+  EXPECT_EQ(static_cast<TypeParam>(a), 9);
+  EXPECT_EQ(a.get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, CompoundAddition) {
+  static_assert(std::is_same_v<
+      decltype(
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>() +=
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>()),
+      ntlib::ct_mod_int<TypeParam, 10>&>);
+
+  ntlib::ct_mod_int<TypeParam, 10> a {5};
+  const ntlib::ct_mod_int<TypeParam, 10> b {3};
+
+  a += b;
+  EXPECT_EQ(static_cast<TypeParam>(a), 8);
+  EXPECT_EQ(a.get_modulus(), 10);
+
+  a += b;
+  EXPECT_EQ(static_cast<TypeParam>(a), 1);
+  EXPECT_EQ(a.get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, Addition) {
+  static_assert(std::is_same_v<
+      decltype(
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>() +
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>()),
+      ntlib::ct_mod_int<TypeParam, 10>>);
+
+  const ntlib::ct_mod_int<TypeParam, 10> a {5};
+  const ntlib::ct_mod_int<TypeParam, 10> b {3};
+
+  const auto c = a + b;
+  EXPECT_EQ(static_cast<TypeParam>(c), 8);
+  EXPECT_EQ(c.get_modulus(), 10);
+
+  const auto d = c + b;
+  EXPECT_EQ(static_cast<TypeParam>(d), 1);
+  EXPECT_EQ(d.get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, CompoundSubtraction) {
+  static_assert(std::is_same_v<
+      decltype(
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>() -=
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>()),
+      ntlib::ct_mod_int<TypeParam, 10>&>);
+
+  ntlib::ct_mod_int<TypeParam, 10> a {5};
+  const ntlib::ct_mod_int<TypeParam, 10> b {3};
+
+  a -= b;
+  EXPECT_EQ(static_cast<TypeParam>(a), 2);
+  EXPECT_EQ(a.get_modulus(), 10);
+
+  a -= b;
+  EXPECT_EQ(static_cast<TypeParam>(a), 9);
+  EXPECT_EQ(a.get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, Subtraction) {
+  static_assert(std::is_same_v<
+      decltype(
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>() -
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>()),
+      ntlib::ct_mod_int<TypeParam, 10>>);
+
+  const ntlib::ct_mod_int<TypeParam, 10> a {5};
+  const ntlib::ct_mod_int<TypeParam, 10> b {3};
+
+  const auto c = a - b;
+  EXPECT_EQ(static_cast<TypeParam>(c), 2);
+  EXPECT_EQ(c.get_modulus(), 10);
+
+  const auto d = c - b;
+  EXPECT_EQ(static_cast<TypeParam>(d), 9);
+  EXPECT_EQ(d.get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, CompoundMultiplication) {
+  static_assert(std::is_same_v<
+      decltype(
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>() *=
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>()),
+      ntlib::ct_mod_int<TypeParam, 10>&>);
+
+  ntlib::ct_mod_int<TypeParam, 10> a {4};
+  const ntlib::ct_mod_int<TypeParam, 10> b {2};
+
+  a *= b;
+  EXPECT_EQ(static_cast<TypeParam>(a), 8);
+  EXPECT_EQ(a.get_modulus(), 10);
+
+  a *= b;
+  EXPECT_EQ(static_cast<TypeParam>(a), 6);
+  EXPECT_EQ(a.get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, Multiplication) {
+  static_assert(std::is_same_v<
+      decltype(
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>() *
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>()),
+      ntlib::ct_mod_int<TypeParam, 10>>);
+
+  const ntlib::ct_mod_int<TypeParam, 10> a {4};
+  const ntlib::ct_mod_int<TypeParam, 10> b {2};
+
+  const auto c = a * b;
+  EXPECT_EQ(static_cast<TypeParam>(c), 8);
+  EXPECT_EQ(c.get_modulus(), 10);
+
+  const auto d = c * b;
+  EXPECT_EQ(static_cast<TypeParam>(d), 6);
+  EXPECT_EQ(d.get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, UnaryPlus) {
+  static_assert(std::is_same_v<
+      decltype(+std::declval<ntlib::ct_mod_int<TypeParam, 10>>()),
+      ntlib::ct_mod_int<TypeParam, 10>>);
+  
+  const ntlib::ct_mod_int<TypeParam, 10> a {5};
+  EXPECT_EQ(static_cast<TypeParam>(+a), 5);
+  EXPECT_EQ((+a).get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, UnaryMinus) {
+  static_assert(std::is_same_v<
+      decltype(-std::declval<ntlib::ct_mod_int<TypeParam, 10>>()),
+      ntlib::ct_mod_int<TypeParam, 10>>);
+  
+  const ntlib::ct_mod_int<TypeParam, 10> a {4};
+  EXPECT_EQ(static_cast<TypeParam>(-a), 6);
+  EXPECT_EQ((-a).get_modulus(), 10);
+}
+
+TYPED_TEST(CompileTimeModInt, Inversion) {
+  constexpr TypeParam m = 10;
+  for (TypeParam n = 0; n < m; ++n) {
+    if (ntlib::gcd(n, m) != 1) { continue; }
+
+    ntlib::ct_mod_int<TypeParam, m> a {n};
+    a.invert();
+    EXPECT_EQ(
+        ntlib::mod(static_cast<TypeParam>(static_cast<TypeParam>(a) * n), m),
+        1);
+    EXPECT_EQ(a.get_modulus(), m);
+  }
+}
+
+TYPED_TEST(CompileTimeModInt, MultiplicativeNeutral) {
+  static_assert(std::is_same_v<
+      decltype(get_multiplicative_neutral(
+          std::declval<ntlib::ct_mod_int<TypeParam, 10>>())),
+      ntlib::ct_mod_int<TypeParam, 10>>);
+
+  const ntlib::ct_mod_int<TypeParam, 10> a {5};
+  const auto mna = get_multiplicative_neutral(a);
+  EXPECT_EQ(static_cast<TypeParam>(mna), 1);
+  EXPECT_EQ(mna.get_modulus(), 10);
+
+  const ntlib::ct_mod_int<TypeParam, 1> b {5};
+  const auto mnb = get_multiplicative_neutral(b);
+  EXPECT_EQ(static_cast<TypeParam>(mnb), 0);
+  EXPECT_EQ(mnb.get_modulus(), 1);
 }

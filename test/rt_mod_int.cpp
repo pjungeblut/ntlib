@@ -54,6 +54,12 @@ TYPED_TEST(RunTimeModInt, CopyConstruction) {
 }
 
 TYPED_TEST(RunTimeModInt, CopyAssignment) {
+  static_assert(std::is_same_v<
+      decltype(
+          std::declval<ntlib::rt_mod_int<TypeParam>>() =
+          std::declval<ntlib::rt_mod_int<TypeParam>>()),
+      ntlib::rt_mod_int<TypeParam>&>);
+
   const ntlib::rt_mod_int<TypeParam> a {5, 10};
   const ntlib::rt_mod_int<TypeParam> b = a;
   EXPECT_EQ(static_cast<TypeParam>(b), 5);
@@ -68,6 +74,12 @@ TYPED_TEST(RunTimeModInt, MoveConstruction) {
 }
 
 TYPED_TEST(RunTimeModInt, MoveAssignment) {
+  static_assert(std::is_same_v<
+      decltype(
+          std::declval<ntlib::rt_mod_int<TypeParam>>() =
+          std::move(std::declval<ntlib::rt_mod_int<TypeParam>>())),
+      ntlib::rt_mod_int<TypeParam>&>);
+
   ntlib::rt_mod_int<TypeParam> a {5, 10};
   const ntlib::rt_mod_int<TypeParam> b = std::move(a);
   EXPECT_EQ(static_cast<TypeParam>(b), 5);
@@ -126,6 +138,7 @@ TYPED_TEST(RunTimeModInt, PrefixDecrement) {
   static_assert(std::is_same_v<
       decltype(--std::declval<ntlib::rt_mod_int<TypeParam>>()),
       ntlib::rt_mod_int<TypeParam>&>);
+      
   ntlib::rt_mod_int<TypeParam> a {1, 10};
 
   EXPECT_EQ(static_cast<TypeParam>(--a), 0);

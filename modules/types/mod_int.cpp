@@ -198,7 +198,11 @@ public:
    */
   DERIVED operator-() const noexcept {
     const T m = static_cast<const DERIVED*>(this)->get_modulus();
-    return DERIVED {mod(m - value), m};
+    if constexpr (std::is_same_v<DERIVED, rt_mod_int<T>>) {
+      return DERIVED {mod(m - value), m};
+    } else {
+      return DERIVED {mod(m - value)};
+    }
   }
 
   /**
