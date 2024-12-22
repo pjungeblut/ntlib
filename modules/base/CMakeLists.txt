@@ -6,4 +6,5 @@ target_sources(ntlib_base PUBLIC
     FILES
         ${PROJECT_SOURCE_DIR}/modules/base/base.cpp
         ${PROJECT_SOURCE_DIR}/modules/base/int128.cpp
+        ${PROJECT_SOURCE_DIR}/modules/base/modulo.cpp
 )

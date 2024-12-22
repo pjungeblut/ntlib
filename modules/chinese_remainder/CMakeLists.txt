@@ -8,7 +8,6 @@ target_sources(ntlib_chinese_remainder PUBLIC
 )
 target_link_libraries(ntlib_chinese_remainder PRIVATE
     ntlib_base
-    ntlib_modulo
     ntlib_prime_decomposition
     ntlib_prime_generation
 )

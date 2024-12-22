@@ -188,7 +188,7 @@ export template<typename T>
 [[nodiscard]] constexpr
 T gcd(T a, T b) noexcept {
   assert(!(a == T{0} && b == T{0}));
-  return b == T{0} ? abs(a) : gcd(b, a % b);
+  return b == T{0} ? ntlib::abs(a) : ntlib::gcd(b, static_cast<T>(a % b));
 }
 
 /**
@@ -235,7 +235,7 @@ std::tuple<T, S, S> extended_euclid(T a, T b) noexcept {
     if (a == S{0}) { return std::make_tuple(b, S{0}, S{1}); }
     auto [gcd, xx, yy] = extended_euclid_non_negative(b % a, a);
 
-    S x{yy - static_cast<S>(b / a) * xx};
+    S x{static_cast<S>(yy - static_cast<S>(b / a) * xx)};
     S y{xx};
     return std::make_tuple(gcd, x, y);
   };
@@ -250,12 +250,11 @@ std::tuple<T, S, S> extended_euclid(T a, T b) noexcept {
  * @brief Returns the multiplicative neutral element `1` for integral types.
  * 
  * @tparam T An integral type.
- * @param n An element of type `T`.
  * @return The multiplicative neutral element of the type.
  */
 export template<std::integral T>
 [[nodiscard]] constexpr
-T get_multiplicative_neutral([[maybe_unused]] T n) noexcept
+T get_multiplicative_neutral(T) noexcept
     requires (sizeof(T) <= 8) {
   return T{1};
 }
@@ -287,7 +286,6 @@ concept HasMultiplicativeNeutral = requires(T n) {
 export template<HasMultiplicativeNeutral A, typename B>
 [[nodiscard]] constexpr
 A pow(A a, B b) noexcept {
-  assert(!(a == A{0} && b == B{0}));
   assert(b >= B{0});
 
   if (b == B{0}) { return get_multiplicative_neutral(a); }

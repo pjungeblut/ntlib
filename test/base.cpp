@@ -267,12 +267,12 @@ TEST(Exponentiation, PowersOfMinus2) {
 }
 
 TEST(Exponentiation, RuntimeModInt) {
-  ntlib::mod_int<uint32_t> a(2, 10);
+  ntlib::rt_mod_int<uint32_t> a(2, 10);
   EXPECT_EQ(ntlib::pow(a, 0), get_multiplicative_neutral(a));
-  EXPECT_EQ(ntlib::pow(a, 1).get(), 2);
-  EXPECT_EQ(ntlib::pow(a, 2).get(), 4);
-  EXPECT_EQ(ntlib::pow(a, 3).get(), 8);
-  EXPECT_EQ(ntlib::pow(a, 4).get(), 6);
+  EXPECT_EQ(static_cast<uint32_t>(ntlib::pow(a, 1)), 2);
+  EXPECT_EQ(static_cast<uint32_t>(ntlib::pow(a, 2)), 4);
+  EXPECT_EQ(static_cast<uint32_t>(ntlib::pow(a, 3)), 8);
+  EXPECT_EQ(static_cast<uint32_t>(ntlib::pow(a, 4)), 6);
 }
 
 TEST(Exponentiation, Matrix) {

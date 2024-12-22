@@ -28,7 +28,6 @@ endfunction()
 # Base functionality.
 set(base_libs
     ntlib_base
-    ntlib_modulo
     ntlib_prime_generation
     ntlib_types
 )
@@ -38,7 +37,6 @@ add_unittest(base "${base_libs}")
 set(binomial_coefficient_libs
     ntlib_base
     ntlib_combinatorics
-    ntlib_modulo
     ntlib_prime_test
 )
 add_unittest(binomial_coefficient "${binomial_coefficient_libs}")
@@ -48,12 +46,6 @@ set(chinese_remainder_libs
     ntlib_chinese_remainder
 )
 add_unittest(chinese_remainder "${chinese_remainder_libs}")
-
-# Compile time integers in residue class.
-set(ct_mod_int_libs
-    ntlib_modulo
-)
-add_unittest(ct_mod_int "${ct_mod_int_libs}")
 
 # Diophantine equations.
 set(diophantine_libs
@@ -96,22 +88,20 @@ add_unittest(lucas_sequence "${lucas_sequence_libs}")
 # Matrices.
 set(matrix_libs
     ntlib_base
-    ntlib_modulo
     ntlib_types
 )
 add_unittest(matrix "${matrix_libs}")
 
 # Modular arithmetic.
 set(mod_int_libs
-    ntlib_base
-    ntlib_modulo
+    ntlib_types
 )
-add_unittest(mod_int "${mod_int_libs}")
+add_unittest(rt_mod_int "${mod_int_libs}")
+add_unittest(ct_mod_int "${mod_int_libs}")
 
 # Modulo.
 set(modulo_libs
     ntlib_base
-    ntlib_modulo
     ntlib_prime_decomposition
 )
 add_unittest(modulo "${modulo_libs}")

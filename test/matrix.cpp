@@ -150,7 +150,7 @@ TEST(MultiplicativeNeutral, Simple) {
 }
 
 TEST(MultiplicativeNeutral, ModInt) {
-  ntlib::matrix<ntlib::mod_int<uint32_t, 10>> m(2, 2);
+  ntlib::matrix<ntlib::ct_mod_int<uint32_t, 10>> m(2, 2);
   const auto nm = ntlib::get_multiplicative_neutral(m);
   EXPECT_EQ(nm.get_columns(), 2);
   EXPECT_EQ(nm.get_rows(), 2);

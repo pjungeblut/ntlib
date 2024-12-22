@@ -65,22 +65,25 @@ export template<typename T>
 [[nodiscard]] constexpr
 bool miller_selfridge_rabin_test(T n, T a) noexcept {
   assert(n > T{2});
-  assert(is_odd(n));
+  assert(ntlib::is_odd(n));
 
   // Handle bases with `a < n`.
-  mod_int<T> a_mod_n(a, n);
-  if (a_mod_n.get() == T{0}) { return true; }
+  rt_mod_int<T> a_mod_n(a, n);
+  if (static_cast<T>(a_mod_n) == T{0}) { return true; }
 
   // Decompose, such that `n-1 = o*2^e`.
   T n_minus_1 = n - T{1};
-  auto [e, o] = odd_part(n_minus_1);
+  auto [e, o] = ntlib::odd_part(n_minus_1);
 
-  auto p_mod_n = pow(a_mod_n, o);
+  auto p_mod_n = ntlib::pow(a_mod_n, o);
 
-  if (p_mod_n.get() == T{1} || p_mod_n.get() == n_minus_1) { return true; }
-  for (T r = 1; r < e && p_mod_n.get() > T{1}; ++r) {
+  if (static_cast<T>(p_mod_n) == T{1} ||
+      static_cast<T>(p_mod_n) == n_minus_1) {
+    return true;
+  }
+  for (T r = 1; r < e && static_cast<T>(p_mod_n) > T{1}; ++r) {
     p_mod_n *= p_mod_n;
-    if (p_mod_n.get() == n_minus_1) { return true; }
+    if (static_cast<T>(p_mod_n) == n_minus_1) { return true; }
   }
   return false;
 }

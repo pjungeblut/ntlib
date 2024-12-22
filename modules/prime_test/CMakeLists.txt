@@ -9,6 +9,5 @@ target_sources(ntlib_prime_test PUBLIC
 )
 target_link_libraries(ntlib_prime_test PRIVATE
     ntlib_base
-    ntlib_modulo
     ntlib_types
 )
