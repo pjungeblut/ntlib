@@ -5,6 +5,7 @@ target_sources(ntlib_types PUBLIC
     BASE_DIRS ${PROJECT_SOURCE_DIR}/modules/types
     FILES
         ${PROJECT_SOURCE_DIR}/modules/types/matrix.cpp
+        ${PROJECT_SOURCE_DIR}/modules/types/mod_int.cpp
         ${PROJECT_SOURCE_DIR}/modules/types/rational.cpp
 )
 target_link_libraries(ntlib_types PRIVATE

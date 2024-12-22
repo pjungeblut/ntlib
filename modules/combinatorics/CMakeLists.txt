@@ -12,7 +12,7 @@ target_sources(ntlib_combinatorics PUBLIC
 target_link_libraries(ntlib_combinatorics PRIVATE
     ntlib_base
     ntlib_chinese_remainder
-    ntlib_modulo
     ntlib_prime_decomposition
     ntlib_prime_test
+    ntlib_types
 )

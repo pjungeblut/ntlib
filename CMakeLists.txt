@@ -42,7 +42,6 @@ add_library(ntlib STATIC
     $<TARGET_OBJECTS:ntlib_chinese_remainder>
     $<TARGET_OBJECTS:ntlib_combinatorics>
     $<TARGET_OBJECTS:ntlib_diophantine>
-    $<TARGET_OBJECTS:ntlib_modulo>
     $<TARGET_OBJECTS:ntlib_prime_decomposition>
     $<TARGET_OBJECTS:ntlib_prime_generation>
     $<TARGET_OBJECTS:ntlib_prime_test>
