@@ -5,7 +5,7 @@ var searchData=
   ['mod_5fbinom_2',['mod_binom',['../binomial__coefficient_8cpp.html#a998112c7d16c9e712e91c6ecc6d21ef2',1,'ntlib']]],
   ['mod_5fbinom_5ftable_3',['mod_binom_table',['../binomial__coefficient_8cpp.html#a7c4e674021d6f2bc9c7b56440d5b94f5',1,'ntlib']]],
   ['mod_5ffactorial_4',['mod_factorial',['../modulo_8cpp.html#abb25a1902a69cca093f750091d8ad0d0',1,'ntlib']]],
-  ['mod_5fint_5',['mod_int',['../classntlib_1_1mod__int.html#ac105994fe445a425dd28af3e219fa4c6',1,'ntlib::mod_int::mod_int(U value=0)'],['../classntlib_1_1mod__int.html#a80b891800a58d3b17674f0adadd31f26',1,'ntlib::mod_int::mod_int(U value=0)'],['../classntlib_1_1mod__int.html#abafce5354022a32f46091c12e2c2296a',1,'ntlib::mod_int::mod_int(U value, U modulus)']]],
+  ['mod_5fint_5',['mod_int',['../classntlib_1_1mod__int.html#a52ff225cbc492cac0f746c67e24c44b0',1,'ntlib::mod_int::mod_int() noexcept=default'],['../classntlib_1_1mod__int.html#a281a927a8e82e47667041a9b89286487',1,'ntlib::mod_int::mod_int(T n) noexcept']]],
   ['mod_5fis_5fsquare_6',['mod_is_square',['../modulo_8cpp.html#a34f49ac624aa3a81b254add17b64fdce',1,'ntlib']]],
   ['mod_5flucas_5fnth_5fterm_7',['mod_lucas_nth_term',['../lucas__sequence_8cpp.html#af91688ee122a5b68e40834968d56c7c1',1,'ntlib']]],
   ['mod_5fmult_5finv_8',['mod_mult_inv',['../modulo_8cpp.html#a22e7f00087ba99c51a1220fd8953e394',1,'ntlib']]],

@@ -194,11 +194,11 @@ Functions</h2></td></tr>
 <tr class="memitem:a737f6ddbea5aa8554fbfcea214d5836f"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::tuple&lt; T, S, S &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a737f6ddbea5aa8554fbfcea214d5836f">ntlib::extended_euclid</a> (T a, T b) noexcept</td></tr>
 <tr class="memdesc:a737f6ddbea5aa8554fbfcea214d5836f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extended Euclidean algorithm.  <br /></td></tr>
 <tr class="separator:a737f6ddbea5aa8554fbfcea214d5836f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf287d92a386731e783133dfcf8f0131" id="r_abf287d92a386731e783133dfcf8f0131"><td class="memTemplParams" colspan="2">template&lt;std::integral T&gt; <br />
+<tr class="memitem:a865eccae31ffc090c0cba462fe856674" id="r_a865eccae31ffc090c0cba462fe856674"><td class="memTemplParams" colspan="2">template&lt;std::integral T&gt; <br />
 requires (sizeof(T) &lt;= 8)</td></tr>
-<tr class="memitem:abf287d92a386731e783133dfcf8f0131"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#abf287d92a386731e783133dfcf8f0131">ntlib::get_multiplicative_neutral</a> (T n) noexcept</td></tr>
-<tr class="memdesc:abf287d92a386731e783133dfcf8f0131"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the multiplicative neutral element <code>1</code> for integral types.  <br /></td></tr>
-<tr class="separator:abf287d92a386731e783133dfcf8f0131"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a865eccae31ffc090c0cba462fe856674"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a865eccae31ffc090c0cba462fe856674">ntlib::get_multiplicative_neutral</a> (T) noexcept</td></tr>
+<tr class="memdesc:a865eccae31ffc090c0cba462fe856674"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the multiplicative neutral element <code>1</code> for integral types.  <br /></td></tr>
+<tr class="separator:a865eccae31ffc090c0cba462fe856674"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9493740aa48e914151a1049c96cbe16d" id="r_a9493740aa48e914151a1049c96cbe16d"><td class="memTemplParams" colspan="2">template&lt;HasMultiplicativeNeutral A, typename B &gt; </td></tr>
 <tr class="memitem:a9493740aa48e914151a1049c96cbe16d"><td class="memTemplItemLeft" align="right" valign="top">constexpr A&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a9493740aa48e914151a1049c96cbe16d">ntlib::pow</a> (A a, B b) noexcept</td></tr>
 <tr class="memdesc:a9493740aa48e914151a1049c96cbe16d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary exponentation.  <br /></td></tr>
@@ -465,8 +465,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="abf287d92a386731e783133dfcf8f0131" name="abf287d92a386731e783133dfcf8f0131"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf287d92a386731e783133dfcf8f0131">&#9670;&#160;</a></span>get_multiplicative_neutral()</h2>
+<a id="a865eccae31ffc090c0cba462fe856674" name="a865eccae31ffc090c0cba462fe856674"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a865eccae31ffc090c0cba462fe856674">&#9670;&#160;</a></span>get_multiplicative_neutral()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -480,7 +480,7 @@ requires (sizeof(T) &lt;= 8)</div>
         <tr>
           <td class="memname">T ntlib::get_multiplicative_neutral </td>
           <td>(</td>
-          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -495,12 +495,6 @@ requires (sizeof(T) &lt;= 8)</div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>An integral type. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">n</td><td>An element of type <code>T</code>. </td></tr>
   </table>
   </dd>
 </dl>

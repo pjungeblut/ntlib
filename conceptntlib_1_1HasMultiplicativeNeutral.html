@@ -104,10 +104,10 @@ $(function(){ initResizable(false); });
 <h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="conceptntlib_1_1HasMultiplicativeNeutral.html">ntlib::HasMultiplicativeNeutral</a> =  <span class="keyword">requires</span>(T n) {</div>
-<div class="line">    { <a class="code hl_function" href="base_8cpp.html#abf287d92a386731e783133dfcf8f0131">get_multiplicative_neutral</a>(n) } -&gt; std::convertible_to&lt;T&gt;;</div>
+<div class="line">    { <a class="code hl_function" href="base_8cpp.html#a865eccae31ffc090c0cba462fe856674">get_multiplicative_neutral</a>(n) } -&gt; std::convertible_to&lt;T&gt;;</div>
 <div class="line">}</div>
-<div class="ttc" id="abase_8cpp_html_abf287d92a386731e783133dfcf8f0131"><div class="ttname"><a href="base_8cpp.html#abf287d92a386731e783133dfcf8f0131">ntlib::get_multiplicative_neutral</a></div><div class="ttdeci">constexpr T get_multiplicative_neutral(T n) noexcept</div><div class="ttdoc">Returns the multiplicative neutral element 1 for integral types.</div><div class="ttdef"><b>Definition</b> base.cpp:258</div></div>
-<div class="ttc" id="aconceptntlib_1_1HasMultiplicativeNeutral_html"><div class="ttname"><a href="conceptntlib_1_1HasMultiplicativeNeutral.html">ntlib::HasMultiplicativeNeutral</a></div><div class="ttdoc">Restricts to types with a multiplicative neutral element.</div><div class="ttdef"><b>Definition</b> base.cpp:271</div></div>
+<div class="ttc" id="abase_8cpp_html_a865eccae31ffc090c0cba462fe856674"><div class="ttname"><a href="base_8cpp.html#a865eccae31ffc090c0cba462fe856674">ntlib::get_multiplicative_neutral</a></div><div class="ttdeci">constexpr T get_multiplicative_neutral(T) noexcept</div><div class="ttdoc">Returns the multiplicative neutral element 1 for integral types.</div><div class="ttdef"><b>Definition</b> base.cpp:257</div></div>
+<div class="ttc" id="aconceptntlib_1_1HasMultiplicativeNeutral_html"><div class="ttname"><a href="conceptntlib_1_1HasMultiplicativeNeutral.html">ntlib::HasMultiplicativeNeutral</a></div><div class="ttdoc">Restricts to types with a multiplicative neutral element.</div><div class="ttdef"><b>Definition</b> base.cpp:270</div></div>
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Restricts to types with a multiplicative neutral element. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>

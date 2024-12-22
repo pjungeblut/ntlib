@@ -98,32 +98,42 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">mod_int Module Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Represents an element of a residue class modulo a given number.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int&lt; U, MOD, S &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classntlib_1_1rt__mod__int.html">ntlib::rt_mod_int&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an element of the residue class \(\mathbb{Z}/m\mathbb{Z}\), where the modulus \(m\) is provided at the time of construction (i.e., at run-time).  <a href="classntlib_1_1rt__mod__int.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classntlib_1_1ct__mod__int.html">ntlib::ct_mod_int&lt; T, m &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an element of the residue class \(\mathbb{Z}/m\mathbb{Z}\), where the modulus \(m\) is provided at compile-time.  <a href="classntlib_1_1ct__mod__int.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac89c56e8f4b87968277bcc10928b09fd" id="r_ac89c56e8f4b87968277bcc10928b09fd"><td class="memTemplParams" colspan="2">template&lt;typename U , U MOD = 0, typename S  = std::make_signed_t&lt;U&gt;&gt; </td></tr>
-<tr class="memitem:ac89c56e8f4b87968277bcc10928b09fd"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="mod__int_8cpp.html#ac89c56e8f4b87968277bcc10928b09fd">ntlib::operator&lt;&lt;</a> (std::ostream &amp;os, mod_int&lt; U, MOD, S &gt; obj)</td></tr>
-<tr class="separator:ac89c56e8f4b87968277bcc10928b09fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bc658a2602892f248746647c628cc2d" id="r_a5bc658a2602892f248746647c628cc2d"><td class="memTemplParams" colspan="2">template&lt;typename U , U MOD = 0, typename S  = std::make_signed_t&lt;U&gt;&gt; <br />
-requires (MOD != 0)</td></tr>
-<tr class="memitem:a5bc658a2602892f248746647c628cc2d"><td class="memTemplItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="mod__int_8cpp.html#a5bc658a2602892f248746647c628cc2d">ntlib::operator&gt;&gt;</a> (std::istream &amp;is, mod_int&lt; U, MOD, S &gt; &amp;obj)</td></tr>
-<tr class="separator:a5bc658a2602892f248746647c628cc2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f1aecc7af7af6f346a826eb3bdfdc4e" id="r_a1f1aecc7af7af6f346a826eb3bdfdc4e"><td class="memTemplParams" colspan="2">template&lt;typename U , U MOD = 0, typename S  = std::make_signed_t&lt;U&gt;&gt; </td></tr>
-<tr class="memitem:a1f1aecc7af7af6f346a826eb3bdfdc4e"><td class="memTemplItemLeft" align="right" valign="top">constexpr mod_int&lt; U, MOD, S &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="mod__int_8cpp.html#a1f1aecc7af7af6f346a826eb3bdfdc4e">ntlib::get_multiplicative_neutral</a> (mod_int&lt; U, MOD, S &gt; obj)</td></tr>
-<tr class="separator:a1f1aecc7af7af6f346a826eb3bdfdc4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96aede8002e64d0ed35be5c4f47f4b25" id="r_a96aede8002e64d0ed35be5c4f47f4b25"><td class="memTemplParams" colspan="2">template&lt;typename U , U MOD = 0, typename S  = std::make_signed_t&lt;U&gt;&gt; </td></tr>
-<tr class="memitem:a96aede8002e64d0ed35be5c4f47f4b25"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="mod__int_8cpp.html#a96aede8002e64d0ed35be5c4f47f4b25">ntlib::to_string</a> (mod_int&lt; U, MOD, S &gt; obj)</td></tr>
-<tr class="separator:a96aede8002e64d0ed35be5c4f47f4b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1797bfa99e2c3aaa54f8ec9ce872a332" id="r_a1797bfa99e2c3aaa54f8ec9ce872a332"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a1797bfa99e2c3aaa54f8ec9ce872a332"><td class="memTemplItemLeft" align="right" valign="top">constexpr rt_mod_int&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="mod__int_8cpp.html#a1797bfa99e2c3aaa54f8ec9ce872a332">ntlib::get_multiplicative_neutral</a> (rt_mod_int&lt; T &gt; n)</td></tr>
+<tr class="memdesc:a1797bfa99e2c3aaa54f8ec9ce872a332"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization for <code><a class="el" href="base_8cpp.html#a865eccae31ffc090c0cba462fe856674" title="Returns the multiplicative neutral element 1 for integral types.">get_multiplicative_neutral()</a></code>.  <br /></td></tr>
+<tr class="separator:a1797bfa99e2c3aaa54f8ec9ce872a332"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba36957e2fc78f9c7596ccdd3b90bd1f" id="r_aba36957e2fc78f9c7596ccdd3b90bd1f"><td class="memTemplParams" colspan="2">template&lt;typename T , T m&gt; </td></tr>
+<tr class="memitem:aba36957e2fc78f9c7596ccdd3b90bd1f"><td class="memTemplItemLeft" align="right" valign="top">constexpr ct_mod_int&lt; T, m &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="mod__int_8cpp.html#aba36957e2fc78f9c7596ccdd3b90bd1f">ntlib::get_multiplicative_neutral</a> (ct_mod_int&lt; T, m &gt;)</td></tr>
+<tr class="memdesc:aba36957e2fc78f9c7596ccdd3b90bd1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization for <code><a class="el" href="base_8cpp.html#a865eccae31ffc090c0cba462fe856674" title="Returns the multiplicative neutral element 1 for integral types.">get_multiplicative_neutral()</a></code>.  <br /></td></tr>
+<tr class="separator:aba36957e2fc78f9c7596ccdd3b90bd1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Represents an element of a residue class modulo a given number. </p>
+<p>Let \(m \in \mathbb{N}\). This class represents an element of the residue class \(\mathbb{Z}/m\mathbb{Z}\).</p>
+<p>There are two classes in this module.</p><ul>
+<li><code>rt_mod_int</code> takes the modulus \(m\) at run-time.</li>
+<li><code>ct_mod_int</code> takes the modulus \(m\) at compile-time. </li>
+</ul>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/modulo/<b>mod_int.cpp</b></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/types/<a class="el" href="mod__int_8cpp.html">mod_int.cpp</a></td></tr>
+<tr class="memdesc:mod__int_8cpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary module interface unit for module <code>mod_int</code>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
