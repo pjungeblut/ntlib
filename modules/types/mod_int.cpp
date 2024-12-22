@@ -10,7 +10,7 @@ module;
 #include <type_traits>
 
 /**
- * @module
+ * @module mod_int
  * @brief Represents an element of a residue class modulo a given number.
  * 
  * Let \f$m \in \mathbb{N}\f$. This class represents an element of the residue
@@ -52,21 +52,6 @@ public:
    */
   explicit operator T() const noexcept {
     return value;
-  }
-
-  /**
-   * @brief Equality comparison operator.
-   * 
-   * @param lhs The first instance.
-   * @param rhs The second instance.
-   * @return Whether `lhs` and `rhs` are equal.
-   */
-  friend bool operator==(DERIVED lhs, DERIVED rhs) noexcept {
-    if constexpr (std::is_same_v<DERIVED, rt_mod_int<T>>) {
-      return lhs.value == rhs.value && lhs.get_modulus() == rhs.get_modulus();
-    } else {
-      return lhs.value == rhs.value;
-    }
   }
 
   /**
@@ -192,20 +177,6 @@ public:
   }
 
   /**
-   * @brief Unary minus operator to negate value.
-   * 
-   * @return The negated instance.
-   */
-  DERIVED operator-() const noexcept {
-    const T m = static_cast<const DERIVED*>(this)->get_modulus();
-    if constexpr (std::is_same_v<DERIVED, rt_mod_int<T>>) {
-      return DERIVED {mod(m - value), m};
-    } else {
-      return DERIVED {mod(m - value)};
-    }
-  }
-
-  /**
    * @brief Inverts the value.
    * 
    * @note This requires that the current value is coprime to the modulus.
@@ -289,6 +260,28 @@ public:
     return modulus;
   }
 
+  /**
+   * @brief Equality comparison operator.
+   * 
+   * @param lhs The first instance.
+   * @param rhs The second instance.
+   * @return Whether `lhs` and `rhs` are equal.
+   */
+  friend bool operator==(rt_mod_int lhs, rt_mod_int rhs) noexcept {
+    return static_cast<T>(lhs) == static_cast<T>(rhs) &&
+        lhs.get_modulus() == rhs.get_modulus();
+  }
+
+  /**
+   * @brief Unary minus operator to negate value.
+   * 
+   * @return The negated instance.
+   */
+  rt_mod_int operator-() const noexcept {
+    return rt_mod_int {
+        static_cast<T>(modulus - static_cast<T>(*this)), modulus};
+  }
+
 private:
   /**
    * The modulus \f$m\f$.
@@ -331,6 +324,26 @@ public:
   [[nodiscard]]
   T get_modulus() const noexcept {
     return m;
+  }
+
+  /**
+   * @brief Equality comparison operator.
+   * 
+   * @param lhs The first instance.
+   * @param rhs The second instance.
+   * @return Whether `lhs` and `rhs` are equal.
+   */
+  friend bool operator==(ct_mod_int lhs, ct_mod_int rhs) noexcept {
+    return static_cast<T>(lhs) == static_cast<T>(rhs);
+  }
+
+  /**
+   * @brief Unary minus operator to negate value.
+   * 
+   * @return The negated instance.
+   */
+  ct_mod_int operator-() const noexcept {
+    return ct_mod_int {static_cast<T>(m - static_cast<T>(*this))};
   }
 };
 
