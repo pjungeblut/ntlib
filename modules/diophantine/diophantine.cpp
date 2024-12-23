@@ -1,13 +1,16 @@
 /**
- * Algorithms to solve diophantine equations.
- * Preconditions are stated in the comments and must be checked by the caller.
+ * @file
+ * @brief Primary module interface unit for module `diophantine`.
  */
-
 module;
 
 #include <cassert>
 #include <tuple>
 
+/**
+ * @module diophantine
+ * @brief Algorithms to solve diophantine equations.
+ */
 export module diophantine;
 
 import base;
@@ -15,21 +18,25 @@ import base;
 namespace ntlib {
 
 /**
- * Computes an integer solution in x to the diophantine equation ax = b.
- * A solution exists if and only if b is a multiple of a.
- * For a = b = 0 each x \in \mathbb{Z} is a solution and x = 0 is returned.
- * In all other cases the solution is unique.
+ * @brief Compute integer solutions to linear univariate diophantine equations.
+ * 
+ * Computes an integer solution in \f$x\f$ to the diophantine equation
+ * \f$ax = b\f$.
+ * A solution exists if and only if \f$b\f$ is a multiple of \f$a\f$.
+ * For \f$a = b = 0\f$ each \f$x \in \mathbb{Z}\f$ is a solution and \f$x = 0\f$
+ * is returned. In all other cases the solution is unique.
  *
- * @param a Parameter a.
- * @param b Parameter b, must be a multiple of a.
- * @return The solution in x.
+ * @param a The coefficient of \f$x\f$.
+ * @param b The absolute offset. Must be a multiple of \f$a\f$.
+ * @return The solution in \f$x\f$.
  */
 export template<typename T>
-T diophantine_linear_univariate(const T &a, const T &b) {
+[[nodiscard]] constexpr
+T diophantine_linear_univariate(T a, T b) noexcept {
   // If a = 0 then we must also have b = 0.
   // In this case, there are inifinitely many solutions and we return 0.
   assert(a != 0 || b == 0);
-  if (a == 0) return 0;
+  if (a == 0) { return 0; }
 
   // There is a unique solution if and only if b is a multiple of a.
   assert(b % a == 0);
@@ -37,33 +44,37 @@ T diophantine_linear_univariate(const T &a, const T &b) {
 }
 
 /**
- * Computes an integer solution (x,y) to the diophantine equation ax + by = c.
- * A solution exists if and only if c is a multiple of gcd(a,b).
- * If a solution exists, there are infinitely many of them.
+ * @brief Computes integer solutions to linear bivariate diophantine equations.
+ * 
+ * Computes an integer solution \f$(x,y)\f$ to the diophantine equation
+ * \f$ax + by = c\f$.
+ * A solution exists if and only if \f$c\f$ is a multiple of
+ * \f$\mathrm{gcd}(a,b)\f$. In this case, there are infinitely many solutions.
  *
- * @param a Parameter a.
- * @param b Parameter b.
- * @param c Parameter c, must be a multiple of gcd(a,b).
- * @return A triple with x, y and gcd(a,b) where the latter is needed to compute
- *         further solution via Bezout's Identity. In case a = b = 0, the third
- *         element is 0.
+ * @param a The coefficient of \f$x\f$.
+ * @param b The coefficient of \f$y\f$.
+ * @param c The absolute offset. Must be a multiple of \f$\mathrm{gcd}(a,b)\f$.
+ * @return A triple with \f$x\f$, \f$y\f$ and \f$\mathrm{gcd}(a,b)\f$ where the
+ *     latter can be used to compute other solutions using via Bezout's
+ *     Identity. In case \f$a = b = 0\f$, the third element is \f$0\f$.
  */
 export template<typename T>
-std::tuple<T,T,T> diophantine_linear_bivariate(T a, T b, T c) {
+[[nodiscard]] constexpr
+std::tuple<T,T,T> diophantine_linear_bivariate(T a, T b, T c) noexcept {
   // Special case: a = 0 and b = 0.
   assert(a != 0 || b != 0 || c == 0);
-  if (a == 0 && b == 0) return std::make_tuple(0, 0, 0);
+  if (a == 0 && b == 0) { return std::make_tuple(0, 0, 0); }
 
   // Special case: a = 0.
   assert(a != 0 || c % b == 0);
-  if (a == 0) return std::make_tuple(0, c / b, b);
+  if (a == 0) { return std::make_tuple(0, c / b, b); }
 
   // Special case: b = 0.
   assert(b != 0 || c % a == 0);
-  if (b == 0) return std::make_tuple(c / a, 0, a);
+  if (b == 0) { return std::make_tuple(c / a, 0, a); }
 
   // General case.
-  auto [gcd, x, y] = extended_euclid(abs(a), abs(b));
+  auto [gcd, x, y] = ntlib::extended_euclid(abs(a), abs(b));
   assert(c % gcd == 0);
   x *= c / gcd;
   y *= c / gcd;
