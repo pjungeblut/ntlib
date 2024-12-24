@@ -66,7 +66,7 @@ std::vector<T> quadratic_irrational_cf(const T &n) {
  * @return The numerator and denominator of the n-th convergent.
  */
 export template<typename T>
-rational<T> nth_convergent_quadratic_irrational_cf(T n,
+rational<T> nth_convergent_quadratic_irrational_cf(std::size_t n,
     const std::vector<T> &cf) {
   T p[3];
   T q[3];
