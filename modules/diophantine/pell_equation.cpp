@@ -61,7 +61,7 @@ std::tuple<T,T> pell_fundamental_solution(T D) noexcept {
  */
 export template<typename T>
 [[nodiscard]] constexpr
-std::tuple<T,T> next_pell_solution(
+std::tuple<T,T> pell_next_solution(
     T D,
     const std::tuple<T,T> &initial,
     const std::tuple<T,T> &current
