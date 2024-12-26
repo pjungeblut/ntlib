@@ -98,24 +98,5 @@ bool is_prime_miller_selfridge_rabin(uint64_t n) noexcept {
   return is_prime_miller_selfridge_rabin<uint64_t, bases64.size(), bases64>(n);
 }
 
-/**
- * Optimized prime test for 32-bit integers.
- * Based on hashing and Miller-Selfridge-Rabin.
- * See: https://ceur-ws.org/Vol-1326/020-Forisek.pdf
- * 
- * @param n The number to test for primality.
- * @return Whether `n` is prime.
- */
-[[nodiscard]] constexpr
-bool is_prime_forisek_jancina(uint32_t n) {
-  // Base cases.
-  if (n == 2 || n == 3 || n == 5 || n == 7) { return true; }
-  if (n % 2 == 0 || n % 3 == 0 || n % 5 == 0 || n % 7 == 0) { return false; }
-  // Every composite below 120 has a prime factor in {2, 3, 5, 7}.
-  if (n < 121) { return n > 1; }
-
-  return forisek_jancina_no_base_cases(n);
-}
-
 }
 }

@@ -117,14 +117,6 @@ TEST(MillerSelfridgeRabin, Base7StrongLiars) {
   }
 }
 
-TEST(ForisekJancina, FirstN) {
-  // Skip small numbers, as the function does not check base cases.
-  for (uint32_t i = 121; i <= N; i += 2) {
-    if (i % 2 == 0 || i % 3 == 0 || i % 5 == 0 || i % 7 == 0) { continue; }
-    EXPECT_EQ(ntlib::forisek_jancina_no_base_cases(i), SIEVE[i]) << "i = " << i;
-  }
-}
-
 TEST(StrongLucas, SmallValues) {
   // Strong Lucas Pseudoprimes.
   // https://oeis.org/A217255

@@ -1,7 +1,7 @@
 /**
- * Implementations for prime number tests.
+ * @file
+ * @brief Primary module interface unit for module `prime_test`.
  */
-
 module;
 
 #include <algorithm>
@@ -12,6 +12,10 @@ module;
 #include <span>
 #include <type_traits>
 
+/**
+ * @module prime_test
+ * @brief Test whether a given number is prime.
+ */
 export module prime_test;
 
 import base;
@@ -23,21 +27,26 @@ import modulo;
 namespace ntlib {
 
 /**
- * @brief Primality test by trial division of a given number using a precomputed list
- * of primes.
+ * @brief Uses trial division to test whether a given number is prime relative
+ * to a given precomputed list of primes.
  * 
- * Assumes that the list of primes is sorted and contains no holes.
+ * Assumes that the given list of primes is sorted and contains no gaps.
+ * If \f$p\f$ is the largest prime in the given list, then the primality of all
+ * numbers up to \f$p^2\f$ can be determined correctly.
+ * For greater numbers, no decision is made.
  * 
  * @tparam C A container of primes of type `T`.
  * @tparam T An integer-like type.
  * @param n The given number.
- * @param primes A list of small primes to divide by.
- * @return Whether `n` is prime (relative to all primes in `primes`).
+ * @param primes The given list of primes.
+ * @retval std::optional<bool>{true} If the number is prime.
+ * @retval std::optional<bool>{false} If the number is composite.
+ * @retval std::nullopt If primality could not be determined by the given list
+ *     of primes.
  */
 export template<typename C, typename T = C::value_type>
 [[nodiscard]] constexpr
-std::optional<bool> is_prime_trial_division(T n,
-    const C &primes) {
+std::optional<bool> is_prime_trial_division(T n, const C &primes) noexcept {
   // Trivial cases.
   if (n <= T{1}) { return false; }
 
@@ -54,12 +63,16 @@ std::optional<bool> is_prime_trial_division(T n,
 }
 
 /**
- * Miller-Selfridge-Rabin primality test.
- * Tests if `n` is a strong propable prime.
+ * @brief Miller-Selfridge-Rabin primality test.
+ * 
+ * Given an odd integer \f$n > 2\f$, tests if \f$n\f$ is a strong propable
+ * prime with respect to a given base.
  *
- * @param n The number to be tested, odd, `n > 2`.
- * @param a The base to test with.
- * @return `true` if and only if the `n` is a strong probable prime to base `a`.
+ * @tparam T An integer-like type.
+ * @param n The given number. Must be odd and greater than \f$2\f$
+ * @param a The given base.
+ * @return Whether \f$n\f$ is a strong probable prime with respect to base
+ *     \f$a\f$.
  */
 export template<typename T>
 [[nodiscard]] constexpr
@@ -72,7 +85,7 @@ bool miller_selfridge_rabin_test(T n, T a) noexcept {
   if (static_cast<T>(a_mod_n) == T{0}) { return true; }
 
   // Decompose, such that `n-1 = o*2^e`.
-  T n_minus_1 = n - T{1};
+  const T n_minus_1 = n - T{1};
   auto [e, o] = ntlib::odd_part(n_minus_1);
 
   auto p_mod_n = ntlib::pow(a_mod_n, o);
@@ -89,17 +102,18 @@ bool miller_selfridge_rabin_test(T n, T a) noexcept {
 }
 
 /**
- * Optimized prime test for 32-bit integers.
+ * @brief Subroutine for optimized prime test for a given 32-bit integer.
+ * 
  * Based on hashing and Miller-Selfridge-Rabin.
  * See: https://ceur-ws.org/Vol-1326/020-Forisek.pdf
  * 
  * Does not check bases cases (numbers divisible by 2, 3, 5, 7)!
  * 
- * @param n The number to test for primality.
- * @return Whether `n` is prime.
+ * @param n The given number.
+ * @return Whether \f$n\f$ is prime.
  */
-export [[nodiscard]] constexpr
-bool forisek_jancina_no_base_cases(uint32_t n) {
+[[nodiscard]] constexpr
+bool forisek_jancina_no_base_cases(uint32_t n) noexcept {
   constexpr auto bases = std::to_array<uint64_t>({
       15591, 2018, 166, 7429, 8064, 16045, 10503, 4399, 1949, 1295, 2776, 3620,
       560, 3128, 5212, 2657, 2300, 2021, 4652, 1471, 9336, 4018, 2398, 20462,
@@ -128,39 +142,41 @@ bool forisek_jancina_no_base_cases(uint32_t n) {
   h = ((h >> 16) ^ h) * 0x45D9F3B;
   h = ((h >> 16) ^ h) * 0x45D9F3B;
   h = ((h >> 16) ^ h) & 0xFF;
-  return miller_selfridge_rabin_test(static_cast<uint64_t>(n), bases[h]);
+  return ntlib::miller_selfridge_rabin_test(static_cast<uint64_t>(n), bases[h]);
 }
 
 /**
- * Prime test, optimized for 32-bit values, i.e., `n <= 2^32 - 1`.
- * Deterministic.
+ * @brief Deterministic prime test optimized for a given 32-bit integer.
  * 
- * @param n The number to test for primality.
- * @return Whether `n` is prime.
+ * Correct if the given number is at most \f$2^32 - 1\f$.
+ * 
+ * @param n The given number.
+ * @return Whether \f$n\f$ is prime.
  */
 [[nodiscard]] constexpr
-bool is_prime_32(uint32_t n) {
+bool is_prime_32(uint32_t n) noexcept {
   // Handle small numbers by trial division.
   std::optional<bool> trial_division =
-      is_prime_trial_division(n, SMALL_PRIMES<uint32_t>);
+      ntlib::is_prime_trial_division(n, SMALL_PRIMES<uint32_t>);
   if (trial_division.has_value()) { return trial_division.value(); }
 
   // Use prime test by Forisek and Jancina for larger values.
-  return forisek_jancina_no_base_cases(n);
+  return ntlib::forisek_jancina_no_base_cases(n);
 }
 
 /**
- * Prime test, optimized for 64-bit values, i.e., `n <= 2^64 - 1`.
- * Deterministic.
+ * @brief Deterministic prime test optimized for a given 64-bit integer.
  * 
- * @param n The number to test for primality.
- * @return Whether `n` is prime.
+ * Correct if the given number is at most \f$2^64 - 1\f$.
+ * 
+ * @param n The given number.
+ * @return Whether \f$n\f$ is prime.
  */
 [[nodiscard]] constexpr
-bool is_prime_64(uint64_t n) {
+bool is_prime_64(uint64_t n) noexcept {
   // Handle small numbers by trial division.
   std::optional<bool> trial_division =
-      is_prime_trial_division(n, SMALL_PRIMES<uint64_t>);
+      ntlib::is_prime_trial_division(n, SMALL_PRIMES<uint64_t>);
   if (trial_division.has_value()) { return trial_division.value(); }
 
   // Use deterministic Miller-Selfridge-Rabin test for larger values.
@@ -168,25 +184,27 @@ bool is_prime_64(uint64_t n) {
   constexpr auto bases64 = std::to_array<uint64_t>({
       2, 325, 9'375, 28'178, 450'775, 9'780'504, 1'795'265'022});
   return std::ranges::all_of(bases64, [n](uint64_t a) {
-    return miller_selfridge_rabin_test(
-        static_cast<u128>(n), static_cast<u128>(a));
+    return ntlib::miller_selfridge_rabin_test(
+        static_cast<ntlib::u128>(n), static_cast<ntlib::u128>(a));
   });
 }
 
 /**
- * Checks whether `n` is a Lucas probable prime.
+ * @brief Checks whether a given number is a Lucas probable prime.
  *
- * @param n The number to check.
- * @return `true` if and only if `n` is a strong Lucas probable prime.
+ * @tparam T An integer-like type.
+ * @tparam S The signed type corresponding to `T`.
+ * @param n The given number.
+ * @return Whether the given number is a strong Lucas probable prime.
  */
-export template<typename U, typename S = std::make_signed_t<U>>
+export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
-bool is_strong_lucas_probable_prime(U n) noexcept {
-  assert(n > U{2});
+bool is_strong_lucas_probable_prime(T n) noexcept {
+  assert(n > T{2});
   assert(is_odd(n));
 
   // Find a `D`, such that `jacobi(D,n) = -1`.
-  const auto find_D = [](U n) {
+  const auto find_D = [](T n) {
     // Function to generate the next candidate value for `D`.
     const auto next_D_candidate = [](S D) {
       return D > S{0} ? S{-2} - D : S{2} - D;
@@ -226,13 +244,13 @@ bool is_strong_lucas_probable_prime(U n) noexcept {
   const S Q{(S{1} - D) / S{4}};
 
   // Decompose such that `n+1 = o*2^e`.
-  auto [e, o] = odd_part(n + U{1});
+  auto [e, o] = odd_part(n + T{1});
 
   // Strong Lucas probable prime test.
   auto [u, v] = mod_lucas_nth_term(o, P, Q, static_cast<S>(n));
   if (u == S{0} || v == S{0}) { return true; }
   while (--e) {
-    S uu = mod(u * v, static_cast<S>(n));
+    const S uu = mod(u * v, static_cast<S>(n));
     S vv = v * v + D * u * u;
     if (is_odd(vv)) { vv += n; }
     vv /= S{2};
@@ -246,39 +264,47 @@ bool is_strong_lucas_probable_prime(U n) noexcept {
 }
 
 /**
- * Tests whether a given number `n` is (probable) prime.
- * Uses a Baillie-PSW-Test, which is deterministic for all values `n <= 2^64`.
+ * @brief Baillie-PSW (probable) prime test.
+ * 
+ * Deterministic for all integers \f$n \leq 2^64\f$.
  *
- * @param n The number to test for primality.
- * @return Whether `n` is a prime number.
+ * @tparam T An integer-like type.
+ * @tparam S The signed type corresponding to `T`.
+ * @param n The given number.
+ * @return Whether \f$n\f$ is a prime number.
  */
-export template<typename U, typename S = std::make_signed_t<U>>
+export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
-bool is_prime_baillie_psw(U n) noexcept {
+bool is_prime_baillie_psw(T n) noexcept {
   // Trivial cases.
-  if (n <= U{1}) { return false; }
+  if (n <= T{1}) { return false; }
 
   // Trial division with some small prime factors.
-  auto trial_division = is_prime_trial_division(n, SMALL_PRIMES<U>);
+  const auto trial_division = is_prime_trial_division(n, SMALL_PRIMES<T>);
   if (trial_division.has_value()) { return trial_division.value(); }
 
   // Strong probable prime test for base 2.
-  if (!miller_selfridge_rabin_test(n, U{2})) return false;
+  if (!miller_selfridge_rabin_test(n, T{2})) return false;
 
   // Strong Lucas probable prime test.
-  if (!is_strong_lucas_probable_prime<U, S>(n)) return false;
+  if (!is_strong_lucas_probable_prime<T, S>(n)) return false;
 
   // Most probably prime.
   return true;
 }
 
 /**
- * Prime test.
- * Deterministic for `n <= 2^64`.
- * Probabilistic for larger values.
+ * @brief Prime test
  * 
+ * Deterministic for all integers \f$n \leq 2^64\f$.
+ * Probabilistic for larger values.
+ * Use this function template whenever there is no strong reason to use any
+ * other.
+ * 
+ * @tparam T An integer-like type.
+ * @tparam S The signed type corresponding to `T`.
  * @param n The number to test for primality.
- * @return Whether `n` is prime.
+ * @return Whether \f$n\f$ is prime.
  */
 export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
