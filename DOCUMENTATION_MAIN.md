@@ -42,7 +42,7 @@ Thus, building NTLib requires an up to date compiler and build system.
 
 ## Diophantine Equations
 
-* diophantine_equation.cpp:
+* diophantine.cpp:
   Solve diophantine equations of different types.
 * pell_equation.cpp:
   Solve Pell's equation.
