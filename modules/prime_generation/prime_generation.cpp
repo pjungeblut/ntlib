@@ -25,8 +25,18 @@ export import :sieve_235;
 namespace ntlib {
 
 /**
- * Generates a prime sieve.
- * See other overload for documentation.
+ * @brief Generates a prime sieve.
+ * 
+ * @tparam T An integer-like type.
+ * @tparam Allocator The allocator to use for the list of primes.
+ * @tparam SieveType The datastructure to use as a prime sieve.
+ * @tparam SEGMENT_SIZE Portion of the sieve to be processed at once. This
+ *     should be small enough that `SEGMENT_SIZE` sieve fields fit into an L3
+ *     cache line.
+ * @tparam CREATE_LIST Whether the sieve should also create a list of primes.
+ * @param N The largest number to be accessable in the sieve.
+ * @param primes The `std::vector<T>` to receive the primes.
+ * @return The sieve.
  */
 export template<
     typename T,
@@ -124,18 +134,15 @@ SieveType eratosthenes_segmented(T N, std::vector<T> &primes) {
 }
 
 /**
- * Generates a prime sieve.
+ * @brief Generates a prime sieve.
  *
- * @tparam T The integral data type to use.
+ * @tparam T An integer-like type.
  * @tparam Allocator The allocator to use for the list of primes.
- * @tparam SieveType The datastructure to use as a prime sieve. NTLib provides
- *                   a classical array like type and a 235-compressed version.
- *                   The latter one can save half the time to generate the
- *                   primes in a tradeoff for slower access times.
+ * @tparam SieveType The datastructure to use as a prime sieve.
  * @tparam SEGMENT_SIZE Portion of the sieve to be processed at once. This
- *                   should be small enough that `SEGMENT_SIZE` sieve fields fit
- *                   easily into the L3 cache.
- * @param N Generate a prime sieve with all values up to `N`.
+ *     should be small enough that `SEGMENT_SIZE` sieve fields fit into an L3
+ *     cache line.
+ * @param N The largest number to be accessable in the sieve.
  * @return The sieve.
  */
 export template<
@@ -145,24 +152,26 @@ export template<
     std::size_t SEGMENT_SIZE = (1 << 18)>
 SieveType prime_sieve(T N) {
   std::vector<T> primes;
-  return eratosthenes_segmented<T, Allocator, SieveType, SEGMENT_SIZE, false>(
-      N, primes);
+  return ntlib::eratosthenes_segmented<
+      T,
+      Allocator,
+      SieveType,
+      SEGMENT_SIZE,
+      false>(
+          N, primes);
 }
 
 /**
- * Generates a prime sieve.
+ * @brief Generates a prime sieve.
  *
- * @tparam T The integral data type to use.
+ * @tparam T An integer-like type.
  * @tparam Allocator The allocator to use for the list of primes.
- * @tparam SieveType The datastructure to use as a prime sieve. NTLib provides
- *                   a classical array like type and a 235-compressed version.
- *                   The latter one can save half the time to generate the
- *                   primes in a tradeoff for slower access times.
+ * @tparam SieveType The datastructure to use as a prime sieve.
  * @tparam SEGMENT_SIZE Portion of the sieve to be processed at once. This
- *                   should be small enough that `SEGMENT_SIZE` sieve fields fit
- *                   easily into the L3 cache.
- * @param N Generate a prime sieve with all values up to `N`.
- * @param primes A vector that will be filled with all primes up to N.
+ *     should be small enough that `SEGMENT_SIZE` sieve fields fit into an L3
+ *     cache line.
+ * @param N The largest number to be accessable in the sieve.
+ * @param primes The `std::vector<T>` to receive the primes.
  * @return The sieve.
  */
 export template<
@@ -171,21 +180,30 @@ export template<
     typename SieveType = ntlib::sieve_235<>,
     std::size_t SEGMENT_SIZE = (1 << 18)>
 SieveType prime_sieve(T N, std::vector<T> &primes) {
-  return eratosthenes_segmented<T, Allocator, SieveType, SEGMENT_SIZE, true>(
-      N, primes);
+  return ntlib::eratosthenes_segmented<
+      T,
+      Allocator,
+      SieveType,
+      SEGMENT_SIZE,
+      true>(
+        N, primes);
 }
 
 /**
- * Given a number, finds the next bigger prime.
+ * @brief Find the smallest prime bigger than a given number.
  * 
- * @param n The number to start from.
- * @return The smallest prime `p` larget than `n`.
+ * @param n The given number.
+ * @return The smallest prime larget than \f$n\f$.
  */
 export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 T next_prime(T n) noexcept {
-  T result{n + T{1}};
-  while (!is_prime<T,S>(result)) { ++result; }
+  // Base cases.
+  if (n <= T{1}) { return T{2}; }
+  if (n == T{2}) { return T{3}; }
+
+  T result {n + (T{1} + static_cast<T>(ntlib::is_odd(n)))};
+  while (!ntlib::is_prime<T,S>(result)) { result += T{2}; }
   return result;
 }
 
