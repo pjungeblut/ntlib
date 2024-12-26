@@ -97,34 +97,40 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">prime_test Module Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Test whether a given number is prime.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ab5c5ebf272972b014d3050b74dd26531" id="r_ab5c5ebf272972b014d3050b74dd26531"><td class="memTemplParams" colspan="2">template&lt;typename C , typename T  = C::value_type&gt; </td></tr>
-<tr class="memitem:ab5c5ebf272972b014d3050b74dd26531"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::optional&lt; bool &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__test_8cpp.html#ab5c5ebf272972b014d3050b74dd26531">ntlib::is_prime_trial_division</a> (T n, const C &amp;primes)</td></tr>
-<tr class="memdesc:ab5c5ebf272972b014d3050b74dd26531"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primality test by trial division of a given number using a precomputed list of primes.  <br /></td></tr>
-<tr class="separator:ab5c5ebf272972b014d3050b74dd26531"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1a7f649a186e29bd61679d8ad9ca1f4" id="r_ad1a7f649a186e29bd61679d8ad9ca1f4"><td class="memTemplParams" colspan="2">template&lt;typename C , typename T  = C::value_type&gt; </td></tr>
+<tr class="memitem:ad1a7f649a186e29bd61679d8ad9ca1f4"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::optional&lt; bool &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__test_8cpp.html#ad1a7f649a186e29bd61679d8ad9ca1f4">ntlib::is_prime_trial_division</a> (T n, const C &amp;primes) noexcept</td></tr>
+<tr class="memdesc:ad1a7f649a186e29bd61679d8ad9ca1f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses trial division to test whether a given number is prime relative to a given precomputed list of primes.  <br /></td></tr>
+<tr class="separator:ad1a7f649a186e29bd61679d8ad9ca1f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acff9e54c9a234cc10642cf7522605537" id="r_acff9e54c9a234cc10642cf7522605537"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:acff9e54c9a234cc10642cf7522605537"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__test_8cpp.html#acff9e54c9a234cc10642cf7522605537">ntlib::miller_selfridge_rabin_test</a> (T n, T a) noexcept</td></tr>
+<tr class="memdesc:acff9e54c9a234cc10642cf7522605537"><td class="mdescLeft">&#160;</td><td class="mdescRight">Miller-Selfridge-Rabin primality test.  <br /></td></tr>
 <tr class="separator:acff9e54c9a234cc10642cf7522605537"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a298d3eb5c87288f118418e0cf4eba171" id="r_a298d3eb5c87288f118418e0cf4eba171"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prime__test_8cpp.html#a298d3eb5c87288f118418e0cf4eba171">ntlib::forisek_jancina_no_base_cases</a> (uint32_t n)</td></tr>
-<tr class="separator:a298d3eb5c87288f118418e0cf4eba171"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabe0ccfc26a0a5dd67992f64c635d055" id="r_aabe0ccfc26a0a5dd67992f64c635d055"><td class="memTemplParams" colspan="2">template&lt;typename U , typename S  = std::make_signed_t&lt;U&gt;&gt; </td></tr>
-<tr class="memitem:aabe0ccfc26a0a5dd67992f64c635d055"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__test_8cpp.html#aabe0ccfc26a0a5dd67992f64c635d055">ntlib::is_strong_lucas_probable_prime</a> (U n) noexcept</td></tr>
-<tr class="separator:aabe0ccfc26a0a5dd67992f64c635d055"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a873afd341639858d927b9b8dee610e07" id="r_a873afd341639858d927b9b8dee610e07"><td class="memTemplParams" colspan="2">template&lt;typename U , typename S  = std::make_signed_t&lt;U&gt;&gt; </td></tr>
-<tr class="memitem:a873afd341639858d927b9b8dee610e07"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__test_8cpp.html#a873afd341639858d927b9b8dee610e07">ntlib::is_prime_baillie_psw</a> (U n) noexcept</td></tr>
-<tr class="separator:a873afd341639858d927b9b8dee610e07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb2d1ecf2ae39fa253fcbf1f5381c9cb" id="r_aeb2d1ecf2ae39fa253fcbf1f5381c9cb"><td class="memTemplParams" colspan="2">template&lt;typename T , typename S  = std::make_signed_t&lt;T&gt;&gt; </td></tr>
+<tr class="memitem:aeb2d1ecf2ae39fa253fcbf1f5381c9cb"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__test_8cpp.html#aeb2d1ecf2ae39fa253fcbf1f5381c9cb">ntlib::is_strong_lucas_probable_prime</a> (T n) noexcept</td></tr>
+<tr class="memdesc:aeb2d1ecf2ae39fa253fcbf1f5381c9cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a given number is a Lucas probable prime.  <br /></td></tr>
+<tr class="separator:aeb2d1ecf2ae39fa253fcbf1f5381c9cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92e73b320e048a1be61f9fe9195d9bb5" id="r_a92e73b320e048a1be61f9fe9195d9bb5"><td class="memTemplParams" colspan="2">template&lt;typename T , typename S  = std::make_signed_t&lt;T&gt;&gt; </td></tr>
+<tr class="memitem:a92e73b320e048a1be61f9fe9195d9bb5"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__test_8cpp.html#a92e73b320e048a1be61f9fe9195d9bb5">ntlib::is_prime_baillie_psw</a> (T n) noexcept</td></tr>
+<tr class="memdesc:a92e73b320e048a1be61f9fe9195d9bb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Baillie-PSW (probable) prime test.  <br /></td></tr>
+<tr class="separator:a92e73b320e048a1be61f9fe9195d9bb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6158100d17fa4281dc67ff553b5d0a7e" id="r_a6158100d17fa4281dc67ff553b5d0a7e"><td class="memTemplParams" colspan="2">template&lt;typename T , typename S  = std::make_signed_t&lt;T&gt;&gt; </td></tr>
 <tr class="memitem:a6158100d17fa4281dc67ff553b5d0a7e"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__test_8cpp.html#a6158100d17fa4281dc67ff553b5d0a7e">ntlib::is_prime</a> (T n) noexcept</td></tr>
+<tr class="memdesc:a6158100d17fa4281dc67ff553b5d0a7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prime test.  <br /></td></tr>
 <tr class="separator:a6158100d17fa4281dc67ff553b5d0a7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implementations for prime number tests. </p>
+<div class="textblock"><p>Test whether a given number is prime. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/prime_test/<b>prime_test.cpp</b></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/prime_test/<a class="el" href="prime__test_8cpp.html">prime_test.cpp</a></td></tr>
+<tr class="memdesc:prime__test_8cpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary module interface unit for module <code>prime_test</code>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
