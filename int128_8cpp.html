@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NTLib - Number Theory Library: int128 Module Reference</title>
+<title>NTLib - Number Theory Library: modules/base/int128.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,8 +62,6 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
-<div id="doc-content">
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function(){ initResizable(false); });
@@ -90,19 +88,35 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_fa1cca46f684da0e0f2853cac5cf3ca2.html">base</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div id="doc-content">
 <div class="header">
   <div class="summary">
 <a href="#concepts">Concepts</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#files">Files</a>  </div>
-  <div class="headertitle"><div class="title">int128 Module Reference</div></div>
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">int128.cpp File Reference<div class="ingroups">module <a class="el" href="module__int128.html">int128</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>128-bit integers.  
+<p>Primary module interface unit for module <code>int128</code>.  
 <a href="#details">More...</a></p>
-<table class="memberdecls">
+<div class="textblock"><code>#include &lt;type_traits&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for int128.cpp:</div>
+<div class="dyncontent">
+<div class="center"><img src="int128_8cpp__incl.png" border="0" usemap="#amodules_2base_2int128_8cpp" alt=""/></div>
+<map name="amodules_2base_2int128_8cpp" id="amodules_2base_2int128_8cpp">
+<area shape="rect" title="Primary module interface unit for module int128." alt="" coords="5,5,171,31"/>
+<area shape="rect" title=" " alt="" coords="47,79,129,105"/>
+<area shape="poly" title=" " alt="" coords="91,31,91,63,85,63,85,31"/>
+</map>
+</div>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
 Concepts</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conceptntlib_1_1Int128.html">ntlib::Int128</a></td></tr>
@@ -123,19 +137,41 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>ntlib::u128</b> = un
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a529db10e2b65aa7b02be6200c5ac9589" id="r_a529db10e2b65aa7b02be6200c5ac9589"><td class="memTemplParams" colspan="2">template&lt;Int128 T&gt; </td></tr>
-<tr class="memitem:a529db10e2b65aa7b02be6200c5ac9589"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="int128_8cpp.html#a529db10e2b65aa7b02be6200c5ac9589">ntlib::get_multiplicative_neutral</a> (T) noexcept</td></tr>
+<tr class="memitem:a529db10e2b65aa7b02be6200c5ac9589"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a529db10e2b65aa7b02be6200c5ac9589">ntlib::get_multiplicative_neutral</a> (T) noexcept</td></tr>
 <tr class="separator:a529db10e2b65aa7b02be6200c5ac9589"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>128-bit integers. </p>
-<p>Currently, these are just wrappers around the (non-standard) built-in 128-bit integers supported by Clang and GCC. </p>
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/base/<a class="el" href="int128_8cpp.html">int128.cpp</a></td></tr>
-<tr class="memdesc:int128_8cpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary module interface unit for module <code>int128</code>. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><p>Primary module interface unit for module <code>int128</code>. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a529db10e2b65aa7b02be6200c5ac9589" name="a529db10e2b65aa7b02be6200c5ac9589"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a529db10e2b65aa7b02be6200c5ac9589">&#9670;&#160;</a></span>get_multiplicative_neutral()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;Int128 T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T ntlib::get_multiplicative_neutral </td>
+          <td>(</td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">constexpr</span><span class="mlabel">export</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
 </table>
+</div><div class="memdoc">
+<p>Specialization for <code>get_multiplicative_neutral()</code>.</p>
+<dl class="section return"><dt>Returns</dt><dd>The multiplicative neutral element (<code>1</code>). </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

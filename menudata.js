@@ -46,7 +46,8 @@ var menudata={children:[
 {text:"p",url:"modulemembers.html#index_p"},
 {text:"q",url:"modulemembers.html#index_q"},
 {text:"s",url:"modulemembers.html#index_s"},
-{text:"t",url:"modulemembers.html#index_t"}]},
+{text:"t",url:"modulemembers.html#index_t"},
+{text:"u",url:"modulemembers.html#index_u"}]},
 {text:"Functions",url:"modulemembers_func.html",children:[
 {text:"a",url:"modulemembers_func.html#index_a"},
 {text:"b",url:"modulemembers_func.html#index_b"},
