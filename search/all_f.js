@@ -1,4 +1,29 @@
 var searchData=
 [
-  ['quadratic_5firrational_5fcf_0',['quadratic_irrational_cf',['../continued__fraction_8cpp.html#aa823178826f48842614c5e7549b0f68c',1,'ntlib']]]
+  ['p_0',['p',['../structntlib_1_1prime__power.html#a22148d7915738de87d3d63fa5e2c8d2d',1,'ntlib::prime_power']]],
+  ['pell_5fequation_1',['pell_equation',['../module__pell__equation.html',1,'']]],
+  ['pell_5fequation_2ecpp_2',['pell_equation.cpp',['../pell__equation_8cpp.html',1,'']]],
+  ['pell_5ffundamental_5fsolution_3',['pell_fundamental_solution',['../pell__equation_8cpp.html#aa51da102a74a2bce7f08e4b8d049b699',1,'ntlib']]],
+  ['pell_5fnext_5fsolution_4',['pell_next_solution',['../pell__equation_8cpp.html#a61bb81145969b479f50d7c0069bf2f2b',1,'ntlib']]],
+  ['performance_20benchmarks_5',['Run Performance Benchmarks',['../md_README.html#autotoc_md16',1,'']]],
+  ['pow_6',['pow',['../base_8cpp.html#a9493740aa48e914151a1049c96cbe16d',1,'ntlib']]],
+  ['prime_20numbers_7',['Prime Numbers',['../index.html#autotoc_md3',1,'']]],
+  ['prime_5fdecomposition_8',['prime_decomposition',['../module__prime__decomposition.html',1,'prime_decomposition module'],['../prime__decomposition_8cpp.html#a4acaba006b0c7a90e2c412847bd40333',1,'ntlib::prime_decomposition()']]],
+  ['prime_5fdecomposition_2ecpp_9',['prime_decomposition.cpp',['../prime__decomposition_8cpp.html',1,'']]],
+  ['prime_5fdecomposition_5f32_10',['prime_decomposition_32',['../prime__decomposition_8cpp.html#a593f89d6f0bd72904c7bfdf457e7496a',1,'ntlib']]],
+  ['prime_5fdecomposition_5flarge_11',['prime_decomposition_large',['../prime__decomposition_8cpp.html#aa1852fd43ee2b9d00a86dfbea5324223',1,'ntlib']]],
+  ['prime_5fdecomposition_5flist_12',['prime_decomposition_list',['../prime__decomposition_8cpp.html#a6ba4ca59e22f6c4df30bfb59a27cd3d8',1,'ntlib']]],
+  ['prime_5fdecomposition_5flist_5fremainder_13',['prime_decomposition_list_remainder',['../prime__decomposition_8cpp.html#a6351f0aed630575f037c96d356bee2ee',1,'ntlib']]],
+  ['prime_5ffactors_14',['prime_factors',['../prime__decomposition_8cpp.html#a8a9cd3211947fb7b14dacb7db6b4a232',1,'ntlib']]],
+  ['prime_5fgeneration_15',['prime_generation',['../module__prime__generation.html',1,'']]],
+  ['prime_5fgeneration_2ecpp_16',['prime_generation.cpp',['../prime__generation_8cpp.html',1,'']]],
+  ['prime_5flist_2ehpp_17',['prime_list.hpp',['../prime__list_8hpp.html',1,'']]],
+  ['prime_5fpower_18',['prime_power',['../structntlib_1_1prime__power.html',1,'ntlib']]],
+  ['prime_5fsieve_19',['prime_sieve',['../prime__generation_8cpp.html#a2f3174dcb0f5daf239e101ba2ebd7c70',1,'ntlib::prime_sieve(T N)'],['../prime__generation_8cpp.html#a1eb5039614a4caba9be15ce75355cb87',1,'ntlib::prime_sieve(T N, std::vector&lt; T &gt; &amp;primes)']]],
+  ['prime_5ftest_20',['prime_test',['../module__prime__test.html',1,'']]],
+  ['prime_5ftest_2ecpp_21',['prime_test.cpp',['../prime__test_8cpp.html',1,'']]],
+  ['primes_5fbelow_5f2_5f16_22',['PRIMES_BELOW_2_16',['../prime__list_8hpp.html#a112b71b3a38e0ccc75ee5cf0933f553b',1,'ntlib']]],
+  ['primitive_5fpythagorean_5ftriples_23',['primitive_pythagorean_triples',['../pythagorean__triple_8cpp.html#a964f287582daee6f425e736bacf83df3',1,'ntlib']]],
+  ['pythagorean_5ftriple_24',['pythagorean_triple',['../module__pythagorean__triple.html',1,'']]],
+  ['pythagorean_5ftriple_2ecpp_25',['pythagorean_triple.cpp',['../pythagorean__triple_8cpp.html',1,'']]]
 ];

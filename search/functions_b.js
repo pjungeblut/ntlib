@@ -4,7 +4,7 @@ var searchData=
   ['miller_5fselfridge_5frabin_5ftest_1',['miller_selfridge_rabin_test',['../prime__test_8cpp.html#acff9e54c9a234cc10642cf7522605537',1,'ntlib']]],
   ['mod_2',['mod',['../modulo_8cpp.html#ab11afb456eb969b2c041a515fcbe83d2',1,'ntlib']]],
   ['mod_5fbinom_3',['mod_binom',['../binomial__coefficient_8cpp.html#a998112c7d16c9e712e91c6ecc6d21ef2',1,'ntlib']]],
-  ['mod_5fbinom_5ftable_4',['mod_binom_table',['../binomial__coefficient_8cpp.html#a7c4e674021d6f2bc9c7b56440d5b94f5',1,'ntlib']]],
+  ['mod_5fbinom_5ftable_4',['mod_binom_table',['../binomial__coefficient_8cpp.html#a5ec979a1a40980d590190e77c0b9d581',1,'ntlib']]],
   ['mod_5ffactorial_5',['mod_factorial',['../modulo_8cpp.html#abb25a1902a69cca093f750091d8ad0d0',1,'ntlib']]],
   ['mod_5fint_6',['mod_int',['../classntlib_1_1mod__int.html#a52ff225cbc492cac0f746c67e24c44b0',1,'ntlib::mod_int::mod_int() noexcept=default'],['../classntlib_1_1mod__int.html#a281a927a8e82e47667041a9b89286487',1,'ntlib::mod_int::mod_int(T n) noexcept']]],
   ['mod_5fis_5fsquare_7',['mod_is_square',['../modulo_8cpp.html#a34f49ac624aa3a81b254add17b64fdce',1,'ntlib']]],

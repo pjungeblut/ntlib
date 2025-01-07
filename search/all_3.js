@@ -8,7 +8,7 @@ var searchData=
   ['diophantine_5flinear_5fbivariate_5',['diophantine_linear_bivariate',['../diophantine_8cpp.html#a80be6d6096392bd23dffefdd75708bab',1,'ntlib']]],
   ['diophantine_5flinear_5funivariate_6',['diophantine_linear_univariate',['../diophantine_8cpp.html#a076993e18fe3aaf372ac2ac2ba54b93e',1,'ntlib']]],
   ['disclaimer_7',['License &amp; Disclaimer',['../md_README.html#autotoc_md17',1,'']]],
-  ['divisor_5ffunction_8',['divisor_function',['../divisors_8cpp.html#a03625781ea45c307bd5e58f28bb1803d',1,'ntlib']]],
+  ['divisor_5ffunction_8',['divisor_function',['../divisors_8cpp.html#a82c20327191f003613b6dc853d2d17b1',1,'ntlib']]],
   ['divisors_9',['divisors',['../module__divisors.html',1,'']]],
   ['divisors_2ecpp_10',['divisors.cpp',['../divisors_8cpp.html',1,'']]],
   ['documentation_11',['Documentation',['../index.html#autotoc_md0',1,'Documentation'],['../md_README.html#autotoc_md11',1,'Documentation']]],

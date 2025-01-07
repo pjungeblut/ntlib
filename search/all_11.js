@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['sgn_0',['sgn',['../base_8cpp.html#a0da3fec11ac16f272889ba76a1c2be6d',1,'ntlib']]],
-  ['sieve_5f235_1',['sieve_235',['../classntlib_1_1sieve__235.html',1,'ntlib::sieve_235&lt; Allocator &gt;'],['../classntlib_1_1sieve__235.html#a6e0ef27711ec99820b06563d5827d5fd',1,'ntlib::sieve_235::sieve_235()=default'],['../classntlib_1_1sieve__235.html#a64cf0c0805e926e9ffb29f0748ef5b26',1,'ntlib::sieve_235::sieve_235(std::size_t min_capacity)']]],
-  ['sieve_5f235_2ecpp_2',['sieve_235.cpp',['../sieve__235_8cpp.html',1,'']]],
-  ['size_3',['size',['../classntlib_1_1sieve__235.html#ab55ea38e9f1ad57d111c147706900b41',1,'ntlib::sieve_235']]],
-  ['small_5fprimes_4',['SMALL_PRIMES',['../base_8cpp.html#aeb55d56667aaaa7cbb319b9b0d1999bf',1,'ntlib']]],
-  ['small_5fprimes_5fbiggest_5',['SMALL_PRIMES_BIGGEST',['../base_8cpp.html#a09ca98914193dcbcbae25a20dc76417a',1,'ntlib']]],
-  ['some_20features_20of_20ntlib_6',['Some Features of NTLib',['../md_README.html#autotoc_md10',1,'']]]
+  ['rational_0',['rational',['../classntlib_1_1rational.html',1,'ntlib::rational&lt; T &gt;'],['../module__rational.html',1,'rational module'],['../classntlib_1_1rational.html#a01974d998601167751587de968563047',1,'ntlib::rational::rational()']]],
+  ['rational_2ecpp_1',['rational.cpp',['../rational_8cpp.html',1,'']]],
+  ['reference_2',['reference',['../classntlib_1_1sieve__235_1_1reference.html',1,'ntlib::sieve_235']]],
+  ['requirements_3',['Requirements',['../md_README.html#autotoc_md12',1,'']]],
+  ['rt_5fmod_5fint_4',['rt_mod_int',['../classntlib_1_1rt__mod__int.html',1,'ntlib::rt_mod_int&lt; T &gt;'],['../classntlib_1_1rt__mod__int.html#acaae5f46a46fa6044683896791559ee9',1,'ntlib::rt_mod_int::rt_mod_int() noexcept=default'],['../classntlib_1_1rt__mod__int.html#a7ccb0a84642e51d7b8bddafcb1469d13',1,'ntlib::rt_mod_int::rt_mod_int(T n, T m) noexcept']]],
+  ['run_20performance_20benchmarks_5',['Run Performance Benchmarks',['../md_README.html#autotoc_md16',1,'']]],
+  ['run_20tests_6',['Run Tests',['../md_README.html#autotoc_md15',1,'']]]
 ];
