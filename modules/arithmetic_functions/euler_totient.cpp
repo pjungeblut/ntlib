@@ -36,9 +36,9 @@ namespace ntlib {
  */
 export template<typename T>
 [[nodiscard]] constexpr
-T euler_totient(const prime_factors<T> &factors) {
-  return std::ranges::fold_left(factors, T{1}, [](T prod, prime_power<T> pp) {
-    return prod * pow(pp.p, pp.e - 1) * (pp.p - 1);
+T euler_totient(const prime_factors<T> &factors) noexcept {
+  return std::ranges::fold_left(factors, T{1}, [](T prod, const auto &pp) {
+    return prod * ntlib::pow(pp.p, pp.e - 1) * (pp.p - 1);
   });
 }
 
@@ -51,8 +51,8 @@ T euler_totient(const prime_factors<T> &factors) {
  */
 export template<typename T>
 [[nodiscard]] constexpr
-T euler_totient(T n) {
-  return euler_totient(prime_decomposition(n));
+T euler_totient(T n) noexcept {
+  return ntlib::euler_totient(ntlib::prime_decomposition(n));
 }
 
 /**
@@ -68,12 +68,12 @@ T euler_totient(T n) {
  */
 export template<typename T>
 [[nodiscard]]
-std::vector<T> euler_totient_sieve(T N) {
+std::vector<T> euler_totient_sieve(std::size_t N) {
   std::vector<T> sieve(N + 1);
   std::ranges::iota(sieve, 0);
   for (std::size_t i = 2; i <= N; ++i) {
     if (sieve[i] == i) {
-      for (T j = i; j <= N; j += i) {
+      for (std::size_t j = i; j <= N; j += i) {
         sieve[j] /= i;
         sieve[j] *= i - 1;
       }

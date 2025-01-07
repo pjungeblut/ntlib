@@ -4,8 +4,10 @@
  */
 module;
 
+#include <algorithm>
 #include <cassert>
 #include <random>
+#include <ranges>
 #include <type_traits>
 
 /**
@@ -223,11 +225,14 @@ export template<typename T>
 export template<typename T>
 [[nodiscard]] constexpr
 T mod_factorial(T n, T m) {
-  T res = ntlib::mod(T{1}, m);
-  while (n > 1) {
-    res = ntlib::mod(res * n--, m);
-  }
-  return res;
+  if (n <= 1) { return ntlib::mod(T{1}, m); }
+
+  return std::ranges::fold_left(
+      std::views::iota(T{2}, n + T{1}),
+      ntlib::mod(T{1}, m),
+      [m](T prod, T i) {
+        return ntlib::mod(prod * i, m);
+  });
 }
 
 /**

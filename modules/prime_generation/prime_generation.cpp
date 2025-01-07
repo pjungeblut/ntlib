@@ -35,7 +35,7 @@ namespace ntlib {
  *     cache line.
  * @tparam CREATE_LIST Whether the sieve should also create a list of primes.
  * @param N The largest number to be accessable in the sieve.
- * @param primes The `std::vector<T>` to receive the primes.
+ * @param[out] primes The `std::vector<T>` to receive the primes.
  * @return The sieve.
  */
 export template<

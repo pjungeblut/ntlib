@@ -44,18 +44,20 @@ T count_divisors(const prime_factors<T> &factors) noexcept {
  * \f$\sigma_x(n) = \sum_{d \mid n} d^x\f$.
  *
  * @tparam T An integer-like type.
+ * @tparam Exp An integer-like type.
  * @param factors The prime decomposition of `n`.
  * @param x The power to which all divisors should be taken.
  *     Must be non-negative.
  * @return The value of \f$\sigma_x(n)\f$.
  */
-export template<typename T>
+export template<typename T, typename Exp>
 [[nodiscard]] constexpr
-T divisor_function(const prime_factors<T> &factors, T x) noexcept {
-  assert(x >= T{0});
+T divisor_function(const prime_factors<T> &factors, Exp x) noexcept {
+  assert(x >= Exp{0});
 
-  // General formula below requires `x > 0`, so we use `count_divisors` instead.
-  if (x == 0) { return count_divisors(factors); }
+  // The general formula below requires `x > 0`.
+  // Therefore, for `x == 0`, we use `count_divisors` instead.
+  if (x == Exp{0}) { return count_divisors(factors); }
 
   return std::ranges::fold_left(factors, T{1}, [x](T res, prime_power<T> pp) {
     T sum{1};

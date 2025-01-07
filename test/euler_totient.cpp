@@ -30,7 +30,7 @@ TEST(OneShot, BigExamples) {
 
 TEST(Sieve, SmallValues) {
   const std::size_t N = truth.size() - 1;
-  const auto sieve = ntlib::euler_totient_sieve(N);
+  const auto sieve = ntlib::euler_totient_sieve<uint32_t>(N);
   EXPECT_EQ(sieve.size(), truth.size());
   for (std::size_t i = 0; i < truth.size(); ++i) {
     EXPECT_EQ(sieve[i], truth[i]);
