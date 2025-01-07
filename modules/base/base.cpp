@@ -14,6 +14,7 @@ module;
 #include <cstdint>
 #include <functional>
 #include <numeric>
+#include <ranges>
 #include <type_traits>
 #include <vector>
 
@@ -91,7 +92,7 @@ bool is_odd(T n) noexcept {
 export template<typename T>
 [[nodiscard]] constexpr
 bool is_even(T n) noexcept {
-  return !is_odd(n);
+  return !ntlib::is_odd(n);
 }
 
 /**
@@ -157,7 +158,7 @@ std::pair<T,T> odd_part(T n) noexcept {
       return std::make_pair(e, o);
     } else {
       T e{0};
-      while (n >= T{1} && is_even(n)) {
+      while (n >= T{1} && ntlib::is_even(n)) {
         n /= T{2};
         ++e;
       }
@@ -165,8 +166,8 @@ std::pair<T,T> odd_part(T n) noexcept {
     }
   };
 
-  auto res = odd_part_non_negative(abs(n));
-  res.second *= sgn(n);
+  auto res = odd_part_non_negative(ntlib::abs(n));
+  res.second *= ntlib::sgn(n);
   return res;
 }
 
@@ -209,7 +210,7 @@ export template<typename T>
 T lcm(T a, T b) noexcept {
   assert(a != T{0});
   assert(b != T{0});
-  return abs(a) * (abs(b) / gcd(a, b));
+  return ntlib::abs(a) * (ntlib::abs(b) / ntlib::gcd(a, b));
 }
 
 /**
@@ -240,7 +241,7 @@ std::tuple<T, S, S> extended_euclid(T a, T b) noexcept {
     return std::make_tuple(gcd, x, y);
   };
 
-  auto [gcd, x, y] = extended_euclid_non_negative(abs(a), abs(b));
+  auto [gcd, x, y] = extended_euclid_non_negative(ntlib::abs(a), ntlib::abs(b));
   if (a < T{0}) x = -x;
   if (b < T{0}) y = -y;
   return std::make_tuple(gcd, x, y);
@@ -290,8 +291,8 @@ A pow(A a, B b) noexcept {
 
   if (b == B{0}) { return get_multiplicative_neutral(a); }
   else if (b == B{1}) { return a; }
-  else if (is_odd(b)) { return pow(a, b - B{1}) * a; }
-  else { return pow(a * a, b / B{2}); }
+  else if (ntlib::is_odd(b)) { return ntlib::pow(a, b - B{1}) * a; }
+  else { return ntlib::pow(a * a, b / B{2}); }
 }
 
 /**
@@ -390,7 +391,9 @@ bool is_square(T n) noexcept {
   }
 
   // The last two digits cannot both be odd.
-  if (is_odd(last_digit) && is_odd(second_last_digit)) { return false; }
+  if (ntlib::is_odd(last_digit) && ntlib::is_odd(second_last_digit)) {
+    return false;
+  }
 
   // If the last digit is 1 or 9, the two digits befor must be a multiple of 4.
   if ((last_digit == T{1} || last_digit == T{9}) &&
@@ -399,17 +402,17 @@ bool is_square(T n) noexcept {
   }
 
   // If the last digit is 4, the digit before it must be even.
-  if (last_digit == T{4} && is_odd(second_last_digit)) { return false; }
+  if (last_digit == T{4} && ntlib::is_odd(second_last_digit)) { return false; }
 
   // If the last digit is 6, the digit before it must be odd.
-  if (last_digit == T{6} && is_even(second_last_digit)) { return false; }
+  if (last_digit == T{6} && ntlib::is_even(second_last_digit)) { return false; }
 
   // If the last digit is 5, the digit before it must be 2.
   if (last_digit == T{5} && second_last_digit != T{2}) { return false; }
 
   // Take the integer root and square it to check, if the real root is an
   // integer.
-  T iroot = isqrt(n);
+  T iroot = ntlib::isqrt(n);
   return iroot * iroot == n;
 }
 
@@ -425,9 +428,11 @@ export template<typename T>
 T factorial(T n) noexcept {
   assert(n >= T{0});
 
-  T result{1};
-  for (T i{2}; i <= n; ++i) { result *= i; }
-  return result;
+  if (n <= T{1}) { return T{1}; }
+  return std::ranges::fold_left(
+      std::views::iota(T{2}, n + T{1}),
+      T{1},
+      std::multiplies{});
 }
 
 }

@@ -41,7 +41,8 @@ class sieve_235 {
    * Assumes that a byte consists of 8 bits.
    */
   static constexpr std::size_t PER_BYTE = 2 * 3 * 5;
-  static_assert(CHAR_BIT == 8);
+  static_assert(CHAR_BIT == 8,
+        "235 sieve optimization only works for 8 bits per byte.");
 
   /**
    * Stores a bitmaks to access the sieve for each possible remainder
@@ -74,10 +75,7 @@ public:
    * @param min_capacity The minimum required capacity.
    */
   sieve_235(std::size_t min_capacity) :
-      memory((min_capacity + PER_BYTE - 1) / PER_BYTE) {
-    static_assert(CHAR_BIT == 8,
-        "235 sieve optimization only works for 8 bits per byte.");
-  }
+      memory((min_capacity + PER_BYTE - 1) / PER_BYTE) {}
 
   /**
    * A proxy class to provide an lvalue that can be returned from operator[].

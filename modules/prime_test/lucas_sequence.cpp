@@ -74,23 +74,23 @@ std::pair<S,S> mod_lucas_nth_term(N n, S P, S Q, S m) {
   assert(m > S{0});
 
   if (n == N{0}) {
-    return std::make_pair(S{0}, mod(S{2}, m));
+    return std::make_pair(S{0}, ntlib::mod(S{2}, m));
   } else if (n == N{1}) {
-    return std::make_pair(S{1}, mod(P, m));
+    return std::make_pair(S{1}, ntlib::mod(P, m));
   } else {
-    matrix<S> mat({{mod(P, m), mod(-Q, m)}, {S{1}, S{0}}});
+    matrix<S> mat({{ntlib::mod(P, m), ntlib::mod(-Q, m)}, {S{1}, S{0}}});
 
     const auto component_mod_m = [m](const matrix<S> &x) {
-      return exec_each_element(x, [m](S y) { return mod(y, m); });
+      return exec_each_element(x, [m](S y) { return ntlib::mod(y, m); });
     };
     mat = ntlib::mod_pow(mat, n - 1, component_mod_m,
         matrix<S>::get_identity(2));
 
     matrix<S> u({{S{1}}, {S{0}}});
-    matrix<S> v({{mod(P, m)}, {S{mod(S{2}, m)}}});
+    matrix<S> v({{ntlib::mod(P, m)}, {S{ntlib::mod(S{2}, m)}}});
     u = mat * u;
     v = mat * v;
-    return std::make_pair(mod(u[0, 0], m), mod(v[0, 0], m));
+    return std::make_pair(ntlib::mod(u[0, 0], m), ntlib::mod(v[0, 0], m));
   }
 }
 

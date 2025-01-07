@@ -83,8 +83,8 @@ crt_congruence<T> crt_coprime(
   const T x = std::ranges::fold_left(congruences, T{0},
       [M](T sum, crt_congruence<T> c) {
     const T M_i = M / c.m;
-    const T N_i = mod_mult_inv<T,S>(M_i, c.m);
-    return mod(sum + mod(c.a * M_i, M) * N_i, M);
+    const T N_i = ntlib::mod_mult_inv<T,S>(M_i, c.m);
+    return ntlib::mod(sum + ntlib::mod(c.a * M_i, M) * N_i, M);
   });
 
   return crt_congruence {x, M};
@@ -111,9 +111,9 @@ std::optional<crt_congruence<T>> crt(
   const auto ms = congruences |
       std::ranges::views::transform(&crt_congruence<T>::m);
   const T max_mod = *std::ranges::max_element(ms);
-  const T iroot = isqrt(max_mod);
+  const T iroot = ntlib::isqrt(max_mod);
   std::vector<T> primes;
-  prime_sieve(iroot, primes);
+  ntlib::prime_sieve(iroot, primes);
 
   // Represents a single congruence `x = a mod p^e`, where `p^e` is a prime
   // power.
@@ -127,9 +127,10 @@ std::optional<crt_congruence<T>> crt(
   // powers.
   std::vector<pp_crt_congruence> pp_congruences;
   for (const auto c : congruences) {
-    const auto factors = prime_decomposition_list(c.m, primes);
+    const auto factors = ntlib::prime_decomposition_list(c.m, primes);
     for (const auto [p, e] : factors) {
-      pp_congruences.push_back(pp_crt_congruence {mod(c.a, pow(p, e)), p, e});
+      pp_congruences.push_back(
+          pp_crt_congruence {ntlib::mod(c.a, ntlib::pow(p, e)), p, e});
     }
   }
 
@@ -147,7 +148,7 @@ std::optional<crt_congruence<T>> crt(
   std::vector<crt_congruence<T>> flattened;
   T last_prime{1};
   for (const pp_crt_congruence pp_c : pp_congruences) {
-    const T pp = pow(pp_c.p, pp_c.e);
+    const T pp = ntlib::pow(pp_c.p, pp_c.e);
 
     if (last_prime != pp_c.p) {
       // First congruence with this prime (and with the highest power).
@@ -155,14 +156,14 @@ std::optional<crt_congruence<T>> crt(
       flattened.push_back(crt_congruence {pp_c.a, pp});
     } else {
       // Dominated congruence. Check for inconsistency.
-      if (mod(flattened.back().a, pp) != pp_c.a) {
+      if (ntlib::mod(flattened.back().a, pp) != pp_c.a) {
         return std::optional<crt_congruence<T>>();
       }
     }
   }
 
   // Use coprime case on normalized congruences.
-  return crt_coprime(flattened);
+  return ntlib::crt_coprime(flattened);
 }
 
 }

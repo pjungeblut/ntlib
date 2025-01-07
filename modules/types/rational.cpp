@@ -39,7 +39,7 @@ public:
   rational(T n, T d = 1) noexcept {
     assert(d != T{0});
 
-    T f = gcd(n, d);
+    T f = ntlib::gcd(n, d);
     numerator = n / f;
     denominator = d / f;
 
@@ -79,13 +79,13 @@ public:
    * @return Reference to the result.
    */
   rational &operator+=(const rational &rhs) noexcept {
-    T l = lcm(denominator, rhs.denominator);
+    T l = ntlib::lcm(denominator, rhs.denominator);
     T f_lhs = l / denominator;
     T f_rhs = l / rhs.denominator;
     T new_numerator = f_lhs * numerator + f_rhs * rhs.numerator;
     T new_denominator = l;
 
-    T g = gcd(new_numerator, new_denominator);
+    T g = ntlib::gcd(new_numerator, new_denominator);
     if (g != T{1}) {
       new_numerator /= g;
       new_denominator /= g;
@@ -115,13 +115,13 @@ public:
    * @return Reference to the result.
    */
   rational &operator-=(const rational &rhs) noexcept {
-    T l = lcm(denominator, rhs.denominator);
+    T l = ntlib::lcm(denominator, rhs.denominator);
     T f_lhs = l / denominator;
     T f_rhs = l / rhs.denominator;
     T new_numerator = f_lhs * numerator - f_rhs * rhs.numerator;
     T new_denominator = l;
 
-    T g = gcd(new_numerator, new_denominator);
+    T g = ntlib::gcd(new_numerator, new_denominator);
     if (g != T{1}) {
       new_numerator /= g;
       new_denominator /= g;
@@ -154,7 +154,7 @@ public:
     numerator *= rhs.numerator;
     denominator *= rhs.denominator;
 
-    T g = gcd(numerator, denominator);
+    T g = ntlib::gcd(numerator, denominator);
     if (g != T{1}) {
       numerator /= g;
       denominator /= g;
@@ -187,7 +187,7 @@ public:
     numerator *= rhs.denominator;
     denominator *= rhs.numerator;
 
-    T g = gcd(numerator, denominator);
+    T g = ntlib::gcd(numerator, denominator);
     if (g != T{1}) {
       numerator /= g;
       denominator /= g;

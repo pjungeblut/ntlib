@@ -49,7 +49,7 @@ std::vector<std::tuple<T,T,T>> primitive_pythagorean_triples(T N) {
   std::vector<std::tuple<T,T,T>> triples;
   for (T v{1}; T{2} * v * v <= N; ++v) {
     for (T u = v + T{1}; u * u + v * v <= N; ++u) {
-      if (!(is_odd(u) && is_odd(v)) && gcd(u, v) == T{1}) {
+      if (!(ntlib::is_odd(u) && ntlib::is_odd(v)) && ntlib::gcd(u, v) == T{1}) {
         T a = u * u - v * v;
         T b = T{2} * u * v;
         T c = u * u + v * v;

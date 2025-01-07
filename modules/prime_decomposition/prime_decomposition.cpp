@@ -9,6 +9,7 @@ module;
 #include <cstdlib>
 #include <limits>
 #include <optional>
+#include <ranges>
 #include <type_traits>
 #include <utility>
 #include <vector>
@@ -66,22 +67,22 @@ using prime_factors = std::vector<prime_power<T>>;
  * will be returned seperately. 
  * 
  * @tparam T An integer-like type.
- * @tparam C A container with elements of type `T`.
+ * @tparam R An input-range.
  * @param n The given number.
- * @param primes The list of potential prime divisors. Must be sorted and
+ * @param list The list of potential prime divisors. Must be sorted and
  *     contain all primes up to some upper bound.
  * @return A `std::pair` containing a list of prime powers dividing `n` as its
- *     first element and the remainder (coprime with all primes in `primes`) as
+ *     first element and the remainder (coprime with all primes in `list`) as
  *     its second element.
  */
-template<typename C, typename T = typename C::value_type>
+template<typename T, std::ranges::input_range R>
 [[nodiscard]] constexpr
-std::pair<prime_factors<T>,T> prime_decomposition_list_remainder(
-    T n, const C &primes) {
+std::pair<prime_factors<T>, T> prime_decomposition_list_remainder(T n, R &&list)
+    requires std::convertible_to<std::ranges::range_value_t<R>, T> {
   assert(n > T{0});
 
   prime_factors<T> factors;
-  for (const T p : primes) {
+  for (const T p : list) {
     if (p * p > n) { break; }
     if (n % p == 0) {
       T e{0};
@@ -107,15 +108,16 @@ std::pair<prime_factors<T>,T> prime_decomposition_list_remainder(
  * decomposition.
  * 
  * @tparam T An integer-like type.
- * @tparam C A container with elements of type `T`.
+ * @tparam R An input-range.
  * @param n The number to decompose.
- * @param primes The list of potential prime divisors.
+ * @param list The list of potential prime divisors.
  * @return A prime decompositon of.
  */
-export template<typename C, typename T = typename C::value_type>
+export template<typename T, std::ranges::input_range R>
 [[nodiscard]] constexpr
-prime_factors<T> prime_decomposition_list(T n, const C &primes) {
-  auto res_list = ntlib::prime_decomposition_list_remainder(n, primes);
+prime_factors<T> prime_decomposition_list(T n, R &&list)
+    requires std::convertible_to<std::ranges::range_value_t<R>, T> {
+  auto res_list = ntlib::prime_decomposition_list_remainder(n, list);
   if (res_list.second != 1) {
     res_list.first.push_back(prime_power<T>{res_list.second, T{1}});
   }
@@ -136,7 +138,7 @@ prime_factors<T> prime_decomposition_32(T n) {
   assert(static_cast<std::make_unsigned_t<T>>(n) <=
       std::numeric_limits<uint32_t>::max());
   
-  return prime_decomposition_list(n, PRIMES_BELOW_2_16);
+  return ntlib::prime_decomposition_list(n, PRIMES_BELOW_2_16<uint32_t>);
 }
 
 /**
@@ -236,7 +238,7 @@ prime_factors<T> prime_decomposition_large(T n) {
   if (ntlib::is_prime(n)) { return {prime_power<T>{n, T{1}}}; }
 
   // Find a non-trivial factor.
-  const T f = find_factor(n);
+  const T f = ntlib::find_factor(n);
   n /= f;
 
   // Decompose factor and reduce `n` by all found prime factors.

@@ -82,8 +82,10 @@ T mod_p_binom(T n, T k, T p) noexcept {
   assert(p > std::max(k, n - k));
 
   T res = mod_factorial(n, p);
-  res = mod(res * mod_mult_inv<T,S>(mod_factorial(k, p), p), p);
-  res = mod(res * mod_mult_inv<T,S>(mod_factorial(n - k, p), p), p);
+  res = ntlib::mod(
+      res * ntlib::mod_mult_inv<T,S>(ntlib::mod_factorial(k, p), p), p);
+  res = ntlib::mod(
+      res * ntlib::mod_mult_inv<T,S>(ntlib::mod_factorial(n - k, p), p), p);
   return res;
 }
 
@@ -107,13 +109,13 @@ T mod_pp_binom(T n, T k, T p, T e) {
   assert(n >= T{0});
 
   // Compute the modulus `pp`.
-  const T pp = pow(p, e);
+  const T pp = ntlib::pow(p, e);
 
   // Base cases.
   if (k < T{0} || k > n) { return T{0}; }
 
   // If `pp` is large enough, all required modular inverses exist.
-  if (p > std::max(k, n - k)) { return mod_p_binom(n, k, pp); }
+  if (p > std::max(k, n - k)) { return ntlib::mod_p_binom(n, k, pp); }
 
   // TODO: This should be in its own function to be testable.
   //
@@ -129,19 +131,19 @@ T mod_pp_binom(T n, T k, T p, T e) {
     g[i] = g[i - 1];
 
     T ii = i;
-    while (mod(ii, p) == 0) {
+    while (ntlib::mod(ii, p) == T{0}) {
       ++c[i];
       ii /= p;
     }
-    g[i] = mod(g[i] * ii, pp);
+    g[i] = ntlib::mod(g[i] * ii, pp);
   }
 
   // Compute the binomial coefficient.
   T res = g[n];
-  const auto mod_pp = [pp](T x) { return mod(x, pp); };
-  res = mod(res * mod_pow(p, c[n] - c[k] - c[n - k], mod_pp), pp);
-  res = mod(res * mod_mult_inv<T,S>(g[k], pp), pp);
-  res = mod(res * mod_mult_inv<T,S>(g[n - k], pp), pp);
+  const auto mod_pp = [pp](T x) { return ntlib::mod(x, pp); };
+  res = ntlib::mod(res * ntlib::mod_pow(p, c[n] - c[k] - c[n - k], mod_pp), pp);
+  res = ntlib::mod(res * ntlib::mod_mult_inv<T,S>(g[k], pp), pp);
+  res = ntlib::mod(res * ntlib::mod_mult_inv<T,S>(g[n - k], pp), pp);
   return res;
 }
 
@@ -159,19 +161,19 @@ export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 T mod_binom(T n, T k, T m) {
   // Find prime decomposition of modulus.
-  const prime_factors<T> factors = prime_decomposition(m);
+  const prime_factors<T> factors = ntlib::prime_decomposition(m);
 
   // Compute for each prime power individually.
   std::vector<crt_congruence<T>> congruences;
   congruences.reserve(factors.size());
   for (const auto [p, e] : factors) {
-    const T pp = pow(p, e);
-    const T res_mod_pp = mod_pp_binom<T,S>(n, k, p, e);
+    const T pp = ntlib::pow(p, e);
+    const T res_mod_pp = ntlib::mod_pp_binom<T,S>(n, k, p, e);
     congruences.push_back(crt_congruence {res_mod_pp, pp});
   }
 
   // Use Chinese remainder theorem to get the result.
-  return crt_coprime<T,S>(congruences).a;
+  return ntlib::crt_coprime<T,S>(congruences).a;
 }
 
 /**
@@ -220,16 +222,16 @@ std::vector<std::vector<T>> binom_table(T N) {
  */
 export template<typename T>
 [[nodiscard]] constexpr
-std::vector<std::vector<T>> mod_binom_table(T N, T m) {
-  assert(N >= T{0});
+std::vector<std::vector<T>> mod_binom_table(std::size_t N, T m) {
+  assert(N >= 0);
   assert(m > T{0});
 
   std::vector<std::vector<T>> binoms(N + 1, std::vector<T>(N + 1, T{0}));
-  binoms[0][0] = mod(T{1}, m);
-  for (T n{1}; n <= N; ++n) {
-    binoms[n][0] = mod(T{1}, m);
-    for (T k{1}; k <= n; ++k) {
-      binoms[n][k] = mod(binoms[n - 1][k - 1] + binoms[n - 1][k], m);
+  binoms[0][0] = ntlib::mod(T{1}, m);
+  for (std::size_t n = 1; n <= N; ++n) {
+    binoms[n][0] = ntlib::mod(T{1}, m);
+    for (std::size_t k = 1; k <= n; ++k) {
+      binoms[n][k] = ntlib::mod(binoms[n - 1][k - 1] + binoms[n - 1][k], m);
     }
   }
   return binoms;

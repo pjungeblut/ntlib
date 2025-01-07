@@ -35,23 +35,24 @@ namespace ntlib {
  * numbers up to \f$p^2\f$ can be determined correctly.
  * For greater numbers, no decision is made.
  * 
- * @tparam C A container of primes of type `T`.
  * @tparam T An integer-like type.
+ * @tparam R An input-range.
  * @param n The given number.
- * @param primes The given list of primes.
+ * @param list The given list of primes.
  * @retval std::optional<bool>{true} If the number is prime.
  * @retval std::optional<bool>{false} If the number is composite.
  * @retval std::nullopt If primality could not be determined by the given list
  *     of primes.
  */
-export template<typename C, typename T = C::value_type>
+export template<typename T, std::ranges::input_range R>
 [[nodiscard]] constexpr
-std::optional<bool> is_prime_trial_division(T n, const C &primes) noexcept {
+std::optional<bool> is_prime_trial_division(T n, R &&list) noexcept
+    requires std::convertible_to<std::ranges::range_value_t<R>, T> {
   // Trivial cases.
   if (n <= T{1}) { return false; }
 
   // Trial division with some small prime factors.
-  for (const auto p : primes) {
+  for (const auto p : list) {
     if (n == p) { return true; }
     if (n % p == T{0}) { return false; }
     // Known: `n` is not divisible by any prime less than `p`.
@@ -201,7 +202,7 @@ export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 bool is_strong_lucas_probable_prime(T n) noexcept {
   assert(n > T{2});
-  assert(is_odd(n));
+  assert(ntlib::is_odd(n));
 
   // Find a `D`, such that `jacobi(D,n) = -1`.
   const auto find_D = [](T n) {
@@ -215,7 +216,7 @@ bool is_strong_lucas_probable_prime(T n) noexcept {
     S D{5};
     bool found_d = false;
     for (std::size_t i = 0; i < ITERATIONS_BEFORE_SQUARE_TEST; ++i) {
-      if (jacobi(D, static_cast<S>(n)) == S{-1}) {
+      if (ntlib::jacobi(D, static_cast<S>(n)) == S{-1}) {
         found_d = true;
         break;
       }
@@ -224,11 +225,11 @@ bool is_strong_lucas_probable_prime(T n) noexcept {
 
     // If no value for `D` was found yet, then it might be that `n` is a perfect
     // square. Then, no `D` exists.
-    if (!found_d && is_square(n)) { return std::optional<S>{}; }
+    if (!found_d && ntlib::is_square(n)) { return std::optional<S>{}; }
 
     // If `n` is not a perfect square we continue looking for a `D`.
     // It must exist.
-    while (jacobi(D, static_cast<S>(n)) != S{-1}) {
+    while (ntlib::jacobi(D, static_cast<S>(n)) != S{-1}) {
       D = next_D_candidate(D);
     }
 
@@ -244,17 +245,17 @@ bool is_strong_lucas_probable_prime(T n) noexcept {
   const S Q{(S{1} - D) / S{4}};
 
   // Decompose such that `n+1 = o*2^e`.
-  auto [e, o] = odd_part(n + T{1});
+  auto [e, o] = ntlib::odd_part(n + T{1});
 
   // Strong Lucas probable prime test.
-  auto [u, v] = mod_lucas_nth_term(o, P, Q, static_cast<S>(n));
+  auto [u, v] = ntlib::mod_lucas_nth_term(o, P, Q, static_cast<S>(n));
   if (u == S{0} || v == S{0}) { return true; }
   while (--e) {
-    const S uu = mod(u * v, static_cast<S>(n));
+    const S uu = ntlib::mod(u * v, static_cast<S>(n));
     S vv = v * v + D * u * u;
-    if (is_odd(vv)) { vv += n; }
+    if (ntlib::is_odd(vv)) { vv += n; }
     vv /= S{2};
-    vv = mod(vv, static_cast<S>(n));
+    vv = ntlib::mod(vv, static_cast<S>(n));
     u = uu;
     v = vv;
     if (v == S{0}) { return true; }
@@ -280,17 +281,15 @@ bool is_prime_baillie_psw(T n) noexcept {
   if (n <= T{1}) { return false; }
 
   // Trial division with some small prime factors.
-  const auto trial_division = is_prime_trial_division(n, SMALL_PRIMES<T>);
+  const auto trial_division =
+      ntlib::is_prime_trial_division(n, SMALL_PRIMES<T>);
   if (trial_division.has_value()) { return trial_division.value(); }
 
   // Strong probable prime test for base 2.
-  if (!miller_selfridge_rabin_test(n, T{2})) return false;
+  if (!ntlib::miller_selfridge_rabin_test(n, T{2})) { return false; }
 
   // Strong Lucas probable prime test.
-  if (!is_strong_lucas_probable_prime<T, S>(n)) return false;
-
-  // Most probably prime.
-  return true;
+  return ntlib::is_strong_lucas_probable_prime<T, S>(n);
 }
 
 /**
@@ -312,15 +311,15 @@ bool is_prime(T n) noexcept {
   if constexpr (std::is_integral_v<T> && sizeof(T) <= 4) {
     if constexpr (std::is_signed_v<T>) {
       if (n < 0) { return false; }
-      else { return is_prime_32(static_cast<uint32_t>(n)); }
-    } else { return is_prime_32(static_cast<uint32_t>(n)); }
+      else { return ntlib::is_prime_32(static_cast<uint32_t>(n)); }
+    } else { return ntlib::is_prime_32(static_cast<uint32_t>(n)); }
   } else if constexpr (std::is_integral_v<T> && sizeof(T) <= 8) {
     if constexpr (std::is_signed_v<T>) {
       if (n < 0) { return false; }
-      else { return is_prime_64(static_cast<uint64_t>(n)); }
-    } else { return is_prime_64(static_cast<uint64_t>(n)); }
+      else { return ntlib::is_prime_64(static_cast<uint64_t>(n)); }
+    } else { return ntlib::is_prime_64(static_cast<uint64_t>(n)); }
   } else {
-    return is_prime_baillie_psw<T,S>(n);
+    return ntlib::is_prime_baillie_psw<T,S>(n);
   }
 }
 
