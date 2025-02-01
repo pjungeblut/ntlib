@@ -167,6 +167,12 @@ TEST(GreatestCommonDivisor, CornerCases) {
   EXPECT_EQ(ntlib::gcd(min_int, -2), 2);
 }
 
+TEST(GreatestCommonDivisor, List)
+{
+  EXPECT_EQ(ntlib::gcd({2, 4, 6}), 2);
+  EXPECT_EQ(ntlib::gcd({2, 3, 5}), 1);
+}
+
 TEST(LeastCommonMultiple, Multiples) {
   EXPECT_EQ(ntlib::lcm(2, 8), 8);
   EXPECT_EQ(ntlib::lcm(3, 9), 9);
@@ -192,6 +198,12 @@ TEST(LeastCommonMultiple, CornerCases) {
   EXPECT_EQ(ntlib::lcm(max_int, 1), max_int);
   EXPECT_EQ(ntlib::lcm(min_int + 1, 1), max_int);
   EXPECT_EQ(ntlib::lcm(3u * 5 * 17 * 257, 65'537u), max_uint);
+}
+
+TEST(LeastCommonMultiples, List)
+{
+  EXPECT_EQ(ntlib::lcm({2, 4, 6}), 12);
+  EXPECT_EQ(ntlib::lcm({2, 3, 5, 6}), 30);
 }
 
 TEST(ExtendedEuclid, SmallValues) {

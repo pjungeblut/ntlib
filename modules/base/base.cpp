@@ -193,6 +193,22 @@ T gcd(T a, T b) noexcept {
 }
 
 /**
+ * @brief Computes the greatest common divisor of a list of numbers.
+ * 
+ * @tparam T An integer-like type.
+ * @param list The list of numbers. Must not be empty.
+ * @return The greatest common divisor of the numbers in the list.
+ */
+export template<typename T>
+[[nodiscard]] constexpr
+T gcd(std::initializer_list<T> list) noexcept {
+  assert(list.size() > 0);
+  return std::ranges::fold_left(list, T{0}, [](T a, T b){
+    return ntlib::gcd(a, b);
+  });
+}
+
+/**
  * @brief Computes the least common multiple of two numbers.
  *
  * The least common multiple of two non-zero integers `a` and `b` is the
@@ -211,6 +227,22 @@ T lcm(T a, T b) noexcept {
   assert(a != T{0});
   assert(b != T{0});
   return ntlib::abs(a) * (ntlib::abs(b) / ntlib::gcd(a, b));
+}
+
+/**
+ * @brief Computes the least common multiple of a list of numbers.
+ * 
+ * @tparam T An integer-like type.
+ * @param list The list of numbers. Must not be empty.
+ * @return The least common multiple of the numbers in the list.
+ */
+export template<typename T>
+[[nodiscard]] constexpr
+T lcm(std::initializer_list<T> list) noexcept {
+  assert(list.size() > 0);
+  return std::ranges::fold_left(list, T{1}, [](T a, T b){
+    return ntlib::lcm(a, b);
+  });
 }
 
 /**
