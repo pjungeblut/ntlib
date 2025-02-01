@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['gcd_0',['gcd',['../base_8cpp.html#a2fc8fbcd48d16222ceac636b4306d0da',1,'ntlib']]],
+  ['gcd_0',['gcd',['../base_8cpp.html#a2fc8fbcd48d16222ceac636b4306d0da',1,'ntlib::gcd(T a, T b) noexcept'],['../base_8cpp.html#ad80c039840e761c2210a30b01cc5fbe0',1,'ntlib::gcd(std::initializer_list&lt; T &gt; list) noexcept']]],
   ['get_5fcolumns_1',['get_columns',['../classntlib_1_1matrix.html#a28a1410b2cfb5d6ead554aa445967f9b',1,'ntlib::matrix']]],
   ['get_5fdenominator_2',['get_denominator',['../classntlib_1_1rational.html#a41d1d8c00a437e563cb3823fa0dc0c8f',1,'ntlib::rational']]],
   ['get_5fidentity_3',['get_identity',['../classntlib_1_1matrix.html#a0daaae8dfaf4d215c5ec235300ef8c99',1,'ntlib::matrix']]],
