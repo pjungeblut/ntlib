@@ -6,5 +6,6 @@ var searchData=
   ['size_3',['size',['../classntlib_1_1sieve__235.html#ab55ea38e9f1ad57d111c147706900b41',1,'ntlib::sieve_235']]],
   ['small_5fprimes_4',['SMALL_PRIMES',['../base_8cpp.html#aeb55d56667aaaa7cbb319b9b0d1999bf',1,'ntlib']]],
   ['small_5fprimes_5fbiggest_5',['SMALL_PRIMES_BIGGEST',['../base_8cpp.html#a09ca98914193dcbcbae25a20dc76417a',1,'ntlib']]],
-  ['some_20features_20of_20ntlib_6',['Some Features of NTLib',['../md_README.html#autotoc_md10',1,'']]]
+  ['some_20features_20of_20ntlib_6',['Some Features of NTLib',['../md_README.html#autotoc_md10',1,'']]],
+  ['started_7',['Getting Started',['../md_README.html#autotoc_md12',1,'']]]
 ];

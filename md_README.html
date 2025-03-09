@@ -96,14 +96,14 @@ $(function(){ initResizable(false); });
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="autotoc_md9"></a></p>
 <p>NTLib is a C++ template library containing several common number theory implementations. The library contains modular implementations that can easily be combined to solve mathematical programming problems.</p>
-<p>My main motivation for NTLib was to have a generic library for <a href="https://projecteuler.net">Project Euler</a> problems. At the same time, this project allows me to try out the newest C++ features.</p>
+<p>The main motivation for NTLib was to have a generic library for <a href="https://projecteuler.net">Project Euler</a> problems.</p>
 <h1><a class="anchor" id="autotoc_md10"></a>
 Some Features of NTLib</h1>
 <ul>
 <li>Basic number theoretic functions such as <code>gcd</code>, <code>lcm</code>, <code>isqrt</code>, ...</li>
 <li>Primality test, prime decomposition and prime generation.</li>
 <li>Generate all primitive Pythagorean triples.</li>
-<li>Solve Pell's equation.</li>
+<li>Solve several kinds of Diophantine equations, i.e., Pell's equation.</li>
 <li>Compute binomial coefficients, polygonal numbers, Euler's totient function, divisor function and Turan numbers.</li>
 <li>...</li>
 </ul>
@@ -111,44 +111,42 @@ Some Features of NTLib</h1>
 Documentation</h1>
 <p>See here for the <a href="https://pjungeblut.github.io/ntlib/">Doxygen documentation</a>.</p>
 <h1><a class="anchor" id="autotoc_md12"></a>
-Requirements</h1>
-<p>NTLib uses several modern C++ features, in particular C++20 modules. This requires up to date tools to compile.</p>
-<p>Tested with:</p><ul>
-<li>C++23</li>
-<li>Clang-18.1</li>
+Getting Started</h1>
+<h2><a class="anchor" id="autotoc_md13"></a>
+Requirements</h2>
+<p>NTLib uses several modern C++ features, including:</p><ul>
+<li>C++20 modules</li>
+<li>several C++23 standard library features</li>
+</ul>
+<p>As a consequence, you need up to date tooling to sucessfully compile the library. A working set of tools is:</p><ul>
+<li>Clang-19.1, including Clang Tools 19</li>
 <li>Ninja 1.11</li>
 <li>CMake and CTest 3.28</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md13"></a>
-Downloading NTLib</h1>
-<p>To download NTLib clone this repository: </p><div class="fragment"><div class="line">git clone --recurse-submodules https://github.com/pjungeblut/ntlib</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md14"></a>
-Compiling NTLib</h2>
-<p>Inside the <code>ntlib</code> directory, run the following to bulid all tests and benchmarks:</p>
-<div class="fragment"><div class="line">mkdir build</div>
-<div class="line">cd build</div>
-<div class="line">cmake -DCMAKE_BUILD_TYPE=&lt;build-type&gt; -DCMAKE_CXX_COMPILER=clang++-18 .. -G Ninja</div>
-<div class="line">ninja</div>
-</div><!-- fragment --><p>Regarding <code>&lt;build-type&gt;</code>, choose <code>Debug</code> to run tests and <code>Release</code> to run benchmarks. Alternatively, create separate <code>debug</code> and <code>release</code> directories.</p>
+<h2><a class="anchor" id="autotoc_md14"></a>
+Download NTLib</h2>
+<p>Clone NTLib a new <code>ntlib</code> directory: </p><div class="fragment"><div class="line">git clone https://github.com/pjungeblut/ntlib ntlib</div>
+</div><!-- fragment --><p> There are no git submodules are any other dependencies.</p>
 <h2><a class="anchor" id="autotoc_md15"></a>
+Debug Builds (for Development)</h2>
+<p>Move into the <code>ntlib</code> directory and execute the CMake <code>debug</code> preset. This will build all unit tests. </p><div class="fragment"><div class="line">cd ntlib</div>
+<div class="line">cmake --preset debug</div>
+<div class="line">cmake --build --preset tests</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md16"></a>
+Release Builds and Installation (for Usage in other Projects)</h2>
+<p>TODO </p><div class="fragment"><div class="line">cd ntlib</div>
+<div class="line">cmake --preset release</div>
+<div class="line">...</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md17"></a>
 Run Tests</h2>
 <p>NTLib comes with many unit tests to guarantee correctness. Inside the <code>build</code> directory, run <code>ctest</code> to execute all tests at once.</p>
 <p>You can also build and run specific sets of unit tests. For example, consider we want to test the basic functionality from <code>include/base.hpp</code>.</p><ul>
 <li>Run <code>ninja ut_base</code>. In general, all unit test targets are prefixed with <code>ut_</code>.</li>
 <li>Run <code>./test/base</code> to start the test.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md16"></a>
-Run Performance Benchmarks</h2>
-<p>Some components of the libary come with performance benchmarks to test their implementations agains others. All benchmark targets are prefixed with <code>bm_</code>.</p>
-<p>For example, to benchmark different implementations for prime generation, run (inside the <code>build</code> directory): </p><div class="fragment"><div class="line">ninja bm_prime_generation</div>
-<div class="line">./benchmark/prime_generation</div>
-</div><!-- fragment --><p> <b>Note 1:</b> To get realistic benchmarks you should build the library in release mode (see above).</p>
-<p><b>Note 2:</b> To get more consistent benchmarks CPU scaling should be disabled. This can for example be achieved by (source <a href="https://github.com/google/benchmark#disabling-cpu-frequency-scaling">here</a>): </p><div class="fragment"><div class="line">sudo cpupower frequency-set --governor performance</div>
-<div class="line">./benchmark/prime_generation</div>
-<div class="line">sudo cpupower frequency-set --governor powersave</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md17"></a>
+<h1><a class="anchor" id="autotoc_md18"></a>
 License &amp; Disclaimer</h1>
-<p>This software is licensed under the MIT license. See <code>LICENSE</code> for details. NTLib is still in development. Therefore, things could break and the API might change.</p>
+<p>This software is licensed under the MIT license. See <code>LICENSE</code> for details. NTLib is still in development. Therefore, things will break and the API will change.</p>
 <p>Feedback is always welcome. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

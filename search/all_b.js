@@ -4,7 +4,7 @@ var searchData=
   ['legendre_1',['legendre',['../modulo_8cpp.html#a96502f7ab4282a55b19fb66b484bfb82',1,'ntlib']]],
   ['library_2',['NTLib - Number Theory Library',['../index.html',1,'']]],
   ['library_20ntlib_3',['Number Theory Library (NTLib)',['../md_README.html',1,'']]],
-  ['license_20disclaimer_4',['License &amp; Disclaimer',['../md_README.html#autotoc_md17',1,'']]],
+  ['license_20disclaimer_4',['License &amp; Disclaimer',['../md_README.html#autotoc_md18',1,'']]],
   ['lucas_5fnth_5fterm_5',['lucas_nth_term',['../lucas__sequence_8cpp.html#a2587ac4225051ca5c438ddaf8a1233da',1,'ntlib']]],
   ['lucas_5fsequence_6',['lucas_sequence',['../module__lucas__sequence.html',1,'']]],
   ['lucas_5fsequence_2ecpp_7',['lucas_sequence.cpp',['../lucas__sequence_8cpp.html',1,'']]]
