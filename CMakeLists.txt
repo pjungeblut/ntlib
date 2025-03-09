@@ -10,19 +10,9 @@ project(NTLib
 # General settings.
 ################################################################################
 
-# Set the C++ compiler flags.
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -O2")
-
-# Treat warnings as errors.
-if (MSVC)
-  add_compile_options(/W3 /WX)
-else()
-  add_compile_options(-W -Wall -Werror)
-endif()
-
 # Colored compiler output.
-option (FORCE_COLORED_OUTPUT "Always produce ANSI-colored output (GNU/Clang only)." FALSE)
-if (${FORCE_COLORED_OUTPUT})
+option (NTLIB_COLORED_COMPILET_OUTPUT "Always produce ANSI-colored output (GNU/Clang only)." FALSE)
+if (${NTLIB_COLORED_COMPILET_OUTPUT})
   if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     add_compile_options(-fdiagnostics-color=always)
   elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -75,7 +65,7 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
   if (NTLIB_BUILD_BENCHMARKS)
     # Don't build tests for Google Benchmark.
     set(BENCHMARK_ENABLE_GTEST_TESTS OFF
-        CACHE INTERNAL "don't build tests for Google Benchmark")
+        CACHE INTERNAL "don't build tests for Google Benchmark" FORCE)
 
     add_subdirectory(benchmarks)
   endif()

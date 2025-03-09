@@ -5,3 +5,4 @@ release
 html
 latex
 .vscode
+CMakeUserPresets.json

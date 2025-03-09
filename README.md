@@ -3,48 +3,55 @@
 NTLib is a C++ template library containing several common number theory implementations.
 The library contains modular implementations that can easily be combined to solve mathematical programming problems.
 
-My main motivation for NTLib was to have a generic library for [Project Euler](https://projecteuler.net) problems.
-At the same time, this project allows me to try out the newest C++ features.
+The main motivation for NTLib was to have a generic library for [Project Euler](https://projecteuler.net) problems.
 
 ## Some Features of NTLib
 * Basic number theoretic functions such as `gcd`, `lcm`, `isqrt`, ...
 * Primality test, prime decomposition and prime generation.
 * Generate all primitive Pythagorean triples.
-* Solve Pell's equation.
+* Solve several kinds of Diophantine equations, i.e., Pell's equation.
 * Compute binomial coefficients, polygonal numbers, Euler's totient function, divisor function and Turan numbers.
 * ...
 
 ## Documentation
 See here for the [Doxygen documentation](https://pjungeblut.github.io/ntlib/).
 
-# Requirements
-NTLib uses several modern C++ features, in particular C++20 modules.
-This requires up to date tools to compile.
+# Getting Started
 
-Tested with:
-* C++23
-* Clang-18.1
+## Requirements
+NTLib uses several modern C++ features, including:
+* C++20 modules
+* several C++23 standard library features
+
+As a consequence, you need up to date tooling to sucessfully compile the library.
+A working set of tools is:
+* Clang-19.1, including Clang Tools 19
 * Ninja 1.11
 * CMake and CTest 3.28
 
-# Downloading NTLib
-To download NTLib clone this repository:
+## Download NTLib
+Clone NTLib a new `ntlib` directory:
 ```
-git clone --recurse-submodules https://github.com/pjungeblut/ntlib
+git clone https://github.com/pjungeblut/ntlib ntlib
+```
+There are no git submodules are any other dependencies.
+
+## Debug Builds (for Development)
+Move into the `ntlib` directory and execute the CMake `debug` preset.
+This will build all unit tests.
+```
+cd ntlib
+cmake --preset debug
+cmake --build --preset tests
 ```
 
-## Compiling NTLib
-Inside the `ntlib` directory, run the following to bulid all tests and benchmarks:
-
+## Release Builds and Installation (for Usage in other Projects)
+TODO
 ```
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=<build-type> -DCMAKE_CXX_COMPILER=clang++-18 .. -G Ninja
-ninja
+cd ntlib
+cmake --preset release
+...
 ```
-
-Regarding `<build-type>`, choose `Debug` to run tests and `Release` to run benchmarks.
-Alternatively, create separate `debug` and `release` directories.
 
 ## Run Tests
 NTLib comes with many unit tests to guarantee correctness.
@@ -55,30 +62,11 @@ For example, consider we want to test the basic functionality from `include/base
 * Run `ninja ut_base`. In general, all unit test targets are prefixed with `ut_`.
 * Run `./test/base` to start the test.
 
-## Run Performance Benchmarks
-Some components of the libary come with performance benchmarks to test their implementations agains others.
-All benchmark targets are prefixed with `bm_`.
-
-For example, to benchmark different implementations for prime generation, run (inside the `build` directory):
-```
-ninja bm_prime_generation
-./benchmark/prime_generation
-```
-**Note 1:** To get realistic benchmarks you should build the library in release mode (see above).
-
-**Note 2:** To get more consistent benchmarks CPU scaling should be disabled.
-This can for example be achieved by (source [here](https://github.com/google/benchmark#disabling-cpu-frequency-scaling)):
-```
-sudo cpupower frequency-set --governor performance
-./benchmark/prime_generation
-sudo cpupower frequency-set --governor powersave
-```
-
 # License & Disclaimer
 This software is licensed under the MIT license.
 See `LICENSE` for details.
 NTLib is still in development.
-Therefore, things could break and the API might change.
+Therefore, things will break and the API will change.
 
 Feedback is always welcome.
 
