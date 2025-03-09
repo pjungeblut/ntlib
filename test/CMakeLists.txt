@@ -2,6 +2,12 @@
 #
 # Workflow from:
 # https://github.com/google/googletest/blob/main/googletest/README.md
+
+# Configure GoogleTest.
+set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
+set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
+
+# Include GoogleTest.
 include(FetchContent)
 FetchContent_Declare(
     googletest
