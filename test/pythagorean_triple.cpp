@@ -9,7 +9,7 @@ TEST(PythagoreanTriple, Primitive) {
   const uint32_t N = 1'000;
   const auto triples = ntlib::primitive_pythagorean_triples(N);
 
-  for (const auto [a,b,c] : triples) {
+  for (const auto &[a, b, c] : triples) {
     // Check validity.
     EXPECT_EQ(a * a + b * b, c * c);
 
@@ -18,7 +18,7 @@ TEST(PythagoreanTriple, Primitive) {
     EXPECT_LE(b, c);
 
     // Check primitivity.
-    uint32_t gcd = ntlib::gcd(a, ntlib::gcd(b, c));
+    uint32_t gcd = ntlib::gcd({a, b, c});
     EXPECT_EQ(gcd, 1);
   }
 }
