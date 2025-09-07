@@ -31,8 +31,7 @@ static constexpr auto primes = std::to_array<uint64_t>({
   18'446'744'073'709'551'557ull // = largest prime fitting into `uint64_t`
 });
 
-
-template<typename T>
+template<ntlib::Integer T>
 [[nodiscard]] constexpr
 bool is_prime_decomposition(
     T n, const std::vector<ntlib::prime_power<T>> &factors) noexcept {

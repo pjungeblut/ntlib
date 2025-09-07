@@ -35,6 +35,8 @@ export using u128 = unsigned __int128;
  * @tparam T An integer-like type.
  */
 export template<typename T>
-concept Int128 = std::is_same_v<T, i128> || std::is_same_v<T, u128>;
+concept Int128 =
+    std::is_same_v<std::remove_cvref_t<T>, i128> ||
+    std::is_same_v<std::remove_cvref_t<T>, u128>;
 
 } // namespace ntlib

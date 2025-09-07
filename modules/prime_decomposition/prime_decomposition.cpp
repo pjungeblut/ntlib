@@ -7,6 +7,7 @@ module;
 #include <cassert>
 #include <cstddef>
 #include <cstdlib>
+#include <concepts>
 #include <limits>
 #include <optional>
 #include <ranges>
@@ -38,7 +39,7 @@ namespace ntlib {
  * 
  * @tparam T An integer-like type.
  */
-export template<typename T>
+export template<Integer T>
 struct prime_power {
   /**
    * @brief The prime number.
@@ -56,7 +57,7 @@ struct prime_power {
  * 
  * @tparam T An integer-like type.
  */
-export template<typename T>
+export template<Integer T>
 using prime_factors = std::vector<prime_power<T>>;
 
 /**
@@ -75,7 +76,7 @@ using prime_factors = std::vector<prime_power<T>>;
  *     first element and the remainder (coprime with all primes in `list`) as
  *     its second element.
  */
-template<typename T, std::ranges::input_range R>
+template<Integer T, std::ranges::input_range R>
 [[nodiscard]] constexpr
 std::pair<prime_factors<T>, T> prime_decomposition_list_remainder(T n, R &&list)
     requires std::convertible_to<std::ranges::range_value_t<R>, T> {
@@ -113,7 +114,7 @@ std::pair<prime_factors<T>, T> prime_decomposition_list_remainder(T n, R &&list)
  * @param list The list of potential prime divisors.
  * @return A prime decompositon of.
  */
-export template<typename T, std::ranges::input_range R>
+export template<Integer T, std::ranges::input_range R>
 [[nodiscard]] constexpr
 prime_factors<T> prime_decomposition_list(T n, R &&list)
     requires std::convertible_to<std::ranges::range_value_t<R>, T> {
@@ -131,7 +132,7 @@ prime_factors<T> prime_decomposition_list(T n, R &&list)
  * @param n The given number.
  * @return A vector of prime powers.
  */
-template<typename T>
+template<Integer T>
 [[nodiscard]] constexpr
 prime_factors<T> prime_decomposition_32(T n) {
   assert(n >= T{0});
@@ -161,7 +162,7 @@ prime_factors<T> prime_decomposition_32(T n) {
  * @return A `std::optional<T>` that is either empty or contains a non-trivial
  *     factor.
  */
-template<typename T, typename F>
+template<Integer T, std::invocable<T> F>
 [[nodiscard]] constexpr
 std::optional<T> find_factor_pollard_rho_mult(
     T n, F f, T x, const std::size_t MULTIPLICATIONS = 128) noexcept {
@@ -200,7 +201,7 @@ std::optional<T> find_factor_pollard_rho_mult(
  * @param n The given number.
  * @return A non-trivial factor.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 T find_factor(T n) noexcept {
   // A polynomial (modulo `n`) simulating a pseudorandom function.
@@ -231,7 +232,7 @@ T find_factor(T n) noexcept {
  * @param n The given number.
  * @return A prime decomposition.
  */
-template<typename T>
+template<Integer T>
 [[nodiscard]] constexpr
 prime_factors<T> prime_decomposition_large(T n) {
   // Base cases.
@@ -269,7 +270,7 @@ prime_factors<T> prime_decomposition_large(T n) {
  * @param n The given number.
  * @return A vector of prime powers.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 prime_factors<T> prime_decomposition(T n) {
   assert(n >= T{1});

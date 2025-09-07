@@ -17,6 +17,8 @@ module;
  */
 export module turan_number;
 
+import base;
+
 namespace ntlib {
 
 /**
@@ -27,7 +29,7 @@ namespace ntlib {
  * @param k The number of bipartition sets.
  * @return The number of edges in \f$T(n,k)\f$.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 T turan_number(T n, T k) noexcept {
   assert(n >= T{0});

@@ -33,7 +33,7 @@ namespace ntlib {
  * @param D Parameter \f$D \in \mathbb{N}\f$. Must not be a square number.
  * @return Fundamental solution \f$(x,y)\f$.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 std::tuple<T,T> pell_fundamental_solution(T D) noexcept {
   assert(D > 0);
@@ -59,7 +59,7 @@ std::tuple<T,T> pell_fundamental_solution(T D) noexcept {
  * @param current Any solution.
  * @return The next bigger solution than current (in x, by absolute value).
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 std::tuple<T,T> pell_next_solution(
     T D,
@@ -74,4 +74,4 @@ std::tuple<T,T> pell_next_solution(
   return std::make_tuple(ix * cx + D * iy * cy, iy * cx + ix * cy);
 }
 
-}
+} // namespace ntlib

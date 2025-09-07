@@ -26,11 +26,12 @@ namespace ntlib {
  * For \f$a = b = 0\f$ each \f$x \in \mathbb{Z}\f$ is a solution and \f$x = 0\f$
  * is returned. In all other cases the solution is unique.
  *
+ * @tparam T An integer-like type.
  * @param a The coefficient of \f$x\f$.
  * @param b The absolute offset. Must be a multiple of \f$a\f$.
  * @return The solution in \f$x\f$.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 T diophantine_linear_univariate(T a, T b) noexcept {
   // If a = 0 then we must also have b = 0.
@@ -51,6 +52,7 @@ T diophantine_linear_univariate(T a, T b) noexcept {
  * A solution exists if and only if \f$c\f$ is a multiple of
  * \f$\mathrm{gcd}(a,b)\f$. In this case, there are infinitely many solutions.
  *
+ * @tparam T An integer-like type.
  * @param a The coefficient of \f$x\f$.
  * @param b The coefficient of \f$y\f$.
  * @param c The absolute offset. Must be a multiple of \f$\mathrm{gcd}(a,b)\f$.
@@ -58,7 +60,7 @@ T diophantine_linear_univariate(T a, T b) noexcept {
  *     latter can be used to compute other solutions using via Bezout's
  *     Identity. In case \f$a = b = 0\f$, the third element is \f$0\f$.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 std::tuple<T,T,T> diophantine_linear_bivariate(T a, T b, T c) noexcept {
   // Special case: a = 0 and b = 0.
@@ -83,4 +85,4 @@ std::tuple<T,T,T> diophantine_linear_bivariate(T a, T b, T c) noexcept {
   return std::make_tuple(x, y, gcd);
 }
 
-}
+} // namespace ntlib

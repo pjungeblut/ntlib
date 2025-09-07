@@ -64,14 +64,6 @@ TEST(Odd, SmallValues) {
   EXPECT_FALSE(ntlib::is_odd(2));
 }
 
-TEST(Odd, IntegerFloats) {
-  EXPECT_FALSE(ntlib::is_odd(-2.0));
-  EXPECT_TRUE(ntlib::is_odd(-1.0));
-  EXPECT_FALSE(ntlib::is_odd(0.0));
-  EXPECT_TRUE(ntlib::is_odd(1.0));
-  EXPECT_FALSE(ntlib::is_odd(2.0));
-}
-
 TEST(Even, SmallValues) {
   EXPECT_TRUE(ntlib::is_even(-2));
   EXPECT_FALSE(ntlib::is_even(-1));
@@ -109,16 +101,6 @@ TEST(OddPart, PowersOfTwo) {
   }
 }
 
-TEST(OddPart, Floats) {
-  EXPECT_EQ(ntlib::odd_part(-3.0), std::make_pair(0.0, -3.0));
-  EXPECT_EQ(ntlib::odd_part(-2.0), std::make_pair(1.0, -1.0));
-  EXPECT_EQ(ntlib::odd_part(-1.0), std::make_pair(0.0, -1.0));
-  EXPECT_EQ(ntlib::odd_part(0.0), std::make_pair(0.0, 0.0));
-  EXPECT_EQ(ntlib::odd_part(1.0), std::make_pair(0.0, 1.0));
-  EXPECT_EQ(ntlib::odd_part(2.0), std::make_pair(1.0, 1.0));
-  EXPECT_EQ(ntlib::odd_part(3.0), std::make_pair(0.0, 3.0));
-}
-
 TEST(AbsoluteValue, SmallValues) {
   EXPECT_EQ(ntlib::abs(1), 1);
   EXPECT_EQ(ntlib::abs(-1), 1);
@@ -136,6 +118,8 @@ TEST(Difference, SmallValues) {
   EXPECT_EQ(ntlib::difference(0, 0), 0);
   EXPECT_EQ(ntlib::difference(0, 10), 10);
   EXPECT_EQ(ntlib::difference(-10, 10), 20);
+  EXPECT_EQ(ntlib::difference(-5, -10), 5);
+  EXPECT_EQ(ntlib::difference(-10, -5), 5);
 }
 
 TEST(Difference, ExtremalValues) {
@@ -313,14 +297,6 @@ TEST(IntegerLog2, Signed) {
 TEST(IntegerLog2, Unsigned) {
   for (unsigned int i = 1; i < 1'000'000; ++i) {
     unsigned int cl2 = ntlib::ilog2(i);
-    EXPECT_LE(1 << cl2, i);
-    EXPECT_GT(1 << (cl2 + 1), i);
-  }
-}
-
-TEST(IntegerLog2, NoBuiltin) {
-  for (int i = 1; i < 1'000'000; ++i) {
-    int cl2 = ntlib::ilog2(static_cast<double>(i));
     EXPECT_LE(1 << cl2, i);
     EXPECT_GT(1 << (cl2 + 1), i);
   }

@@ -22,7 +22,7 @@ Thus, building NTLib requires an up to date compiler and build system.
   Compute several classical functions modulo some number $m$.
 * mod_int.cpp:
   A type for integers modulo some number $m$.
-  The modulus $m$ can either be provided at run time or at compile time, the latter allowing for compiler optimizations.
+  The modulus $m$ is provided at compile time, allowing for compiler optimizations.
 
 ## Prime Numbers
 
@@ -61,7 +61,7 @@ Thus, building NTLib requires an up to date compiler and build system.
 ## Types
 
 * matrix.cpp:
-  Matrix of some type `T`.
+  Matrix with elements of some type `T`.
 * rational.cpp:
   Rational number with numerator and denominator of some type `T`.
 

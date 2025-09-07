@@ -44,7 +44,7 @@ namespace ntlib {
  * @retval std::nullopt If primality could not be determined by the given list
  *     of primes.
  */
-export template<typename T, std::ranges::input_range R>
+export template<Integer T, std::ranges::input_range R>
 [[nodiscard]] constexpr
 std::optional<bool> is_prime_trial_division(T n, R &&list) noexcept
     requires std::convertible_to<std::ranges::range_value_t<R>, T> {
@@ -75,7 +75,7 @@ std::optional<bool> is_prime_trial_division(T n, R &&list) noexcept
  * @return Whether \f$n\f$ is a strong probable prime with respect to base
  *     \f$a\f$.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 bool miller_selfridge_rabin_test(T n, T a) noexcept {
   assert(n > T{2});
@@ -91,7 +91,6 @@ bool miller_selfridge_rabin_test(T n, T a) noexcept {
 
   T p = ntlib::mod_pow(a, o, n, ntlib::mod<T>);
   if (p == T{1} || p == n_minus_1) { return true; }
-
 
   for (T r{1}; r < e && p > T{1}; ++r) {
     p = ntlib::mod(p * p, n);
@@ -196,7 +195,7 @@ bool is_prime_64(uint64_t n) noexcept {
  * @param n The given number.
  * @return Whether the given number is a strong Lucas probable prime.
  */
-export template<typename T, typename S = std::make_signed_t<T>>
+export template<Integer T, Integer S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 bool is_strong_lucas_probable_prime(T n) noexcept {
   assert(n > T{2});
@@ -272,7 +271,7 @@ bool is_strong_lucas_probable_prime(T n) noexcept {
  * @param n The given number.
  * @return Whether \f$n\f$ is a prime number.
  */
-export template<typename T, typename S = std::make_signed_t<T>>
+export template<Integer T, Integer S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 bool is_prime_baillie_psw(T n) noexcept {
   // Trivial cases.
@@ -303,7 +302,7 @@ bool is_prime_baillie_psw(T n) noexcept {
  * @param n The number to test for primality.
  * @return Whether \f$n\f$ is prime.
  */
-export template<typename T, typename S = std::make_signed_t<T>>
+export template<Integer T, Integer S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 bool is_prime(T n) noexcept {
   if constexpr (std::is_integral_v<T> && sizeof(T) <= 4) {

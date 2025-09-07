@@ -6,6 +6,8 @@ module;
 
 #include <algorithm>
 #include <cassert>
+#include <concepts>
+#include <functional>
 #include <random>
 #include <ranges>
 #include <type_traits>
@@ -28,7 +30,7 @@ namespace ntlib {
  * @param b The divisor.
  * @return The quotient, rounded down.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr T floor_div(T a, T b) noexcept {
   assert(b != T{0});
 
@@ -45,7 +47,7 @@ export template<typename T>
  * @param b The divisor.
  * @return The quotient, rounded up.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr T ceil_div(T a, T b) noexcept {
   assert(b != T{0});
 
@@ -66,7 +68,7 @@ export template<typename T>
  * @param m The modulus.
  * @return \f$a \mod m\f$ in the mathematical sense.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr T mod(T a, T m) noexcept {
   if constexpr (std::is_unsigned_v<T>) {
     return a % m;
@@ -78,10 +80,10 @@ export template<typename T>
 /**
  * @brief Binary exponentiation with a custom mod-function and modulus.
  * 
- * Let \f$\mathrm{mod_func} \colon A \times M \to A\f$ be a mod-function.
- * Computes \f$\mathrm{mod_func}(a^b, m)\f$ using binary exponentation.
+ * Let \f$\mathrm{mod\_func} \colon A \times M \to A\f$ be a mod-function.
+ * Computes \f$\mathrm{mod\_func}(a^b, m)\f$ using binary exponentation.
  * 
- * Complexity: \f$O(\log(b))\f$ calls to \f$\mathrm{mod_func}\f$.
+ * Complexity: \f$O(\log(b))\f$ calls to \f$\mathrm{mod\_func}\f$.
  * 
  * @tparam A A multiplicative monoid.
  * @tparam B An integer-like type.
@@ -91,10 +93,10 @@ export template<typename T>
  * @param b The exponent, must be non-negative.
  * @param m The modulus.
  * @param mod_func The mod-function.
- * @return The result of \f$\mathrm{mod_func}\f$ applied to the power
+ * @return The result of \f$\mathrm{mod\_func}\f$ applied to the power
  *     \f$a^b\f$ and the modulus \f$m\f$.
  */
-export template<typename A, typename B, typename M, typename MF>
+export template<MultiplicativeMonoid A, Integer B, Integer M, std::invocable<A,M> MF>
 [[nodiscard]] constexpr
 A mod_pow(A a, B b, M m, MF mod_func) noexcept {
   assert(!(a == ntlib::zero<A>() && b == B{0}));
@@ -122,7 +124,7 @@ A mod_pow(A a, B b, M m, MF mod_func) noexcept {
  * @param m The order of the group \f$a \in \mathbb{Z}/m\mathbb{Z}\f$.
  * @return The multiplicative inverse of \f$a\f$ modulo \f$m\f$.
  */
-export template<typename T, typename S = std::make_signed_t<T>>
+export template<Integer T, Integer S = std::make_signed_t<T>>
 [[nodiscard]] constexpr T mod_mult_inv(T a, T m) noexcept {
   assert(m > T{0});
 
@@ -146,7 +148,7 @@ export template<typename T, typename S = std::make_signed_t<T>>
  * @param p The modulus. Must be prime.
  * @return Whether \f$a\f$ is a quadratic residue modulo \f$p\f$.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr bool mod_is_square(T a, T p) noexcept {
   if (a == T{0}) { return true; }
   if (p == T{2}) { return true; }
@@ -167,7 +169,7 @@ export template<typename T>
  * @param p Odd prime number.
  * @return The smaller of two solutions \f$x\f$ to \f$x^2 = n \mod p\f$.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr T mod_sqrt(T n, T p) noexcept {
   // Find q, s with p-1 = q*2^s.
   const auto [s, q] = ntlib::odd_part(p - T{1});
@@ -222,7 +224,7 @@ export template<typename T>
  * @param m The modulus.
  * @return The factorial \f$n!\f$ modulo \f$m\f$.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 T mod_factorial(T n, T m) {
   if (n <= 1) { return ntlib::mod(T{1}, m); }
@@ -248,7 +250,7 @@ T mod_factorial(T n, T m) {
  * @param p An odd prime.
  * @return The Legendre Symbol \f$\left(\frac{a}{p}\right)\f$.
  */
-export template<typename T, typename S = std::make_signed_t<T>>
+export template<Integer T, Integer S = std::make_signed_t<T>>
 [[nodiscard]] constexpr S legendre(T a, T p) noexcept {
   assert(p != T{2});
 
@@ -265,7 +267,7 @@ export template<typename T, typename S = std::make_signed_t<T>>
  * @param b The "denominator".
  * @return The Jacobi Symbol \f$\left(\frac{a}{p}\right)\f$.
  */
-export template<typename T, typename S = std::make_signed_t<T>>
+export template<Integer T, Integer S = std::make_signed_t<T>>
 [[nodiscard]] constexpr S jacobi(T a, T b) noexcept {
   assert(b > T{0});
   assert(ntlib::is_odd(b));

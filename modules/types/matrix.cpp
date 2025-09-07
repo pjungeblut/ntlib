@@ -29,7 +29,7 @@ namespace ntlib {
  * @tparam COLUMS The number of colums.
  * @tparam T The element type.
  */
-export template<std::size_t ROWS, std::size_t COLUMNS, std::regular T>
+export template<std::size_t ROWS, std::size_t COLUMNS, Ring T>
 class matrix {
 public:
   /**
@@ -109,8 +109,7 @@ public:
    * @param rhs The second factor. A scalar.
    * @return Reference to the result.
    */
-  template<typename S>
-  matrix& operator*=(S rhs) {
+  matrix& operator*=(T rhs) {
     for (std::size_t r = 0; r < ROWS; ++r) {
       for (std::size_t c = 0; c < COLUMNS; ++c) {
         mat[r][c] *= rhs;
@@ -125,9 +124,8 @@ public:
    * @param rhs The divisor. A scalar.
    * @return Reference to this matrix.
    */
-  template<typename S>
-  matrix& operator/=(S rhs) {
-    assert(rhs != S{0});
+  matrix& operator/=(T rhs) requires Field<T> {
+    assert(rhs != T{0});
 
     for (std::size_t r = 0; r < ROWS; ++r) {
       for (std::size_t c = 0; c < COLUMNS; ++c) {
@@ -143,9 +141,8 @@ public:
    * @param rhs The divisor. A scalar.
    * @return Reference to the result.
    */
-  template<typename S>
-  matrix& operator%=(S rhs) {
-    assert(rhs != S{0});
+  matrix& operator%=(T rhs) requires HasDivisionWithRemainder<T> {
+    assert(rhs != T{0});
 
     for (std::size_t r = 0; r < ROWS; ++r) {
       for (std::size_t c = 0; c < COLUMNS; ++c) {
@@ -157,18 +154,15 @@ public:
 
   /**
    * @brief Compound times operator for matrix multiplication.
+   * 
+   * @note As this method returns a reference to the modified first factor, it
+   *     can only be used on square matrices. For other dimensions the product
+   *     would have different dimension.
    *
-   * @tparam RHS_ROWS The number of rows of the second factor.
-   * @tparam RHS_COLUMNS The number of columns of the second factor.
    * @param rhs The second factor.
    * @return Reference to the result.
    */
-  template<std::size_t RHS_ROWS, std::size_t RHS_COLUMNS>
-      requires (ROWS == COLUMNS && ROWS == RHS_ROWS && COLUMNS == RHS_COLUMNS)
-  matrix& operator*=(const matrix<RHS_ROWS, RHS_COLUMNS, T> &rhs) {
-    static_assert(COLUMNS == RHS_ROWS,
-        "Incompatible dimensions for matrix multiplication.");
-
+  matrix& operator*=(const matrix &rhs) {
     *this = *this * rhs;
     return *this;
   }
@@ -200,9 +194,7 @@ public:
    * 
    * @return An identity matrix.
    */
-  template<typename = void>
-      requires (ROWS == COLUMNS)
-  static matrix get_identity() {
+  static matrix get_identity() requires (ROWS == COLUMNS) {
     matrix id = get_zero();
     for (std::size_t i = 0; i < ROWS; ++i) {
       id[i, i] = ntlib::one<T>();
@@ -233,7 +225,7 @@ private:
  * @param mat The given matrix.
  * @return A string representation of the given matrix.
  */
-export template<std::size_t ROWS, std::size_t COLUMNS, std::regular T>
+export template<std::size_t ROWS, std::size_t COLUMNS, Ring T>
 std::string to_string(matrix<ROWS, COLUMNS, T> mat) {
   using std::to_string;
 
@@ -264,7 +256,7 @@ std::string to_string(matrix<ROWS, COLUMNS, T> mat) {
  * @param m The given matrix.
  * @return Reference to the output stream.
  */
-export template<std::size_t ROWS, std::size_t COLUMNS, std::regular T>
+export template<std::size_t ROWS, std::size_t COLUMNS, Ring T>
 std::ostream& operator<<(std::ostream &os, const matrix<ROWS, COLUMNS, T> &m) {
   os << ntlib::to_string(m);
   return os;
@@ -280,10 +272,11 @@ std::ostream& operator<<(std::ostream &os, const matrix<ROWS, COLUMNS, T> &m) {
  * @param rhs The second summand.
  * @return The sum of `lhs` and `rhs`.
  */
-export template<std::size_t ROWS, std::size_t COLUMNS, std::regular T>
+export template<std::size_t ROWS, std::size_t COLUMNS, Ring T>
 [[nodiscard]]
 matrix<ROWS, COLUMNS, T> operator+(
-    matrix<ROWS, COLUMNS, T> lhs, const matrix<ROWS, COLUMNS, T> &rhs) {
+    matrix<ROWS, COLUMNS, T> lhs,
+    const matrix<ROWS, COLUMNS, T> &rhs) {
   lhs += rhs;
   return lhs;
 }
@@ -298,49 +291,47 @@ matrix<ROWS, COLUMNS, T> operator+(
  * @param rhs The subtrahend.
  * @return The difference of `lhs` and `rhs`.
  */
-export template<std::size_t ROWS, std::size_t COLUMNS, std::regular T>
+export template<std::size_t ROWS, std::size_t COLUMNS, Ring T>
 matrix<ROWS, COLUMNS, T> operator-(
-    matrix<ROWS, COLUMNS, T> lhs, const matrix<ROWS, COLUMNS, T> &rhs) {
+    matrix<ROWS, COLUMNS, T> lhs,
+    const matrix<ROWS, COLUMNS, T> &rhs) {
   lhs -= rhs;
   return lhs;
 }
 
 /**
- * @brief Times operator for right scalar multiplicatoin.
+ * @brief Times operator for right scalar multiplication.
  *
  * @tparam ROWS The number of rows.
  * @tparam COLUMNS The number of columns.
  * @tparam T The element type.
- * @tparam S The scalar type.
  * @param lhs The first factor, a matrix.
  * @param rhs The second factor, a scalar.
  * @return The product of `lhs` and `rhs`.
  */
-export template<
-    std::size_t ROWS, std::size_t COLUMNS, std::regular T, typename S>
-matrix<ROWS, COLUMNS, T> operator*(matrix<ROWS, COLUMNS, T> lhs, S rhs) {
+export template<std::size_t ROWS, std::size_t COLUMNS, Ring T>
+matrix<ROWS, COLUMNS, T> operator*(matrix<ROWS, COLUMNS, T> lhs, T rhs) {
   lhs *= rhs;
   return lhs;
 }
 
 /**
- * @brief Times operator for left scalar multiplicatoin.
+ * @brief Times operator for left scalar multiplication.
  *
  * @tparam ROWS The number of rows.
  * @tparam COLUMNS The number of columns.
  * @tparam T The element type.
- * @tparam S The scalar type.
  * @param lhs The first factor, a scalar.
  * @param rhs The second factor, a matrix.
  * @return The product of `lhs` and `rhs`.
  */
-export template<
-    std::size_t ROWS, std::size_t COLUMNS, std::regular T, typename S>
-matrix<ROWS, COLUMNS, T> operator*(S lhs, matrix<ROWS, COLUMNS, T> rhs) {
-  // TODO (pjungeblut): Fix this!
-  // This uses commutativiy of scalar multiplication.
-  // Depending on T this might not be true!
-  rhs *= lhs;
+export template<std::size_t ROWS, std::size_t COLUMNS, Ring T>
+matrix<ROWS, COLUMNS, T> operator*(T lhs, matrix<ROWS, COLUMNS, T> rhs) {
+  for (std::size_t r = 0; r < ROWS; ++r) {
+    for (std::size_t c = 0; c < COLUMNS; ++c) {
+      rhs[r, c] = lhs * rhs[r, c];
+    }
+  }
   return rhs;
 }
 
@@ -350,14 +341,12 @@ matrix<ROWS, COLUMNS, T> operator*(S lhs, matrix<ROWS, COLUMNS, T> rhs) {
  * @tparam ROWS The number of rows.
  * @tparam COLUMNS The number of columns.
  * @tparam T The element type.
- * @tparam S The scalar type.
  * @param lhs The dividend. A matrix.
  * @param rhs The divisor. A scalar.
  * @return The quotient matrix.
  */
-export template<
-    std::size_t ROWS, std::size_t COLUMNS, std::regular T, typename S>
-matrix<ROWS, COLUMNS, T> operator/(matrix<ROWS, COLUMNS, T> lhs, S rhs) {
+export template<std::size_t ROWS, std::size_t COLUMNS, Ring T>
+matrix<ROWS, COLUMNS, T> operator/(matrix<ROWS, COLUMNS, T> lhs, T rhs) {
   lhs /= rhs;
   return lhs;
 }
@@ -368,15 +357,13 @@ matrix<ROWS, COLUMNS, T> operator/(matrix<ROWS, COLUMNS, T> lhs, S rhs) {
  * @tparam ROWS The number of rows.
  * @tparam COLUMNS The number of columns.
  * @tparam T The element type.
- * @tparam S The scalar type.
  * @param lhs The dividend. A matrix.
  * @param rhs The divisor. A scalar.
  * @return A matrix with every element being the remainder of the
  *     corresponding element in `lhs` after divison by `rhs`.
  */
-export template<
-    std::size_t ROWS, std::size_t COLUMNS, std::regular T, typename S>
-matrix<ROWS, COLUMNS, T> operator%(matrix<ROWS, COLUMNS, T> lhs, S rhs) {
+export template<std::size_t ROWS, std::size_t COLUMNS, Ring T>
+matrix<ROWS, COLUMNS, T> operator%(matrix<ROWS, COLUMNS, T> lhs, T rhs) {
   lhs %= rhs;
   return lhs;
 }
@@ -390,7 +377,7 @@ matrix<ROWS, COLUMNS, T> operator%(matrix<ROWS, COLUMNS, T> lhs, S rhs) {
  * @param rhs The matrix..
  * @return A copy of the old matrix.
  */
-export template<std::size_t ROWS, std::size_t COLUMNS, std::regular T>
+export template<std::size_t ROWS, std::size_t COLUMNS, Ring T>
 matrix<ROWS, COLUMNS, T> operator+(const matrix<ROWS, COLUMNS, T> &rhs) {
   return rhs;
 }
@@ -404,7 +391,7 @@ matrix<ROWS, COLUMNS, T> operator+(const matrix<ROWS, COLUMNS, T> &rhs) {
  * @param rhs The matrix.
  * @return A matrix with all elements negated.
  */
-export template<std::size_t ROWS, std::size_t COLUMNS, std::regular T>
+export template<std::size_t ROWS, std::size_t COLUMNS, Ring T>
 matrix<ROWS, COLUMNS, T> operator-(const matrix<ROWS, COLUMNS, T> &rhs) {
   matrix<ROWS, COLUMNS, T> negated;
   for (std::size_t r = 0; r < ROWS; ++r) {
@@ -432,7 +419,7 @@ export template<
     std::size_t COLUMNS_LHS,
     std::size_t ROWS_RHS,
     std::size_t COLUMNS_RHS,
-    std::regular T>
+    Ring T>
     requires (COLUMNS_LHS == ROWS_RHS)
 matrix<ROWS_LHS, COLUMNS_RHS, T> operator*(
     const matrix<ROWS_LHS, COLUMNS_LHS, T> &lhs,
@@ -462,7 +449,7 @@ matrix<ROWS_LHS, COLUMNS_RHS, T> operator*(
  * @param func The function to execute.
  * @return The new matrix.
  */
-export template<std::size_t ROWS, std::size_t COLUMNS, std::regular T, typename F>
+export template<std::size_t ROWS, std::size_t COLUMNS, Ring T, std::invocable<T> F>
 matrix<ROWS, COLUMNS, T> exec_each_element(
     const matrix<ROWS, COLUMNS, T> &m, const F &func) {
   matrix<ROWS, COLUMNS, T> res;
@@ -481,7 +468,7 @@ matrix<ROWS, COLUMNS, T> exec_each_element(
  * @tparam COLUMNS The number of columns.
  * @tparam T The element type.
  */
-export template<std::size_t ROWS, std::size_t COLUMNS, std::regular T>
+export template<std::size_t ROWS, std::size_t COLUMNS, Ring T>
 class algebra_traits<matrix<ROWS, COLUMNS, T>> {
 public:
   /**
@@ -504,6 +491,12 @@ public:
   static matrix<ROWS, COLUMNS, T> get_one() noexcept {
     return matrix<ROWS, COLUMNS, T>::get_identity();
   }
+
+  /// @brief Matrix addition is commutative.
+  static constexpr bool is_additive_commutative = true;
+
+  /// @brief Matrix multiplication is not commutative.
+  static constexpr bool is_multiplicative_commutative = false;
 };
 
 } // namespace ntlib

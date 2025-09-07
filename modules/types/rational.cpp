@@ -25,7 +25,7 @@ namespace ntlib {
  * 
  * @tparam T An integer-like type.
  */
-export template<typename T>
+export template<Integer T>
 class rational {
 public:
   /**
@@ -242,7 +242,7 @@ private:
  * @param r A rational.
  * @return A string representation.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]]
 std::string to_string(const rational<T> &r) {
   using std::to_string;
@@ -257,7 +257,7 @@ std::string to_string(const rational<T> &r) {
  * @param r The rational.
  * @return The output stream.
  */
-export template<typename T>
+export template<Integer T>
 std::ostream &operator<<(std::ostream &os, const rational<T> &r) {
   os << to_string(r);
   return os;
@@ -270,7 +270,7 @@ std::ostream &operator<<(std::ostream &os, const rational<T> &r) {
  * @param rhs The right hand side to compare.
  * @return True, if and only if `lhs` is equal to `rhs`.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]]
 bool operator==(const rational<T> &lhs, const rational<T> &rhs) {
   return lhs.get_numerator() == rhs.get_numerator() &&
@@ -287,7 +287,7 @@ bool operator==(const rational<T> &lhs, const rational<T> &rhs) {
  * @retval 0 If `lhs == rhs`.
  * @retval >0 If `lhs > rhs`.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]]
 std::strong_ordering operator<=>(
     const rational<T> &lhs, const rational<T> &rhs) {
@@ -302,7 +302,7 @@ std::strong_ordering operator<=>(
  * @param r The rational.
  * @return The rational with the same absolute value but opposite sign.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]]
 rational<T> operator-(const rational<T> &r) {
   static_assert(std::is_signed_v<T>);
@@ -316,7 +316,7 @@ rational<T> operator-(const rational<T> &r) {
  * 
  * @tparam T An integer-like type.
  */
-export template<typename T>
+export template<Integer T>
 class algebra_traits<rational<T>> {
 public:
   /**
@@ -336,6 +336,12 @@ public:
   [[nodiscard]] static constexpr rational<T> get_one() noexcept {
     return rational<T>{T{1}, T{1}};
   }
+
+  /// @brief Rational addition is commutative.
+  static constexpr bool is_additive_commutative = true;
+
+  /// @brief Rational multiplication is commutative.
+  static constexpr bool is_multiplicative_commutative = true;
 };
 
 } // namespace ntlib

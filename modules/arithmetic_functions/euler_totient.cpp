@@ -34,7 +34,7 @@ namespace ntlib {
  * @param factors The prime decomposition of `n`.
  * @return Euler's totient function \f$\phi(n)\f$.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 T euler_totient(const prime_factors<T> &factors) noexcept {
   return std::ranges::fold_left(factors, T{1}, [](T prod, const auto &pp) {
@@ -49,7 +49,7 @@ T euler_totient(const prime_factors<T> &factors) noexcept {
  * @param n The given number.
  * @return Euler's totient function \f$\phi(n)\f$.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 T euler_totient(T n) noexcept {
   return ntlib::euler_totient(ntlib::prime_decomposition(n));
@@ -66,7 +66,7 @@ T euler_totient(T n) noexcept {
  * @return A `std::vector<T>` containing all values. The element at index `0`
  *     will be set to `0`.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]]
 std::vector<T> euler_totient_sieve(std::size_t N) {
   std::vector<T> sieve(N + 1);

@@ -10,7 +10,6 @@ module;
 #include <cassert>
 #include <climits>
 #include <cmath>
-#include <concepts>
 #include <cstdint>
 #include <functional>
 #include <numeric>
@@ -27,74 +26,9 @@ module;
  */
 export module base;
 
+export import :concepts;
+
 namespace ntlib {
-
-/**
- * @brief Traits class for algebraic types.
- * 
- * This empty class is the primary template definition.
- * All types supposed to be used with NTLib need to specialize this class and
- * provide the following static members:
- * - `get_zero`: Returns the additive neutral element.
- * - `get_one`: Returns the multiplicative neutral element.
- */
-export template<typename>
-class algebra_traits {};
-
-/**
- * @brief Specialization of `ntlib::algebra_traits` for integral types.
- * 
- * @tparam T An integral type.
- */
-export template<std::integral T>
-class algebra_traits<T> {
-public:
-  /**
-   * @brief Returns the additive neutral element of `T`.
-   * 
-   * @return The additive neutral element, i.e., \f$0\f$.
-   */
-  [[nodiscard]] static constexpr T get_zero() noexcept {
-    return T{0};
-  }
-
-  /**
-   * @brief Returns the multiplicative neutral element of `T`.
-   * 
-   * @return The multiplicative neutral element, i.e., \f$1\f$.
-   */
-  [[nodiscard]] static constexpr T get_one() noexcept {
-    return T{1};
-  }
-};
-
-/**
- * @brief Returns the additive neutral element of a given type.
- * 
- * @tparam T The type. Must have a specialization of `ntlib::algebra_traits`
- *     with a static `get_zero` method.
- * @return The additive neutral element of type `T`.
- */
-export template<typename T>
-    requires requires { algebra_traits<T>::get_zero(); }
-[[nodiscard]] constexpr
-T zero() noexcept {
-  return algebra_traits<T>::get_zero();
-}
-
-/**
- * @brief Returns the multiplicative neutral element of a given type.
- * 
- * @tparam T The type. Must have a specialization of `ntlib::algebra_traits`
- *     with a static `get_one` method.
- * @return The multiplicative neutral element of type `T`.
- */
-export template<typename T>
-    requires requires { algebra_traits<T>::get_one(); }
-[[nodiscard]] constexpr
-T one() noexcept {
-  return algebra_traits<T>::get_one();
-}
 
 /**
  * @brief A list with all prime numbers up to `ntlib::SMALL_PRIMES_BIGGEST`.
@@ -103,7 +37,7 @@ T one() noexcept {
  * 
  * @tparam T An integer-like type.
  */
-export template<typename T>
+export template<Integer T>
 constexpr auto SMALL_PRIMES = std::to_array<T>({
     2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
     73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151,
@@ -125,7 +59,7 @@ static_assert(std::ranges::is_sorted(SMALL_PRIMES<uint32_t>),
  * 
  * @tparam T An integer-like type.
  */
-export template<typename T>
+export template<Integer T>
 constexpr T SMALL_PRIMES_BIGGEST =
     *std::ranges::max_element(SMALL_PRIMES<T>);
 
@@ -136,7 +70,7 @@ constexpr T SMALL_PRIMES_BIGGEST =
  * @param n The given number.
  * @return Whether `n` is odd.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 bool is_odd(T n) noexcept {
   if constexpr (requires(T n) { n & T{1}; }) {
@@ -156,7 +90,7 @@ bool is_odd(T n) noexcept {
  * @param n The given number.
  * @return Whether `n` is even.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 bool is_even(T n) noexcept {
   return !ntlib::is_odd(n);
@@ -165,11 +99,12 @@ bool is_even(T n) noexcept {
 /**
  * @brief Computes the absolute value of a given number.
  *
- * @tparam T An integer-like type.
+ * @tparam T An additive group.
  * @param n The given number.
  * @return The absolute value of `n`.
  */
-export template<typename T>
+export template<AdditiveGroup T>
+    requires std::totally_ordered<T>
 [[nodiscard]] constexpr
 T abs(T n) noexcept {
   return n >= T{0} ? n : -n;
@@ -180,13 +115,13 @@ T abs(T n) noexcept {
  * 
  * For integral types this is safe against overflows.
  * 
- * @tparam T An integer-like type.
+ * @tparam T An additive group.
  * @tparam U The unsigned-integer-like type corresponding to `T`. 
  * @param a The first number.
  * @param b The second number.
  * @return The difference, i.e., `abs(a-b)`.
  */
-export template<typename T, typename U = std::make_unsigned_t<T>>
+export template<AdditiveGroup T, AdditiveGroup U = std::make_unsigned_t<T>>
 [[nodiscard]] constexpr
 U difference(T a, T b) noexcept {
   if (a > b) { return static_cast<U>(a) - b; }
@@ -200,10 +135,16 @@ U difference(T a, T b) noexcept {
  * @param n The given number.
  * @return The sign. One of `-1`, `0` or `+1`.
  */
-export template <typename T>
+export template <std::totally_ordered T>
 [[nodiscard]] constexpr
 int sgn(T n) noexcept {
+  if constexpr (HasAdditiveInverses<T>) {
     return (T{0} < n) - (n < T{0});
+  } else {
+    if (n > T{0}) { return 1; }
+    else if (n < T{0}) { return -1; }
+    else { return 0; }
+  }
 }
 
 /**
@@ -214,7 +155,7 @@ int sgn(T n) noexcept {
  * @return A pair with `e` and `o` as its first and second element,
  *     respectively. 
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 std::pair<T,T> odd_part(T n) noexcept {
   constexpr auto odd_part_non_negative = [](T n) {
@@ -245,14 +186,14 @@ std::pair<T,T> odd_part(T n) noexcept {
  * The greatest common divisor of two numbers `a` and `b` (not both zero) is the
  * smallest positive number that divides both `a` and `b`.
  * 
- * Runtime: `O(log a + log b)`.
+ * Complexity: \f$O(\log a + \log b)\f$
  *
  * @tparam T An integer-like type.
  * @param a The first number.
  * @param b The second number.
  * @return The greatest common divisor of `a` and `b`.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 T gcd(T a, T b) noexcept {
   assert(!(a == T{0} && b == T{0}));
@@ -266,7 +207,7 @@ T gcd(T a, T b) noexcept {
  * @param list The list of numbers. Must not be empty.
  * @return The greatest common divisor of the numbers in the list.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 T gcd(std::initializer_list<T> list) noexcept {
   assert(list.size() > 0);
@@ -280,15 +221,15 @@ T gcd(std::initializer_list<T> list) noexcept {
  *
  * The least common multiple of two non-zero integers `a` and `b` is the
  * smallest positive integer that can be divided by both `a` and `b`.
- * 
- * Runtime: `O(log a + log b)`
+ *
+ * Complexity: \f$O(\log a + \log b)\f$
  *
  * @tparam T An integer-like type.
  * @param a The first number.
  * @param b The second number.
  * @return The least common multiple of `a` and `b`.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 T lcm(T a, T b) noexcept {
   assert(a != T{0});
@@ -303,7 +244,7 @@ T lcm(T a, T b) noexcept {
  * @param list The list of numbers. Must not be empty.
  * @return The least common multiple of the numbers in the list.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 T lcm(std::initializer_list<T> list) noexcept {
   assert(list.size() > 0);
@@ -324,7 +265,7 @@ T lcm(std::initializer_list<T> list) noexcept {
  * @param b The second number.
  * @return Tuple `(gcd(a,b), x, y)`.
  */
-export template<typename T, typename S = std::make_signed_t<T>>
+export template<Integer T, Integer S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 std::tuple<T, S, S> extended_euclid(T a, T b) noexcept {
   assert(!(a == T{0} && b == T{0}));
@@ -349,16 +290,15 @@ std::tuple<T, S, S> extended_euclid(T a, T b) noexcept {
 /**
  * @brief Binary exponentation.
  * 
- * Runtime: O(log b)
+ * Complexity: \f$O(\log b)\f$
  *
- * @tparam A A type that is closed under multiplication and contains a
- *     multiplicative neutral element.
+ * @tparam A A multiplicative monoid.
  * @tparam B An integer-like type.
  * @param a The base.
  * @param b The exponent, non-negative.
- * @return The power `a^b`.
+ * @return The power \f$a^b\f$.
  */
-export template<typename A, typename B>
+export template<MultiplicativeMonoid A, Integer B>
 [[nodiscard]] constexpr
 A pow(A a, B b) noexcept {
   assert(!(a == ntlib::zero<A>() && b == B{0}));
@@ -375,10 +315,10 @@ A pow(A a, B b) noexcept {
  *
  * @tparam T An integer-like type.
  * @param n The given number.
- * @return The integer part of the binary logarithm of `n`, i.e.,
- *     `floor(log2(n))`.
+ * @return The integer part of the binary logarithm of \f$n\f$, i.e.,
+ *     \f$\lfloor\log_2(n)\rfloor\f$.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 T ilog2(T n) noexcept {
   assert(n > T{0});
@@ -399,9 +339,9 @@ T ilog2(T n) noexcept {
  *
  * @tparam T An integer-like type.
  * @param n The given number. Must be non-negative.
- * @return The integer square root of `n`, i.e., `floor(sqrt(n))`.
+ * @return The integer square root of \f$n\f$, i.e., \f$\lfloor(\sqrt{n})\rfloor\f$.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 T isqrt(T n) noexcept {
   assert(n >= T{0});
@@ -435,13 +375,13 @@ T isqrt(T n) noexcept {
  * Uses ideas from this site:
  * https://math.stackexchange.com/questions/131330/detecting-perfect-squares-faster-than-by-extracting-square-root/712818#712818
  * 
- * Runtime: O(log n)
+ * Complexity: \f$O(\log n)\f$
  *
  * @tparam T An integer-like type.
  * @param n The given number.
  * @return Whether `n` is a perfect square.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 bool is_square(T n) noexcept {
   if (n < T{0}) { return false; }
@@ -496,9 +436,9 @@ bool is_square(T n) noexcept {
  *
  * @tparam T An integer-like type.
  * @param n The given number.
- * @return The factorial of `n`, i.e, `n! = 1 * 2 * ... * n`.
+ * @return The factorial of \f$n\f$, i.e, \f$n! = 1 \cdot 2 \cdot \ldots \cdot n\f$.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 T factorial(T n) noexcept {
   assert(n >= T{0});
@@ -510,4 +450,4 @@ T factorial(T n) noexcept {
       std::multiplies{});
 }
 
-}
+} // namespace ntlib

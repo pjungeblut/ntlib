@@ -28,7 +28,6 @@ namespace ntlib {
  * @brief Generates a prime sieve.
  * 
  * @tparam T An integer-like type.
- * @tparam Allocator The allocator to use for the list of primes.
  * @tparam SieveType The datastructure to use as a prime sieve.
  * @tparam SEGMENT_SIZE Portion of the sieve to be processed at once. This
  *     should be small enough that `SEGMENT_SIZE` sieve fields fit into an L3
@@ -39,8 +38,7 @@ namespace ntlib {
  * @return The sieve.
  */
 export template<
-    typename T,
-    typename Allocator,
+    Integer T,
     typename SieveType,
     std::size_t SEGMENT_SIZE,
     bool CREATE_LIST>
@@ -65,8 +63,8 @@ SieveType eratosthenes_segmented(T N, std::vector<T> &primes) {
   sieve[5] = true;
 
   primes = {2, 3, 5};
-  std::vector<T, Allocator> multiples = {0, 0, 0};
-  std::vector<T, Allocator> offsets = {0, 0, 0};
+  std::vector<T> multiples = {0, 0, 0};
+  std::vector<T> offsets = {0, 0, 0};
   const T primes_until_root = (R * 4 / 15) + 2;
   if constexpr (CREATE_LIST) {
     const T primes_until_N = (N * 4 / 15) + 2;
@@ -137,7 +135,6 @@ SieveType eratosthenes_segmented(T N, std::vector<T> &primes) {
  * @brief Generates a prime sieve.
  *
  * @tparam T An integer-like type.
- * @tparam Allocator The allocator to use for the list of primes.
  * @tparam SieveType The datastructure to use as a prime sieve.
  * @tparam SEGMENT_SIZE Portion of the sieve to be processed at once. This
  *     should be small enough that `SEGMENT_SIZE` sieve fields fit into an L3
@@ -146,15 +143,13 @@ SieveType eratosthenes_segmented(T N, std::vector<T> &primes) {
  * @return The sieve.
  */
 export template<
-    typename T,
-    typename Allocator = std::allocator<T>,
+    Integer T,
     typename SieveType = ntlib::sieve_235<>,
     std::size_t SEGMENT_SIZE = (1 << 18)>
 SieveType prime_sieve(T N) {
   std::vector<T> primes;
   return ntlib::eratosthenes_segmented<
       T,
-      Allocator,
       SieveType,
       SEGMENT_SIZE,
       false>(
@@ -165,7 +160,6 @@ SieveType prime_sieve(T N) {
  * @brief Generates a prime sieve.
  *
  * @tparam T An integer-like type.
- * @tparam Allocator The allocator to use for the list of primes.
  * @tparam SieveType The datastructure to use as a prime sieve.
  * @tparam SEGMENT_SIZE Portion of the sieve to be processed at once. This
  *     should be small enough that `SEGMENT_SIZE` sieve fields fit into an L3
@@ -175,14 +169,12 @@ SieveType prime_sieve(T N) {
  * @return The sieve.
  */
 export template<
-    typename T,
-    typename Allocator = std::allocator<T>,
+    Integer T,
     typename SieveType = ntlib::sieve_235<>,
     std::size_t SEGMENT_SIZE = (1 << 18)>
 SieveType prime_sieve(T N, std::vector<T> &primes) {
   return ntlib::eratosthenes_segmented<
       T,
-      Allocator,
       SieveType,
       SEGMENT_SIZE,
       true>(
@@ -192,10 +184,12 @@ SieveType prime_sieve(T N, std::vector<T> &primes) {
 /**
  * @brief Find the smallest prime bigger than a given number.
  * 
+ * @tparam T An integer-like type.
+ * @tparam S The signed type corresponding to `T`.
  * @param n The given number.
- * @return The smallest prime larget than \f$n\f$.
+ * @return The smallest prime larger than \f$n\f$.
  */
-export template<typename T, typename S = std::make_signed_t<T>>
+export template<Integer T, Integer S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 T next_prime(T n) noexcept {
   // Base cases.
@@ -207,4 +201,4 @@ T next_prime(T n) noexcept {
   return result;
 }
 
-}
+} // namespace ntlib

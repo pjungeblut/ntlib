@@ -15,7 +15,7 @@ using Types = ::testing::Types<
     int32_t, uint32_t,
     int64_t, uint64_t>;
 
-template<typename T>
+template<typename>
 class ModInt : public testing::Test {};
 
 TYPED_TEST_SUITE(ModInt, Types);

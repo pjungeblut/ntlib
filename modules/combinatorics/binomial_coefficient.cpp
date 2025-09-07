@@ -43,7 +43,7 @@ namespace ntlib {
  * @param k Size of the subsets.
  * @return The binomial coefficient \f${n \choose k}\f$.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 T binom(T n, T k) noexcept {
   assert(n >= T{0});
@@ -71,7 +71,7 @@ T binom(T n, T k) noexcept {
  * @param p The modulus. Must be prime and sufficiently large.
  * @return The binomial coefficient \f${n \choose k} \mod p\f$.
  */
-export template<typename T, typename S = std::make_signed_t<T>>
+export template<Integer T, Integer S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 T mod_p_binom(T n, T k, T p) noexcept {
   assert(n >= T{0});
@@ -103,7 +103,7 @@ T mod_p_binom(T n, T k, T p) noexcept {
  * @param e The exponent of the prime.
  * @return The binomial coefficient \f${n \choose k} \mod p^e\f$.
  */
-export template<typename T, typename S = std::make_signed_t<T>>
+export template<Integer T, Integer S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 T mod_pp_binom(T n, T k, T p, T e) {
   assert(n >= T{0});
@@ -156,7 +156,7 @@ T mod_pp_binom(T n, T k, T p, T e) {
  * @param m The modulus.
  * @return The binomial coefficient \f${n \choose k} \mod m\f$.
  */
-export template<typename T, typename S = std::make_signed_t<T>>
+export template<Integer T, Integer S = std::make_signed_t<T>>
 [[nodiscard]] constexpr
 T mod_binom(T n, T k, T m) {
   // Find prime decomposition of modulus.
@@ -189,7 +189,7 @@ T mod_binom(T n, T k, T m) {
  * @param N The number of rows to compute.
  * @return Two-dimensional `std::vector` containing the binomial coefficients.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 std::vector<std::vector<T>> binom_table(T N) {
   assert(N >= T{0});
@@ -219,7 +219,7 @@ std::vector<std::vector<T>> binom_table(T N) {
  * @param m The modulus.
  * @return Two-dimensional `std::vector` containing the binomial coefficients.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 std::vector<std::vector<T>> mod_binom_table(std::size_t N, T m) {
   assert(N >= 0);

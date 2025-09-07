@@ -115,12 +115,12 @@ TEST(Arithmetic, Division) {
   EXPECT_EQ(b, ntlib::rational(2, 25));
 }
 
-TEST(AdditiveNeutral, SmallValues) {
+TEST(AdditiveNeutral, Existence) {
   const auto n1 = ntlib::zero<ntlib::rational<int32_t>>();
   EXPECT_EQ(n1, (ntlib::rational<int32_t>{0, 1}));
 }
 
-TEST(MultiplicativeNeutral, SmallValues) {
+TEST(MultiplicativeNeutral, Existence) {
   const auto n1 = ntlib::one<ntlib::rational<int32_t>>();
   EXPECT_EQ(n1, (ntlib::rational<int32_t>{1, 1}));
 }

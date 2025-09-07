@@ -30,7 +30,7 @@ namespace ntlib {
  * addition and subtraction. If this concept is not satisfied, a bigger integer
  * type must be used for `T`.
  */
-export template<typename T, T m>
+template<typename T, T m>
 concept ModIntAddable =
     !std::numeric_limits<T>::is_bounded ||
     std::numeric_limits<T>::max() / 2 >= m;
@@ -43,7 +43,7 @@ concept ModIntAddable =
  * multiplication. If this concept is not satisfied, a bigger integer type must
  * be used for `T`.
  */
-export template<typename T, T m>
+template<typename T, T m>
 concept ModIntMultiplicable =
     !std::numeric_limits<T>::is_bounded ||
     std::numeric_limits<T>::max() / m >= m;
@@ -61,7 +61,7 @@ concept ModIntMultiplicable =
  * @tparam T An integer-like type.
  * @tparam m The modulus.
  */
-export template<typename T,T m>
+export template<Integer T, T m>
     requires(m > 0)
 class mod_int {
 public:
@@ -143,9 +143,7 @@ public:
    * @param rhs The second summand.
    * @return Reference to the result.
    */
-  template<typename = void>
-      requires ModIntAddable<T, m>
-  mod_int& operator+=(mod_int rhs) noexcept {
+  mod_int& operator+=(mod_int rhs) noexcept requires ModIntAddable<T, m> {
     value = (value + rhs.value) % m;
     return *this;
   }
@@ -170,9 +168,7 @@ public:
    * @param rhs The subtrahend.
    * @return Reference to the result.
    */
-  template<typename = void>
-      requires ModIntAddable<T, m>
-  mod_int& operator-=(mod_int rhs) noexcept {
+  mod_int& operator-=(mod_int rhs) noexcept requires ModIntAddable<T, m> {
     value = (value + m - rhs.value) % m;
     return *this;
   }
@@ -197,9 +193,7 @@ public:
    * @param rhs The second factor.
    * @return Reference to the result.
    */
-  template<typename = void>
-      requires ModIntMultiplicable<T, m>
-  mod_int& operator*=(mod_int rhs) noexcept {
+  mod_int& operator*=(mod_int rhs) noexcept requires ModIntMultiplicable<T, m> {
     value = (value * rhs.value) % m;
     return *this;
   }
@@ -239,9 +233,7 @@ public:
    * 
    * @note This requires that the current value is coprime to the modulus.
    */
-  template<typename = void>
-      requires (std::numeric_limits<T>::is_signed)
-  void invert() {
+  void invert() requires (std::numeric_limits<T>::is_signed) {
     assert(ntlib::gcd(value, m) == 1);
     value = ntlib::mod_mult_inv<T,T>(value, m);
   }
@@ -268,7 +260,7 @@ private:
  * @tparam T An integer-like type.
  * @tparam m The modulus.
  */
-export template<typename T, T m>
+export template<Integer T, T m>
 class algebra_traits<mod_int<T, m>> {
 public:
   /**
@@ -288,6 +280,12 @@ public:
   [[nodiscard]] static constexpr mod_int<T, m> get_one() noexcept {
     return mod_int<T, m> {1};
   }
+
+  /// @brief Modular addition is commutative.
+  static constexpr bool is_additive_commutative = true;
+
+  /// @brief Modular multiplication is commutative.
+  static constexpr bool is_multiplicative_commutative = true;
 };
 
 } // namespace ntlib

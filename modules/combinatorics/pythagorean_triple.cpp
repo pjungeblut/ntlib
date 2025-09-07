@@ -40,10 +40,11 @@ namespace ntlib {
  * @brief Creates all primitive pythagorean triples \f$(a,b,c)\f$ with
  * \f$a \leq b \leq c \leq N\f$.
  *
+ * @tparam T An integer-like type.
  * @param N The maximum value of any component.
  * @return triples A `std::vector` containing the triples.
  */
-export template<typename T>
+export template<Integer T>
 [[nodiscard]] constexpr
 std::vector<std::tuple<T,T,T>> primitive_pythagorean_triples(T N) {
   std::vector<std::tuple<T,T,T>> triples;

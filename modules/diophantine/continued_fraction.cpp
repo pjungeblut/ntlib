@@ -33,7 +33,7 @@ namespace ntlib {
  *     first position gives the whole number part, the second until the last one
  *     form the period.
  */
-export template<typename T>
+export template<Integer T>
 std::vector<T> quadratic_irrational_cf(const T &n) {
   const T m0{0};
   const T d0{1};
@@ -65,7 +65,7 @@ std::vector<T> quadratic_irrational_cf(const T &n) {
  * @param cf The continued fraction representation of the quadratic irrational.
  * @return The numerator and denominator of the n-th convergent.
  */
-export template<typename T>
+export template<Integer T>
 rational<T> nth_convergent_quadratic_irrational_cf(std::size_t n,
     const std::vector<T> &cf) {
   T p[3];

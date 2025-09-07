@@ -33,7 +33,7 @@ namespace ntlib {
  * @return A `std::pair<S,S>` containing \f$U_n(P,Q)\f$ as its first element and
  *     \f$V_n(P,Q)\f$ as its second element.
  */
-export template <typename N, typename S>
+export template <Integer N, Integer S>
 [[nodiscard]] constexpr
 std::pair<S,S> lucas_nth_term(N n, S P, S Q) {
   if (n == N{0}) {
@@ -66,7 +66,7 @@ std::pair<S,S> lucas_nth_term(N n, S P, S Q) {
  * @return A `std::pair<T,T>` containing \f$U_n(P,Q) \mod m\f$ as its first
  *     element and \f$V_n(P,Q) \mod m\f$ as its second element.
  */
-export template <typename N, typename S>
+export template <Integer N, Integer S>
 [[nodiscard]] constexpr
 std::pair<S,S> mod_lucas_nth_term(N n, S P, S Q, S m) {
   // Check that `S` is a signed type.
