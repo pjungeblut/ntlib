@@ -76,35 +76,36 @@ export template<typename T>
 }
 
 /**
- * @brief Binary exponentiation with a custom mod-function.
+ * @brief Binary exponentiation with a custom mod-function and modulus.
  * 
- * Let \f$\mathrm{mod\_func}\f$ be a mod-function.
- * Computes \f$\mathrm{mod\_func}(a^b)\f$ using binary exponentation.
+ * Let \f$\mathrm{mod_func} \colon A \times M \to A\f$ be a mod-function.
+ * Computes \f$\mathrm{mod_func}(a^b, m)\f$ using binary exponentation.
  * 
- * Runtime: \f$O(\log(b))\f$ calls to \f$\mathrm{mod\_func}\f$.
- *
- * @tparam A Multiplicative monoid.
+ * Complexity: \f$O(\log(b))\f$ calls to \f$\mathrm{mod_func}\f$.
+ * 
+ * @tparam A A multiplicative monoid.
  * @tparam B An integer-like type.
- * @tparam MF Function object.
+ * @tparam M The type of the modulus.
+ * @tparam MF A function object type with signature `A(A, M)`.
  * @param a The base.
  * @param b The exponent, must be non-negative.
+ * @param m The modulus.
  * @param mod_func The mod-function.
- * @param unit The multiplicative unit of `A`.
- * @return The result of \f$\mathrm{mod\_func}\f$ applied to the power
- *     \f$a^b\f$.
+ * @return The result of \f$\mathrm{mod_func}\f$ applied to the power
+ *     \f$a^b\f$ and the modulus \f$m\f$.
  */
-export template<typename A, typename B, typename MF>
+export template<typename A, typename B, typename M, typename MF>
 [[nodiscard]] constexpr
-A mod_pow(A a, B b, MF mod_func, A unit = A{1}) noexcept {
-  assert(!(a == A{0} && b == B{0}));
+A mod_pow(A a, B b, M m, MF mod_func) noexcept {
+  assert(!(a == ntlib::zero<A>() && b == B{0}));
   assert(b >= B{0});
 
-  if (b == B{0}) { return unit; }
-  else if (b == B{1}) { return mod_func(a); }
+  if (b == B{0}) { return ntlib::one<A>(); }
+  else if (b == B{1}) { return mod_func(a, m); }
   else if (ntlib::is_odd(b)) {
-    return mod_func(ntlib::mod_pow(a, b - B{1}, mod_func, unit) * a);
+    return mod_func(ntlib::mod_pow(a, b - B{1}, m, mod_func) * a, m);
   } else {
-    return ntlib::mod_pow(mod_func(a * a), b / B{2}, mod_func, unit);
+    return ntlib::mod_pow(mod_func(a * a, m), b / B{2}, m, mod_func);
   }
 }
 
@@ -150,7 +151,7 @@ export template<typename T>
   if (a == T{0}) { return true; }
   if (p == T{2}) { return true; }
   const auto mod_p = [p](T n) { return ntlib::mod(n, p); };
-  return ntlib::mod_pow(a, (p - T{1}) / T{2}, mod_p) == T{1};
+  return ntlib::mod_pow(a, (p - T{1}) / T{2}, p, ntlib::mod<T>) == T{1};
 }
 
 /**
@@ -169,14 +170,14 @@ export template<typename T>
  */
 export template<typename T>
 [[nodiscard]] constexpr T mod_sqrt(T n, T p) noexcept {
-  const auto mod_p = [p](T x) { return ntlib::mod(x, p); };
-
   // Find q, s with p-1 = q*2^s.
   const auto [s, q] = ntlib::odd_part(p - T{1});
 
   // If and only if s == 1, we have p = 3 (mod 4).
   // In this case we can compute root x directly.
-  if (s == T{1}) { return ntlib::mod_pow(n, (p + T{1}) / T{4}, mod_p); }
+  if (s == T{1}) {
+    return ntlib::mod_pow(n, (p + T{1}) / T{4}, p, ntlib::mod<T>);
+  }
 
   // Find a quadratic non-residue z.
   // Half the numbers in 1, ..., p-1 are, so we randomly guess.
@@ -187,9 +188,9 @@ export template<typename T>
   T z{dis(gen)};
   while (ntlib::mod_is_square(z, p)) z = dis(gen);
 
-  T c = ntlib::mod_pow(z, q, mod_p);
-  T x = ntlib::mod_pow(n, (q + T{1}) / T{2}, mod_p);
-  T t = ntlib::mod_pow(n, q, mod_p);
+  T c = ntlib::mod_pow(z, q, p, ntlib::mod<T>);
+  T x = ntlib::mod_pow(n, (q + T{1}) / T{2}, p, ntlib::mod<T>);
+  T t = ntlib::mod_pow(n, q, p, ntlib::mod<T>);
   T m = s;
 
   while (t % p != T{1}) {
@@ -202,7 +203,7 @@ export template<typename T>
     }
 
     T cexp = T{1} << (m - i - T{1});
-    T b = ntlib::mod_pow(c, cexp, mod_p);
+    T b = ntlib::mod_pow(c, cexp, p, ntlib::mod<T>);
     x = x * b % p;
     t = t * b % p * b % p;
     c = b * b % p;
@@ -252,8 +253,7 @@ export template<typename T, typename S = std::make_signed_t<T>>
 [[nodiscard]] constexpr S legendre(T a, T p) noexcept {
   assert(p != T{2});
 
-  const auto mod_p = [&p](T n) { return ntlib::mod(n, p); };
-  T rem = ntlib::mod_pow(a, (p - T{1}) / T{2}, mod_p);
+  T rem = ntlib::mod_pow(a, (p - T{1}) / T{2}, p, ntlib::mod<T>);
   return rem <= T{1} ? static_cast<S>(rem) : S{-1};
 }
 

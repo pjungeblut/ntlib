@@ -348,29 +348,43 @@ public:
 };
 
 /**
- * @brief Specialization for `get_multiplicative_neutral()`.
- * 
- * @tparam T An integer-like type.
- * @param n Instance of the type.
- * @return The multiplicative neutral `1`.
- */
-export template<typename T>
-[[nodiscard]] constexpr
-rt_mod_int<T> get_multiplicative_neutral(rt_mod_int<T> n) {
-  return rt_mod_int<T> {1, n.get_modulus()};
-}
-
-/**
- * @brief Specialization for `get_multiplicative_neutral()`.
+ * @brief Specialization of `ntlib::zero_helper` for `ct_mod_int`.
  * 
  * @tparam T An integer-like type.
  * @tparam m The modulus.
- * @return The multiplicative neutral `1`.
  */
 export template<typename T, T m>
-[[nodiscard]] constexpr
-ct_mod_int<T, m> get_multiplicative_neutral(ct_mod_int<T, m>) {
-  return ct_mod_int<T, m> {1};
-}
+class zero_helper<ct_mod_int<T, m>> {
+public:
+  /**
+   * @brief Returns the additive neutral element of `ct_mod_int<T, m>`.
+   * 
+   * @return The additive neutral element, i.e., `0`.
+   */
+  [[nodiscard]] constexpr
+  static ct_mod_int<T, m> get_zero() noexcept {
+    return ct_mod_int<T, m> {0};
+  }
+};
 
-}
+/**
+ * @brief Specialization of `ntlib::one_helper` for `ct_mod_int`.
+ * 
+ * @tparam T An integer-like type.
+ * @tparam m The modulus.
+ */
+export template<typename T, T m>
+class one_helper<ct_mod_int<T, m>> {
+public:
+  /**
+   * @brief Returns the multiplicative neutral element of `ct_mod_int<T, m>`.
+   * 
+   * @return The multiplicative neutral element, i.e., `1`.
+   */
+  [[nodiscard]] constexpr
+  static ct_mod_int<T, m> get_one() noexcept {
+    return ct_mod_int<T, m> {1};
+  }
+};
+
+} // namespace ntlib

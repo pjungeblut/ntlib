@@ -53,36 +53,30 @@ TEST(Modulo, DoesNotDivide) {
 }
 
 TEST(ModularExponentiation, BaseCases) {
-  const auto mod_3 = [](int n) { return ntlib::mod(n, 3); };
-  EXPECT_EQ(ntlib::mod_pow(2, 0, mod_3), 1);
-  EXPECT_EQ(ntlib::mod_pow(2, 1, mod_3), 2);
-  EXPECT_EQ(ntlib::mod_pow(4, 1, mod_3), 1);
-  EXPECT_EQ(ntlib::mod_pow(0, 1, mod_3), 0);
-  EXPECT_EQ(ntlib::mod_pow(-1, 1, mod_3), 2);
-  EXPECT_EQ(ntlib::mod_pow(-2, 1, mod_3), 1);
+  EXPECT_EQ(ntlib::mod_pow(2, 0, 3, ntlib::mod<int>), 1);
+  EXPECT_EQ(ntlib::mod_pow(2, 1, 3, ntlib::mod<int>), 2);
+  EXPECT_EQ(ntlib::mod_pow(4, 1, 3, ntlib::mod<int>), 1);
+  EXPECT_EQ(ntlib::mod_pow(0, 1, 3, ntlib::mod<int>), 0);
+  EXPECT_EQ(ntlib::mod_pow(-1, 1, 3, ntlib::mod<int>), 2);
+  EXPECT_EQ(ntlib::mod_pow(-2, 1, 3, ntlib::mod<int>), 1);
 }
 
 TEST(ModularExponentiation, PowersOf2) {
-  const auto mod_2 = [](int n) { return ntlib::mod(n, 2); };
-  const auto mod_3 = [](int n) { return ntlib::mod(n, 3); };
   for (int32_t i = 1; i < 30; ++i) {
-    EXPECT_EQ(ntlib::mod_pow(2, i, mod_2), 0);
-    EXPECT_EQ(ntlib::mod_pow(2, i, mod_3), (1 << i) % 3);
+    EXPECT_EQ(ntlib::mod_pow(2, i, 2, ntlib::mod<int>), 0);
+    EXPECT_EQ(ntlib::mod_pow(2, i, 3, ntlib::mod<int>), (1 << i) % 3);
   }
 }
 
 TEST(ModularExponentiation, PowersOfMinus2) {
-  const auto mod_2 = [](int n) { return ntlib::mod(n, 2); };
-  const auto mod_3 = [](int n) { return ntlib::mod(n, 3); };
   for (int32_t i = 1; i < 30; ++i) {
-    EXPECT_EQ(ntlib::mod_pow(-2, i, mod_2), 0) << "i = " << i;
-    EXPECT_EQ(ntlib::mod_pow(-2, i, mod_3), 1) << "i = " << i;
+    EXPECT_EQ(ntlib::mod_pow(-2, i, 2, ntlib::mod<int>), 0) << "i = " << i;
+    EXPECT_EQ(ntlib::mod_pow(-2, i, 3, ntlib::mod<int>), 1) << "i = " << i;
   }
 }
 
 TEST(ModularExponentiation, SmallValues) {
   uint32_t p = 509;
-  const auto mod_p = [p](uint32_t n) { return ntlib::mod(n, p); };
   for (uint32_t i = 1; i < p; ++i) {
     for (uint32_t j = 1; j < p; ++j) {
       uint32_t correct = 1;
@@ -90,7 +84,7 @@ TEST(ModularExponentiation, SmallValues) {
         correct *= i;
         correct %= p;
       }
-      EXPECT_EQ(ntlib::mod_pow(i, j, mod_p), correct);
+      EXPECT_EQ(ntlib::mod_pow(i, j, p, ntlib::mod<uint32_t>), correct);
     }
   }
 }

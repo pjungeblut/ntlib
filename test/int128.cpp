@@ -1,15 +1,14 @@
 #include <gtest/gtest.h>
 
+import base;
 import int128;
 
-TEST(MultiplicativeNeutral, Signed) {
-  auto neutral = ntlib::get_multiplicative_neutral(ntlib::i128{-5});
-  EXPECT_TRUE((std::is_same_v<decltype(neutral), ntlib::i128>));
-  EXPECT_EQ(neutral, 1);
+TEST(AdditiveNeutal, Existence) {
+  const auto n1 = ntlib::zero<ntlib::i128>();
+  EXPECT_EQ(n1, ntlib::i128{0});
 }
 
-TEST(MultiplicativeNeutral, Unsigned) {
-  auto neutral = ntlib::get_multiplicative_neutral(ntlib::u128{5});
-  EXPECT_TRUE((std::is_same_v<decltype(neutral), ntlib::u128>));
-  EXPECT_EQ(neutral, 1);
+TEST(MulitplicativeNeutral, Existence) {
+  const auto n1 = ntlib::one<ntlib::i128>();
+  EXPECT_EQ(n1, ntlib::i128{1});
 }

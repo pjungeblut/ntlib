@@ -24,6 +24,20 @@ static constexpr ntlib::i128 max_int128 =
 static constexpr ntlib::u128 max_uint128 =
     std::numeric_limits<ntlib::u128>::max();
 
+TEST(AdditiveNeutral, Existence) {
+  const auto n1 = ntlib::zero<int>();
+  EXPECT_EQ(n1, 0);
+  const auto n2 = ntlib::zero<uint32_t>();
+  EXPECT_EQ(n2, 0u);
+}
+
+TEST(MulitplicativeNeutral, Existence) {
+  const auto n1 = ntlib::one<int>();
+  EXPECT_EQ(n1, 1);
+  const auto n2 = ntlib::one<uint32_t>();
+  EXPECT_EQ(n2, 1u);
+}
+
 TEST(SmallPrimes, ListContainsOnlyPrimes) {
   const auto sieve = ntlib::prime_sieve(ntlib::SMALL_PRIMES_BIGGEST<uint32_t>);
   for (uint32_t p : ntlib::SMALL_PRIMES<uint32_t>) {
@@ -247,18 +261,6 @@ TEST(ExtendedEuclid, CornerCases) {
   EXPECT_EQ(x2 * -max_int + y2 * 2, gcd2);
 }
 
-TEST(MultiplicativeNeutral, IntegralType) {
-  int32_t a = -5;
-  auto na = ntlib::get_multiplicative_neutral(a);
-  EXPECT_TRUE((std::is_same_v<decltype(na), int32_t>));
-  EXPECT_EQ(na, 1);
-
-  uint32_t b = 5;
-  auto nb = ntlib::get_multiplicative_neutral(b);
-  EXPECT_TRUE((std::is_same_v<decltype(nb), uint32_t>));
-  EXPECT_EQ(nb, 1);
-}
-
 TEST(Exponentiation, BaseCases) {
   EXPECT_EQ(ntlib::pow(2, 0), 1);
   EXPECT_EQ(ntlib::pow(2, 1), 2);
@@ -278,20 +280,11 @@ TEST(Exponentiation, PowersOfMinus2) {
   }
 }
 
-TEST(Exponentiation, RuntimeModInt) {
-  ntlib::rt_mod_int<uint32_t> a(2, 10);
-  EXPECT_EQ(ntlib::pow(a, 0), get_multiplicative_neutral(a));
-  EXPECT_EQ(static_cast<uint32_t>(ntlib::pow(a, 1)), 2);
-  EXPECT_EQ(static_cast<uint32_t>(ntlib::pow(a, 2)), 4);
-  EXPECT_EQ(static_cast<uint32_t>(ntlib::pow(a, 3)), 8);
-  EXPECT_EQ(static_cast<uint32_t>(ntlib::pow(a, 4)), 6);
-}
-
 TEST(Exponentiation, Matrix) {
-  ntlib::matrix<uint32_t> mat({{0, 1}, {2, 3}});
+  ntlib::matrix<2, 2, uint32_t> mat({{0, 1}, {2, 3}});
   
   auto p0 = ntlib::pow(mat, 0);
-  EXPECT_EQ(p0, get_multiplicative_neutral(mat));
+  EXPECT_EQ(p0, (ntlib::matrix<2, 2, uint32_t>::get_identity()));
 
   auto p1 = ntlib::pow(mat, 1);
   EXPECT_EQ(p1, mat);

@@ -15,6 +15,8 @@ module;
  */
 export module int128;
 
+import base;
+
 namespace ntlib {
 
 /**
@@ -35,15 +37,4 @@ export using u128 = unsigned __int128;
 export template<typename T>
 concept Int128 = std::is_same_v<T, i128> || std::is_same_v<T, u128>;
 
-/**
- * Specialization for `get_multiplicative_neutral()`.
- * 
- * @return The multiplicative neutral element (`1`).
- */
-export template<Int128 T>
-[[nodiscard]] constexpr
-T get_multiplicative_neutral(T) noexcept {
-  return T{1};
-}
-
-}
+} // namespace ntlib

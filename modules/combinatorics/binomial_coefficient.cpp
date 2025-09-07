@@ -140,8 +140,7 @@ T mod_pp_binom(T n, T k, T p, T e) {
 
   // Compute the binomial coefficient.
   T res = g[n];
-  const auto mod_pp = [pp](T x) { return ntlib::mod(x, pp); };
-  res = ntlib::mod(res * ntlib::mod_pow(p, c[n] - c[k] - c[n - k], mod_pp), pp);
+  res = ntlib::mod(res * ntlib::mod_pow(p, c[n] - c[k] - c[n - k], pp, ntlib::mod<T>), pp);
   res = ntlib::mod(res * ntlib::mod_mult_inv<T,S>(g[k], pp), pp);
   res = ntlib::mod(res * ntlib::mod_mult_inv<T,S>(g[n - k], pp), pp);
   return res;
@@ -237,4 +236,4 @@ std::vector<std::vector<T>> mod_binom_table(std::size_t N, T m) {
   return binoms;
 }
 
-};
+} // namespace ntlib

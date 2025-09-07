@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+import base;
 import rational;
 
 TEST(Initialization, ConstructionByValue) {
@@ -114,8 +115,12 @@ TEST(Arithmetic, Division) {
   EXPECT_EQ(b, ntlib::rational(2, 25));
 }
 
-TEST(MultiplicativeNeutral, Simple) {
-  ntlib::rational a(5, 3);
-  auto na = ntlib::get_multiplicative_neutral(a);
-  EXPECT_EQ(na, ntlib::rational{1});
+TEST(AdditiveNeutral, SmallValues) {
+  const auto n1 = ntlib::zero<ntlib::rational<int32_t>>();
+  EXPECT_EQ(n1, (ntlib::rational<int32_t>{0, 1}));
+}
+
+TEST(MultiplicativeNeutral, SmallValues) {
+  const auto n1 = ntlib::one<ntlib::rational<int32_t>>();
+  EXPECT_EQ(n1, (ntlib::rational<int32_t>{1, 1}));
 }

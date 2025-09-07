@@ -82,22 +82,20 @@ bool miller_selfridge_rabin_test(T n, T a) noexcept {
   assert(ntlib::is_odd(n));
 
   // Handle bases with `a < n`.
-  rt_mod_int<T> a_mod_n(a, n);
-  if (static_cast<T>(a_mod_n) == T{0}) { return true; }
+  a = ntlib::mod(a, n);
+  if (a == T{0}) { return true; }
 
   // Decompose, such that `n-1 = o*2^e`.
   const T n_minus_1 = n - T{1};
   auto [e, o] = ntlib::odd_part(n_minus_1);
 
-  auto p_mod_n = ntlib::pow(a_mod_n, o);
+  T p = ntlib::mod_pow(a, o, n, ntlib::mod<T>);
+  if (p == T{1} || p == n_minus_1) { return true; }
 
-  if (static_cast<T>(p_mod_n) == T{1} ||
-      static_cast<T>(p_mod_n) == n_minus_1) {
-    return true;
-  }
-  for (T r = 1; r < e && static_cast<T>(p_mod_n) > T{1}; ++r) {
-    p_mod_n *= p_mod_n;
-    if (static_cast<T>(p_mod_n) == n_minus_1) { return true; }
+
+  for (T r{1}; r < e && p > T{1}; ++r) {
+    p = ntlib::mod(p * p, n);
+    if (p == n_minus_1) { return true; }
   }
   return false;
 }
@@ -323,4 +321,4 @@ bool is_prime(T n) noexcept {
   }
 }
 
-}
+} // namespace ntlib

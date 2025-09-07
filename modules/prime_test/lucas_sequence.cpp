@@ -41,10 +41,10 @@ std::pair<S,S> lucas_nth_term(N n, S P, S Q) {
   } else if (n == N{1}) {
     return std::make_pair(S{1}, P);
   } else {
-    matrix<S> mat({{P, -Q}, {S{1}, S{0}}});
+    matrix<2, 2, S> mat({{P, -Q}, {S{1}, S{0}}});
     mat = ntlib::pow(mat, n - 1);
-    matrix<S> u({{S{1}}, {S{0}}});
-    matrix<S> v({{P}, {S{2}}});
+    matrix<2, 1, S> u({{S{1}}, {S{0}}});
+    matrix<2, 1, S> v({{P}, {S{2}}});
     u = mat * u;
     v = mat * v;
     return std::make_pair(u[0, 0], v[0, 0]);
@@ -78,20 +78,19 @@ std::pair<S,S> mod_lucas_nth_term(N n, S P, S Q, S m) {
   } else if (n == N{1}) {
     return std::make_pair(S{1}, ntlib::mod(P, m));
   } else {
-    matrix<S> mat({{ntlib::mod(P, m), ntlib::mod(-Q, m)}, {S{1}, S{0}}});
+    matrix<2, 2, S> mat({{ntlib::mod(P, m), ntlib::mod(-Q, m)}, {S{1}, S{0}}});
 
-    const auto component_mod_m = [m](const matrix<S> &x) {
+    const auto component_mod_m = [](const matrix<2, 2, S> &x, S m) {
       return exec_each_element(x, [m](S y) { return ntlib::mod(y, m); });
     };
-    mat = ntlib::mod_pow(mat, n - 1, component_mod_m,
-        matrix<S>::get_identity(2));
+    mat = ntlib::mod_pow(mat, n - 1, m, component_mod_m);
 
-    matrix<S> u({{S{1}}, {S{0}}});
-    matrix<S> v({{ntlib::mod(P, m)}, {S{ntlib::mod(S{2}, m)}}});
+    matrix<2, 1, S> u({{S{1}}, {S{0}}});
+    matrix<2, 1, S> v({{ntlib::mod(P, m)}, {S{ntlib::mod(S{2}, m)}}});
     u = mat * u;
     v = mat * v;
     return std::make_pair(ntlib::mod(u[0, 0], m), ntlib::mod(v[0, 0], m));
   }
 }
 
-}
+} // namespace ntlib

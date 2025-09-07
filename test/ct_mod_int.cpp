@@ -311,19 +311,15 @@ TYPED_TEST(CompileTimeModInt, Inversion) {
   }
 }
 
+TYPED_TEST(CompileTimeModInt, AddtitiveNeutral) {
+  const auto n1 = ntlib::zero<ntlib::ct_mod_int<TypeParam, 10>>();
+  EXPECT_EQ(static_cast<TypeParam>(n1), 0);
+}
+
 TYPED_TEST(CompileTimeModInt, MultiplicativeNeutral) {
-  static_assert(std::is_same_v<
-      decltype(get_multiplicative_neutral(
-          std::declval<ntlib::ct_mod_int<TypeParam, 10>>())),
-      ntlib::ct_mod_int<TypeParam, 10>>);
+  const auto n1 = ntlib::one<ntlib::ct_mod_int<TypeParam, 10>>();
+  EXPECT_EQ(static_cast<TypeParam>(n1), 1);
 
-  const ntlib::ct_mod_int<TypeParam, 10> a {5};
-  const auto mna = get_multiplicative_neutral(a);
-  EXPECT_EQ(static_cast<TypeParam>(mna), 1);
-  EXPECT_EQ(mna.get_modulus(), 10);
-
-  const ntlib::ct_mod_int<TypeParam, 1> b {5};
-  const auto mnb = get_multiplicative_neutral(b);
-  EXPECT_EQ(static_cast<TypeParam>(mnb), 0);
-  EXPECT_EQ(mnb.get_modulus(), 1);
+  const auto n2 = ntlib::one<ntlib::ct_mod_int<TypeParam, 1>>();
+  EXPECT_EQ(static_cast<TypeParam>(n2), 0);
 }

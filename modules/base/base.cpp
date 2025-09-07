@@ -30,6 +30,94 @@ export module base;
 namespace ntlib {
 
 /**
+ * @brief Helper class template to get the additive neutral element of a type.
+ * 
+ * This is the primary template definition.
+ * It is an empty class, in particular, it does not contain a `get_zero` method.
+ * 
+ * Specializations for specific types must provide a static `get_zero` method.
+ */
+export template<typename>
+class zero_helper {};
+
+/**
+ * @brief Specialization of `ntlib::zero_helper` for integral types.
+ * 
+ * @tparam T An integral type.
+ */
+export template<std::integral T>
+class zero_helper<T> {
+public:
+  /**
+   * @brief Returns the additive neutral element of type `T`.
+   * 
+   * @return The additive neutral element, i.e., `0`.
+   */
+  [[nodiscard]] constexpr
+  static T get_zero() noexcept {
+    return T{0};
+  }
+};
+
+/**
+ * @brief Returns the additive neutral element of a given type.
+ * 
+ * @tparam T The type. Must have a specialization of `ntlib::zero_helper` with a
+ *     static `get_zero` method.
+ * @return The additive neutral element of type `T`.
+ */
+export template<typename T>
+    requires requires { zero_helper<T>::get_zero(); }
+[[nodiscard]] constexpr
+T zero() noexcept {
+  return zero_helper<T>::get_zero();
+}
+
+/**
+ * @brief Helper class template to get the multiplicative neutral element of a
+ *     type.
+ * 
+ * This is the primary template definition.
+ * It is an empty class, in particular, it does not contain a `get_one` method.
+ * 
+ * Specializations for specific types must provide a static `get_one` method.
+ */
+export template<typename>
+class one_helper {};
+
+/**
+ * @brief Specialization of `ntlib::one_helper` for integral types.
+ * 
+ * @tparam T An integral type.
+ */
+export template<std::integral T>
+class one_helper<T> {
+public:
+  /**
+   * @brief Returns the multiplicative neutral element of type `T`.
+   * 
+   * @return The multiplicative neutral element, i.e., `1`.
+   */
+  [[nodiscard]] constexpr
+  static T get_one() noexcept {
+    return T{1};
+  }
+};
+
+/**
+ * @brief Returns the multiplicative neutral element of a given type.
+ * 
+ * @tparam T The type. Must have a specialization of `ntlib::one_helper` with a
+ *     static `get_one` method.
+ * @return The multiplicative neutral element of type `T`.
+ */
+export template<typename T>
+[[nodiscard]] constexpr
+T one() {
+  return one_helper<T>::get_one();
+}
+
+/**
  * @brief A list with all prime numbers up to `ntlib::SMALL_PRIMES_BIGGEST`.
  * 
  * Can be used for trial division in primality tests and prime factorizations.
@@ -280,31 +368,6 @@ std::tuple<T, S, S> extended_euclid(T a, T b) noexcept {
 }
 
 /**
- * @brief Returns the multiplicative neutral element `1` for integral types.
- * 
- * @tparam T An integral type.
- * @return The multiplicative neutral element of the type.
- */
-export template<std::integral T>
-[[nodiscard]] constexpr
-T get_multiplicative_neutral(T) noexcept
-    requires (sizeof(T) <= 8) {
-  return T{1};
-}
-
-/**
- * @concept HasMultiplicativeNeutral
- * @brief Restricts to types with a multiplicative neutral element.
- * 
- * @tparam T An integer-like type.
- * @param n Element of type `T`.
- */
-export template<typename T>
-concept HasMultiplicativeNeutral = requires(T n) {
-    { get_multiplicative_neutral(n) } -> std::convertible_to<T>;
-};
-
-/**
  * @brief Binary exponentation.
  * 
  * Runtime: O(log b)
@@ -316,12 +379,13 @@ concept HasMultiplicativeNeutral = requires(T n) {
  * @param b The exponent, non-negative.
  * @return The power `a^b`.
  */
-export template<HasMultiplicativeNeutral A, typename B>
+export template<typename A, typename B>
 [[nodiscard]] constexpr
 A pow(A a, B b) noexcept {
+  assert(!(a == ntlib::zero<A>() && b == B{0}));
   assert(b >= B{0});
 
-  if (b == B{0}) { return get_multiplicative_neutral(a); }
+  if (b == B{0}) { return ntlib::one<A>(); }
   else if (b == B{1}) { return a; }
   else if (ntlib::is_odd(b)) { return ntlib::pow(a, b - B{1}) * a; }
   else { return ntlib::pow(a * a, b / B{2}); }
