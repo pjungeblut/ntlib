@@ -97,8 +97,7 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#concepts">Concepts</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle"><div class="title">int128.cpp File Reference<div class="ingroups">module <a class="el" href="module__int128.html">int128</a></div></div></div>
 </div><!--header-->
 <div class="contents">
@@ -106,14 +105,42 @@ $(function(){ initResizable(false); });
 <p>Primary module interface unit for module <code><a class="el" href="module__int128.html" title="128-bit integers.">int128</a></code>.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;type_traits&gt;</code><br />
+<code>import <a class="el" href="base_8cpp.html">base</a>;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for int128.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="int128_8cpp__incl.png" border="0" usemap="#amodules_2base_2int128_8cpp" alt=""/></div>
 <map name="amodules_2base_2int128_8cpp" id="amodules_2base_2int128_8cpp">
-<area shape="rect" title="Primary module interface unit for module int128." alt="" coords="5,5,171,31"/>
-<area shape="rect" title=" " alt="" coords="47,79,129,105"/>
-<area shape="poly" title=" " alt="" coords="91,31,91,63,85,63,85,31"/>
+<area shape="rect" title="Primary module interface unit for module int128." alt="" coords="213,5,378,31"/>
+<area shape="rect" title=" " alt="" coords="5,153,87,178"/>
+<area shape="poly" title=" " alt="" coords="276,34,81,147,79,142,273,29"/>
+<area shape="rect" href="base_8cpp.html" title="Primary module interface unit for module base." alt="" coords="479,79,528,105"/>
+<area shape="poly" title=" " alt="" coords="331,29,465,75,463,80,330,34"/>
+<area shape="poly" title=" " alt="" coords="478,99,324,119,102,155,101,149,323,114,478,94"/>
+<area shape="rect" title=" " alt="" coords="110,153,184,178"/>
+<area shape="poly" title=" " alt="" coords="479,100,200,154,199,149,478,95"/>
+<area shape="rect" title=" " alt="" coords="208,153,257,178"/>
+<area shape="poly" title=" " alt="" coords="479,102,273,155,272,150,477,97"/>
+<area shape="rect" title=" " alt="" coords="281,153,320,178"/>
+<area shape="poly" title=" " alt="" coords="479,104,335,155,334,150,478,99"/>
+<area shape="rect" title=" " alt="" coords="344,153,409,178"/>
+<area shape="poly" title=" " alt="" coords="483,108,413,147,410,142,481,103"/>
+<area shape="rect" title=" " alt="" coords="432,153,492,178"/>
+<area shape="poly" title=" " alt="" coords="499,106,479,141,474,138,494,104"/>
+<area shape="rect" title=" " alt="" coords="516,153,573,178"/>
+<area shape="poly" title=" " alt="" coords="512,104,532,138,528,141,508,106"/>
+<area shape="rect" title=" " alt="" coords="597,153,671,178"/>
+<area shape="poly" title=" " alt="" coords="527,103,600,143,598,147,524,108"/>
+<area shape="rect" title=" " alt="" coords="696,153,756,178"/>
+<area shape="poly" title=" " alt="" coords="529,99,682,147,680,152,528,104"/>
+<area shape="rect" title=" " alt="" coords="781,153,858,178"/>
+<area shape="poly" title=" " alt="" coords="529,96,766,149,765,155,528,101"/>
+<area shape="rect" title=" " alt="" coords="882,153,949,178"/>
+<area shape="poly" title=" " alt="" coords="529,94,669,114,867,150,866,155,668,120,528,99"/>
+<area shape="rect" title=" " alt="" coords="973,153,1034,178"/>
+<area shape="poly" title=" " alt="" coords="529,93,704,111,828,128,958,150,957,155,827,133,704,116,528,98"/>
+<area shape="rect" title=" " alt="" coords="1057,153,1115,178"/>
+<area shape="poly" title=" " alt="" coords="529,92,737,108,887,125,1043,150,1042,155,886,130,737,113,528,97"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -133,46 +160,10 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>ntlib::i128</b> = __
 using&#160;</td><td class="memItemRight" valign="bottom"><b>ntlib::u128</b> = unsigned __int128</td></tr>
 <tr class="memdesc:acb1f9a65466024483bc6ba880f63daa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper around (non-standard) built-in 128-bit unsigned integer. <br /></td></tr>
 <tr class="separator:acb1f9a65466024483bc6ba880f63daa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a529db10e2b65aa7b02be6200c5ac9589" id="r_a529db10e2b65aa7b02be6200c5ac9589"><td class="memTemplParams" colspan="2">template&lt;Int128 T&gt; </td></tr>
-<tr class="memitem:a529db10e2b65aa7b02be6200c5ac9589"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a529db10e2b65aa7b02be6200c5ac9589">ntlib::get_multiplicative_neutral</a> (T) noexcept</td></tr>
-<tr class="separator:a529db10e2b65aa7b02be6200c5ac9589"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Primary module interface unit for module <code><a class="el" href="module__int128.html" title="128-bit integers.">int128</a></code>. </p>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a529db10e2b65aa7b02be6200c5ac9589" name="a529db10e2b65aa7b02be6200c5ac9589"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a529db10e2b65aa7b02be6200c5ac9589">&#9670;&#160;</a></span>get_multiplicative_neutral()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;Int128 T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">T ntlib::get_multiplicative_neutral </td>
-          <td>(</td>
-          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel export">export</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Specialization for <code>get_multiplicative_neutral()</code>.</p>
-<dl class="section return"><dt>Returns</dt><dd>The multiplicative neutral element (<code>1</code>). </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2

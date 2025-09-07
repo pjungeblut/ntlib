@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NTLib - Number Theory Library: ntlib::matrix&lt; T &gt; Class Template Reference</title>
+<title>NTLib - Number Theory Library: ntlib::matrix&lt; ROWS, COLUMNS, T &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -100,7 +100,7 @@ $(function(){ initResizable(false); });
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classntlib_1_1matrix-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">ntlib::matrix&lt; T &gt; Class Template Reference<span class="mlabels"><span class="mlabel export">export</span></span><div class="ingroups">module <a class="el" href="module__matrix.html">matrix</a></div></div></div>
+  <div class="headertitle"><div class="title">ntlib::matrix&lt; ROWS, COLUMNS, T &gt; Class Template Reference<span class="mlabels"><span class="mlabel export">export</span></span><div class="ingroups">module <a class="el" href="module__matrix.html">matrix</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -109,55 +109,49 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac6defaf2324c0dc0acfd02058c62d62c" id="r_ac6defaf2324c0dc0acfd02058c62d62c"><td class="memItemLeft" align="right" valign="top"><a id="ac6defaf2324c0dc0acfd02058c62d62c" name="ac6defaf2324c0dc0acfd02058c62d62c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>matrix</b> ()</td></tr>
-<tr class="memdesc:ac6defaf2324c0dc0acfd02058c62d62c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. Creates 0x0-matrix. <br /></td></tr>
-<tr class="separator:ac6defaf2324c0dc0acfd02058c62d62c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa03bf408a4fd239da014ef4042787f0" id="r_afa03bf408a4fd239da014ef4042787f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afa03bf408a4fd239da014ef4042787f0">matrix</a> (T val)</td></tr>
-<tr class="memdesc:afa03bf408a4fd239da014ef4042787f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a 1x1 matrix from a given value.  <br /></td></tr>
-<tr class="separator:afa03bf408a4fd239da014ef4042787f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecfcbe99678df84ccfc7976ea3defe15" id="r_aecfcbe99678df84ccfc7976ea3defe15"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aecfcbe99678df84ccfc7976ea3defe15">matrix</a> (std::size_t rows, std::size_t columns)</td></tr>
-<tr class="memdesc:aecfcbe99678df84ccfc7976ea3defe15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new matrix of the given dimensions,.  <br /></td></tr>
-<tr class="separator:aecfcbe99678df84ccfc7976ea3defe15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b3b3e2b72f525c2076792fbea24b528" id="r_a7b3b3e2b72f525c2076792fbea24b528"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b3b3e2b72f525c2076792fbea24b528">matrix</a> (std::initializer_list&lt; std::initializer_list&lt; T &gt; &gt; elements)</td></tr>
-<tr class="memdesc:a7b3b3e2b72f525c2076792fbea24b528"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new matrix from a given 2D initializer list.  <br /></td></tr>
-<tr class="separator:a7b3b3e2b72f525c2076792fbea24b528"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a7dc033bad3baf423eca09ebc4482ae" id="r_a5a7dc033bad3baf423eca09ebc4482ae"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5a7dc033bad3baf423eca09ebc4482ae">get_rows</a> () const noexcept</td></tr>
-<tr class="memdesc:a5a7dc033bad3baf423eca09ebc4482ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of rows.  <br /></td></tr>
-<tr class="separator:a5a7dc033bad3baf423eca09ebc4482ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28a1410b2cfb5d6ead554aa445967f9b" id="r_a28a1410b2cfb5d6ead554aa445967f9b"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a28a1410b2cfb5d6ead554aa445967f9b">get_columns</a> () const noexcept</td></tr>
-<tr class="memdesc:a28a1410b2cfb5d6ead554aa445967f9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of columns.  <br /></td></tr>
-<tr class="separator:a28a1410b2cfb5d6ead554aa445967f9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6b82471c80b38e57e4128d5330d9126" id="r_ae6b82471c80b38e57e4128d5330d9126"><td class="memItemLeft" align="right" valign="top">decltype(auto)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6b82471c80b38e57e4128d5330d9126">operator[]</a> (this auto &amp;self, std::size_t r, std::size_t c)</td></tr>
-<tr class="memdesc:ae6b82471c80b38e57e4128d5330d9126"><td class="mdescLeft">&#160;</td><td class="mdescRight">Two dimensional array subscript operator.  <br /></td></tr>
-<tr class="separator:ae6b82471c80b38e57e4128d5330d9126"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1db5ea14800040b69efeb12286a9e277" id="r_a1db5ea14800040b69efeb12286a9e277"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1db5ea14800040b69efeb12286a9e277">operator+=</a> (const <a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;rhs)</td></tr>
-<tr class="memdesc:a1db5ea14800040b69efeb12286a9e277"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound plus operator for matrix addition.  <br /></td></tr>
-<tr class="separator:a1db5ea14800040b69efeb12286a9e277"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa5b56abffd4afab9ade944e36751b22" id="r_afa5b56abffd4afab9ade944e36751b22"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afa5b56abffd4afab9ade944e36751b22">operator-=</a> (const <a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;rhs)</td></tr>
-<tr class="memdesc:afa5b56abffd4afab9ade944e36751b22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound minus operator for matrix subtraction.  <br /></td></tr>
-<tr class="separator:afa5b56abffd4afab9ade944e36751b22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55df6aa4d65c920f2505f7b7323afde7" id="r_a55df6aa4d65c920f2505f7b7323afde7"><td class="memTemplParams" colspan="2">template&lt;typename S&gt; </td></tr>
-<tr class="memitem:a55df6aa4d65c920f2505f7b7323afde7"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a55df6aa4d65c920f2505f7b7323afde7">operator*=</a> (S rhs)</td></tr>
-<tr class="memdesc:a55df6aa4d65c920f2505f7b7323afde7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound times operator for right scalar multiplication.  <br /></td></tr>
-<tr class="separator:a55df6aa4d65c920f2505f7b7323afde7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67bb4ffba9469a95205ec4869ada2d70" id="r_a67bb4ffba9469a95205ec4869ada2d70"><td class="memTemplParams" colspan="2">template&lt;typename S&gt; </td></tr>
-<tr class="memitem:a67bb4ffba9469a95205ec4869ada2d70"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a67bb4ffba9469a95205ec4869ada2d70">operator/=</a> (S rhs)</td></tr>
-<tr class="memdesc:a67bb4ffba9469a95205ec4869ada2d70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound divides operator for scalar division.  <br /></td></tr>
-<tr class="separator:a67bb4ffba9469a95205ec4869ada2d70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a7b88c106f953295d3a43ef4d12c572" id="r_a5a7b88c106f953295d3a43ef4d12c572"><td class="memTemplParams" colspan="2">template&lt;typename S&gt; </td></tr>
-<tr class="memitem:a5a7b88c106f953295d3a43ef4d12c572"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a5a7b88c106f953295d3a43ef4d12c572">operator%=</a> (S rhs)</td></tr>
-<tr class="memdesc:a5a7b88c106f953295d3a43ef4d12c572"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound modulo operator for elementwise modulo by a scalar.  <br /></td></tr>
-<tr class="separator:a5a7b88c106f953295d3a43ef4d12c572"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a196f0beb4b769adc6e351ffc92fcb643" id="r_a196f0beb4b769adc6e351ffc92fcb643"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a196f0beb4b769adc6e351ffc92fcb643">operator*=</a> (const <a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;rhs)</td></tr>
-<tr class="memdesc:a196f0beb4b769adc6e351ffc92fcb643"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound times operator for matrix multiplication.  <br /></td></tr>
-<tr class="separator:a196f0beb4b769adc6e351ffc92fcb643"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0422fceb48c9f2f60fe12baaa12347b4" id="r_a0422fceb48c9f2f60fe12baaa12347b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0422fceb48c9f2f60fe12baaa12347b4">matrix</a> ()=default</td></tr>
+<tr class="memdesc:a0422fceb48c9f2f60fe12baaa12347b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates new matrix.  <br /></td></tr>
+<tr class="separator:a0422fceb48c9f2f60fe12baaa12347b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab11c7934706fa0ef6eb04493db8558b8" id="r_ab11c7934706fa0ef6eb04493db8558b8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab11c7934706fa0ef6eb04493db8558b8">matrix</a> (const std::initializer_list&lt; std::initializer_list&lt; T &gt; &gt; &amp;elements)</td></tr>
+<tr class="memdesc:ab11c7934706fa0ef6eb04493db8558b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new matrix from a given 2D initializer list.  <br /></td></tr>
+<tr class="separator:ab11c7934706fa0ef6eb04493db8558b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd40a22a3600b603e3bce5c78d299875" id="r_abd40a22a3600b603e3bce5c78d299875"><td class="memItemLeft" align="right" valign="top">decltype(auto)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abd40a22a3600b603e3bce5c78d299875">operator[]</a> (this auto &amp;self, std::size_t r, std::size_t c)</td></tr>
+<tr class="memdesc:abd40a22a3600b603e3bce5c78d299875"><td class="mdescLeft">&#160;</td><td class="mdescRight">Two dimensional array subscript operator.  <br /></td></tr>
+<tr class="separator:abd40a22a3600b603e3bce5c78d299875"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfa8606214e855947f080b891af0ee3b" id="r_acfa8606214e855947f080b891af0ee3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acfa8606214e855947f080b891af0ee3b">operator+=</a> (const <a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;rhs)</td></tr>
+<tr class="memdesc:acfa8606214e855947f080b891af0ee3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound plus operator for matrix addition.  <br /></td></tr>
+<tr class="separator:acfa8606214e855947f080b891af0ee3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a660a5b1f1dc7d2994b780050da65b0ab" id="r_a660a5b1f1dc7d2994b780050da65b0ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a660a5b1f1dc7d2994b780050da65b0ab">operator-=</a> (const <a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;rhs)</td></tr>
+<tr class="memdesc:a660a5b1f1dc7d2994b780050da65b0ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound minus operator for matrix subtraction.  <br /></td></tr>
+<tr class="separator:a660a5b1f1dc7d2994b780050da65b0ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a400b3d5311fecd89588896c16e61a75e" id="r_a400b3d5311fecd89588896c16e61a75e"><td class="memTemplParams" colspan="2">template&lt;typename S&gt; </td></tr>
+<tr class="memitem:a400b3d5311fecd89588896c16e61a75e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a400b3d5311fecd89588896c16e61a75e">operator*=</a> (S rhs)</td></tr>
+<tr class="memdesc:a400b3d5311fecd89588896c16e61a75e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound times operator for right scalar multiplication.  <br /></td></tr>
+<tr class="separator:a400b3d5311fecd89588896c16e61a75e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25152043a123b8d4e5df9d735e23b504" id="r_a25152043a123b8d4e5df9d735e23b504"><td class="memTemplParams" colspan="2">template&lt;typename S&gt; </td></tr>
+<tr class="memitem:a25152043a123b8d4e5df9d735e23b504"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a25152043a123b8d4e5df9d735e23b504">operator/=</a> (S rhs)</td></tr>
+<tr class="memdesc:a25152043a123b8d4e5df9d735e23b504"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound divides operator for scalar division.  <br /></td></tr>
+<tr class="separator:a25152043a123b8d4e5df9d735e23b504"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae315da9de63561d50d2b369e53424a9f" id="r_ae315da9de63561d50d2b369e53424a9f"><td class="memTemplParams" colspan="2">template&lt;typename S&gt; </td></tr>
+<tr class="memitem:ae315da9de63561d50d2b369e53424a9f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ae315da9de63561d50d2b369e53424a9f">operator%=</a> (S rhs)</td></tr>
+<tr class="memdesc:ae315da9de63561d50d2b369e53424a9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound modulo operator for elementwise modulo by a scalar.  <br /></td></tr>
+<tr class="separator:ae315da9de63561d50d2b369e53424a9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a819cade922b7e20c46e3a83cd2377448" id="r_a819cade922b7e20c46e3a83cd2377448"><td class="memTemplParams" colspan="2">template&lt;std::size_t RHS_ROWS, std::size_t RHS_COLUMNS&gt; <br />
+requires (ROWS == COLUMNS &amp;&amp; ROWS == RHS_ROWS &amp;&amp; COLUMNS == RHS_COLUMNS)</td></tr>
+<tr class="memitem:a819cade922b7e20c46e3a83cd2377448"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a819cade922b7e20c46e3a83cd2377448">operator*=</a> (const <a class="el" href="classntlib_1_1matrix.html">matrix</a>&lt; RHS_ROWS, RHS_COLUMNS, T &gt; &amp;rhs)</td></tr>
+<tr class="memdesc:a819cade922b7e20c46e3a83cd2377448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound times operator for matrix multiplication.  <br /></td></tr>
+<tr class="separator:a819cade922b7e20c46e3a83cd2377448"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a0daaae8dfaf4d215c5ec235300ef8c99" id="r_a0daaae8dfaf4d215c5ec235300ef8c99"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classntlib_1_1matrix.html">matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0daaae8dfaf4d215c5ec235300ef8c99">get_identity</a> (std::size_t dim, T multiplicative_neutral=T{1})</td></tr>
-<tr class="memdesc:a0daaae8dfaf4d215c5ec235300ef8c99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a square identity matrix with the given dimensions.  <br /></td></tr>
-<tr class="separator:a0daaae8dfaf4d215c5ec235300ef8c99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacb786780291ab3f146af1d5c723cb90" id="r_aacb786780291ab3f146af1d5c723cb90"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classntlib_1_1matrix.html">matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aacb786780291ab3f146af1d5c723cb90">get_zero</a> ()</td></tr>
+<tr class="memdesc:aacb786780291ab3f146af1d5c723cb90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a zero matrix.  <br /></td></tr>
+<tr class="separator:aacb786780291ab3f146af1d5c723cb90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadac5ed46abd3c1c97c5f29883dc8139" id="r_aadac5ed46abd3c1c97c5f29883dc8139"><td class="memTemplParams" colspan="2">template&lt;typename = void&gt; <br />
+requires (ROWS == COLUMNS)</td></tr>
+<tr class="memitem:aadac5ed46abd3c1c97c5f29883dc8139"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classntlib_1_1matrix.html">matrix</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aadac5ed46abd3c1c97c5f29883dc8139">get_identity</a> ()</td></tr>
+<tr class="memdesc:aadac5ed46abd3c1c97c5f29883dc8139"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a square identity matrix.  <br /></td></tr>
+<tr class="separator:aadac5ed46abd3c1c97c5f29883dc8139"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -166,107 +160,62 @@ Friends</h2></td></tr>
 <tr class="separator:a574548c40458da0d7877da751ec9d963"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;std::regular T&gt;<br />
-class ntlib::matrix&lt; T &gt;</div><p>Represents a matrix with a given number of rows and colums. </p>
-<p>The dimensions of the matrix are set at runtime.</p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt;<br />
+class ntlib::matrix&lt; ROWS, COLUMNS, T &gt;</div><p>Represents a matrix with a given number of rows and colums. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
+    <tr><td class="paramname">ROWS</td><td>The number of rows. </td></tr>
+    <tr><td class="paramname">COLUMS</td><td>The number of colums. </td></tr>
     <tr><td class="paramname">T</td><td>The element type. </td></tr>
   </table>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="afa03bf408a4fd239da014ef4042787f0" name="afa03bf408a4fd239da014ef4042787f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa03bf408a4fd239da014ef4042787f0">&#9670;&#160;</a></span>matrix() <span class="overload">[1/3]</span></h2>
+<a id="a0422fceb48c9f2f60fe12baaa12347b4" name="a0422fceb48c9f2f60fe12baaa12347b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0422fceb48c9f2f60fe12baaa12347b4">&#9670;&#160;</a></span>matrix() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::regular T&gt; </div>
+template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; T &gt;::matrix </td>
+          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; ROWS, COLUMNS, T &gt;::matrix </td>
           <td>(</td>
-          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>val</em></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructs a 1x1 matrix from a given value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">val</td><td>The given value. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Creates new matrix. </p>
+<p>Elements will be default initialized. </p>
 
 </div>
 </div>
-<a id="aecfcbe99678df84ccfc7976ea3defe15" name="aecfcbe99678df84ccfc7976ea3defe15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aecfcbe99678df84ccfc7976ea3defe15">&#9670;&#160;</a></span>matrix() <span class="overload">[2/3]</span></h2>
+<a id="ab11c7934706fa0ef6eb04493db8558b8" name="ab11c7934706fa0ef6eb04493db8558b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab11c7934706fa0ef6eb04493db8558b8">&#9670;&#160;</a></span>matrix() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::regular T&gt; </div>
+template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; T &gt;::matrix </td>
+          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; ROWS, COLUMNS, T &gt;::matrix </td>
           <td>(</td>
-          <td class="paramtype">std::size_t</td>          <td class="paramname"><span class="paramname"><em>rows</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::size_t</td>          <td class="paramname"><span class="paramname"><em>columns</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructs a new matrix of the given dimensions,. </p>
-<p>Elements will be default initialized.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">rows</td><td>The number of rows. </td></tr>
-    <tr><td class="paramname">columns</td><td>The number of columns. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a7b3b3e2b72f525c2076792fbea24b528" name="a7b3b3e2b72f525c2076792fbea24b528"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b3b3e2b72f525c2076792fbea24b528">&#9670;&#160;</a></span>matrix() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;std::regular T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; T &gt;::matrix </td>
-          <td>(</td>
-          <td class="paramtype">std::initializer_list&lt; std::initializer_list&lt; T &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>elements</em></span></td><td>)</td>
+          <td class="paramtype">const std::initializer_list&lt; std::initializer_list&lt; T &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>elements</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -289,56 +238,25 @@ template&lt;std::regular T&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a28a1410b2cfb5d6ead554aa445967f9b" name="a28a1410b2cfb5d6ead554aa445967f9b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28a1410b2cfb5d6ead554aa445967f9b">&#9670;&#160;</a></span>get_columns()</h2>
+<a id="aadac5ed46abd3c1c97c5f29883dc8139" name="aadac5ed46abd3c1c97c5f29883dc8139"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadac5ed46abd3c1c97c5f29883dc8139">&#9670;&#160;</a></span>get_identity()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::regular T&gt; </div>
+template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
+<div class="memtemplate">
+template&lt;typename = void&gt; <br />
+requires (ROWS == COLUMNS)</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::size_t <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; T &gt;::get_columns </td>
+          <td class="memname">static <a class="el" href="classntlib_1_1matrix.html">matrix</a> <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; ROWS, COLUMNS, T &gt;::get_identity </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns the number of columns. </p>
-<dl class="section return"><dt>Returns</dt><dd>The number of columns. </dd></dl>
-
-</div>
-</div>
-<a id="a0daaae8dfaf4d215c5ec235300ef8c99" name="a0daaae8dfaf4d215c5ec235300ef8c99"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0daaae8dfaf4d215c5ec235300ef8c99">&#9670;&#160;</a></span>get_identity()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;std::regular T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="classntlib_1_1matrix.html">matrix</a> <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; T &gt;::get_identity </td>
-          <td>(</td>
-          <td class="paramtype">std::size_t</td>          <td class="paramname"><span class="paramname"><em>dim</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>multiplicative_neutral</em></span><span class="paramdefsep"> = </span><span class="paramdefval">T{1}</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -348,55 +266,48 @@ template&lt;std::regular T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Returns a square identity matrix with the given dimensions. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">dim</td><td>The dimensions, i.e., the number of rows and columns. </td></tr>
-    <tr><td class="paramname">multiplicative_neutral</td><td>The multiplicative neutral element to use for the main diagonal. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Returns a square identity matrix. </p>
 <dl class="section return"><dt>Returns</dt><dd>An identity matrix. </dd></dl>
 
 </div>
 </div>
-<a id="a5a7dc033bad3baf423eca09ebc4482ae" name="a5a7dc033bad3baf423eca09ebc4482ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a7dc033bad3baf423eca09ebc4482ae">&#9670;&#160;</a></span>get_rows()</h2>
+<a id="aacb786780291ab3f146af1d5c723cb90" name="aacb786780291ab3f146af1d5c723cb90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacb786780291ab3f146af1d5c723cb90">&#9670;&#160;</a></span>get_zero()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::regular T&gt; </div>
+template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::size_t <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; T &gt;::get_rows </td>
+          <td class="memname">static <a class="el" href="classntlib_1_1matrix.html">matrix</a> <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; ROWS, COLUMNS, T &gt;::get_zero </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Returns the number of rows. </p>
-<dl class="section return"><dt>Returns</dt><dd>The number of rows. </dd></dl>
+<p>Returns a zero matrix. </p>
+<dl class="section return"><dt>Returns</dt><dd>A zero matrix. </dd></dl>
 
 </div>
 </div>
-<a id="a5a7b88c106f953295d3a43ef4d12c572" name="a5a7b88c106f953295d3a43ef4d12c572"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a7b88c106f953295d3a43ef4d12c572">&#9670;&#160;</a></span>operator%=()</h2>
+<a id="ae315da9de63561d50d2b369e53424a9f" name="ae315da9de63561d50d2b369e53424a9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae315da9de63561d50d2b369e53424a9f">&#9670;&#160;</a></span>operator%=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::regular T&gt; </div>
+template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
 <div class="memtemplate">
 template&lt;typename S&gt; </div>
 <table class="mlabels">
@@ -404,7 +315,7 @@ template&lt;typename S&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp; <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; T &gt;::operator%= </td>
+          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp; <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; ROWS, COLUMNS, T &gt;::operator%= </td>
           <td>(</td>
           <td class="paramtype">S</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
@@ -428,21 +339,24 @@ template&lt;typename S&gt; </div>
 
 </div>
 </div>
-<a id="a196f0beb4b769adc6e351ffc92fcb643" name="a196f0beb4b769adc6e351ffc92fcb643"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a196f0beb4b769adc6e351ffc92fcb643">&#9670;&#160;</a></span>operator*=() <span class="overload">[1/2]</span></h2>
+<a id="a819cade922b7e20c46e3a83cd2377448" name="a819cade922b7e20c46e3a83cd2377448"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a819cade922b7e20c46e3a83cd2377448">&#9670;&#160;</a></span>operator*=() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::regular T&gt; </div>
+template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
+<div class="memtemplate">
+template&lt;std::size_t RHS_ROWS, std::size_t RHS_COLUMNS&gt; <br />
+requires (ROWS == COLUMNS &amp;&amp; ROWS == RHS_ROWS &amp;&amp; COLUMNS == RHS_COLUMNS)</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp; <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; T &gt;::operator*= </td>
+          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp; <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; ROWS, COLUMNS, T &gt;::operator*= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classntlib_1_1matrix.html">matrix</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classntlib_1_1matrix.html">matrix</a>&lt; RHS_ROWS, RHS_COLUMNS, T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -454,6 +368,13 @@ template&lt;std::regular T&gt; </div>
 </div><div class="memdoc">
 
 <p>Compound times operator for matrix multiplication. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">RHS_ROWS</td><td>The number of rows of the second factor. </td></tr>
+    <tr><td class="paramname">RHS_COLUMNS</td><td>The number of columns of the second factor. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>The second factor. </td></tr>
@@ -464,13 +385,13 @@ template&lt;std::regular T&gt; </div>
 
 </div>
 </div>
-<a id="a55df6aa4d65c920f2505f7b7323afde7" name="a55df6aa4d65c920f2505f7b7323afde7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55df6aa4d65c920f2505f7b7323afde7">&#9670;&#160;</a></span>operator*=() <span class="overload">[2/2]</span></h2>
+<a id="a400b3d5311fecd89588896c16e61a75e" name="a400b3d5311fecd89588896c16e61a75e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a400b3d5311fecd89588896c16e61a75e">&#9670;&#160;</a></span>operator*=() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::regular T&gt; </div>
+template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
 <div class="memtemplate">
 template&lt;typename S&gt; </div>
 <table class="mlabels">
@@ -478,7 +399,7 @@ template&lt;typename S&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp; <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; T &gt;::operator*= </td>
+          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp; <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; ROWS, COLUMNS, T &gt;::operator*= </td>
           <td>(</td>
           <td class="paramtype">S</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
@@ -502,21 +423,21 @@ template&lt;typename S&gt; </div>
 
 </div>
 </div>
-<a id="a1db5ea14800040b69efeb12286a9e277" name="a1db5ea14800040b69efeb12286a9e277"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1db5ea14800040b69efeb12286a9e277">&#9670;&#160;</a></span>operator+=()</h2>
+<a id="acfa8606214e855947f080b891af0ee3b" name="acfa8606214e855947f080b891af0ee3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfa8606214e855947f080b891af0ee3b">&#9670;&#160;</a></span>operator+=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::regular T&gt; </div>
+template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp; <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; T &gt;::operator+= </td>
+          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp; <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; ROWS, COLUMNS, T &gt;::operator+= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classntlib_1_1matrix.html">matrix</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classntlib_1_1matrix.html">matrix</a>&lt; ROWS, COLUMNS, T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -538,21 +459,21 @@ template&lt;std::regular T&gt; </div>
 
 </div>
 </div>
-<a id="afa5b56abffd4afab9ade944e36751b22" name="afa5b56abffd4afab9ade944e36751b22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa5b56abffd4afab9ade944e36751b22">&#9670;&#160;</a></span>operator-=()</h2>
+<a id="a660a5b1f1dc7d2994b780050da65b0ab" name="a660a5b1f1dc7d2994b780050da65b0ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a660a5b1f1dc7d2994b780050da65b0ab">&#9670;&#160;</a></span>operator-=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::regular T&gt; </div>
+template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp; <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; T &gt;::operator-= </td>
+          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp; <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; ROWS, COLUMNS, T &gt;::operator-= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classntlib_1_1matrix.html">matrix</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classntlib_1_1matrix.html">matrix</a>&lt; ROWS, COLUMNS, T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -574,13 +495,13 @@ template&lt;std::regular T&gt; </div>
 
 </div>
 </div>
-<a id="a67bb4ffba9469a95205ec4869ada2d70" name="a67bb4ffba9469a95205ec4869ada2d70"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67bb4ffba9469a95205ec4869ada2d70">&#9670;&#160;</a></span>operator/=()</h2>
+<a id="a25152043a123b8d4e5df9d735e23b504" name="a25152043a123b8d4e5df9d735e23b504"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25152043a123b8d4e5df9d735e23b504">&#9670;&#160;</a></span>operator/=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::regular T&gt; </div>
+template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
 <div class="memtemplate">
 template&lt;typename S&gt; </div>
 <table class="mlabels">
@@ -588,7 +509,7 @@ template&lt;typename S&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp; <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; T &gt;::operator/= </td>
+          <td class="memname"><a class="el" href="classntlib_1_1matrix.html">matrix</a> &amp; <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; ROWS, COLUMNS, T &gt;::operator/= </td>
           <td>(</td>
           <td class="paramtype">S</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
@@ -612,19 +533,19 @@ template&lt;typename S&gt; </div>
 
 </div>
 </div>
-<a id="ae6b82471c80b38e57e4128d5330d9126" name="ae6b82471c80b38e57e4128d5330d9126"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6b82471c80b38e57e4128d5330d9126">&#9670;&#160;</a></span>operator[]()</h2>
+<a id="abd40a22a3600b603e3bce5c78d299875" name="abd40a22a3600b603e3bce5c78d299875"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd40a22a3600b603e3bce5c78d299875">&#9670;&#160;</a></span>operator[]()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::regular T&gt; </div>
+template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">decltype(auto) <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; T &gt;::operator[] </td>
+          <td class="memname">decltype(auto) <a class="el" href="classntlib_1_1matrix.html">ntlib::matrix</a>&lt; ROWS, COLUMNS, T &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">this auto &amp;</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
         </tr>
@@ -666,7 +587,7 @@ template&lt;std::regular T&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::regular T&gt; </div>
+template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -674,12 +595,12 @@ template&lt;std::regular T&gt; </div>
         <tr>
           <td class="memname">bool operator== </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classntlib_1_1matrix.html">matrix</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+          <td class="paramtype">const <a class="el" href="classntlib_1_1matrix.html">matrix</a>&lt; ROWS, COLUMNS, T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classntlib_1_1matrix.html">matrix</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+          <td class="paramtype">const <a class="el" href="classntlib_1_1matrix.html">matrix</a>&lt; ROWS, COLUMNS, T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
         </tr>
       </table>
   </td>

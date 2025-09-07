@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['matrix_0',['matrix',['../classntlib_1_1matrix.html#ac6defaf2324c0dc0acfd02058c62d62c',1,'ntlib::matrix::matrix()'],['../classntlib_1_1matrix.html#afa03bf408a4fd239da014ef4042787f0',1,'ntlib::matrix::matrix(T val)'],['../classntlib_1_1matrix.html#aecfcbe99678df84ccfc7976ea3defe15',1,'ntlib::matrix::matrix(std::size_t rows, std::size_t columns)'],['../classntlib_1_1matrix.html#a7b3b3e2b72f525c2076792fbea24b528',1,'ntlib::matrix::matrix(std::initializer_list&lt; std::initializer_list&lt; T &gt; &gt; elements)']]],
+  ['matrix_0',['matrix',['../classntlib_1_1matrix.html#a0422fceb48c9f2f60fe12baaa12347b4',1,'ntlib::matrix::matrix()=default'],['../classntlib_1_1matrix.html#ab11c7934706fa0ef6eb04493db8558b8',1,'ntlib::matrix::matrix(const std::initializer_list&lt; std::initializer_list&lt; T &gt; &gt; &amp;elements)']]],
   ['miller_5fselfridge_5frabin_5ftest_1',['miller_selfridge_rabin_test',['../prime__test_8cpp.html#acff9e54c9a234cc10642cf7522605537',1,'ntlib']]],
   ['mod_2',['mod',['../modulo_8cpp.html#ab11afb456eb969b2c041a515fcbe83d2',1,'ntlib']]],
   ['mod_5fbinom_3',['mod_binom',['../binomial__coefficient_8cpp.html#a998112c7d16c9e712e91c6ecc6d21ef2',1,'ntlib']]],
@@ -11,7 +11,7 @@ var searchData=
   ['mod_5flucas_5fnth_5fterm_8',['mod_lucas_nth_term',['../lucas__sequence_8cpp.html#af91688ee122a5b68e40834968d56c7c1',1,'ntlib']]],
   ['mod_5fmult_5finv_9',['mod_mult_inv',['../modulo_8cpp.html#a22e7f00087ba99c51a1220fd8953e394',1,'ntlib']]],
   ['mod_5fp_5fbinom_10',['mod_p_binom',['../binomial__coefficient_8cpp.html#abb8ca895d496b5fd863155df8293e250',1,'ntlib']]],
-  ['mod_5fpow_11',['mod_pow',['../modulo_8cpp.html#a04a07fb78fe25723e30c8fd92641e31b',1,'ntlib']]],
+  ['mod_5fpow_11',['mod_pow',['../modulo_8cpp.html#a7867f57080cee92f122ba7d28b0e3e20',1,'ntlib']]],
   ['mod_5fpp_5fbinom_12',['mod_pp_binom',['../binomial__coefficient_8cpp.html#a59fd80cf26ed9a4cf144a43ab09d0265',1,'ntlib']]],
   ['mod_5fsqrt_13',['mod_sqrt',['../modulo_8cpp.html#a42e78f523153222493f334a23cdb9cd0',1,'ntlib']]]
 ];

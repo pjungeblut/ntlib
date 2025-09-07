@@ -166,10 +166,10 @@ Functions</h2></td></tr>
 <tr class="memitem:ab11afb456eb969b2c041a515fcbe83d2"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab11afb456eb969b2c041a515fcbe83d2">ntlib::mod</a> (T a, T m) noexcept</td></tr>
 <tr class="memdesc:ab11afb456eb969b2c041a515fcbe83d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The mathematical modulo operation.  <br /></td></tr>
 <tr class="separator:ab11afb456eb969b2c041a515fcbe83d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04a07fb78fe25723e30c8fd92641e31b" id="r_a04a07fb78fe25723e30c8fd92641e31b"><td class="memTemplParams" colspan="2">template&lt;typename A, typename B, typename MF&gt; </td></tr>
-<tr class="memitem:a04a07fb78fe25723e30c8fd92641e31b"><td class="memTemplItemLeft" align="right" valign="top">constexpr A&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a04a07fb78fe25723e30c8fd92641e31b">ntlib::mod_pow</a> (A a, B b, MF mod_func, A unit=A{1}) noexcept</td></tr>
-<tr class="memdesc:a04a07fb78fe25723e30c8fd92641e31b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary exponentiation with a custom mod-function.  <br /></td></tr>
-<tr class="separator:a04a07fb78fe25723e30c8fd92641e31b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7867f57080cee92f122ba7d28b0e3e20" id="r_a7867f57080cee92f122ba7d28b0e3e20"><td class="memTemplParams" colspan="2">template&lt;typename A, typename B, typename M, typename MF&gt; </td></tr>
+<tr class="memitem:a7867f57080cee92f122ba7d28b0e3e20"><td class="memTemplItemLeft" align="right" valign="top">constexpr A&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a7867f57080cee92f122ba7d28b0e3e20">ntlib::mod_pow</a> (A a, B b, M m, MF mod_func) noexcept</td></tr>
+<tr class="memdesc:a7867f57080cee92f122ba7d28b0e3e20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary exponentiation with a custom mod-function and modulus.  <br /></td></tr>
+<tr class="separator:a7867f57080cee92f122ba7d28b0e3e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22e7f00087ba99c51a1220fd8953e394" id="r_a22e7f00087ba99c51a1220fd8953e394"><td class="memTemplParams" colspan="2">template&lt;typename T, typename S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
 <tr class="memitem:a22e7f00087ba99c51a1220fd8953e394"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a22e7f00087ba99c51a1220fd8953e394">ntlib::mod_mult_inv</a> (T a, T m) noexcept</td></tr>
 <tr class="memdesc:a22e7f00087ba99c51a1220fd8953e394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the multiplicative inverse.  <br /></td></tr>
@@ -582,13 +582,13 @@ template&lt;typename T, typename S = std::make_signed_t&lt;T&gt;&gt; </div>
 
 </div>
 </div>
-<a id="a04a07fb78fe25723e30c8fd92641e31b" name="a04a07fb78fe25723e30c8fd92641e31b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04a07fb78fe25723e30c8fd92641e31b">&#9670;&#160;</a></span>mod_pow()</h2>
+<a id="a7867f57080cee92f122ba7d28b0e3e20" name="a7867f57080cee92f122ba7d28b0e3e20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7867f57080cee92f122ba7d28b0e3e20">&#9670;&#160;</a></span>mod_pow()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename A, typename B, typename MF&gt; </div>
+template&lt;typename A, typename B, typename M, typename MF&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -606,12 +606,12 @@ template&lt;typename A, typename B, typename MF&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MF</td>          <td class="paramname"><span class="paramname"><em>mod_func</em></span>, </td>
+          <td class="paramtype">M</td>          <td class="paramname"><span class="paramname"><em>m</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">A</td>          <td class="paramname"><span class="paramname"><em>unit</em></span><span class="paramdefsep"> = </span><span class="paramdefval">A{1}</span>&#160;)</td>
+          <td class="paramtype">MF</td>          <td class="paramname"><span class="paramname"><em>mod_func</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -621,14 +621,15 @@ template&lt;typename A, typename B, typename MF&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Binary exponentiation with a custom mod-function. </p>
-<p>Let \(\mathrm{mod\_func}\) be a mod-function. Computes \(\mathrm{mod\_func}(a^b)\) using binary exponentation.</p>
-<p>Runtime: \(O(\log(b))\) calls to \(\mathrm{mod\_func}\).</p>
+<p>Binary exponentiation with a custom mod-function and modulus. </p>
+<p>Let \(\mathrm{mod_func} \colon A \times M \to A\) be a mod-function. Computes \(\mathrm{mod_func}(a^b, m)\) using binary exponentation.</p>
+<p>Complexity: \(O(\log(b))\) calls to \(\mathrm{mod_func}\).</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">A</td><td>Multiplicative monoid. </td></tr>
+    <tr><td class="paramname">A</td><td>A multiplicative monoid. </td></tr>
     <tr><td class="paramname">B</td><td>An integer-like type. </td></tr>
-    <tr><td class="paramname">MF</td><td>Function object. </td></tr>
+    <tr><td class="paramname">M</td><td>The type of the modulus. </td></tr>
+    <tr><td class="paramname">MF</td><td>A function object type with signature <code>A(A, M)</code>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -636,12 +637,12 @@ template&lt;typename A, typename B, typename MF&gt; </div>
   <table class="params">
     <tr><td class="paramname">a</td><td>The base. </td></tr>
     <tr><td class="paramname">b</td><td>The exponent, must be non-negative. </td></tr>
+    <tr><td class="paramname">m</td><td>The modulus. </td></tr>
     <tr><td class="paramname">mod_func</td><td>The mod-function. </td></tr>
-    <tr><td class="paramname">unit</td><td>The multiplicative unit of <code>A</code>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of \(\mathrm{mod\_func}\) applied to the power \(a^b\). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of \(\mathrm{mod_func}\) applied to the power \(a^b\) and the modulus \(m\). </dd></dl>
 
 </div>
 </div>

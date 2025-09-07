@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hasmultiplicativeneutral_0',['HasMultiplicativeNeutral',['../conceptntlib_1_1HasMultiplicativeNeutral.html',1,'ntlib']]]
+  ['int128_0',['Int128',['../conceptntlib_1_1Int128.html',1,'ntlib']]]
 ];
