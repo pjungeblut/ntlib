@@ -475,14 +475,14 @@ matrix<ROWS, COLUMNS, T> exec_each_element(
 }
 
 /**
- * @brief Specialization of `ntlib::zero_helper` for `matrix`.
+ * @brief Specialization of `ntlib::algebra_traits` for `matrix`.
  * 
  * @tparam ROWS The number of rows.
  * @tparam COLUMNS The number of columns.
  * @tparam T The element type.
  */
 export template<std::size_t ROWS, std::size_t COLUMNS, std::regular T>
-class zero_helper<matrix<ROWS, COLUMNS, T>> {
+class algebra_traits<matrix<ROWS, COLUMNS, T>> {
 public:
   /**
    * @brief Returns the additive neutral element of `matrix<ROWS, COLUMNS, T>`.
@@ -493,18 +493,7 @@ public:
   static matrix<ROWS, COLUMNS, T> get_zero() noexcept {
     return matrix<ROWS, COLUMNS, T>::get_zero();
   }
-};
 
-/**
- * @brief Specialization of `ntlib::one_helper` for `matrix`.
- * 
- * @tparam ROWS The number of rows.
- * @tparam COLUMNS The number of columns.
- * @tparam T The element type.
- */
-export template<std::size_t ROWS, std::size_t COLUMNS, std::regular T>
-class one_helper<matrix<ROWS, COLUMNS, T>> {
-public:
   /**
    * @brief Returns the multiplicative neutral element of
    *     `matrix<ROWS, COLUMNS, T>`.

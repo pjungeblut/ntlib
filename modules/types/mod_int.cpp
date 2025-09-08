@@ -348,41 +348,19 @@ public:
 };
 
 /**
- * @brief Specialization of `ntlib::zero_helper` for `ct_mod_int`.
+ * @brief Specialization of `ntlib::algebra_traits` for `ct_mod_int`.
  * 
  * @tparam T An integer-like type.
  * @tparam m The modulus.
  */
 export template<typename T, T m>
-class zero_helper<ct_mod_int<T, m>> {
+class algebra_traits<ct_mod_int<T, m>> {
 public:
-  /**
-   * @brief Returns the additive neutral element of `ct_mod_int<T, m>`.
-   * 
-   * @return The additive neutral element, i.e., `0`.
-   */
-  [[nodiscard]] constexpr
-  static ct_mod_int<T, m> get_zero() noexcept {
+  [[nodiscard]] static constexpr ct_mod_int<T, m> get_zero() noexcept {
     return ct_mod_int<T, m> {0};
   }
-};
 
-/**
- * @brief Specialization of `ntlib::one_helper` for `ct_mod_int`.
- * 
- * @tparam T An integer-like type.
- * @tparam m The modulus.
- */
-export template<typename T, T m>
-class one_helper<ct_mod_int<T, m>> {
-public:
-  /**
-   * @brief Returns the multiplicative neutral element of `ct_mod_int<T, m>`.
-   * 
-   * @return The multiplicative neutral element, i.e., `1`.
-   */
-  [[nodiscard]] constexpr
-  static ct_mod_int<T, m> get_one() noexcept {
+  [[nodiscard]] static constexpr ct_mod_int<T, m> get_one() noexcept {
     return ct_mod_int<T, m> {1};
   }
 };

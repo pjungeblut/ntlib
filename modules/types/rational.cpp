@@ -312,39 +312,18 @@ rational<T> operator-(const rational<T> &r) {
 }
 
 /**
- * @brief Specialization of `ntlib::zero_helper` for `rational`.
+ * @brief Specialization of `ntlib::algebra_traits` for `rational`.
  * 
  * @tparam T An integer-like type.
  */
 export template<typename T>
-class zero_helper<rational<T>> {
+class algebra_traits<rational<T>> {
 public:
-  /**
-   * @brief Returns the additive neutral element of `rational<T>`.
-   * 
-   * @return The additive neutral element, i.e., `0/1`.
-   */
-  [[nodiscard]] constexpr
-  static rational<T> get_zero() noexcept {
+  [[nodiscard]] static constexpr rational<T> get_zero() noexcept {
     return rational<T>{T{0}, T{1}};
   }
-};
 
-/**
- * @brief Specialization of `ntlib::one_helper` for `rational`.
- * 
- * @tparam T An integer-like type.
- */
-export template<typename T>
-class one_helper<rational<T>> {
-public:
-  /**
-   * @brief Returns the multiplicative neutral element of `rational<T>`.
-   * 
-   * @return The multiplicative neutral element, i.e., `1/1`.
-   */
-  [[nodiscard]] constexpr
-  static rational<T> get_one() noexcept {
+  [[nodiscard]] static constexpr rational<T> get_one() noexcept {
     return rational<T>{T{1}, T{1}};
   }
 };

@@ -30,91 +30,60 @@ export module base;
 namespace ntlib {
 
 /**
- * @brief Helper class template to get the additive neutral element of a type.
+ * @brief Traits class for algebraic types.
  * 
- * This is the primary template definition.
- * It is an empty class, in particular, it does not contain a `get_zero` method.
- * 
- * Specializations for specific types must provide a static `get_zero` method.
+ * This empty class is the primary template definition.
+ * All types supposed to be used with NTLib need to specialize this class and
+ * provide the following static members:
+ * - `get_zero`: Returns the additive neutral element.
+ * - `get_one`: Returns the multiplicative neutral element.
  */
 export template<typename>
-class zero_helper {};
+class algebra_traits {};
 
 /**
- * @brief Specialization of `ntlib::zero_helper` for integral types.
+ * @brief Specialization of `ntlib::algebra_traits` for integral types.
  * 
  * @tparam T An integral type.
  */
 export template<std::integral T>
-class zero_helper<T> {
+class algebra_traits<T> {
 public:
-  /**
-   * @brief Returns the additive neutral element of type `T`.
-   * 
-   * @return The additive neutral element, i.e., `0`.
-   */
-  [[nodiscard]] constexpr
-  static T get_zero() noexcept {
+  [[nodiscard]] static constexpr T get_zero() noexcept {
     return T{0};
+  }
+
+  [[nodiscard]] static constexpr T get_one() noexcept {
+    return T{1};
   }
 };
 
 /**
  * @brief Returns the additive neutral element of a given type.
  * 
- * @tparam T The type. Must have a specialization of `ntlib::zero_helper` with a
- *     static `get_zero` method.
+ * @tparam T The type. Must have a specialization of `ntlib::algebra_traits`
+ *     with a static `get_zero` method.
  * @return The additive neutral element of type `T`.
  */
 export template<typename T>
-    requires requires { zero_helper<T>::get_zero(); }
+    requires requires { algebra_traits<T>::get_zero(); }
 [[nodiscard]] constexpr
 T zero() noexcept {
-  return zero_helper<T>::get_zero();
+  return algebra_traits<T>::get_zero();
 }
-
-/**
- * @brief Helper class template to get the multiplicative neutral element of a
- *     type.
- * 
- * This is the primary template definition.
- * It is an empty class, in particular, it does not contain a `get_one` method.
- * 
- * Specializations for specific types must provide a static `get_one` method.
- */
-export template<typename>
-class one_helper {};
-
-/**
- * @brief Specialization of `ntlib::one_helper` for integral types.
- * 
- * @tparam T An integral type.
- */
-export template<std::integral T>
-class one_helper<T> {
-public:
-  /**
-   * @brief Returns the multiplicative neutral element of type `T`.
-   * 
-   * @return The multiplicative neutral element, i.e., `1`.
-   */
-  [[nodiscard]] constexpr
-  static T get_one() noexcept {
-    return T{1};
-  }
-};
 
 /**
  * @brief Returns the multiplicative neutral element of a given type.
  * 
- * @tparam T The type. Must have a specialization of `ntlib::one_helper` with a
- *     static `get_one` method.
+ * @tparam T The type. Must have a specialization of `ntlib::algebra_traits`
+ *     with a static `get_one` method.
  * @return The multiplicative neutral element of type `T`.
  */
 export template<typename T>
+    requires requires { algebra_traits<T>::get_one(); }
 [[nodiscard]] constexpr
-T one() {
-  return one_helper<T>::get_one();
+T one() noexcept {
+  return algebra_traits<T>::get_one();
 }
 
 /**
