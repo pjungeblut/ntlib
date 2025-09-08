@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NTLib - Number Theory Library: Class Index</title>
+<title>NTLib - Number Theory Library: ntlib::ModIntAddable Concept Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,8 +62,6 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
-<div id="doc-content">
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function(){ initResizable(false); });
@@ -90,32 +88,28 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>ntlib</b></li><li class="navelem"><a class="el" href="conceptntlib_1_1ModIntAddable.html">ModIntAddable</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div id="doc-content">
 <div class="header">
-  <div class="headertitle"><div class="title">Class Index</div></div>
+  <div class="headertitle"><div class="title">ntlib::ModIntAddable Concept Reference<span class="mlabels"><span class="mlabel export">export</span></span><div class="ingroups">module <a class="el" href="module__mod__int.html">mod_int</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-<div class="qindex"><a class="qindex" href="#letter_A">A</a>&#160;|&#160;<a class="qindex" href="#letter_C">C</a>&#160;|&#160;<a class="qindex" href="#letter_M">M</a>&#160;|&#160;<a class="qindex" href="#letter_P">P</a>&#160;|&#160;<a class="qindex" href="#letter_R">R</a>&#160;|&#160;<a class="qindex" href="#letter_S">S</a></div>
-<div class="classindex">
-<dl class="classindex even">
-<dt class="alphachar"><a id="letter_A" name="letter_A">A</a></dt>
-<dd><a class="el" href="classntlib_1_1algebra__traits.html">algebra_traits</a> (ntlib)</dd><dd><a class="el" href="classntlib_1_1algebra__traits_3_01matrix_3_01ROWS_00_01COLUMNS_00_01T_01_4_01_4.html">algebra_traits&lt; matrix&lt; ROWS, COLUMNS, T &gt; &gt;</a> (ntlib)</dd><dd><a class="el" href="classntlib_1_1algebra__traits_3_01mod__int_3_01T_00_01m_01_4_01_4.html">algebra_traits&lt; mod_int&lt; T, m &gt; &gt;</a> (ntlib)</dd><dd><a class="el" href="classntlib_1_1algebra__traits_3_01rational_3_01T_01_4_01_4.html">algebra_traits&lt; rational&lt; T &gt; &gt;</a> (ntlib)</dd><dd><a class="el" href="classntlib_1_1algebra__traits_3_01T_01_4.html">algebra_traits&lt; T &gt;</a> (ntlib)</dd></dl>
-<dl class="classindex odd">
-<dt class="alphachar"><a id="letter_C" name="letter_C">C</a></dt>
-<dd><a class="el" href="structntlib_1_1crt__congruence.html">crt_congruence</a> (ntlib)</dd></dl>
-<dl class="classindex even">
-<dt class="alphachar"><a id="letter_M" name="letter_M">M</a></dt>
-<dd><a class="el" href="classntlib_1_1matrix.html">matrix</a> (ntlib)</dd><dd><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> (ntlib)</dd></dl>
-<dl class="classindex odd">
-<dt class="alphachar"><a id="letter_P" name="letter_P">P</a></dt>
-<dd><a class="el" href="structntlib_1_1prime__power.html">prime_power</a> (ntlib)</dd></dl>
-<dl class="classindex even">
-<dt class="alphachar"><a id="letter_R" name="letter_R">R</a></dt>
-<dd><a class="el" href="classntlib_1_1rational.html">rational</a> (ntlib)</dd><dd><a class="el" href="classntlib_1_1sieve__235_1_1reference.html">sieve_235::reference</a> (ntlib)</dd></dl>
-<dl class="classindex odd">
-<dt class="alphachar"><a id="letter_S" name="letter_S">S</a></dt>
-<dd><a class="el" href="classntlib_1_1sieve__235.html">sieve_235</a> (ntlib)</dd></dl>
-</div>
-</div><!-- contents -->
+
+<p>Concept to ensure that no overflow can occur during addition or subtraction.  
+<a href="#details">More...</a></p>
+<h2 class="groupheader">Concept definition</h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, T m&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="conceptntlib_1_1ModIntAddable.html">ntlib::ModIntAddable</a> = </div>
+<div class="line">    !std::numeric_limits&lt;T&gt;::is_bounded || std::numeric_limits&lt;T&gt;::max() / 2 &gt;= m</div>
+<div class="ttc" id="aconceptntlib_1_1ModIntAddable_html"><div class="ttname"><a href="conceptntlib_1_1ModIntAddable.html">ntlib::ModIntAddable</a></div><div class="ttdoc">Concept to ensure that no overflow can occur during addition or subtraction.</div><div class="ttdef"><b>Definition</b> mod_int.cpp:34</div></div>
+</div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Concept to ensure that no overflow can occur during addition or subtraction. </p>
+<p>Checks that <code>T</code> can hold at least \(2m\) which is required internally for addition and subtraction. If this concept is not satisfied, a bigger integer type must be used for <code>T</code>. </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2

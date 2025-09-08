@@ -16,6 +16,5 @@ var searchData=
   ['crt_13',['crt',['../chinese__remainder_8cpp.html#ab5d442297342895c5ba1dea5621961a9',1,'ntlib']]],
   ['crt_5fcongruence_14',['crt_congruence',['../structntlib_1_1crt__congruence.html',1,'ntlib']]],
   ['crt_5fcoprime_15',['crt_coprime',['../chinese__remainder_8cpp.html#a5139a8aacaaa9054eadfa4f7f0884370',1,'ntlib']]],
-  ['ct_5fmod_5fint_16',['ct_mod_int',['../classntlib_1_1ct__mod__int.html',1,'ntlib::ct_mod_int&lt; T, m &gt;'],['../classntlib_1_1ct__mod__int.html#aac0177807e60d84787d763dc46d258dc',1,'ntlib::ct_mod_int::ct_mod_int() noexcept=default'],['../classntlib_1_1ct__mod__int.html#ad280290ce112c77566d3f72130214571',1,'ntlib::ct_mod_int::ct_mod_int(T n) noexcept']]],
-  ['cube_5fnumber_17',['cube_number',['../figurate__number_8cpp.html#a83677651b5d2f088cb086cc039d5156b',1,'ntlib']]]
+  ['cube_5fnumber_16',['cube_number',['../figurate__number_8cpp.html#a83677651b5d2f088cb086cc039d5156b',1,'ntlib']]]
 ];

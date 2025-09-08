@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NTLib - Number Theory Library: ntlib::mod_int&lt; T, DERIVED &gt; Class Template Reference</title>
+<title>NTLib - Number Theory Library: ntlib::mod_int&lt; T, m &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,97 +97,111 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classntlib_1_1mod__int-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">ntlib::mod_int&lt; T, DERIVED &gt; Class Template Reference<div class="ingroups">module <a class="el" href="module__mod__int.html">mod_int</a></div></div></div>
+  <div class="headertitle"><div class="title">ntlib::mod_int&lt; T, m &gt; Class Template Reference<span class="mlabels"><span class="mlabel export">export</span></span><div class="ingroups">module <a class="el" href="module__mod__int.html">mod_int</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Base class for CRTP design of <code><a class="el" href="classntlib_1_1rt__mod__int.html" title="Represents an element of the residue class , where the modulus  is provided at the time of constructi...">rt_mod_int</a></code> and <code><a class="el" href="classntlib_1_1ct__mod__int.html" title="Represents an element of the residue class , where the modulus  is provided at compile-time.">ct_mod_int</a></code>.  
+<p>Class representing an element of a ring of integers modulo another positive integer. The modulus is provided at compile-time.  
  <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad045cdb12126b6e48e43a18f42281a46" id="r_ad045cdb12126b6e48e43a18f42281a46"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad045cdb12126b6e48e43a18f42281a46">operator T</a> () const noexcept</td></tr>
-<tr class="memdesc:ad045cdb12126b6e48e43a18f42281a46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value.  <br /></td></tr>
-<tr class="separator:ad045cdb12126b6e48e43a18f42281a46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad941c7765d32ea5c3c8a453f16c60c50" id="r_ad941c7765d32ea5c3c8a453f16c60c50"><td class="memItemLeft" align="right" valign="top">DERIVED &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad941c7765d32ea5c3c8a453f16c60c50">operator++</a> () noexcept</td></tr>
-<tr class="memdesc:ad941c7765d32ea5c3c8a453f16c60c50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix increment operator.  <br /></td></tr>
-<tr class="separator:ad941c7765d32ea5c3c8a453f16c60c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af837af62876b53136c6424a1ed4a0fef" id="r_af837af62876b53136c6424a1ed4a0fef"><td class="memItemLeft" align="right" valign="top">DERIVED&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af837af62876b53136c6424a1ed4a0fef">operator++</a> (int) noexcept</td></tr>
-<tr class="memdesc:af837af62876b53136c6424a1ed4a0fef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Postfix increment operator.  <br /></td></tr>
-<tr class="separator:af837af62876b53136c6424a1ed4a0fef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6df26821604434b2eb565e404721a5f" id="r_af6df26821604434b2eb565e404721a5f"><td class="memItemLeft" align="right" valign="top">DERIVED &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af6df26821604434b2eb565e404721a5f">operator--</a> () noexcept</td></tr>
-<tr class="memdesc:af6df26821604434b2eb565e404721a5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix decrement operator.  <br /></td></tr>
-<tr class="separator:af6df26821604434b2eb565e404721a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae79e52fb115a3efc9139e32fbd4119c6" id="r_ae79e52fb115a3efc9139e32fbd4119c6"><td class="memItemLeft" align="right" valign="top">DERIVED&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae79e52fb115a3efc9139e32fbd4119c6">operator--</a> (int) noexcept</td></tr>
-<tr class="memdesc:ae79e52fb115a3efc9139e32fbd4119c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Postfix decrement operator.  <br /></td></tr>
-<tr class="separator:ae79e52fb115a3efc9139e32fbd4119c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4914eb1ba828c40a833264573b50a0de" id="r_a4914eb1ba828c40a833264573b50a0de"><td class="memItemLeft" align="right" valign="top">DERIVED &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4914eb1ba828c40a833264573b50a0de">operator+=</a> (DERIVED rhs) noexcept</td></tr>
-<tr class="memdesc:a4914eb1ba828c40a833264573b50a0de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound plus operator for modular addition.  <br /></td></tr>
-<tr class="separator:a4914eb1ba828c40a833264573b50a0de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a552ac7787a52c1c569b90e3cd3c4ebed" id="r_a552ac7787a52c1c569b90e3cd3c4ebed"><td class="memItemLeft" align="right" valign="top">DERIVED &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a552ac7787a52c1c569b90e3cd3c4ebed">operator-=</a> (DERIVED rhs) noexcept</td></tr>
-<tr class="memdesc:a552ac7787a52c1c569b90e3cd3c4ebed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound minus operator for modular subtraction.  <br /></td></tr>
-<tr class="separator:a552ac7787a52c1c569b90e3cd3c4ebed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7feb5e72b2aac3adba77b333fc6e501f" id="r_a7feb5e72b2aac3adba77b333fc6e501f"><td class="memItemLeft" align="right" valign="top">DERIVED &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7feb5e72b2aac3adba77b333fc6e501f">operator*=</a> (DERIVED rhs) noexcept</td></tr>
-<tr class="memdesc:a7feb5e72b2aac3adba77b333fc6e501f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound times operator for modular multiplication.  <br /></td></tr>
-<tr class="separator:a7feb5e72b2aac3adba77b333fc6e501f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad514a3fdfc8313f9b32ea6a7c2460285" id="r_ad514a3fdfc8313f9b32ea6a7c2460285"><td class="memItemLeft" align="right" valign="top">DERIVED&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad514a3fdfc8313f9b32ea6a7c2460285">operator+</a> () const noexcept</td></tr>
-<tr class="memdesc:ad514a3fdfc8313f9b32ea6a7c2460285"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unary plus operator. Does nothing.  <br /></td></tr>
-<tr class="separator:ad514a3fdfc8313f9b32ea6a7c2460285"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33836e8472eb04fba10c76fdfc77982a" id="r_a33836e8472eb04fba10c76fdfc77982a"><td class="memTemplParams" colspan="2">template&lt;typename S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
-<tr class="memitem:a33836e8472eb04fba10c76fdfc77982a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a33836e8472eb04fba10c76fdfc77982a">invert</a> ()</td></tr>
-<tr class="memdesc:a33836e8472eb04fba10c76fdfc77982a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverts the value.  <br /></td></tr>
-<tr class="separator:a33836e8472eb04fba10c76fdfc77982a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a52ff225cbc492cac0f746c67e24c44b0" id="r_a52ff225cbc492cac0f746c67e24c44b0"><td class="memItemLeft" align="right" valign="top"><a id="a52ff225cbc492cac0f746c67e24c44b0" name="a52ff225cbc492cac0f746c67e24c44b0"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>mod_int</b> () noexcept=default</td></tr>
-<tr class="memdesc:a52ff225cbc492cac0f746c67e24c44b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
-<tr class="separator:a52ff225cbc492cac0f746c67e24c44b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a281a927a8e82e47667041a9b89286487" id="r_a281a927a8e82e47667041a9b89286487"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a281a927a8e82e47667041a9b89286487">mod_int</a> (T n) noexcept</td></tr>
-<tr class="memdesc:a281a927a8e82e47667041a9b89286487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from a given value.  <br /></td></tr>
-<tr class="separator:a281a927a8e82e47667041a9b89286487"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7beab668716734aa994e075de9969bf" id="r_aa7beab668716734aa994e075de9969bf"><td class="memItemLeft" align="right" valign="top"><a id="aa7beab668716734aa994e075de9969bf" name="aa7beab668716734aa994e075de9969bf"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>mod_int</b> () noexcept</td></tr>
+<tr class="memdesc:aa7beab668716734aa994e075de9969bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. Initializes the value to zero. <br /></td></tr>
+<tr class="separator:aa7beab668716734aa994e075de9969bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1992c9dfa0244998ba9570c56f5a6832" id="r_a1992c9dfa0244998ba9570c56f5a6832"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1992c9dfa0244998ba9570c56f5a6832">mod_int</a> (T n) noexcept</td></tr>
+<tr class="memdesc:a1992c9dfa0244998ba9570c56f5a6832"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new element from a given value.  <br /></td></tr>
+<tr class="separator:a1992c9dfa0244998ba9570c56f5a6832"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a1988ec24826ab6d622bd02043c242f" id="r_a5a1988ec24826ab6d622bd02043c242f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5a1988ec24826ab6d622bd02043c242f">operator T</a> () const noexcept</td></tr>
+<tr class="memdesc:a5a1988ec24826ab6d622bd02043c242f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value.  <br /></td></tr>
+<tr class="separator:a5a1988ec24826ab6d622bd02043c242f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc41da5e15899e7a47fcd76fb57dd71a" id="r_acc41da5e15899e7a47fcd76fb57dd71a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc41da5e15899e7a47fcd76fb57dd71a">operator++</a> () noexcept</td></tr>
+<tr class="memdesc:acc41da5e15899e7a47fcd76fb57dd71a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix increment operator.  <br /></td></tr>
+<tr class="separator:acc41da5e15899e7a47fcd76fb57dd71a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a220e02868e2cd6b729f74f1474d5cc98" id="r_a220e02868e2cd6b729f74f1474d5cc98"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a220e02868e2cd6b729f74f1474d5cc98">operator++</a> (int) noexcept</td></tr>
+<tr class="memdesc:a220e02868e2cd6b729f74f1474d5cc98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Postfix increment operator.  <br /></td></tr>
+<tr class="separator:a220e02868e2cd6b729f74f1474d5cc98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b073061714222114bb68fecce4d79d6" id="r_a9b073061714222114bb68fecce4d79d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b073061714222114bb68fecce4d79d6">operator--</a> () noexcept</td></tr>
+<tr class="memdesc:a9b073061714222114bb68fecce4d79d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix decrement operator.  <br /></td></tr>
+<tr class="separator:a9b073061714222114bb68fecce4d79d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c4a844eb9da1d54baafb723f4330e05" id="r_a4c4a844eb9da1d54baafb723f4330e05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c4a844eb9da1d54baafb723f4330e05">operator--</a> (int) noexcept</td></tr>
+<tr class="memdesc:a4c4a844eb9da1d54baafb723f4330e05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Postfix decrement operator.  <br /></td></tr>
+<tr class="separator:a4c4a844eb9da1d54baafb723f4330e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7817fb34bc9f7e0cde35a3458059ed9b" id="r_a7817fb34bc9f7e0cde35a3458059ed9b"><td class="memTemplParams" colspan="2">template&lt;typename = void&gt; <br />
+requires ModIntAddable&lt;T, m&gt;</td></tr>
+<tr class="memitem:a7817fb34bc9f7e0cde35a3458059ed9b"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a7817fb34bc9f7e0cde35a3458059ed9b">operator+=</a> (<a class="el" href="classntlib_1_1mod__int.html">mod_int</a> rhs) noexcept</td></tr>
+<tr class="memdesc:a7817fb34bc9f7e0cde35a3458059ed9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound plus operator for modular addition.  <br /></td></tr>
+<tr class="separator:a7817fb34bc9f7e0cde35a3458059ed9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5449f911a3fe403d288a4b2d5e79d4d" id="r_ab5449f911a3fe403d288a4b2d5e79d4d"><td class="memTemplParams" colspan="2">template&lt;typename = void&gt; <br />
+requires ModIntAddable&lt;T, m&gt;</td></tr>
+<tr class="memitem:ab5449f911a3fe403d288a4b2d5e79d4d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab5449f911a3fe403d288a4b2d5e79d4d">operator-=</a> (<a class="el" href="classntlib_1_1mod__int.html">mod_int</a> rhs) noexcept</td></tr>
+<tr class="memdesc:ab5449f911a3fe403d288a4b2d5e79d4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound minus operator for modular subtraction.  <br /></td></tr>
+<tr class="separator:ab5449f911a3fe403d288a4b2d5e79d4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abce42676891144cf906a59ecc2013d51" id="r_abce42676891144cf906a59ecc2013d51"><td class="memTemplParams" colspan="2">template&lt;typename = void&gt; <br />
+requires ModIntMultiplicable&lt;T, m&gt;</td></tr>
+<tr class="memitem:abce42676891144cf906a59ecc2013d51"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#abce42676891144cf906a59ecc2013d51">operator*=</a> (<a class="el" href="classntlib_1_1mod__int.html">mod_int</a> rhs) noexcept</td></tr>
+<tr class="memdesc:abce42676891144cf906a59ecc2013d51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compound times operator for modular multiplication.  <br /></td></tr>
+<tr class="separator:abce42676891144cf906a59ecc2013d51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8ce1355f9b51cdd734f458f699b8c06" id="r_ad8ce1355f9b51cdd734f458f699b8c06"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8ce1355f9b51cdd734f458f699b8c06">operator+</a> () const noexcept</td></tr>
+<tr class="memdesc:ad8ce1355f9b51cdd734f458f699b8c06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unary plus operator. Does nothing.  <br /></td></tr>
+<tr class="separator:ad8ce1355f9b51cdd734f458f699b8c06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae37ca45966f4ff7efd3f5f2e567b93a3" id="r_ae37ca45966f4ff7efd3f5f2e567b93a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae37ca45966f4ff7efd3f5f2e567b93a3">operator-</a> () const noexcept</td></tr>
+<tr class="memdesc:ae37ca45966f4ff7efd3f5f2e567b93a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unary minus operator to negate value.  <br /></td></tr>
+<tr class="separator:ae37ca45966f4ff7efd3f5f2e567b93a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab18cae7691d3c259fed51423e66d5fd6" id="r_ab18cae7691d3c259fed51423e66d5fd6"><td class="memTemplParams" colspan="2">template&lt;typename = void&gt; <br />
+requires (std::numeric_limits&lt;T&gt;::is_signed)</td></tr>
+<tr class="memitem:ab18cae7691d3c259fed51423e66d5fd6"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab18cae7691d3c259fed51423e66d5fd6">invert</a> ()</td></tr>
+<tr class="memdesc:ab18cae7691d3c259fed51423e66d5fd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverts the value.  <br /></td></tr>
+<tr class="separator:ab18cae7691d3c259fed51423e66d5fd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:a497c180271653fb520643fb7463cb916" id="r_a497c180271653fb520643fb7463cb916"><td class="memItemLeft" align="right" valign="top">DERIVED&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a497c180271653fb520643fb7463cb916">operator+</a> (DERIVED lhs, DERIVED rhs) noexcept</td></tr>
-<tr class="memdesc:a497c180271653fb520643fb7463cb916"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plus operator for modular addition.  <br /></td></tr>
-<tr class="separator:a497c180271653fb520643fb7463cb916"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88f2a752c93ad22dab4a23591db0d1af" id="r_a88f2a752c93ad22dab4a23591db0d1af"><td class="memItemLeft" align="right" valign="top">DERIVED&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a88f2a752c93ad22dab4a23591db0d1af">operator-</a> (DERIVED lhs, DERIVED rhs) noexcept</td></tr>
-<tr class="memdesc:a88f2a752c93ad22dab4a23591db0d1af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minus operator for modular subtraction.  <br /></td></tr>
-<tr class="separator:a88f2a752c93ad22dab4a23591db0d1af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad2605d6e47eae326f5b38208273f584" id="r_aad2605d6e47eae326f5b38208273f584"><td class="memItemLeft" align="right" valign="top">DERIVED&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad2605d6e47eae326f5b38208273f584">operator*</a> (DERIVED lhs, DERIVED rhs) noexcept</td></tr>
-<tr class="memdesc:aad2605d6e47eae326f5b38208273f584"><td class="mdescLeft">&#160;</td><td class="mdescRight">Times operator for modular multiplication.  <br /></td></tr>
-<tr class="separator:aad2605d6e47eae326f5b38208273f584"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc3c76c371abf7855b888296a364aff6" id="r_afc3c76c371abf7855b888296a364aff6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc3c76c371abf7855b888296a364aff6">operator+</a> (<a class="el" href="classntlib_1_1mod__int.html">mod_int</a> lhs, <a class="el" href="classntlib_1_1mod__int.html">mod_int</a> rhs) noexcept</td></tr>
+<tr class="memdesc:afc3c76c371abf7855b888296a364aff6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plus operator for modular addition.  <br /></td></tr>
+<tr class="separator:afc3c76c371abf7855b888296a364aff6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00bc23dfd6cd56657baf42ecf74797ff" id="r_a00bc23dfd6cd56657baf42ecf74797ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00bc23dfd6cd56657baf42ecf74797ff">operator-</a> (<a class="el" href="classntlib_1_1mod__int.html">mod_int</a> lhs, <a class="el" href="classntlib_1_1mod__int.html">mod_int</a> rhs) noexcept</td></tr>
+<tr class="memdesc:a00bc23dfd6cd56657baf42ecf74797ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minus operator for modular subtraction.  <br /></td></tr>
+<tr class="separator:a00bc23dfd6cd56657baf42ecf74797ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa174daeead1041eac3b179c926525b2b" id="r_aa174daeead1041eac3b179c926525b2b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa174daeead1041eac3b179c926525b2b">operator*</a> (<a class="el" href="classntlib_1_1mod__int.html">mod_int</a> lhs, <a class="el" href="classntlib_1_1mod__int.html">mod_int</a> rhs) noexcept</td></tr>
+<tr class="memdesc:aa174daeead1041eac3b179c926525b2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Times operator for modular multiplication.  <br /></td></tr>
+<tr class="separator:aa174daeead1041eac3b179c926525b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86835d66a942118c312c5e08bbff2171" id="r_a86835d66a942118c312c5e08bbff2171"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a86835d66a942118c312c5e08bbff2171">operator==</a> (<a class="el" href="classntlib_1_1mod__int.html">mod_int</a> lhs, <a class="el" href="classntlib_1_1mod__int.html">mod_int</a> rhs) noexcept</td></tr>
+<tr class="memdesc:a86835d66a942118c312c5e08bbff2171"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality comparison operator.  <br /></td></tr>
+<tr class="separator:a86835d66a942118c312c5e08bbff2171"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename T, typename DERIVED&gt;<br />
-class ntlib::mod_int&lt; T, DERIVED &gt;</div><p>Base class for CRTP design of <code><a class="el" href="classntlib_1_1rt__mod__int.html" title="Represents an element of the residue class , where the modulus  is provided at the time of constructi...">rt_mod_int</a></code> and <code><a class="el" href="classntlib_1_1ct__mod__int.html" title="Represents an element of the residue class , where the modulus  is provided at compile-time.">ct_mod_int</a></code>. </p>
-<dl class="section note"><dt>Note</dt><dd>As this base class does not store the modulus \(n\), it makes no sense to create instances of it. For this reason, all constructors and assignment operators are protected.</dd></dl>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T, T m&gt;<br />
+requires (m &gt; 0)<br />
+class ntlib::mod_int&lt; T, m &gt;</div><p>Class representing an element of a ring of integers modulo another positive integer. The modulus is provided at compile-time. </p>
+<dl class="section note"><dt>Note</dt><dd>To avoid overflows, the type <code>T</code> must be able to hold<ul>
+<li>\(2m\) for addition and subtraction,</li>
+<li>\(m^2\) for multiplication. This is ensured at compile-time. For this to work, <code>T</code> must provide <code>std::numeric_limits&lt;T&gt;::max()</code>.</li>
+</ul>
+</dd></dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>An integer-like type. </td></tr>
-    <tr><td class="paramname">DERIVED</td><td>Class derived from this one. </td></tr>
+    <tr><td class="paramname">m</td><td>The modulus. </td></tr>
   </table>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a281a927a8e82e47667041a9b89286487" name="a281a927a8e82e47667041a9b89286487"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a281a927a8e82e47667041a9b89286487">&#9670;&#160;</a></span>mod_int()</h2>
+<a id="a1992c9dfa0244998ba9570c56f5a6832" name="a1992c9dfa0244998ba9570c56f5a6832"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1992c9dfa0244998ba9570c56f5a6832">&#9670;&#160;</a></span>mod_int()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename DERIVED&gt; </div>
+template&lt;typename T, T m&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, DERIVED &gt;::mod_int </td>
+          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, m &gt;::mod_int </td>
           <td>(</td>
           <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
           <td></td>
@@ -195,12 +209,12 @@ template&lt;typename T, typename DERIVED&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel protected">protected</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Construct from a given value. </p>
+<p>Construct a new element from a given value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">n</td><td>The given value. </td></tr>
@@ -211,21 +225,22 @@ template&lt;typename T, typename DERIVED&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a33836e8472eb04fba10c76fdfc77982a" name="a33836e8472eb04fba10c76fdfc77982a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33836e8472eb04fba10c76fdfc77982a">&#9670;&#160;</a></span>invert()</h2>
+<a id="ab18cae7691d3c259fed51423e66d5fd6" name="ab18cae7691d3c259fed51423e66d5fd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab18cae7691d3c259fed51423e66d5fd6">&#9670;&#160;</a></span>invert()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename DERIVED&gt; </div>
+template&lt;typename T, T m&gt; </div>
 <div class="memtemplate">
-template&lt;typename S = std::make_signed_t&lt;T&gt;&gt; </div>
+template&lt;typename = void&gt; <br />
+requires (std::numeric_limits&lt;T&gt;::is_signed)</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, DERIVED &gt;::invert </td>
+          <td class="memname">void <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, m &gt;::invert </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -243,19 +258,19 @@ template&lt;typename S = std::make_signed_t&lt;T&gt;&gt; </div>
 
 </div>
 </div>
-<a id="ad045cdb12126b6e48e43a18f42281a46" name="ad045cdb12126b6e48e43a18f42281a46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad045cdb12126b6e48e43a18f42281a46">&#9670;&#160;</a></span>operator T()</h2>
+<a id="a5a1988ec24826ab6d622bd02043c242f" name="a5a1988ec24826ab6d622bd02043c242f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a1988ec24826ab6d622bd02043c242f">&#9670;&#160;</a></span>operator T()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename DERIVED&gt; </div>
+template&lt;typename T, T m&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, DERIVED &gt;::operator T </td>
+          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, m &gt;::operator T </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -273,21 +288,24 @@ template&lt;typename T, typename DERIVED&gt; </div>
 
 </div>
 </div>
-<a id="a7feb5e72b2aac3adba77b333fc6e501f" name="a7feb5e72b2aac3adba77b333fc6e501f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7feb5e72b2aac3adba77b333fc6e501f">&#9670;&#160;</a></span>operator*=()</h2>
+<a id="abce42676891144cf906a59ecc2013d51" name="abce42676891144cf906a59ecc2013d51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abce42676891144cf906a59ecc2013d51">&#9670;&#160;</a></span>operator*=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename DERIVED&gt; </div>
+template&lt;typename T, T m&gt; </div>
+<div class="memtemplate">
+template&lt;typename = void&gt; <br />
+requires ModIntMultiplicable&lt;T, m&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">DERIVED &amp; <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, DERIVED &gt;::operator*= </td>
+          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> &amp; <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, m &gt;::operator*= </td>
           <td>(</td>
-          <td class="paramtype">DERIVED</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&lt; T, m &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -299,6 +317,7 @@ template&lt;typename T, typename DERIVED&gt; </div>
 </div><div class="memdoc">
 
 <p>Compound times operator for modular multiplication. </p>
+<dl class="section note"><dt>Note</dt><dd>Contains a compile-time check to ensure that no overflow can occur.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>The second factor. </td></tr>
@@ -309,19 +328,19 @@ template&lt;typename T, typename DERIVED&gt; </div>
 
 </div>
 </div>
-<a id="ad514a3fdfc8313f9b32ea6a7c2460285" name="ad514a3fdfc8313f9b32ea6a7c2460285"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad514a3fdfc8313f9b32ea6a7c2460285">&#9670;&#160;</a></span>operator+()</h2>
+<a id="ad8ce1355f9b51cdd734f458f699b8c06" name="ad8ce1355f9b51cdd734f458f699b8c06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8ce1355f9b51cdd734f458f699b8c06">&#9670;&#160;</a></span>operator+()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename DERIVED&gt; </div>
+template&lt;typename T, T m&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">DERIVED <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, DERIVED &gt;::operator+ </td>
+          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, m &gt;::operator+ </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -339,19 +358,19 @@ template&lt;typename T, typename DERIVED&gt; </div>
 
 </div>
 </div>
-<a id="ad941c7765d32ea5c3c8a453f16c60c50" name="ad941c7765d32ea5c3c8a453f16c60c50"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad941c7765d32ea5c3c8a453f16c60c50">&#9670;&#160;</a></span>operator++() <span class="overload">[1/2]</span></h2>
+<a id="acc41da5e15899e7a47fcd76fb57dd71a" name="acc41da5e15899e7a47fcd76fb57dd71a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc41da5e15899e7a47fcd76fb57dd71a">&#9670;&#160;</a></span>operator++() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename DERIVED&gt; </div>
+template&lt;typename T, T m&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">DERIVED &amp; <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, DERIVED &gt;::operator++ </td>
+          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> &amp; <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, m &gt;::operator++ </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -369,19 +388,19 @@ template&lt;typename T, typename DERIVED&gt; </div>
 
 </div>
 </div>
-<a id="af837af62876b53136c6424a1ed4a0fef" name="af837af62876b53136c6424a1ed4a0fef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af837af62876b53136c6424a1ed4a0fef">&#9670;&#160;</a></span>operator++() <span class="overload">[2/2]</span></h2>
+<a id="a220e02868e2cd6b729f74f1474d5cc98" name="a220e02868e2cd6b729f74f1474d5cc98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a220e02868e2cd6b729f74f1474d5cc98">&#9670;&#160;</a></span>operator++() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename DERIVED&gt; </div>
+template&lt;typename T, T m&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">DERIVED <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, DERIVED &gt;::operator++ </td>
+          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, m &gt;::operator++ </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -399,21 +418,24 @@ template&lt;typename T, typename DERIVED&gt; </div>
 
 </div>
 </div>
-<a id="a4914eb1ba828c40a833264573b50a0de" name="a4914eb1ba828c40a833264573b50a0de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4914eb1ba828c40a833264573b50a0de">&#9670;&#160;</a></span>operator+=()</h2>
+<a id="a7817fb34bc9f7e0cde35a3458059ed9b" name="a7817fb34bc9f7e0cde35a3458059ed9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7817fb34bc9f7e0cde35a3458059ed9b">&#9670;&#160;</a></span>operator+=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename DERIVED&gt; </div>
+template&lt;typename T, T m&gt; </div>
+<div class="memtemplate">
+template&lt;typename = void&gt; <br />
+requires ModIntAddable&lt;T, m&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">DERIVED &amp; <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, DERIVED &gt;::operator+= </td>
+          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> &amp; <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, m &gt;::operator+= </td>
           <td>(</td>
-          <td class="paramtype">DERIVED</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&lt; T, m &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -425,6 +447,7 @@ template&lt;typename T, typename DERIVED&gt; </div>
 </div><div class="memdoc">
 
 <p>Compound plus operator for modular addition. </p>
+<dl class="section note"><dt>Note</dt><dd>Contains a compile-time check to ensure that no overflow can occur.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>The second summand. </td></tr>
@@ -435,19 +458,49 @@ template&lt;typename T, typename DERIVED&gt; </div>
 
 </div>
 </div>
-<a id="af6df26821604434b2eb565e404721a5f" name="af6df26821604434b2eb565e404721a5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6df26821604434b2eb565e404721a5f">&#9670;&#160;</a></span>operator--() <span class="overload">[1/2]</span></h2>
+<a id="ae37ca45966f4ff7efd3f5f2e567b93a3" name="ae37ca45966f4ff7efd3f5f2e567b93a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae37ca45966f4ff7efd3f5f2e567b93a3">&#9670;&#160;</a></span>operator-()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename DERIVED&gt; </div>
+template&lt;typename T, T m&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">DERIVED &amp; <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, DERIVED &gt;::operator-- </td>
+          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, m &gt;::operator- </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Unary minus operator to negate value. </p>
+<dl class="section return"><dt>Returns</dt><dd>The negated instance. </dd></dl>
+
+</div>
+</div>
+<a id="a9b073061714222114bb68fecce4d79d6" name="a9b073061714222114bb68fecce4d79d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b073061714222114bb68fecce4d79d6">&#9670;&#160;</a></span>operator--() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, T m&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> &amp; <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, m &gt;::operator-- </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -465,19 +518,19 @@ template&lt;typename T, typename DERIVED&gt; </div>
 
 </div>
 </div>
-<a id="ae79e52fb115a3efc9139e32fbd4119c6" name="ae79e52fb115a3efc9139e32fbd4119c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae79e52fb115a3efc9139e32fbd4119c6">&#9670;&#160;</a></span>operator--() <span class="overload">[2/2]</span></h2>
+<a id="a4c4a844eb9da1d54baafb723f4330e05" name="a4c4a844eb9da1d54baafb723f4330e05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c4a844eb9da1d54baafb723f4330e05">&#9670;&#160;</a></span>operator--() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename DERIVED&gt; </div>
+template&lt;typename T, T m&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">DERIVED <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, DERIVED &gt;::operator-- </td>
+          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, m &gt;::operator-- </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -495,21 +548,24 @@ template&lt;typename T, typename DERIVED&gt; </div>
 
 </div>
 </div>
-<a id="a552ac7787a52c1c569b90e3cd3c4ebed" name="a552ac7787a52c1c569b90e3cd3c4ebed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a552ac7787a52c1c569b90e3cd3c4ebed">&#9670;&#160;</a></span>operator-=()</h2>
+<a id="ab5449f911a3fe403d288a4b2d5e79d4d" name="ab5449f911a3fe403d288a4b2d5e79d4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5449f911a3fe403d288a4b2d5e79d4d">&#9670;&#160;</a></span>operator-=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename DERIVED&gt; </div>
+template&lt;typename T, T m&gt; </div>
+<div class="memtemplate">
+template&lt;typename = void&gt; <br />
+requires ModIntAddable&lt;T, m&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">DERIVED &amp; <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, DERIVED &gt;::operator-= </td>
+          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> &amp; <a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int</a>&lt; T, m &gt;::operator-= </td>
           <td>(</td>
-          <td class="paramtype">DERIVED</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&lt; T, m &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -521,6 +577,7 @@ template&lt;typename T, typename DERIVED&gt; </div>
 </div><div class="memdoc">
 
 <p>Compound minus operator for modular subtraction. </p>
+<dl class="section note"><dt>Note</dt><dd>Contains a compile-time check to ensure that no overflow can occur.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>The subtrahend. </td></tr>
@@ -532,26 +589,26 @@ template&lt;typename T, typename DERIVED&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Friends And Related Symbol Documentation</h2>
-<a id="aad2605d6e47eae326f5b38208273f584" name="aad2605d6e47eae326f5b38208273f584"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad2605d6e47eae326f5b38208273f584">&#9670;&#160;</a></span>operator*</h2>
+<a id="aa174daeead1041eac3b179c926525b2b" name="aa174daeead1041eac3b179c926525b2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa174daeead1041eac3b179c926525b2b">&#9670;&#160;</a></span>operator*</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename DERIVED&gt; </div>
+template&lt;typename T, T m&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">DERIVED operator* </td>
+          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> operator* </td>
           <td>(</td>
-          <td class="paramtype">DERIVED</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+          <td class="paramtype"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&lt; T, m &gt;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">DERIVED</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&lt; T, m &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -573,26 +630,26 @@ template&lt;typename T, typename DERIVED&gt; </div>
 
 </div>
 </div>
-<a id="a497c180271653fb520643fb7463cb916" name="a497c180271653fb520643fb7463cb916"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a497c180271653fb520643fb7463cb916">&#9670;&#160;</a></span>operator+</h2>
+<a id="afc3c76c371abf7855b888296a364aff6" name="afc3c76c371abf7855b888296a364aff6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc3c76c371abf7855b888296a364aff6">&#9670;&#160;</a></span>operator+</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename DERIVED&gt; </div>
+template&lt;typename T, T m&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">DERIVED operator+ </td>
+          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> operator+ </td>
           <td>(</td>
-          <td class="paramtype">DERIVED</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+          <td class="paramtype"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&lt; T, m &gt;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">DERIVED</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&lt; T, m &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -614,26 +671,26 @@ template&lt;typename T, typename DERIVED&gt; </div>
 
 </div>
 </div>
-<a id="a88f2a752c93ad22dab4a23591db0d1af" name="a88f2a752c93ad22dab4a23591db0d1af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88f2a752c93ad22dab4a23591db0d1af">&#9670;&#160;</a></span>operator-</h2>
+<a id="a00bc23dfd6cd56657baf42ecf74797ff" name="a00bc23dfd6cd56657baf42ecf74797ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00bc23dfd6cd56657baf42ecf74797ff">&#9670;&#160;</a></span>operator-</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename DERIVED&gt; </div>
+template&lt;typename T, T m&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">DERIVED operator- </td>
+          <td class="memname"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a> operator- </td>
           <td>(</td>
-          <td class="paramtype">DERIVED</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+          <td class="paramtype"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&lt; T, m &gt;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">DERIVED</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&lt; T, m &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -652,6 +709,47 @@ template&lt;typename T, typename DERIVED&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The difference of <code>lhs</code> and <code>rhs</code>. </dd></dl>
+
+</div>
+</div>
+<a id="a86835d66a942118c312c5e08bbff2171" name="a86835d66a942118c312c5e08bbff2171"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86835d66a942118c312c5e08bbff2171">&#9670;&#160;</a></span>operator==</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, T m&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool operator== </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&lt; T, m &gt;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&lt; T, m &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel friend">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Equality comparison operator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lhs</td><td>The first instance. </td></tr>
+    <tr><td class="paramname">rhs</td><td>The second instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether <code>lhs</code> and <code>rhs</code> are equal. </dd></dl>
 
 </div>
 </div>

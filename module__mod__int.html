@@ -92,39 +92,41 @@ $(function(){ initResizable(false); });
 
 <div class="header">
   <div class="summary">
+<a href="#concepts">Concepts</a> &#124;
 <a href="#classes">Classes</a> &#124;
 <a href="#files">Files</a>  </div>
   <div class="headertitle"><div class="title">mod_int Module Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Represents an element of a residue class modulo a given number.  
+<p>Represents an integer modulo another integer.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
+Concepts</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conceptntlib_1_1ModIntAddable.html">ntlib::ModIntAddable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept to ensure that no overflow can occur during addition or subtraction. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conceptntlib_1_1ModIntMultiplicable.html">ntlib::ModIntMultiplicable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept to ensure that no overflow can occur during multiplication. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classntlib_1_1rt__mod__int.html">ntlib::rt_mod_int&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an element of the residue class \(\mathbb{Z}/m\mathbb{Z}\), where the modulus \(m\) is provided at the time of construction (i.e., at run-time).  <a href="classntlib_1_1rt__mod__int.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classntlib_1_1mod__int.html">ntlib::mod_int&lt; T, m &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class representing an element of a ring of integers modulo another positive integer. The modulus is provided at compile-time.  <a href="classntlib_1_1mod__int.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classntlib_1_1ct__mod__int.html">ntlib::ct_mod_int&lt; T, m &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an element of the residue class \(\mathbb{Z}/m\mathbb{Z}\), where the modulus \(m\) is provided at compile-time.  <a href="classntlib_1_1ct__mod__int.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classntlib_1_1algebra__traits_3_01ct__mod__int_3_01T_00_01m_01_4_01_4.html">ntlib::algebra_traits&lt; ct_mod_int&lt; T, m &gt; &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of <code><a class="el" href="classntlib_1_1algebra__traits.html" title="Traits class for algebraic types.">ntlib::algebra_traits</a></code> for <code><a class="el" href="classntlib_1_1ct__mod__int.html" title="Represents an element of the residue class , where the modulus  is provided at compile-time.">ct_mod_int</a></code>.  <a href="classntlib_1_1algebra__traits_3_01ct__mod__int_3_01T_00_01m_01_4_01_4.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classntlib_1_1algebra__traits_3_01mod__int_3_01T_00_01m_01_4_01_4.html">ntlib::algebra_traits&lt; mod_int&lt; T, m &gt; &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of <code><a class="el" href="classntlib_1_1algebra__traits.html" title="Traits class for algebraic types.">ntlib::algebra_traits</a></code> for <code><a class="el" href="classntlib_1_1mod__int.html" title="Class representing an element of a ring of integers modulo another positive integer....">mod_int</a></code>.  <a href="classntlib_1_1algebra__traits_3_01mod__int_3_01T_00_01m_01_4_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represents an element of a residue class modulo a given number. </p>
-<p>Let \(m \in \mathbb{N}\). This class represents an element of the residue class \(\mathbb{Z}/m\mathbb{Z}\).</p>
-<p>There are two classes in this module.</p><ul>
-<li><code>rt_mod_int</code> takes the modulus \(m\) at run-time.</li>
-<li><code>ct_mod_int</code> takes the modulus \(m\) at compile-time. </li>
-</ul>
+<div class="textblock"><p>Represents an integer modulo another integer. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
 Files</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom">modules/types/<a class="el" href="mod__int_8cpp.html">mod_int.cpp</a></td></tr>
-<tr class="memdesc:mod__int_8cpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary module interface unit for module <code><a class="el" href="module__mod__int.html" title="Represents an element of a residue class modulo a given number.">mod_int</a></code>. <br /></td></tr>
+<tr class="memdesc:mod__int_8cpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary module interface unit for module <code><a class="el" href="module__mod__int.html" title="Represents an integer modulo another integer.">mod_int</a></code>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

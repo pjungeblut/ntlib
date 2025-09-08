@@ -8,7 +8,7 @@ var indexSectionsWithContent =
   5: "ipu",
   6: "o",
   7: "lnt",
-  8: "i",
+  8: "im",
   9: "bcdefilmprt"
 };
 

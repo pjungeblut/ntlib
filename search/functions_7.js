@@ -3,7 +3,7 @@ var searchData=
   ['icosahedral_5fnumber_0',['icosahedral_number',['../figurate__number_8cpp.html#a07c837e8a93ff522fe1f25f5ea4cacbc',1,'ntlib']]],
   ['ilog2_1',['ilog2',['../base_8cpp.html#aa5c8cbf8cd499cff12ff80bce4824b7d',1,'ntlib']]],
   ['init235_2',['init235',['../classntlib_1_1sieve__235.html#a44b9767ce95d9b71ad861e2febd482c9',1,'ntlib::sieve_235']]],
-  ['invert_3',['invert',['../classntlib_1_1mod__int.html#a33836e8472eb04fba10c76fdfc77982a',1,'ntlib::mod_int']]],
+  ['invert_3',['invert',['../classntlib_1_1mod__int.html#ab18cae7691d3c259fed51423e66d5fd6',1,'ntlib::mod_int']]],
   ['is_5feven_4',['is_even',['../base_8cpp.html#a39bed91f8675d49d8ed49b5b4289ff4d',1,'ntlib']]],
   ['is_5fodd_5',['is_odd',['../base_8cpp.html#acfddd4799112954f83b0f2412a500001',1,'ntlib']]],
   ['is_5fprime_6',['is_prime',['../prime__test_8cpp.html#a6158100d17fa4281dc67ff553b5d0a7e',1,'ntlib']]],
