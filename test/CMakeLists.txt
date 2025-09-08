@@ -102,7 +102,7 @@ add_unittest(matrix "${matrix_libs}")
 set(mod_int_libs
     ntlib_types
 )
-add_unittest(ct_mod_int "${mod_int_libs}")
+add_unittest(mod_int "${mod_int_libs}")
 
 # Modulo.
 set(modulo_libs

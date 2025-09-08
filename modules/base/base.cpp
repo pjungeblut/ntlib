@@ -49,10 +49,20 @@ class algebra_traits {};
 export template<std::integral T>
 class algebra_traits<T> {
 public:
+  /**
+   * @brief Returns the additive neutral element of `T`.
+   * 
+   * @return The additive neutral element, i.e., \f$0\f$.
+   */
   [[nodiscard]] static constexpr T get_zero() noexcept {
     return T{0};
   }
 
+  /**
+   * @brief Returns the multiplicative neutral element of `T`.
+   * 
+   * @return The multiplicative neutral element, i.e., \f$1\f$.
+   */
   [[nodiscard]] static constexpr T get_one() noexcept {
     return T{1};
   }

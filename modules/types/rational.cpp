@@ -228,10 +228,10 @@ public:
   }
 
 private:
-  /**
-   * Numerator and denominator.
-   */
+  /// @brief The numerator.
   T numerator;
+
+  /// @brief The denominator.
   T denominator;
 };
 
@@ -319,10 +319,20 @@ rational<T> operator-(const rational<T> &r) {
 export template<typename T>
 class algebra_traits<rational<T>> {
 public:
+  /**
+   * @brief Returns the additive neutral element of `rational<T>`.
+   * 
+   * @return The additive neutral element, i.e., \f$0/1\f$.
+   */
   [[nodiscard]] static constexpr rational<T> get_zero() noexcept {
     return rational<T>{T{0}, T{1}};
   }
 
+  /**
+   * @brief Returns the multiplicative neutral element of `rational<T>`.
+   * 
+   * @return The multiplicative neutral element, i.e., \f$1/1\f$.
+   */
   [[nodiscard]] static constexpr rational<T> get_one() noexcept {
     return rational<T>{T{1}, T{1}};
   }
