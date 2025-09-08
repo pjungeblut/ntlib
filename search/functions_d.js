@@ -2,7 +2,7 @@ var searchData=
 [
   ['octahedral_5fnumber_0',['octahedral_number',['../figurate__number_8cpp.html#afc97c159ce7e38f31c62014001e7eb66',1,'ntlib']]],
   ['odd_5fpart_1',['odd_part',['../base_8cpp.html#afb0f452e412b657c8f8c15df8326c62b',1,'ntlib']]],
-  ['one_2',['one',['../base_8cpp.html#af4cd1e59e9a53dbb1d9f43fa826966d2',1,'ntlib']]],
+  ['one_2',['one',['../base_8cpp.html#a473782081610020ac84065caaa2fedd1',1,'ntlib']]],
   ['operator_20bool_3',['operator bool',['../classntlib_1_1sieve__235_1_1reference.html#aff1da94e66e4d62a225c591c5b610d1e',1,'ntlib::sieve_235::reference::operator bool()'],['../classntlib_1_1rational.html#a2701185606199eec04ae847e6bb8e1af',1,'ntlib::rational::operator bool()']]],
   ['operator_20t_4',['operator T',['../classntlib_1_1mod__int.html#ad045cdb12126b6e48e43a18f42281a46',1,'ntlib::mod_int']]],
   ['operator_25_5',['operator%',['../matrix_8cpp.html#a59f49f8ba3e13bbcc1dba1bea968cf4d',1,'ntlib']]],

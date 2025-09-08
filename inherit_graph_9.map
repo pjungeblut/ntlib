@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classntlib_1_1one__helper.html" title="Helper class template to get the multiplicative neutral element of a type." alt="" coords="5,5,128,46"/>
+<area shape="rect" id="Node000000" href="$classntlib_1_1mod__int.html" title=" " alt="" coords="5,5,132,46"/>
+<area shape="rect" id="Node000001" href="$classntlib_1_1rt__mod__int.html" title="Represents an element of the residue class , where the modulus &#160;is provided at the time of constructi..." alt="" coords="180,13,322,38"/>
+<area shape="poly" id="edge2_Node000000_Node000001" title=" " alt="" coords="147,23,179,23,179,28,147,28"/>
 </map>

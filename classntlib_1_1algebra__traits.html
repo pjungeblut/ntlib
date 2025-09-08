@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NTLib - Number Theory Library: ntlib::zero_helper&lt; typename &gt; Class Template Reference</title>
+<title>NTLib - Number Theory Library: ntlib::algebra_traits&lt; typename &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,22 +90,24 @@ $(function(){ initResizable(false); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>ntlib</b></li><li class="navelem"><a class="el" href="classntlib_1_1zero__helper.html">zero_helper</a></li>  </ul>
+<li class="navelem"><b>ntlib</b></li><li class="navelem"><a class="el" href="classntlib_1_1algebra__traits.html">algebra_traits</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
 <div class="header">
-  <div class="headertitle"><div class="title">ntlib::zero_helper&lt; typename &gt; Class Template Reference<span class="mlabels"><span class="mlabel export">export</span></span><div class="ingroups">module <a class="el" href="module__base.html">base</a></div></div></div>
+  <div class="headertitle"><div class="title">ntlib::algebra_traits&lt; typename &gt; Class Template Reference<span class="mlabels"><span class="mlabel export">export</span></span><div class="ingroups">module <a class="el" href="module__base.html">base</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Helper class template to get the additive neutral element of a type.  
+<p>Traits class for algebraic types.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename&gt;<br />
-class ntlib::zero_helper&lt; typename &gt;</div><p>Helper class template to get the additive neutral element of a type. </p>
-<p>This is the primary template definition. It is an empty class, in particular, it does not contain a <code>get_zero</code> method.</p>
-<p>Specializations for specific types must provide a static <code>get_zero</code> method. </p>
+class ntlib::algebra_traits&lt; typename &gt;</div><p>Traits class for algebraic types. </p>
+<p>This empty class is the primary template definition. All types supposed to be used with NTLib need to specialize this class and provide the following static members:</p><ul>
+<li><code>get_zero</code>: Returns the additive neutral element.</li>
+<li><code>get_one</code>: Returns the multiplicative neutral element. </li>
+</ul>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>modules/base/<a class="el" href="base_8cpp.html">base.cpp</a></li>
 </ul>
