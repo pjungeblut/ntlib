@@ -150,7 +150,6 @@ export template<typename T>
 [[nodiscard]] constexpr bool mod_is_square(T a, T p) noexcept {
   if (a == T{0}) { return true; }
   if (p == T{2}) { return true; }
-  const auto mod_p = [p](T n) { return ntlib::mod(n, p); };
   return ntlib::mod_pow(a, (p - T{1}) / T{2}, p, ntlib::mod<T>) == T{1};
 }
 

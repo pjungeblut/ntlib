@@ -11,8 +11,8 @@ project(NTLib
 ################################################################################
 
 # Colored compiler output.
-option (NTLIB_COLORED_COMPILET_OUTPUT "Always produce ANSI-colored output (GNU/Clang only)." FALSE)
-if (${NTLIB_COLORED_COMPILET_OUTPUT})
+option(NTLIB_COLORED_COMPILER_OUTPUT "Whether to color the compiler output (GNU/Clang only)." OFF)
+if (${NTLIB_COLORED_COMPILER_OUTPUT})
   if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     add_compile_options(-fdiagnostics-color=always)
   elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -40,17 +40,16 @@ add_library(ntlib STATIC
 target_compile_features(ntlib PUBLIC cxx_std_23)
 
 ################################################################################
-# NTLib comes with tests and benchmarks.
-# By default, these are not bulid, except this file is at the root of the source
-# tree, i.e., NTLib is not included as a dependency but bulid by itself.
+# NTLib comes with extensive unit tests.
+# By default, these are not built, except this file is at the root of the source
+# tree, i.e., NTLib is not included as a dependency but built by itself.
 ################################################################################
 
 # This evaluates to false if NTLib is included by another project.
 if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
   # Options.
-  option(NTLIB_BUILD_TESTS      "whether tests should be built"          ON)
-  option(NTLIB_BUILD_BENCHMARKS "whether benchmarks should be built"     ON)
-  option(NTLIB_BUILD_PACKAGE    "whether source package should be built" ON)
+  option(NTLIB_BUILD_TESTS    "Whether tests should be built."          ON)
+  option(NTLIB_BUILD_PACKAGE  "Whether source package should be built." ON)
 
   # Tests.
   if (NTLIB_BUILD_TESTS)
@@ -59,15 +58,6 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     enable_testing()
 
     add_subdirectory(test)
-  endif()
-
-  # Benchmarks.
-  if (NTLIB_BUILD_BENCHMARKS)
-    # Don't build tests for Google Benchmark.
-    set(BENCHMARK_ENABLE_GTEST_TESTS OFF
-        CACHE INTERNAL "don't build tests for Google Benchmark" FORCE)
-
-    add_subdirectory(benchmarks)
   endif()
 
   # Source package.
