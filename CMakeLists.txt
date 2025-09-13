@@ -7,20 +7,6 @@ project(NTLib
   )
 
 ################################################################################
-# General settings.
-################################################################################
-
-# Colored compiler output.
-option(NTLIB_COLORED_COMPILER_OUTPUT "Whether to color the compiler output (GNU/Clang only)." OFF)
-if (${NTLIB_COLORED_COMPILER_OUTPUT})
-  if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    add_compile_options(-fdiagnostics-color=always)
-  elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    add_compile_options(-fcolor-diagnostics)
-  endif()
-endif()
-
-################################################################################
 # Build NTLib as a static library.
 ################################################################################
 

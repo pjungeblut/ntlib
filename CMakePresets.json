@@ -17,14 +17,6 @@
       }
     },
     {
-      "name": "gcc",
-      "hidden": true,
-      "cacheVariables": {
-        "CMAKE_CXX_COMPILER": "g++",
-        "CMAKE_C_COMPILER": "gcc"
-      }
-    },
-    {
       "name": "debug",
       "displayName": "Debug (Clang latest)",
       "inherits": ["common", "clang"],
