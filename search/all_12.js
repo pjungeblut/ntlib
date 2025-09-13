@@ -1,10 +1,11 @@
 var searchData=
 [
-  ['tests_0',['Run Tests',['../md_README.html#autotoc_md17',1,'']]],
-  ['theory_20library_1',['NTLib - Number Theory Library',['../index.html',1,'']]],
-  ['theory_20library_20ntlib_2',['Number Theory Library (NTLib)',['../md_README.html',1,'']]],
-  ['to_5fstring_3',['to_string',['../matrix_8cpp.html#a7e0c80166b87def71eb256cc968a6cd7',1,'ntlib::to_string(matrix&lt; ROWS, COLUMNS, T &gt; mat)'],['../rational_8cpp.html#a7f196ddbc27630394f521d4c8955c398',1,'ntlib::to_string(const rational&lt; T &gt; &amp;r)']]],
-  ['turan_5fnumber_4',['turan_number',['../module__turan__number.html',1,'turan_number module'],['../turan__number_8cpp.html#a686c79cda56a8db8c582800501800a0e',1,'ntlib::turan_number()']]],
-  ['turan_5fnumber_2ecpp_5',['turan_number.cpp',['../turan__number_8cpp.html',1,'']]],
-  ['types_6',['Types',['../index.html#autotoc_md7',1,'']]]
+  ['sgn_0',['sgn',['../base_8cpp.html#a0da3fec11ac16f272889ba76a1c2be6d',1,'ntlib']]],
+  ['sieve_5f235_1',['sieve_235',['../classntlib_1_1sieve__235.html',1,'ntlib::sieve_235&lt; Allocator &gt;'],['../classntlib_1_1sieve__235.html#a6e0ef27711ec99820b06563d5827d5fd',1,'ntlib::sieve_235::sieve_235()=default'],['../classntlib_1_1sieve__235.html#a64cf0c0805e926e9ffb29f0748ef5b26',1,'ntlib::sieve_235::sieve_235(std::size_t min_capacity)']]],
+  ['sieve_5f235_2ecpp_2',['sieve_235.cpp',['../sieve__235_8cpp.html',1,'']]],
+  ['size_3',['size',['../classntlib_1_1sieve__235.html#ab55ea38e9f1ad57d111c147706900b41',1,'ntlib::sieve_235']]],
+  ['small_5fprimes_4',['SMALL_PRIMES',['../base_8cpp.html#aeb55d56667aaaa7cbb319b9b0d1999bf',1,'ntlib']]],
+  ['small_5fprimes_5fbiggest_5',['SMALL_PRIMES_BIGGEST',['../base_8cpp.html#a09ca98914193dcbcbae25a20dc76417a',1,'ntlib']]],
+  ['some_20features_20of_20ntlib_6',['Some Features of NTLib',['../md_README.html#autotoc_md10',1,'']]],
+  ['started_7',['Getting Started',['../md_README.html#autotoc_md12',1,'']]]
 ];

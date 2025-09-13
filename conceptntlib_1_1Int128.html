@@ -103,8 +103,12 @@ $(function(){ initResizable(false); });
 <a href="#details">More...</a></p>
 <h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="conceptntlib_1_1Int128.html">ntlib::Int128</a> =  std::is_same_v&lt;T, i128&gt; || std::is_same_v&lt;T, u128&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="conceptntlib_1_1Int128.html">ntlib::Int128</a> = </div>
+<div class="line">    std::is_same_v&lt;std::remove_cvref_t&lt;T&gt;, <a class="code hl_typedef" href="int128_8cpp.html#a9b2973a8687d25397e5c4272462c801b">i128</a>&gt; ||</div>
+<div class="line">    std::is_same_v&lt;std::remove_cvref_t&lt;T&gt;, <a class="code hl_typedef" href="int128_8cpp.html#acb1f9a65466024483bc6ba880f63daa6">u128</a>&gt;</div>
 <div class="ttc" id="aconceptntlib_1_1Int128_html"><div class="ttname"><a href="conceptntlib_1_1Int128.html">ntlib::Int128</a></div><div class="ttdoc">Concept for signed and unsigned NTLib 128 bit integers.</div><div class="ttdef"><b>Definition</b> int128.cpp:38</div></div>
+<div class="ttc" id="aint128_8cpp_html_a9b2973a8687d25397e5c4272462c801b"><div class="ttname"><a href="int128_8cpp.html#a9b2973a8687d25397e5c4272462c801b">ntlib::i128</a></div><div class="ttdeci">__int128 i128</div><div class="ttdoc">Wrapper around (non-standard) built-in 128-bit signed integer.</div><div class="ttdef"><b>Definition</b> int128.cpp:25</div></div>
+<div class="ttc" id="aint128_8cpp_html_acb1f9a65466024483bc6ba880f63daa6"><div class="ttname"><a href="int128_8cpp.html#acb1f9a65466024483bc6ba880f63daa6">ntlib::u128</a></div><div class="ttdeci">unsigned __int128 u128</div><div class="ttdoc">Wrapper around (non-standard) built-in 128-bit unsigned integer.</div><div class="ttdef"><b>Definition</b> int128.cpp:30</div></div>
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Concept for signed and unsigned NTLib 128 bit integers. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>

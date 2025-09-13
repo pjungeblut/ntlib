@@ -97,6 +97,7 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classntlib_1_1algebra__traits_3_01mod__int_3_01T_00_01m_01_4_01_4-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ntlib::algebra_traits&lt; mod_int&lt; T, m &gt; &gt; Class Template Reference<span class="mlabels"><span class="mlabel export">export</span></span><div class="ingroups">module <a class="el" href="module__mod__int.html">mod_int</a></div></div></div>
 </div><!--header-->
@@ -113,9 +114,20 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ac0348b68eabe4fcc8c428c431a2cb7f0" id="r_ac0348b68eabe4fcc8c428c431a2cb7f0"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classntlib_1_1mod__int.html">mod_int</a>&lt; T, m &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0348b68eabe4fcc8c428c431a2cb7f0">get_one</a> () noexcept</td></tr>
 <tr class="memdesc:ac0348b68eabe4fcc8c428c431a2cb7f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the multiplicative neutral element of <code><a class="el" href="classntlib_1_1mod__int.html" title="Class representing an element of a ring of integers modulo another positive integer....">mod_int</a>&lt;T, m&gt;</code>.  <br /></td></tr>
 <tr class="separator:ac0348b68eabe4fcc8c428c431a2cb7f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a045166127b3268a65ddc5fff7fa85f58" id="r_a045166127b3268a65ddc5fff7fa85f58"><td class="memItemLeft" align="right" valign="top"><a id="a045166127b3268a65ddc5fff7fa85f58" name="a045166127b3268a65ddc5fff7fa85f58"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_additive_commutative</b> = true</td></tr>
+<tr class="memdesc:a045166127b3268a65ddc5fff7fa85f58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modular addition is commutative. <br /></td></tr>
+<tr class="separator:a045166127b3268a65ddc5fff7fa85f58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72f8e29a8d4677cb449686d2b6325d9b" id="r_a72f8e29a8d4677cb449686d2b6325d9b"><td class="memItemLeft" align="right" valign="top"><a id="a72f8e29a8d4677cb449686d2b6325d9b" name="a72f8e29a8d4677cb449686d2b6325d9b"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_multiplicative_commutative</b> = true</td></tr>
+<tr class="memdesc:a72f8e29a8d4677cb449686d2b6325d9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modular multiplication is commutative. <br /></td></tr>
+<tr class="separator:a72f8e29a8d4677cb449686d2b6325d9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename T, T m&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;Integer T, T m&gt;<br />
 class ntlib::algebra_traits&lt; mod_int&lt; T, m &gt; &gt;</div><p>Specialization of <code><a class="el" href="classntlib_1_1algebra__traits.html" title="Traits class for algebraic types.">ntlib::algebra_traits</a></code> for <code><a class="el" href="classntlib_1_1mod__int.html" title="Class representing an element of a ring of integers modulo another positive integer....">mod_int</a></code>. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -131,7 +143,7 @@ class ntlib::algebra_traits&lt; mod_int&lt; T, m &gt; &gt;</div><p>Specializatio
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, T m&gt; </div>
+template&lt;Integer T, T m&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -161,7 +173,7 @@ template&lt;typename T, T m&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, T m&gt; </div>
+template&lt;Integer T, T m&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

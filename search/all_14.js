@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['zero_0',['zero',['../base_8cpp.html#ad69384c31440f495650c1427727680f3',1,'ntlib']]]
+  ['u128_0',['u128',['../int128_8cpp.html#acb1f9a65466024483bc6ba880f63daa6',1,'ntlib']]],
+  ['usage_20in_20other_20projects_1',['Release Builds and Installation (for Usage in other Projects)',['../md_README.html#autotoc_md16',1,'']]]
 ];

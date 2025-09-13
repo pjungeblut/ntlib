@@ -1,29 +1,28 @@
 <map id="modules/base/base.cpp" name="modules/base/base.cpp">
-<area shape="rect" id="Node000001" title="Primary module interface unit for module base." alt="" coords="450,5,608,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,80,105"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="450,31,290,50,96,81,95,76,289,45,449,25"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="103,79,152,105"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="450,32,322,51,168,81,167,76,321,46,449,27"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="177,79,215,105"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="451,34,350,53,231,81,230,76,349,48,451,29"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="240,79,304,105"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="486,34,320,80,318,75,485,29"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="328,79,387,105"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="501,34,401,75,399,70,499,29"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="411,79,468,105"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="516,34,468,71,465,67,512,29"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="492,79,566,105"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="532,31,532,63,526,63,526,31"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="591,79,651,105"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="546,29,596,67,592,72,543,34"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="676,79,753,105"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="562,29,670,71,668,75,560,34"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="777,79,844,105"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="578,29,762,76,761,81,576,34"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="868,79,929,105"/>
-<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="607,29,719,49,854,76,853,81,718,54,606,34"/>
-<area shape="rect" id="Node000013" title=" " alt="" coords="952,79,1034,105"/>
-<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="609,27,758,47,938,76,937,81,757,52,608,32"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="1058,79,1115,105"/>
-<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="609,22,803,40,921,55,1043,76,1042,81,921,61,802,45,608,27"/>
+<area shape="rect" id="Node000001" title="Primary module interface unit for module base." alt="" coords="402,7,560,32"/>
+<area shape="poly" id="edge13_Node000001_Node000001" title=" " alt="" coords="535,4,570,6,582,11,587,20,584,27,576,32,551,36,550,31,574,27,580,23,582,20,579,15,569,11,535,9"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,80,80,106"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="402,34,263,54,95,82,95,77,262,48,401,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="103,80,152,106"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="404,36,296,55,168,83,167,78,295,50,403,30"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="177,80,215,106"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="421,36,335,55,231,83,229,78,334,50,420,31"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="240,80,304,106"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="447,36,320,79,318,74,445,30"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="328,80,387,106"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="461,35,392,75,390,70,459,31"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="411,80,468,106"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="477,34,457,68,452,66,472,31"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="492,80,553,106"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="490,31,510,66,506,68,486,34"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="577,80,654,106"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="505,31,581,71,578,75,503,35"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="678,80,746,106"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="521,30,664,75,663,80,520,36"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="770,80,830,106"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="542,30,755,77,754,83,541,36"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="854,80,935,106"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="561,30,840,77,839,83,560,35"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="959,80,1016,106"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="561,25,733,43,837,58,944,77,943,83,837,64,733,49,560,30"/>
 </map>

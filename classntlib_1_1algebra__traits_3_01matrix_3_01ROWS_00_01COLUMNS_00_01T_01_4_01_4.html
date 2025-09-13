@@ -97,6 +97,7 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classntlib_1_1algebra__traits_3_01matrix_3_01ROWS_00_01COLUMNS_00_01T_01_4_01_4-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ntlib::algebra_traits&lt; matrix&lt; ROWS, COLUMNS, T &gt; &gt; Class Template Reference<span class="mlabels"><span class="mlabel export">export</span></span><div class="ingroups">module <a class="el" href="module__matrix.html">matrix</a></div></div></div>
 </div><!--header-->
@@ -113,9 +114,20 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a715532e4c91dacd72218a16ae370e4e0" id="r_a715532e4c91dacd72218a16ae370e4e0"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classntlib_1_1matrix.html">matrix</a>&lt; ROWS, COLUMNS, T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a715532e4c91dacd72218a16ae370e4e0">get_one</a> () noexcept</td></tr>
 <tr class="memdesc:a715532e4c91dacd72218a16ae370e4e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the multiplicative neutral element of <code>matrix&lt;ROWS, COLUMNS, T&gt;</code>.  <br /></td></tr>
 <tr class="separator:a715532e4c91dacd72218a16ae370e4e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:ad0ee48ee87781ed673f5b225f30eef7d" id="r_ad0ee48ee87781ed673f5b225f30eef7d"><td class="memItemLeft" align="right" valign="top"><a id="ad0ee48ee87781ed673f5b225f30eef7d" name="ad0ee48ee87781ed673f5b225f30eef7d"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_additive_commutative</b> = true</td></tr>
+<tr class="memdesc:ad0ee48ee87781ed673f5b225f30eef7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix addition is commutative. <br /></td></tr>
+<tr class="separator:ad0ee48ee87781ed673f5b225f30eef7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a768739d2846c2b36e5427b1de8674616" id="r_a768739d2846c2b36e5427b1de8674616"><td class="memItemLeft" align="right" valign="top"><a id="a768739d2846c2b36e5427b1de8674616" name="a768739d2846c2b36e5427b1de8674616"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_multiplicative_commutative</b> = false</td></tr>
+<tr class="memdesc:a768739d2846c2b36e5427b1de8674616"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix multiplication is not commutative. <br /></td></tr>
+<tr class="separator:a768739d2846c2b36e5427b1de8674616"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;std::size_t ROWS, std::size_t COLUMNS, Ring T&gt;<br />
 class ntlib::algebra_traits&lt; matrix&lt; ROWS, COLUMNS, T &gt; &gt;</div><p>Specialization of <code><a class="el" href="classntlib_1_1algebra__traits.html" title="Traits class for algebraic types.">ntlib::algebra_traits</a></code> for <code>matrix</code>. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -132,7 +144,7 @@ class ntlib::algebra_traits&lt; matrix&lt; ROWS, COLUMNS, T &gt; &gt;</div><p>Sp
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
+template&lt;std::size_t ROWS, std::size_t COLUMNS, Ring T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -162,7 +174,7 @@ template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t ROWS, std::size_t COLUMNS, std::regular T&gt; </div>
+template&lt;std::size_t ROWS, std::size_t COLUMNS, Ring T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

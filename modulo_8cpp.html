@@ -105,6 +105,8 @@ $(function(){ initResizable(false); });
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;cassert&gt;</code><br />
+<code>#include &lt;concepts&gt;</code><br />
+<code>#include &lt;functional&gt;</code><br />
 <code>#include &lt;random&gt;</code><br />
 <code>#include &lt;ranges&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
@@ -114,83 +116,85 @@ Include dependency graph for modulo.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="modulo_8cpp__incl.png" border="0" usemap="#amodules_2base_2modulo_8cpp" alt=""/></div>
 <map name="amodules_2base_2modulo_8cpp" id="amodules_2base_2modulo_8cpp">
-<area shape="rect" title="Primary module interface unit for module modulo." alt="" coords="194,5,366,31"/>
+<area shape="rect" title="Primary module interface unit for module modulo." alt="" coords="263,5,435,31"/>
 <area shape="rect" title=" " alt="" coords="5,153,80,178"/>
-<area shape="poly" title=" " alt="" coords="261,34,76,147,74,142,259,29"/>
+<area shape="poly" title=" " alt="" coords="325,34,83,148,81,143,322,29"/>
 <area shape="rect" title=" " alt="" coords="104,153,168,178"/>
-<area shape="poly" title=" " alt="" coords="270,33,160,143,157,140,266,29"/>
-<area shape="rect" title=" " alt="" coords="549,79,613,105"/>
-<area shape="poly" title=" " alt="" coords="335,29,534,76,533,81,334,34"/>
-<area shape="rect" title=" " alt="" coords="192,153,253,178"/>
-<area shape="poly" title=" " alt="" coords="278,32,235,139,230,137,273,30"/>
-<area shape="rect" title=" " alt="" coords="276,153,358,178"/>
-<area shape="poly" title=" " alt="" coords="285,31,313,137,308,138,280,32"/>
-<area shape="rect" href="base_8cpp.html" title="Primary module interface unit for module base." alt="" coords="475,79,524,105"/>
-<area shape="poly" title=" " alt="" coords="318,29,461,75,459,80,316,34"/>
-<area shape="poly" title=" " alt="" coords="475,99,319,119,95,155,94,150,318,114,475,93"/>
-<area shape="poly" title=" " alt="" coords="475,100,354,121,184,155,183,149,353,116,474,95"/>
-<area shape="poly" title=" " alt="" coords="475,102,268,155,267,149,474,97"/>
-<area shape="poly" title=" " alt="" coords="476,105,363,149,361,144,474,100"/>
-<area shape="rect" title=" " alt="" coords="920,153,970,178"/>
-<area shape="poly" title=" " alt="" coords="526,99,538,102,639,119,720,126,802,132,906,150,905,155,801,138,720,131,638,124,537,107,524,104"/>
-<area shape="rect" title=" " alt="" coords="994,153,1032,178"/>
-<area shape="poly" title=" " alt="" coords="526,99,538,102,603,114,660,120,757,124,856,129,913,137,980,150,979,155,912,142,855,135,757,129,659,125,602,119,537,107,524,104"/>
-<area shape="rect" title=" " alt="" coords="1057,153,1116,178"/>
-<area shape="poly" title=" " alt="" coords="526,99,538,102,612,115,676,122,787,128,899,132,965,139,1042,150,1041,155,964,144,899,138,787,133,676,128,612,120,537,107,524,104"/>
-<area shape="rect" title=" " alt="" coords="382,153,439,178"/>
-<area shape="poly" title=" " alt="" coords="486,107,439,145,436,141,483,103"/>
-<area shape="rect" title=" " alt="" coords="463,153,537,178"/>
-<area shape="poly" title=" " alt="" coords="502,105,502,137,497,137,497,105"/>
-<area shape="rect" title=" " alt="" coords="562,153,622,178"/>
-<area shape="poly" title=" " alt="" coords="517,103,566,141,563,145,514,107"/>
-<area shape="rect" title=" " alt="" coords="646,153,724,178"/>
-<area shape="poly" title=" " alt="" coords="526,100,641,144,639,149,524,105"/>
-<area shape="rect" title=" " alt="" coords="748,153,815,178"/>
-<area shape="poly" title=" " alt="" coords="526,99,538,102,733,149,732,154,536,107,524,104"/>
-<area shape="rect" title=" " alt="" coords="839,153,896,178"/>
-<area shape="poly" title=" " alt="" coords="526,99,538,102,616,118,679,126,743,135,824,150,823,155,742,140,678,132,615,123,537,107,524,104"/>
+<area shape="poly" title=" " alt="" coords="333,34,168,146,165,141,330,29"/>
+<area shape="rect" title=" " alt="" coords="509,79,584,105"/>
+<area shape="poly" title=" " alt="" coords="384,29,500,71,498,76,382,34"/>
+<area shape="rect" title=" " alt="" coords="192,153,269,178"/>
+<area shape="poly" title=" " alt="" coords="342,33,252,142,248,139,337,30"/>
+<area shape="rect" title=" " alt="" coords="608,79,672,105"/>
+<area shape="poly" title=" " alt="" coords="401,29,593,76,592,81,400,34"/>
+<area shape="rect" title=" " alt="" coords="294,153,354,178"/>
+<area shape="poly" title=" " alt="" coords="350,32,331,138,326,137,344,31"/>
+<area shape="rect" title=" " alt="" coords="378,153,459,178"/>
+<area shape="poly" title=" " alt="" coords="357,30,409,137,404,140,352,32"/>
+<area shape="rect" href="base_8cpp.html" title="Primary module interface unit for module base." alt="" coords="412,79,462,105"/>
+<area shape="poly" title=" " alt="" coords="366,29,412,67,409,71,362,34"/>
+<area shape="poly" title=" " alt="" coords="412,100,281,121,96,155,95,150,280,116,412,94"/>
+<area shape="poly" title=" " alt="" coords="413,101,184,155,183,149,411,96"/>
+<area shape="poly" title=" " alt="" coords="413,104,281,150,279,145,411,99"/>
+<area shape="poly" title=" " alt="" coords="419,107,357,146,355,142,417,103"/>
+<area shape="poly" title=" " alt="" coords="437,106,428,138,423,137,432,104"/>
+<area shape="poly" title=" " alt="" coords="463,76,480,78,486,84,488,92,486,101,479,106,476,102,481,98,483,92,482,86,478,83,462,81"/>
+<area shape="rect" title=" " alt="" coords="968,153,1018,178"/>
+<area shape="poly" title=" " alt="" coords="463,96,498,102,624,116,725,122,826,129,954,150,953,155,825,135,725,127,624,121,497,107,462,101"/>
+<area shape="rect" title=" " alt="" coords="483,153,522,178"/>
+<area shape="poly" title=" " alt="" coords="450,103,483,139,479,143,446,107"/>
+<area shape="rect" title=" " alt="" coords="546,153,606,178"/>
+<area shape="poly" title=" " alt="" coords="462,103,540,143,537,147,459,108"/>
+<area shape="rect" title=" " alt="" coords="630,153,687,178"/>
+<area shape="poly" title=" " alt="" coords="463,99,616,148,614,153,461,104"/>
+<area shape="rect" title=" " alt="" coords="711,153,771,178"/>
+<area shape="poly" title=" " alt="" coords="463,96,697,149,696,154,462,101"/>
+<area shape="rect" title=" " alt="" coords="796,153,863,178"/>
+<area shape="poly" title=" " alt="" coords="463,95,498,102,638,124,781,149,780,155,637,130,497,107,462,101"/>
+<area shape="rect" title=" " alt="" coords="887,153,944,178"/>
+<area shape="poly" title=" " alt="" coords="463,96,498,102,601,116,683,123,767,132,872,150,871,155,766,138,683,129,601,121,497,107,462,101"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5f9b09cdaa3e63bb5f17e3d3b4c00f44" id="r_a5f9b09cdaa3e63bb5f17e3d3b4c00f44"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a5f9b09cdaa3e63bb5f17e3d3b4c00f44" id="r_a5f9b09cdaa3e63bb5f17e3d3b4c00f44"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; </td></tr>
 <tr class="memitem:a5f9b09cdaa3e63bb5f17e3d3b4c00f44"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a5f9b09cdaa3e63bb5f17e3d3b4c00f44">ntlib::floor_div</a> (T a, T b) noexcept</td></tr>
 <tr class="memdesc:a5f9b09cdaa3e63bb5f17e3d3b4c00f44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the rounded down quotient of two given numbers.  <br /></td></tr>
 <tr class="separator:a5f9b09cdaa3e63bb5f17e3d3b4c00f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa71218fcdf1a8db275de8c2d8f39af07" id="r_aa71218fcdf1a8db275de8c2d8f39af07"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:aa71218fcdf1a8db275de8c2d8f39af07" id="r_aa71218fcdf1a8db275de8c2d8f39af07"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; </td></tr>
 <tr class="memitem:aa71218fcdf1a8db275de8c2d8f39af07"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aa71218fcdf1a8db275de8c2d8f39af07">ntlib::ceil_div</a> (T a, T b) noexcept</td></tr>
 <tr class="memdesc:aa71218fcdf1a8db275de8c2d8f39af07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the rounded up quotient of two given numbers.  <br /></td></tr>
 <tr class="separator:aa71218fcdf1a8db275de8c2d8f39af07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab11afb456eb969b2c041a515fcbe83d2" id="r_ab11afb456eb969b2c041a515fcbe83d2"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:ab11afb456eb969b2c041a515fcbe83d2" id="r_ab11afb456eb969b2c041a515fcbe83d2"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; </td></tr>
 <tr class="memitem:ab11afb456eb969b2c041a515fcbe83d2"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab11afb456eb969b2c041a515fcbe83d2">ntlib::mod</a> (T a, T m) noexcept</td></tr>
 <tr class="memdesc:ab11afb456eb969b2c041a515fcbe83d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The mathematical modulo operation.  <br /></td></tr>
 <tr class="separator:ab11afb456eb969b2c041a515fcbe83d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7867f57080cee92f122ba7d28b0e3e20" id="r_a7867f57080cee92f122ba7d28b0e3e20"><td class="memTemplParams" colspan="2">template&lt;typename A, typename B, typename M, typename MF&gt; </td></tr>
+<tr class="memitem:a7867f57080cee92f122ba7d28b0e3e20" id="r_a7867f57080cee92f122ba7d28b0e3e20"><td class="memTemplParams" colspan="2">template&lt;MultiplicativeMonoid A, Integer B, Integer M, std::invocable&lt; A, M &gt; MF&gt; </td></tr>
 <tr class="memitem:a7867f57080cee92f122ba7d28b0e3e20"><td class="memTemplItemLeft" align="right" valign="top">constexpr A&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a7867f57080cee92f122ba7d28b0e3e20">ntlib::mod_pow</a> (A a, B b, M m, MF mod_func) noexcept</td></tr>
 <tr class="memdesc:a7867f57080cee92f122ba7d28b0e3e20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary exponentiation with a custom mod-function and modulus.  <br /></td></tr>
 <tr class="separator:a7867f57080cee92f122ba7d28b0e3e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22e7f00087ba99c51a1220fd8953e394" id="r_a22e7f00087ba99c51a1220fd8953e394"><td class="memTemplParams" colspan="2">template&lt;typename T, typename S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
+<tr class="memitem:a22e7f00087ba99c51a1220fd8953e394" id="r_a22e7f00087ba99c51a1220fd8953e394"><td class="memTemplParams" colspan="2">template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
 <tr class="memitem:a22e7f00087ba99c51a1220fd8953e394"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a22e7f00087ba99c51a1220fd8953e394">ntlib::mod_mult_inv</a> (T a, T m) noexcept</td></tr>
 <tr class="memdesc:a22e7f00087ba99c51a1220fd8953e394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the multiplicative inverse.  <br /></td></tr>
 <tr class="separator:a22e7f00087ba99c51a1220fd8953e394"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34f49ac624aa3a81b254add17b64fdce" id="r_a34f49ac624aa3a81b254add17b64fdce"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a34f49ac624aa3a81b254add17b64fdce" id="r_a34f49ac624aa3a81b254add17b64fdce"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; </td></tr>
 <tr class="memitem:a34f49ac624aa3a81b254add17b64fdce"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a34f49ac624aa3a81b254add17b64fdce">ntlib::mod_is_square</a> (T a, T p) noexcept</td></tr>
 <tr class="memdesc:a34f49ac624aa3a81b254add17b64fdce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test whether a given number is a quadratic residue module a prime.  <br /></td></tr>
 <tr class="separator:a34f49ac624aa3a81b254add17b64fdce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42e78f523153222493f334a23cdb9cd0" id="r_a42e78f523153222493f334a23cdb9cd0"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:a42e78f523153222493f334a23cdb9cd0" id="r_a42e78f523153222493f334a23cdb9cd0"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; </td></tr>
 <tr class="memitem:a42e78f523153222493f334a23cdb9cd0"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a42e78f523153222493f334a23cdb9cd0">ntlib::mod_sqrt</a> (T n, T p) noexcept</td></tr>
 <tr class="memdesc:a42e78f523153222493f334a23cdb9cd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes square roots moduolo an odd prime.  <br /></td></tr>
 <tr class="separator:a42e78f523153222493f334a23cdb9cd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb25a1902a69cca093f750091d8ad0d0" id="r_abb25a1902a69cca093f750091d8ad0d0"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:abb25a1902a69cca093f750091d8ad0d0" id="r_abb25a1902a69cca093f750091d8ad0d0"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; </td></tr>
 <tr class="memitem:abb25a1902a69cca093f750091d8ad0d0"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#abb25a1902a69cca093f750091d8ad0d0">ntlib::mod_factorial</a> (T n, T m)</td></tr>
 <tr class="memdesc:abb25a1902a69cca093f750091d8ad0d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a factorial modulo a given number.  <br /></td></tr>
 <tr class="separator:abb25a1902a69cca093f750091d8ad0d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96502f7ab4282a55b19fb66b484bfb82" id="r_a96502f7ab4282a55b19fb66b484bfb82"><td class="memTemplParams" colspan="2">template&lt;typename T, typename S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
+<tr class="memitem:a96502f7ab4282a55b19fb66b484bfb82" id="r_a96502f7ab4282a55b19fb66b484bfb82"><td class="memTemplParams" colspan="2">template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
 <tr class="memitem:a96502f7ab4282a55b19fb66b484bfb82"><td class="memTemplItemLeft" align="right" valign="top">constexpr S&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a96502f7ab4282a55b19fb66b484bfb82">ntlib::legendre</a> (T a, T p) noexcept</td></tr>
 <tr class="memdesc:a96502f7ab4282a55b19fb66b484bfb82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the Legendre Symbol.  <br /></td></tr>
 <tr class="separator:a96502f7ab4282a55b19fb66b484bfb82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc687d134cf78816e9a25ad1f1d55e04" id="r_adc687d134cf78816e9a25ad1f1d55e04"><td class="memTemplParams" colspan="2">template&lt;typename T, typename S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
+<tr class="memitem:adc687d134cf78816e9a25ad1f1d55e04" id="r_adc687d134cf78816e9a25ad1f1d55e04"><td class="memTemplParams" colspan="2">template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
 <tr class="memitem:adc687d134cf78816e9a25ad1f1d55e04"><td class="memTemplItemLeft" align="right" valign="top">constexpr S&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#adc687d134cf78816e9a25ad1f1d55e04">ntlib::jacobi</a> (T a, T b) noexcept</td></tr>
 <tr class="memdesc:adc687d134cf78816e9a25ad1f1d55e04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the Jacobi Symbol \(\left(\frac{a}{p}\right)\).  <br /></td></tr>
 <tr class="separator:adc687d134cf78816e9a25ad1f1d55e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -204,7 +208,7 @@ Functions</h2></td></tr>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;Integer T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -251,7 +255,7 @@ template&lt;typename T&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;Integer T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -298,7 +302,7 @@ template&lt;typename T&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename S = std::make_signed_t&lt;T&gt;&gt; </div>
+template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -346,7 +350,7 @@ template&lt;typename T, typename S = std::make_signed_t&lt;T&gt;&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename S = std::make_signed_t&lt;T&gt;&gt; </div>
+template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -395,7 +399,7 @@ template&lt;typename T, typename S = std::make_signed_t&lt;T&gt;&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;Integer T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -443,7 +447,7 @@ template&lt;typename T&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;Integer T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -491,7 +495,7 @@ template&lt;typename T&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;Integer T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -539,7 +543,7 @@ template&lt;typename T&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T, typename S = std::make_signed_t&lt;T&gt;&gt; </div>
+template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -588,7 +592,7 @@ template&lt;typename T, typename S = std::make_signed_t&lt;T&gt;&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename A, typename B, typename M, typename MF&gt; </div>
+template&lt;MultiplicativeMonoid A, Integer B, Integer M, std::invocable&lt; A, M &gt; MF&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -622,8 +626,8 @@ template&lt;typename A, typename B, typename M, typename MF&gt; </div>
 </div><div class="memdoc">
 
 <p>Binary exponentiation with a custom mod-function and modulus. </p>
-<p>Let \(\mathrm{mod_func} \colon A \times M \to A\) be a mod-function. Computes \(\mathrm{mod_func}(a^b, m)\) using binary exponentation.</p>
-<p>Complexity: \(O(\log(b))\) calls to \(\mathrm{mod_func}\).</p>
+<p>Let \(\mathrm{mod\_func} \colon A \times M \to A\) be a mod-function. Computes \(\mathrm{mod\_func}(a^b, m)\) using binary exponentation.</p>
+<p>Complexity: \(O(\log(b))\) calls to \(\mathrm{mod\_func}\).</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">A</td><td>A multiplicative monoid. </td></tr>
@@ -642,7 +646,7 @@ template&lt;typename A, typename B, typename M, typename MF&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of \(\mathrm{mod_func}\) applied to the power \(a^b\) and the modulus \(m\). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of \(\mathrm{mod\_func}\) applied to the power \(a^b\) and the modulus \(m\). </dd></dl>
 
 </div>
 </div>
@@ -652,7 +656,7 @@ template&lt;typename A, typename B, typename M, typename MF&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;Integer T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

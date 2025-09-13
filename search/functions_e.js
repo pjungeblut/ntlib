@@ -8,6 +8,6 @@ var searchData=
   ['prime_5fdecomposition_5flarge_5',['prime_decomposition_large',['../prime__decomposition_8cpp.html#aa1852fd43ee2b9d00a86dfbea5324223',1,'ntlib']]],
   ['prime_5fdecomposition_5flist_6',['prime_decomposition_list',['../prime__decomposition_8cpp.html#a6ba4ca59e22f6c4df30bfb59a27cd3d8',1,'ntlib']]],
   ['prime_5fdecomposition_5flist_5fremainder_7',['prime_decomposition_list_remainder',['../prime__decomposition_8cpp.html#a6351f0aed630575f037c96d356bee2ee',1,'ntlib']]],
-  ['prime_5fsieve_8',['prime_sieve',['../prime__generation_8cpp.html#a2f3174dcb0f5daf239e101ba2ebd7c70',1,'ntlib::prime_sieve(T N)'],['../prime__generation_8cpp.html#a1eb5039614a4caba9be15ce75355cb87',1,'ntlib::prime_sieve(T N, std::vector&lt; T &gt; &amp;primes)']]],
+  ['prime_5fsieve_8',['prime_sieve',['../prime__generation_8cpp.html#a893c0d621a1af3ee0df0700b6eadcfe9',1,'ntlib::prime_sieve(T N)'],['../prime__generation_8cpp.html#a707e829b10ce3c6b7dc68015793bfc36',1,'ntlib::prime_sieve(T N, std::vector&lt; T &gt; &amp;primes)']]],
   ['primitive_5fpythagorean_5ftriples_9',['primitive_pythagorean_triples',['../pythagorean__triple_8cpp.html#a964f287582daee6f425e736bacf83df3',1,'ntlib']]]
 ];

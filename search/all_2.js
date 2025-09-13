@@ -10,11 +10,13 @@ var searchData=
   ['chinese_5fremainder_7',['chinese_remainder',['../module__chinese__remainder.html',1,'']]],
   ['chinese_5fremainder_2ecpp_8',['chinese_remainder.cpp',['../chinese__remainder_8cpp.html',1,'']]],
   ['combinatorics_9',['Combinatorics',['../index.html#autotoc_md6',1,'']]],
-  ['continued_5ffraction_10',['continued_fraction',['../module__continued__fraction.html',1,'']]],
-  ['continued_5ffraction_2ecpp_11',['continued_fraction.cpp',['../continued__fraction_8cpp.html',1,'']]],
-  ['count_5fdivisors_12',['count_divisors',['../divisors_8cpp.html#a44553b4b70376495c6c4710121764875',1,'ntlib']]],
-  ['crt_13',['crt',['../chinese__remainder_8cpp.html#ab5d442297342895c5ba1dea5621961a9',1,'ntlib']]],
-  ['crt_5fcongruence_14',['crt_congruence',['../structntlib_1_1crt__congruence.html',1,'ntlib']]],
-  ['crt_5fcoprime_15',['crt_coprime',['../chinese__remainder_8cpp.html#a5139a8aacaaa9054eadfa4f7f0884370',1,'ntlib']]],
-  ['cube_5fnumber_16',['cube_number',['../figurate__number_8cpp.html#a83677651b5d2f088cb086cc039d5156b',1,'ntlib']]]
+  ['commutativering_10',['CommutativeRing',['../conceptntlib_1_1CommutativeRing.html',1,'ntlib']]],
+  ['concepts_2ecpp_11',['concepts.cpp',['../concepts_8cpp.html',1,'']]],
+  ['continued_5ffraction_12',['continued_fraction',['../module__continued__fraction.html',1,'']]],
+  ['continued_5ffraction_2ecpp_13',['continued_fraction.cpp',['../continued__fraction_8cpp.html',1,'']]],
+  ['count_5fdivisors_14',['count_divisors',['../divisors_8cpp.html#a44553b4b70376495c6c4710121764875',1,'ntlib']]],
+  ['crt_15',['crt',['../chinese__remainder_8cpp.html#ab5d442297342895c5ba1dea5621961a9',1,'ntlib']]],
+  ['crt_5fcongruence_16',['crt_congruence',['../structntlib_1_1crt__congruence.html',1,'ntlib']]],
+  ['crt_5fcoprime_17',['crt_coprime',['../chinese__remainder_8cpp.html#a5139a8aacaaa9054eadfa4f7f0884370',1,'ntlib']]],
+  ['cube_5fnumber_18',['cube_number',['../figurate__number_8cpp.html#a83677651b5d2f088cb086cc039d5156b',1,'ntlib']]]
 ];

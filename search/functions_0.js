@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['abs_0',['abs',['../base_8cpp.html#adb88cd8b6061ece7fa88de34c20f5ece',1,'ntlib']]]
+  ['abs_0',['abs',['../base_8cpp.html#af688754a400d40792794b426c0d52cf7',1,'ntlib']]]
 ];

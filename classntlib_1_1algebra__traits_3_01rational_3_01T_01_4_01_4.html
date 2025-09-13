@@ -97,6 +97,7 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classntlib_1_1algebra__traits_3_01rational_3_01T_01_4_01_4-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ntlib::algebra_traits&lt; rational&lt; T &gt; &gt; Class Template Reference<span class="mlabels"><span class="mlabel export">export</span></span><div class="ingroups">module <a class="el" href="module__rational.html">rational</a></div></div></div>
 </div><!--header-->
@@ -113,9 +114,20 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a9b6f8242a3970e678696d33e51a03d79" id="r_a9b6f8242a3970e678696d33e51a03d79"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classntlib_1_1rational.html">rational</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b6f8242a3970e678696d33e51a03d79">get_one</a> () noexcept</td></tr>
 <tr class="memdesc:a9b6f8242a3970e678696d33e51a03d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the multiplicative neutral element of <code>rational&lt;T&gt;</code>.  <br /></td></tr>
 <tr class="separator:a9b6f8242a3970e678696d33e51a03d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:ac1aca5cc958d1c354611d2425f1c6cf2" id="r_ac1aca5cc958d1c354611d2425f1c6cf2"><td class="memItemLeft" align="right" valign="top"><a id="ac1aca5cc958d1c354611d2425f1c6cf2" name="ac1aca5cc958d1c354611d2425f1c6cf2"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_additive_commutative</b> = true</td></tr>
+<tr class="memdesc:ac1aca5cc958d1c354611d2425f1c6cf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rational addition is commutative. <br /></td></tr>
+<tr class="separator:ac1aca5cc958d1c354611d2425f1c6cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ec9b4111d5066c4baea9cf9c29b5bbe" id="r_a4ec9b4111d5066c4baea9cf9c29b5bbe"><td class="memItemLeft" align="right" valign="top"><a id="a4ec9b4111d5066c4baea9cf9c29b5bbe" name="a4ec9b4111d5066c4baea9cf9c29b5bbe"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_multiplicative_commutative</b> = true</td></tr>
+<tr class="memdesc:a4ec9b4111d5066c4baea9cf9c29b5bbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rational multiplication is commutative. <br /></td></tr>
+<tr class="separator:a4ec9b4111d5066c4baea9cf9c29b5bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;Integer T&gt;<br />
 class ntlib::algebra_traits&lt; rational&lt; T &gt; &gt;</div><p>Specialization of <code><a class="el" href="classntlib_1_1algebra__traits.html" title="Traits class for algebraic types.">ntlib::algebra_traits</a></code> for <code>rational</code>. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -130,7 +142,7 @@ class ntlib::algebra_traits&lt; rational&lt; T &gt; &gt;</div><p>Specialization 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;Integer T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -160,7 +172,7 @@ template&lt;typename T&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;Integer T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
