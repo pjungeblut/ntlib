@@ -19,10 +19,10 @@ Thus, building NTLib requires an up to date compiler and build system.
 * int128.cpp:
   Signed and unsigned 128 bit integer types.
 * modulo.cpp:
-  Compute several classical functions modulo some number $m$.
+  Compute several classical functions modulo some number \f$m\f$.
 * mod_int.cpp:
-  A type for integers modulo some number $m$.
-  The modulus $m$ is provided at compile time, allowing for compiler optimizations.
+  A type for integers modulo some number \f$m\f$.
+  The modulus \f$m\f$ is provided at compile time, allowing for compiler optimizations.
 
 ## Prime Numbers
 
@@ -71,6 +71,6 @@ Thus, building NTLib requires an up to date compiler and build system.
   Compute the continued fraction expansion of quadratic irrationals.
   This is mainly used as a subroutine in pell_equation.cpp.
 * lucas_sequence.cpp:
-  Compute the $n$-th terms of the Lucas sequences \f$U_n(P,Q)\f$ and \f$V_n(P,Q)\f$.
+  Compute the \f$n\f$-th terms of the Lucas sequences \f$U_n(P,Q)\f$ and \f$V_n(P,Q)\f$.
   This is mainly used as a subroutine in a Baillie-Pomerance-Selfridge-Wagstaff primality test.
 
