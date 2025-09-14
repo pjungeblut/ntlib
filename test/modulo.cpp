@@ -90,10 +90,10 @@ TEST(ModularExponentiation, SmallValues) {
 }
 
 TEST(MultiplicativeInverse, SmallValues) {
-  const uint32_t m = 50;
-  for (uint32_t n = 1; n < m; ++n) {
+  const int32_t m = 50;
+  for (int32_t n = 1; n < m; ++n) {
     if (ntlib::gcd(n, m) == 1) {
-      uint32_t inv = ntlib::mod_mult_inv(n, m);
+      int32_t inv = ntlib::mod_mult_inv(n, m);
       EXPECT_EQ(n * inv % m, 1);
     }
   }
@@ -134,33 +134,33 @@ TEST(ModularFactorial, SmallValues) {
 TEST(LegendreSymbol, Prime3) {
   const auto l = std::to_array<int32_t>({2, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1,
       0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0, 1, -1, 0});
-  for (uint32_t i = 1; i < l.size(); ++i) {
-    EXPECT_EQ(ntlib::legendre(i, 3u), l[i]);
+  for (int32_t i = 1; i < static_cast<int32_t>(l.size()); ++i) {
+    EXPECT_EQ(ntlib::legendre(i, 3), l[i]);
   }
 }
 
 TEST(LegendreSymbol, Prime127) {
   const auto l = std::to_array<int32_t>({2, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1,
       1, -1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, -1, -1, 1, 1, -1, -1, -1, 1});
-  for (uint32_t i = 1; i < l.size(); ++i) {
-    EXPECT_EQ(ntlib::legendre(i, 127u), l[i]);
+  for (int32_t i = 1; i < static_cast<int32_t>(l.size()); ++i) {
+    EXPECT_EQ(ntlib::legendre(i, 127), l[i]);
   }
 }
 
 TEST(LegendreSymbol, PeriodicInTopElement) {
-  for (uint32_t p : ntlib::SMALL_PRIMES<uint32_t>) {
+  for (int32_t p : ntlib::SMALL_PRIMES<int32_t>) {
     if (p == 2) continue;
-    for (uint32_t i = 0; i <= 1'000; ++i) {
+    for (int32_t i = 0; i <= 1'000; ++i) {
       EXPECT_EQ(ntlib::legendre(i, p), ntlib::legendre(i + p, p));
     }
   }
 }
 
 TEST(LegendreSymbol, Multiplicative) {
-  for (uint32_t p : ntlib::SMALL_PRIMES<uint32_t>) {
+  for (int32_t p : ntlib::SMALL_PRIMES<int32_t>) {
     if (p == 2) continue;
-    for (uint32_t i = 0; i <= 100; ++i) {
-      for (uint32_t j = 0; j <= 100; ++j) {
+    for (int32_t i = 0; i <= 100; ++i) {
+      for (int32_t j = 0; j <= 100; ++j) {
         EXPECT_EQ(ntlib::legendre(i, p) * ntlib::legendre(j, p),
             ntlib::legendre(i * j, p));
       }
@@ -169,9 +169,9 @@ TEST(LegendreSymbol, Multiplicative) {
 }
 
 TEST(LegendreSymbol, Squares) {
-  for (uint32_t p : ntlib::SMALL_PRIMES<uint32_t>) {
+  for (int32_t p : ntlib::SMALL_PRIMES<int32_t>) {
     if (p == 2) continue;
-    for (uint32_t i = 0; i <= 100; ++i) {
+    for (int32_t i = 0; i <= 100; ++i) {
       int32_t result = i % p ? 1 : 0;
       EXPECT_EQ(ntlib::legendre(i * i, p), result);
     }

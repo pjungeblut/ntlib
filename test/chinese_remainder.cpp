@@ -6,7 +6,7 @@
 import chinese_remainder;
 
 TEST(ChineseRemainder_Coprime, SmallValues1) {
-  const std::vector<ntlib::crt_congruence<uint32_t>> congruences = {
+  const std::vector<ntlib::crt_congruence<int32_t>> congruences = {
       {2, 3}, {3, 5}, {2, 7}};
   const auto res = ntlib::crt_coprime(congruences);
   EXPECT_EQ(res.a, 23);
@@ -14,7 +14,7 @@ TEST(ChineseRemainder_Coprime, SmallValues1) {
 }
 
 TEST(ChineseRemainder_Coprime, SmallValues2) {
-  const std::vector<ntlib::crt_congruence<uint32_t>> congruences = {
+  const std::vector<ntlib::crt_congruence<int32_t>> congruences = {
       {0, 3}, {3, 4}, {4, 5}};
   const auto res = ntlib::crt_coprime(congruences);
   EXPECT_EQ(res.a, 39);
@@ -22,7 +22,7 @@ TEST(ChineseRemainder_Coprime, SmallValues2) {
 }
 
 TEST(ChineseRemainder_Coprime, SmallValues3) {
-  const std::vector<ntlib::crt_congruence<uint32_t>> congruences = {
+  const std::vector<ntlib::crt_congruence<int32_t>> congruences = {
       {6, 7}, {4, 8}};
   const auto res = ntlib::crt_coprime(congruences);
   EXPECT_EQ(res.a, 20);
@@ -30,7 +30,7 @@ TEST(ChineseRemainder_Coprime, SmallValues3) {
 }
 
 TEST(ChineseRemainder_Coprime, SmallValues4) {
-  const std::vector<ntlib::crt_congruence<uint32_t>> congruences = {
+  const std::vector<ntlib::crt_congruence<int32_t>> congruences = {
       {2, 5}, {3, 7}, {10, 11}};
   const auto res = ntlib::crt_coprime(congruences);
   EXPECT_EQ(res.a, 87);
@@ -38,21 +38,21 @@ TEST(ChineseRemainder_Coprime, SmallValues4) {
 }
 
 TEST(ChineseRemainder, Impossible1) {
-  const std::vector<ntlib::crt_congruence<uint32_t>> congruences = {
+  const std::vector<ntlib::crt_congruence<int32_t>> congruences = {
       {1, 4}, {2, 6}};
   auto res = ntlib::crt(congruences);
   EXPECT_FALSE(res.has_value());
 }
 
 TEST(ChineseRemainder, Impossible2) {
-  const std::vector<ntlib::crt_congruence<uint32_t>> congruences = {
+  const std::vector<ntlib::crt_congruence<int32_t>> congruences = {
       {3, 4}, {0, 6}};
   auto res = ntlib::crt(congruences);
   EXPECT_FALSE(res.has_value());
 }
 
 TEST(ChineseRemainder, SmallValues1) {
-  const std::vector<ntlib::crt_congruence<uint32_t>> congruences = {
+  const std::vector<ntlib::crt_congruence<int32_t>> congruences = {
       {3, 10}, {5, 12}};
   auto res = ntlib::crt(congruences);
   EXPECT_TRUE(res.has_value());
@@ -61,7 +61,7 @@ TEST(ChineseRemainder, SmallValues1) {
 }
 
 TEST(ChineseRemainder, SmallValues2) {
-  const std::vector<ntlib::crt_congruence<uint32_t>> congruences = {
+  const std::vector<ntlib::crt_congruence<int32_t>> congruences = {
       {3, 5}, {3, 7}, {4, 12}};
   auto res = ntlib::crt(congruences);
   EXPECT_TRUE(res.has_value());

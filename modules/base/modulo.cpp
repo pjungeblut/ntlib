@@ -119,19 +119,19 @@ A mod_pow(A a, B b, M m, MF mod_func) noexcept {
  * Computes the multiplicative inverse of \f$a \mod m\f$.
  *
  * @tparam T A integer-like type.
- * @tparam S The signed type corresponding to `T`
  * @param a The number to invert.
  * @param m The order of the group \f$a \in \mathbb{Z}/m\mathbb{Z}\f$.
  * @return The multiplicative inverse of \f$a\f$ modulo \f$m\f$.
  */
-export template<Integer T, Integer S = std::make_signed_t<T>>
+export template<Integer T>
+    requires std::numeric_limits<T>::is_signed
 [[nodiscard]] constexpr T mod_mult_inv(T a, T m) noexcept {
   assert(m > T{0});
 
-  const auto [gcd, x, y] = ntlib::extended_euclid<T, S>(a, m);
+  const auto [gcd, x, y] = ntlib::extended_euclid(a, m);
   assert(gcd == T{1});
 
-  return x >= S{0}
+  return x >= T{0}
       ? ntlib::mod(static_cast<T>(x), m)
       : m - (ntlib::mod(static_cast<T>(-x), m));
 }
@@ -245,37 +245,38 @@ T mod_factorial(T n, T m) {
  * residue modulo \f$p\f$.
  *
  * @tparam T An integer-like type.
- * @tparam S The signed type corresponding to `T`.
  * @param a An integer.
  * @param p An odd prime.
  * @return The Legendre Symbol \f$\left(\frac{a}{p}\right)\f$.
  */
-export template<Integer T, Integer S = std::make_signed_t<T>>
-[[nodiscard]] constexpr S legendre(T a, T p) noexcept {
+export template<Integer T>
+    requires std::numeric_limits<T>::is_signed
+[[nodiscard]] constexpr
+T legendre(T a, T p) noexcept {
   assert(p != T{2});
 
   T rem = ntlib::mod_pow(a, (p - T{1}) / T{2}, p, ntlib::mod<T>);
-  return rem <= T{1} ? static_cast<S>(rem) : S{-1};
+  return rem <= T{1} ? rem : T{-1};
 }
 
 /**
  * @brief Computes the Jacobi Symbol \f$\left(\frac{a}{p}\right)\f$.
  *
  * @tparam T An integer-like type.
- * @tparam S The signed type corresponding to `T`.
  * @param a The "numerator".
  * @param b The "denominator".
  * @return The Jacobi Symbol \f$\left(\frac{a}{p}\right)\f$.
  */
-export template<Integer T, Integer S = std::make_signed_t<T>>
-[[nodiscard]] constexpr S jacobi(T a, T b) noexcept {
+export template<Integer T>
+    requires std::numeric_limits<T>::is_signed
+[[nodiscard]] constexpr T jacobi(T a, T b) noexcept {
   assert(b > T{0});
   assert(ntlib::is_odd(b));
 
   using std::swap;
 
   a = ntlib::mod(a, b);
-  S t{1};
+  T t{1};
   while (a != T{0}) {
     auto [s, aa] = ntlib::odd_part(a);
     a = aa;
@@ -287,7 +288,7 @@ export template<Integer T, Integer S = std::make_signed_t<T>>
     a = ntlib::mod(a, b);
   }
   if (b == T{1}) return t;
-  else return S{0};
+  else return T{0};
 }
 
-}
+} // namespace ntlib

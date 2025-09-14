@@ -6,7 +6,7 @@
 import prime_generation;
 import prime_test;
 
-const uint64_t N = 1'000'000;
+const int64_t N = 1'000'000;
 
 TEST(Sieve, SmallValues) {
   std::vector<int32_t> primes;
@@ -32,16 +32,16 @@ TEST(Sieve, SmallValues) {
 
 TEST(Sieve, FirstN) {
   const auto sieve = ntlib::prime_sieve(N);
-  for (std::size_t i = 0; i <= N; ++i) {
+  for (int64_t i = 0; i <= N; ++i) {
     EXPECT_EQ(sieve[i], ntlib::is_prime(i));
   }
 }
 
 TEST(Sieve, PrimeList) {
-  std::vector<std::size_t> primes;
+  std::vector<int64_t> primes;
   const auto sieve = ntlib::prime_sieve(N, primes);
-  std::vector<std::size_t> list;
-  for (std::size_t i = 0; i <= N; ++i) {
+  std::vector<int64_t> list;
+  for (int64_t i = 0; i <= N; ++i) {
     if (sieve[i]) {
       list.push_back(i);
     }
@@ -64,11 +64,11 @@ TEST(NextPrime, SmallValues) {
 }
 
 TEST(NextPrime, FirstN) {
-  auto sieve = ntlib::prime_sieve<uint32_t>(2 * N);
-  for (uint32_t i = 0; i <= N; ++i) {
-    uint32_t nxt = ntlib::next_prime(i);
+  auto sieve = ntlib::prime_sieve<int32_t>(2 * N);
+  for (int32_t i = 0; i <= N; ++i) {
+    int32_t nxt = ntlib::next_prime(i);
     EXPECT_TRUE(sieve[nxt]);
-    for (uint32_t j = i + 1; j < nxt; ++j) {
+    for (int32_t j = i + 1; j < nxt; ++j) {
       EXPECT_FALSE(sieve[j]);
     }
   }

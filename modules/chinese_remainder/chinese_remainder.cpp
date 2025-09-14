@@ -67,11 +67,11 @@ struct crt_congruence {
  * A solution always exists and is unique modulo \f$M = \Pi_i m_i\f$.
  * 
  * @tparam T An integer-like type.
- * @tparam S The signed type corresponding to `T`.
  * @param congruences The list of congruences.
  * @return The unique solution as a `crt_congruence<T>`.
  */
-export template<Integer T, Integer S = std::make_signed_t<T>>
+export template<Integer T>
+    requires std::numeric_limits<T>::is_signed
 [[nodiscard]] constexpr
 crt_congruence<T> crt_coprime(
     const std::vector<crt_congruence<T>> &congruences) noexcept {
@@ -83,7 +83,7 @@ crt_congruence<T> crt_coprime(
   const T x = std::ranges::fold_left(congruences, T{0},
       [M](T sum, crt_congruence<T> c) {
     const T M_i = M / c.m;
-    const T N_i = ntlib::mod_mult_inv<T,S>(M_i, c.m);
+    const T N_i = ntlib::mod_mult_inv<T>(M_i, c.m);
     return ntlib::mod(sum + ntlib::mod(c.a * M_i, M) * N_i, M);
   });
 
@@ -99,11 +99,11 @@ crt_congruence<T> crt_coprime(
  * \f$M = \mathrm{lcm}(m_1, \ldots, m_k)\f$. 
  * 
  * @tparam T An integer-like type.
- * @tparam S The signed type corresponding to `T`.
  * @param congruences The list of congruences.
  * @return A `std::optional` containing the unique solution if it exists.
  */
-export template<Integer T, Integer S = std::make_signed_t<T>>
+export template<Integer T>
+    requires std::numeric_limits<T>::is_signed
 [[nodiscard]] constexpr
 std::optional<crt_congruence<T>> crt(
     const std::vector<crt_congruence<T>> &congruences) {

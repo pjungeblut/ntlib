@@ -235,7 +235,8 @@ public:
    */
   void invert() requires (std::numeric_limits<T>::is_signed) {
     assert(ntlib::gcd(value, m) == 1);
-    value = ntlib::mod_mult_inv<T,T>(value, m);
+    
+    value = ntlib::mod_mult_inv<T>(value, m);
   }
 
   /**

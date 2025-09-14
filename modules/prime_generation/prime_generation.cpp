@@ -185,11 +185,11 @@ SieveType prime_sieve(T N, std::vector<T> &primes) {
  * @brief Find the smallest prime bigger than a given number.
  * 
  * @tparam T An integer-like type.
- * @tparam S The signed type corresponding to `T`.
  * @param n The given number.
  * @return The smallest prime larger than \f$n\f$.
  */
-export template<Integer T, Integer S = std::make_signed_t<T>>
+export template<Integer T>
+    requires std::numeric_limits<T>::is_signed
 [[nodiscard]] constexpr
 T next_prime(T n) noexcept {
   // Base cases.
@@ -197,7 +197,7 @@ T next_prime(T n) noexcept {
   if (n == T{2}) { return T{3}; }
 
   T result {n + (T{1} + static_cast<T>(ntlib::is_odd(n)))};
-  while (!ntlib::is_prime<T,S>(result)) { result += T{2}; }
+  while (!ntlib::is_prime<T>(result)) { result += T{2}; }
   return result;
 }
 

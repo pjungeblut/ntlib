@@ -113,19 +113,15 @@ T abs(T n) noexcept {
 /**
  * @brief Computes the difference between two numbers.
  * 
- * For integral types this is safe against overflows.
- * 
  * @tparam T An additive group.
- * @tparam U The unsigned-integer-like type corresponding to `T`. 
  * @param a The first number.
  * @param b The second number.
- * @return The difference, i.e., `abs(a-b)`.
+ * @return The difference, i.e., \f$\lvert a-b \rvert\f$.
  */
-export template<AdditiveGroup T, AdditiveGroup U = std::make_unsigned_t<T>>
+export template<AdditiveGroup T>
 [[nodiscard]] constexpr
-U difference(T a, T b) noexcept {
-  if (a > b) { return static_cast<U>(a) - b; }
-  else { return static_cast<U>(b) - a; }
+T difference(T a, T b) noexcept {
+  return a >= b ? a - b : b - a;
 }
 
 /**
@@ -255,29 +251,29 @@ T lcm(std::initializer_list<T> list) noexcept {
 
 /**
  * @brief Extended Euclidean algorithm.
- * 
- * Given two integers `a` and `b`, finds whole number solutions for
- * `a*x + b*y = ntlib::gcd(a,b)`.
- * 
+ *
+ * Given two integers \f$a\f$ and \f$b\f$, finds whole number solutions for
+ * \f$a \cdot x + b \cdot y = \text{gcd}(a,b)\f$.
+ *
  * @tparam T An integer-like type.
- * @tparam S The signed-integer-like type corresponding to `T`.
  * @param a The first number.
  * @param b The second number.
- * @return Tuple `(gcd(a,b), x, y)`.
+ * @return Tuple \f$(\mathrm{gcd}(a,b), x, y)\f$.
  */
-export template<Integer T, Integer S = std::make_signed_t<T>>
+export template<Integer T>
+    requires std::numeric_limits<T>::is_signed
 [[nodiscard]] constexpr
-std::tuple<T, S, S> extended_euclid(T a, T b) noexcept {
+std::tuple<T, T, T> extended_euclid(T a, T b) noexcept{
   assert(!(a == T{0} && b == T{0}));
 
   // Extended Euclidean algorithm for non-negative values.
-  const std::function<std::tuple<T, S, S>(T, T)>
+  const std::function<std::tuple<T, T, T>(T, T)>
       extended_euclid_non_negative = [&extended_euclid_non_negative](T a, T b) {
-    if (a == S{0}) { return std::make_tuple(b, S{0}, S{1}); }
+    if (a == T{0}) { return std::make_tuple(b, T{0}, T{1}); }
     auto [gcd, xx, yy] = extended_euclid_non_negative(b % a, a);
 
-    S x{static_cast<S>(yy - static_cast<S>(b / a) * xx)};
-    S y{xx};
+    T x{static_cast<T>(yy - static_cast<T>(b / a) * xx)};
+    T y{xx};
     return std::make_tuple(gcd, x, y);
   };
 

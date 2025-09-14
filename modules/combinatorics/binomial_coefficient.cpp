@@ -65,13 +65,13 @@ T binom(T n, T k) noexcept {
  * To compute \f${n \choose k} \mod p\f$ we need \f$p > \max\{k, n-k\}\f$.
  * 
  * @tparam T An integer-like type.
- * @tparam S The signed type corresponding to `T`.
  * @param n Size of the universe.
  * @param k Size of the subsets.
  * @param p The modulus. Must be prime and sufficiently large.
  * @return The binomial coefficient \f${n \choose k} \mod p\f$.
  */
-export template<Integer T, Integer S = std::make_signed_t<T>>
+export template<Integer T>
+    requires std::numeric_limits<T>::is_signed
 [[nodiscard]] constexpr
 T mod_p_binom(T n, T k, T p) noexcept {
   assert(n >= T{0});
@@ -83,9 +83,9 @@ T mod_p_binom(T n, T k, T p) noexcept {
 
   T res = mod_factorial(n, p);
   res = ntlib::mod(
-      res * ntlib::mod_mult_inv<T,S>(ntlib::mod_factorial(k, p), p), p);
+      res * ntlib::mod_mult_inv<T>(ntlib::mod_factorial(k, p), p), p);
   res = ntlib::mod(
-      res * ntlib::mod_mult_inv<T,S>(ntlib::mod_factorial(n - k, p), p), p);
+      res * ntlib::mod_mult_inv<T>(ntlib::mod_factorial(n - k, p), p), p);
   return res;
 }
 
@@ -96,14 +96,14 @@ T mod_p_binom(T n, T k, T p) noexcept {
  * \f${n \choose k} \mod p^e\f$.
  *
  * @tparam T An integer-like type.
- * @tparam S The signed type corresponding to `T`.
  * @param n Size of universe.
  * @param k Size of the subsets.
  * @param p A prime number.
  * @param e The exponent of the prime.
  * @return The binomial coefficient \f${n \choose k} \mod p^e\f$.
  */
-export template<Integer T, Integer S = std::make_signed_t<T>>
+export template<Integer T>
+    requires std::numeric_limits<T>::is_signed
 [[nodiscard]] constexpr
 T mod_pp_binom(T n, T k, T p, T e) {
   assert(n >= T{0});
@@ -141,8 +141,8 @@ T mod_pp_binom(T n, T k, T p, T e) {
   // Compute the binomial coefficient.
   T res = g[n];
   res = ntlib::mod(res * ntlib::mod_pow(p, c[n] - c[k] - c[n - k], pp, ntlib::mod<T>), pp);
-  res = ntlib::mod(res * ntlib::mod_mult_inv<T,S>(g[k], pp), pp);
-  res = ntlib::mod(res * ntlib::mod_mult_inv<T,S>(g[n - k], pp), pp);
+  res = ntlib::mod(res * ntlib::mod_mult_inv<T>(g[k], pp), pp);
+  res = ntlib::mod(res * ntlib::mod_mult_inv<T>(g[n - k], pp), pp);
   return res;
 }
 
@@ -150,13 +150,13 @@ T mod_pp_binom(T n, T k, T p, T e) {
  * @brief Computes a single binomial coefficient modulo an arbitrary number.
  * 
  * @tparam T An integer-like type.
- * @tparam S The signed type corresponding to `T`.
  * @param n The size of the universe.
  * @param k The size of the subsets.
  * @param m The modulus.
  * @return The binomial coefficient \f${n \choose k} \mod m\f$.
  */
-export template<Integer T, Integer S = std::make_signed_t<T>>
+export template<Integer T>
+    requires std::numeric_limits<T>::is_signed
 [[nodiscard]] constexpr
 T mod_binom(T n, T k, T m) {
   // Find prime decomposition of modulus.
@@ -167,12 +167,12 @@ T mod_binom(T n, T k, T m) {
   congruences.reserve(factors.size());
   for (const auto [p, e] : factors) {
     const T pp = ntlib::pow(p, e);
-    const T res_mod_pp = ntlib::mod_pp_binom<T,S>(n, k, p, e);
+    const T res_mod_pp = ntlib::mod_pp_binom<T>(n, k, p, e);
     congruences.push_back(crt_congruence {res_mod_pp, pp});
   }
 
   // Use Chinese remainder theorem to get the result.
-  return ntlib::crt_coprime<T,S>(congruences).a;
+  return ntlib::crt_coprime<T>(congruences).a;
 }
 
 /**

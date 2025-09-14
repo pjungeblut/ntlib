@@ -191,11 +191,11 @@ bool is_prime_64(uint64_t n) noexcept {
  * @brief Checks whether a given number is a Lucas probable prime.
  *
  * @tparam T An integer-like type.
- * @tparam S The signed type corresponding to `T`.
  * @param n The given number.
  * @return Whether the given number is a strong Lucas probable prime.
  */
-export template<Integer T, Integer S = std::make_signed_t<T>>
+export template<Integer T>
+    requires std::numeric_limits<T>::is_signed
 [[nodiscard]] constexpr
 bool is_strong_lucas_probable_prime(T n) noexcept {
   assert(n > T{2});
@@ -204,16 +204,16 @@ bool is_strong_lucas_probable_prime(T n) noexcept {
   // Find a `D`, such that `jacobi(D,n) = -1`.
   const auto find_D = [](T n) {
     // Function to generate the next candidate value for `D`.
-    const auto next_D_candidate = [](S D) {
-      return D > S{0} ? S{-2} - D : S{2} - D;
+    const auto next_D_candidate = [](T D) {
+      return D > T{0} ? T{-2} - D : T{2} - D;
     };
 
     // Start by testing a few candidates.
     const std::size_t ITERATIONS_BEFORE_SQUARE_TEST = 5;
-    S D{5};
+    T D{5};
     bool found_d = false;
     for (std::size_t i = 0; i < ITERATIONS_BEFORE_SQUARE_TEST; ++i) {
-      if (ntlib::jacobi(D, static_cast<S>(n)) == S{-1}) {
+      if (ntlib::jacobi(D, n) == T{-1}) {
         found_d = true;
         break;
       }
@@ -222,40 +222,40 @@ bool is_strong_lucas_probable_prime(T n) noexcept {
 
     // If no value for `D` was found yet, then it might be that `n` is a perfect
     // square. Then, no `D` exists.
-    if (!found_d && ntlib::is_square(n)) { return std::optional<S>{}; }
+    if (!found_d && ntlib::is_square(n)) { return std::optional<T>{}; }
 
     // If `n` is not a perfect square we continue looking for a `D`.
     // It must exist.
-    while (ntlib::jacobi(D, static_cast<S>(n)) != S{-1}) {
+    while (ntlib::jacobi(D, n) != T{-1}) {
       D = next_D_candidate(D);
     }
 
-    return std::optional<S>{D};
+    return std::optional<T>{D};
   };
 
   // Compute parameters `P`, `Q` and `D` for the Lucas sequence.
   // If no suitable `D` exists, then `n` is composite.
   const auto optional_D = find_D(n);
   if (!optional_D.has_value()) { return false; }
-  const S D = optional_D.value();
-  const S P{1};
-  const S Q{(S{1} - D) / S{4}};
+  const T D = optional_D.value();
+  const T P{1};
+  const T Q{(T{1} - D) / T{4}};
 
   // Decompose such that `n+1 = o*2^e`.
   auto [e, o] = ntlib::odd_part(n + T{1});
 
   // Strong Lucas probable prime test.
-  auto [u, v] = ntlib::mod_lucas_nth_term(o, P, Q, static_cast<S>(n));
-  if (u == S{0} || v == S{0}) { return true; }
+  auto [u, v] = ntlib::mod_lucas_nth_term(o, P, Q, n);
+  if (u == T{0} || v == T{0}) { return true; }
   while (--e) {
-    const S uu = ntlib::mod(u * v, static_cast<S>(n));
-    S vv = v * v + D * u * u;
+    const T uu = ntlib::mod(u * v, n);
+    T vv = v * v + D * u * u;
     if (ntlib::is_odd(vv)) { vv += n; }
-    vv /= S{2};
-    vv = ntlib::mod(vv, static_cast<S>(n));
+    vv /= T{2};
+    vv = ntlib::mod(vv, n);
     u = uu;
     v = vv;
-    if (v == S{0}) { return true; }
+    if (v == T{0}) { return true; }
   }
 
   return false;
@@ -267,11 +267,11 @@ bool is_strong_lucas_probable_prime(T n) noexcept {
  * Deterministic for all integers \f$n \leq 2^64\f$.
  *
  * @tparam T An integer-like type.
- * @tparam S The signed type corresponding to `T`.
  * @param n The given number.
  * @return Whether \f$n\f$ is a prime number.
  */
-export template<Integer T, Integer S = std::make_signed_t<T>>
+export template<Integer T>
+    requires std::numeric_limits<T>::is_signed
 [[nodiscard]] constexpr
 bool is_prime_baillie_psw(T n) noexcept {
   // Trivial cases.
@@ -286,7 +286,7 @@ bool is_prime_baillie_psw(T n) noexcept {
   if (!ntlib::miller_selfridge_rabin_test(n, T{2})) { return false; }
 
   // Strong Lucas probable prime test.
-  return ntlib::is_strong_lucas_probable_prime<T, S>(n);
+  return ntlib::is_strong_lucas_probable_prime<T>(n);
 }
 
 /**
@@ -298,11 +298,13 @@ bool is_prime_baillie_psw(T n) noexcept {
  * other.
  * 
  * @tparam T An integer-like type.
- * @tparam S The signed type corresponding to `T`.
  * @param n The number to test for primality.
  * @return Whether \f$n\f$ is prime.
  */
-export template<Integer T, Integer S = std::make_signed_t<T>>
+export template<Integer T>
+    requires (
+        std::numeric_limits<T>::is_signed ||
+        (std::is_integral_v<T> && sizeof(T) <= 8))
 [[nodiscard]] constexpr
 bool is_prime(T n) noexcept {
   if constexpr (std::is_integral_v<T> && sizeof(T) <= 4) {
@@ -316,7 +318,7 @@ bool is_prime(T n) noexcept {
       else { return ntlib::is_prime_64(static_cast<uint64_t>(n)); }
     } else { return ntlib::is_prime_64(static_cast<uint64_t>(n)); }
   } else {
-    return ntlib::is_prime_baillie_psw<T,S>(n);
+    return ntlib::is_prime_baillie_psw<T>(n);
   }
 }
 

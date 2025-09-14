@@ -177,7 +177,7 @@ std::optional<T> find_factor_pollard_rho_mult(
     for (std::size_t i = 0; i < MULTIPLICATIONS; ++i) {
       x = f(x);
       y = f(f(y));
-      prod = u128{prod} * ntlib::difference(x, y) % n;
+      prod = static_cast<u128>(prod) * ntlib::difference(x, y) % n;
     }
     g = ntlib::gcd(prod, n);
   }
@@ -207,7 +207,7 @@ T find_factor(T n) noexcept {
   // A polynomial (modulo `n`) simulating a pseudorandom function.
   const auto poly = [n](T x) {
     if constexpr (std::is_integral_v<T> && sizeof(T) <= 8) {
-      return static_cast<T>((u128{x} * x + 1) % n);
+      return static_cast<T>((static_cast<u128>(x) * x + 1) % n);
     } else {
       return (x * x + 1) % n;
     }

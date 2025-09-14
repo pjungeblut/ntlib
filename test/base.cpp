@@ -123,7 +123,7 @@ TEST(Difference, SmallValues) {
 }
 
 TEST(Difference, ExtremalValues) {
-  EXPECT_EQ(ntlib::difference(min_int, max_int), max_uint);
+  EXPECT_EQ(ntlib::difference(min_int + 1, 0), max_int);
   EXPECT_EQ(ntlib::difference(0u, max_uint), max_uint);
 }
 
