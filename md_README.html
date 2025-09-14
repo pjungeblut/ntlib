@@ -95,58 +95,60 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="autotoc_md9"></a></p>
-<p>NTLib is a C++ template library containing several common number theory implementations. The library contains modular implementations that can easily be combined to solve mathematical programming problems.</p>
-<p>The main motivation for NTLib was to have a generic library for <a href="https://projecteuler.net">Project Euler</a> problems.</p>
+<p>NTLib is a C++ template library containing common number theory implementations. All library types and templates are compatible to one another and can easily be combined to solve mathematical programming problems.</p>
+<p>The main motivation for NTLib was to have a generic library for <a href="https://projecteuler.net">Project Euler</a> problems. As such, most of the first 100 problems can easily solved with NTLib in just a few lines of C++ code.</p>
 <h1><a class="anchor" id="autotoc_md10"></a>
 Some Features of NTLib</h1>
 <ul>
 <li>Basic number theoretic functions such as <code>gcd</code>, <code>lcm</code>, <code>isqrt</code>, ...</li>
 <li>Primality test, prime decomposition and prime generation.</li>
-<li>Generate all primitive Pythagorean triples.</li>
+<li>Generate primitive Pythagorean triples.</li>
 <li>Solve several kinds of Diophantine equations, i.e., Pell's equation.</li>
 <li>Compute binomial coefficients, polygonal numbers, Euler's totient function, divisor function and Turan numbers.</li>
 <li>...</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md11"></a>
 Documentation</h1>
-<p>See here for the <a href="https://pjungeblut.github.io/ntlib/">Doxygen documentation</a>.</p>
+<p>See here for the complete <a href="https://pjungeblut.github.io/ntlib/">Doxygen documentation</a>.</p>
 <h1><a class="anchor" id="autotoc_md12"></a>
 Getting Started</h1>
 <h2><a class="anchor" id="autotoc_md13"></a>
 Requirements</h2>
-<p>NTLib uses several modern C++ features, including:</p><ul>
+<p>NTLib uses up-to-date C++ features. In particular:</p><ul>
 <li>C++20 modules</li>
-<li>several C++23 standard library features</li>
+<li>C++23 standard library features</li>
 </ul>
-<p>As a consequence, you need up to date tooling to sucessfully compile the library. A working set of tools is:</p><ul>
+<p>As a consequence (especially because of the modules), you need recent tooling to sucessfully compile the library. A working set of tools under Ubuntu 24.04 LTS is:</p><ul>
 <li>Clang-19.1, including Clang Tools 19</li>
 <li>Ninja 1.11</li>
 <li>CMake and CTest 3.28</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md14"></a>
 Download NTLib</h2>
-<p>Clone NTLib a new <code>ntlib</code> directory: </p><div class="fragment"><div class="line">git clone https://github.com/pjungeblut/ntlib ntlib</div>
-</div><!-- fragment --><p> There are no git submodules are any other dependencies.</p>
+<p>Clone NTLib into a new <code>ntlib</code> directory:</p>
+<div class="fragment"><div class="line">git clone https://github.com/pjungeblut/ntlib ntlib</div>
+</div><!-- fragment --><p>There are no git submodules and no other dependencies are required to use NTLib.</p>
 <h2><a class="anchor" id="autotoc_md15"></a>
-Debug Builds (for Development)</h2>
-<p>Move into the <code>ntlib</code> directory and execute the CMake <code>debug</code> preset. This will build all unit tests. </p><div class="fragment"><div class="line">cd ntlib</div>
-<div class="line">cmake --preset debug</div>
-<div class="line">cmake --build --preset tests</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md16"></a>
-Release Builds and Installation (for Usage in other Projects)</h2>
-<p>TODO </p><div class="fragment"><div class="line">cd ntlib</div>
-<div class="line">cmake --preset release</div>
-<div class="line">...</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md17"></a>
-Run Tests</h2>
-<p>NTLib comes with many unit tests to guarantee correctness. Inside the <code>build</code> directory, run <code>ctest</code> to execute all tests at once.</p>
-<p>You can also build and run specific sets of unit tests. For example, consider we want to test the basic functionality from <code>include/base.hpp</code>.</p><ul>
-<li>Run <code>ninja ut_base</code>. In general, all unit test targets are prefixed with <code>ut_</code>.</li>
-<li>Run <code>./test/base</code> to start the test.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md18"></a>
+Usage</h2>
+<p>TODO (pjungeblut): Document how to include NTLib using CMake.</p>
+<h2><a class="anchor" id="autotoc_md16"></a>
+Development</h2>
+<p>If you don't just want to use but extend/adapt NTLib, this is how to build all unit tests: Move into the <code>ntlib</code> directory and configure CMake using the <code>debug</code> preset (there is also a <code>release</code> preset to build everything in release mode). Then build the library and unit tests using the <code>tests</code> preset.</p>
+<div class="fragment"><div class="line">cd ntlib</div>
+<div class="line">cmake --preset debug            # configure the build</div>
+<div class="line">cmake --build --preset tests    # build the library and all unit tests</div>
+<div class="line">ctest --preset tests            # run all unit tests</div>
+</div><!-- fragment --><p>To run the tests, navigate to <code>build/debug/</code> (or <code>build/release/</code>) and run <code>ctest</code>.</p>
+<h3><a class="anchor" id="autotoc_md17"></a>
+Build and Run Tests for Individual Modules</h3>
+<p>Each module comes with its own unit test which can be build individually.</p>
+<p>For example, consider the <code>base</code> module. The following can be used to build and run only the unit tests for the <code>base</code> module:</p>
+<div class="fragment"><div class="line">cd build/debug   # alternatively, go to `build/release`</div>
+<div class="line">ninja ut_base    # all unit-test targets are name with `ut_&lt;module-name&gt;`</div>
+<div class="line">./test/base      # the test executable is named like the module under test</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md18"></a>
 License &amp; Disclaimer</h1>
-<p>This software is licensed under the MIT license. See <code>LICENSE</code> for details. NTLib is still in development. Therefore, things will break and the API will change.</p>
+<p>This software is licensed under the MIT license. See <code>LICENSE</code> for details. NTLib is still in development. Therefore, things will break and the API/ABI will change.</p>
 <p>Feedback is always welcome. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

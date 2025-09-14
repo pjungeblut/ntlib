@@ -11,6 +11,6 @@ var searchData=
   ['algebra_5ftraits_3c_20mod_5fint_3c_20t_2c_20m_20_3e_20_3e_8',['algebra_traits&lt; mod_int&lt; T, m &gt; &gt;',['../classntlib_1_1algebra__traits_3_01mod__int_3_01T_00_01m_01_4_01_4.html',1,'ntlib']]],
   ['algebra_5ftraits_3c_20rational_3c_20t_20_3e_20_3e_9',['algebra_traits&lt; rational&lt; T &gt; &gt;',['../classntlib_1_1algebra__traits_3_01rational_3_01T_01_4_01_4.html',1,'ntlib']]],
   ['algebra_5ftraits_3c_20t_20_3e_10',['algebra_traits&lt; T &gt;',['../classntlib_1_1algebra__traits_3_01T_01_4.html',1,'ntlib']]],
-  ['and_20installation_20for_20usage_20in_20other_20projects_11',['Release Builds and Installation (for Usage in other Projects)',['../md_README.html#autotoc_md16',1,'']]],
+  ['and_20run_20tests_20for_20individual_20modules_11',['Build and Run Tests for Individual Modules',['../md_README.html#autotoc_md17',1,'']]],
   ['arithmetic_20functions_12',['Arithmetic Functions',['../index.html#autotoc_md4',1,'']]]
 ];

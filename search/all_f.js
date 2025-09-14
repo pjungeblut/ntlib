@@ -23,7 +23,6 @@ var searchData=
   ['prime_5ftest_2ecpp_20',['prime_test.cpp',['../prime__test_8cpp.html',1,'']]],
   ['primes_5fbelow_5f2_5f16_21',['PRIMES_BELOW_2_16',['../prime__list_8hpp.html#a112b71b3a38e0ccc75ee5cf0933f553b',1,'ntlib']]],
   ['primitive_5fpythagorean_5ftriples_22',['primitive_pythagorean_triples',['../pythagorean__triple_8cpp.html#a964f287582daee6f425e736bacf83df3',1,'ntlib']]],
-  ['projects_23',['Release Builds and Installation (for Usage in other Projects)',['../md_README.html#autotoc_md16',1,'']]],
-  ['pythagorean_5ftriple_24',['pythagorean_triple',['../module__pythagorean__triple.html',1,'']]],
-  ['pythagorean_5ftriple_2ecpp_25',['pythagorean_triple.cpp',['../pythagorean__triple_8cpp.html',1,'']]]
+  ['pythagorean_5ftriple_23',['pythagorean_triple',['../module__pythagorean__triple.html',1,'']]],
+  ['pythagorean_5ftriple_2ecpp_24',['pythagorean_triple.cpp',['../pythagorean__triple_8cpp.html',1,'']]]
 ];

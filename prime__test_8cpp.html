@@ -229,18 +229,21 @@ requires std::convertible_to&lt;std::ranges::range_value_t&lt;R&gt;, T&gt;</td><
 <tr class="memitem:a4423c4675e50872c44fd7ec9b3dd032f" id="r_a4423c4675e50872c44fd7ec9b3dd032f"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4423c4675e50872c44fd7ec9b3dd032f">ntlib::is_prime_64</a> (uint64_t n) noexcept</td></tr>
 <tr class="memdesc:a4423c4675e50872c44fd7ec9b3dd032f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deterministic prime test optimized for a given 64-bit integer.  <br /></td></tr>
 <tr class="separator:a4423c4675e50872c44fd7ec9b3dd032f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb2d1ecf2ae39fa253fcbf1f5381c9cb" id="r_aeb2d1ecf2ae39fa253fcbf1f5381c9cb"><td class="memTemplParams" colspan="2">template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
-<tr class="memitem:aeb2d1ecf2ae39fa253fcbf1f5381c9cb"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aeb2d1ecf2ae39fa253fcbf1f5381c9cb">ntlib::is_strong_lucas_probable_prime</a> (T n) noexcept</td></tr>
-<tr class="memdesc:aeb2d1ecf2ae39fa253fcbf1f5381c9cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a given number is a Lucas probable prime.  <br /></td></tr>
-<tr class="separator:aeb2d1ecf2ae39fa253fcbf1f5381c9cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92e73b320e048a1be61f9fe9195d9bb5" id="r_a92e73b320e048a1be61f9fe9195d9bb5"><td class="memTemplParams" colspan="2">template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
-<tr class="memitem:a92e73b320e048a1be61f9fe9195d9bb5"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a92e73b320e048a1be61f9fe9195d9bb5">ntlib::is_prime_baillie_psw</a> (T n) noexcept</td></tr>
-<tr class="memdesc:a92e73b320e048a1be61f9fe9195d9bb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Baillie-PSW (probable) prime test.  <br /></td></tr>
-<tr class="separator:a92e73b320e048a1be61f9fe9195d9bb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6158100d17fa4281dc67ff553b5d0a7e" id="r_a6158100d17fa4281dc67ff553b5d0a7e"><td class="memTemplParams" colspan="2">template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
-<tr class="memitem:a6158100d17fa4281dc67ff553b5d0a7e"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a6158100d17fa4281dc67ff553b5d0a7e">ntlib::is_prime</a> (T n) noexcept</td></tr>
-<tr class="memdesc:a6158100d17fa4281dc67ff553b5d0a7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prime test.  <br /></td></tr>
-<tr class="separator:a6158100d17fa4281dc67ff553b5d0a7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d8b7cf69b40dfb494463c0deba84953" id="r_a5d8b7cf69b40dfb494463c0deba84953"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</td></tr>
+<tr class="memitem:a5d8b7cf69b40dfb494463c0deba84953"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a5d8b7cf69b40dfb494463c0deba84953">ntlib::is_strong_lucas_probable_prime</a> (T n) noexcept</td></tr>
+<tr class="memdesc:a5d8b7cf69b40dfb494463c0deba84953"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a given number is a Lucas probable prime.  <br /></td></tr>
+<tr class="separator:a5d8b7cf69b40dfb494463c0deba84953"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a585317f6886a3ddd5be1acef7241d880" id="r_a585317f6886a3ddd5be1acef7241d880"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</td></tr>
+<tr class="memitem:a585317f6886a3ddd5be1acef7241d880"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a585317f6886a3ddd5be1acef7241d880">ntlib::is_prime_baillie_psw</a> (T n) noexcept</td></tr>
+<tr class="memdesc:a585317f6886a3ddd5be1acef7241d880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Baillie-PSW (probable) prime test.  <br /></td></tr>
+<tr class="separator:a585317f6886a3ddd5be1acef7241d880"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34a519fc526c3ab196ebcead57e3fd69" id="r_a34a519fc526c3ab196ebcead57e3fd69"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; <br />
+requires ( std::numeric_limits&lt;T&gt;::is_signed || (std::is_integral_v&lt;T&gt; &amp;&amp; sizeof(T) &lt;= 8))</td></tr>
+<tr class="memitem:a34a519fc526c3ab196ebcead57e3fd69"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a34a519fc526c3ab196ebcead57e3fd69">ntlib::is_prime</a> (T n) noexcept</td></tr>
+<tr class="memdesc:a34a519fc526c3ab196ebcead57e3fd69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prime test.  <br /></td></tr>
+<tr class="separator:a34a519fc526c3ab196ebcead57e3fd69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Primary module interface unit for module <code><a class="el" href="module__prime__test.html" title="Test whether a given number is prime.">prime_test</a></code>. </p>
@@ -281,13 +284,14 @@ requires std::convertible_to&lt;std::ranges::range_value_t&lt;R&gt;, T&gt;</td><
 
 </div>
 </div>
-<a id="a6158100d17fa4281dc67ff553b5d0a7e" name="a6158100d17fa4281dc67ff553b5d0a7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6158100d17fa4281dc67ff553b5d0a7e">&#9670;&#160;</a></span>is_prime()</h2>
+<a id="a34a519fc526c3ab196ebcead57e3fd69" name="a34a519fc526c3ab196ebcead57e3fd69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34a519fc526c3ab196ebcead57e3fd69">&#9670;&#160;</a></span>is_prime()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
+template&lt;Integer T&gt; <br />
+requires ( std::numeric_limits&lt;T&gt;::is_signed || (std::is_integral_v&lt;T&gt; &amp;&amp; sizeof(T) &lt;= 8))</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -311,7 +315,6 @@ template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>An integer-like type. </td></tr>
-    <tr><td class="paramname">S</td><td>The signed type corresponding to <code>T</code>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -395,13 +398,14 @@ template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
 
 </div>
 </div>
-<a id="a92e73b320e048a1be61f9fe9195d9bb5" name="a92e73b320e048a1be61f9fe9195d9bb5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92e73b320e048a1be61f9fe9195d9bb5">&#9670;&#160;</a></span>is_prime_baillie_psw()</h2>
+<a id="a585317f6886a3ddd5be1acef7241d880" name="a585317f6886a3ddd5be1acef7241d880"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a585317f6886a3ddd5be1acef7241d880">&#9670;&#160;</a></span>is_prime_baillie_psw()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
+template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -425,7 +429,6 @@ template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>An integer-like type. </td></tr>
-    <tr><td class="paramname">S</td><td>The signed type corresponding to <code>T</code>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -496,13 +499,14 @@ requires std::convertible_to&lt;std::ranges::range_value_t&lt;R&gt;, T&gt;</div>
 
 </div>
 </div>
-<a id="aeb2d1ecf2ae39fa253fcbf1f5381c9cb" name="aeb2d1ecf2ae39fa253fcbf1f5381c9cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb2d1ecf2ae39fa253fcbf1f5381c9cb">&#9670;&#160;</a></span>is_strong_lucas_probable_prime()</h2>
+<a id="a5d8b7cf69b40dfb494463c0deba84953" name="a5d8b7cf69b40dfb494463c0deba84953"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d8b7cf69b40dfb494463c0deba84953">&#9670;&#160;</a></span>is_strong_lucas_probable_prime()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
+template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -525,7 +529,6 @@ template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>An integer-like type. </td></tr>
-    <tr><td class="paramname">S</td><td>The signed type corresponding to <code>T</code>. </td></tr>
   </table>
   </dd>
 </dl>

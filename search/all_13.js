@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['tests_0',['Run Tests',['../md_README.html#autotoc_md17',1,'']]],
+  ['tests_20for_20individual_20modules_0',['Build and Run Tests for Individual Modules',['../md_README.html#autotoc_md17',1,'']]],
   ['theory_20library_1',['NTLib - Number Theory Library',['../index.html',1,'']]],
   ['theory_20library_20ntlib_2',['Number Theory Library (NTLib)',['../md_README.html',1,'']]],
   ['to_5fstring_3',['to_string',['../matrix_8cpp.html#a7e0c80166b87def71eb256cc968a6cd7',1,'ntlib::to_string(matrix&lt; ROWS, COLUMNS, T &gt; mat)'],['../rational_8cpp.html#a7f196ddbc27630394f521d4c8955c398',1,'ntlib::to_string(const rational&lt; T &gt; &amp;r)']]],

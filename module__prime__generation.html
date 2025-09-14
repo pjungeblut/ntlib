@@ -121,10 +121,11 @@ Functions</h2></td></tr>
 <tr class="memitem:a707e829b10ce3c6b7dc68015793bfc36"><td class="memTemplItemLeft" align="right" valign="top">SieveType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__generation_8cpp.html#a707e829b10ce3c6b7dc68015793bfc36">ntlib::prime_sieve</a> (T N, std::vector&lt; T &gt; &amp;primes)</td></tr>
 <tr class="memdesc:a707e829b10ce3c6b7dc68015793bfc36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a prime sieve.  <br /></td></tr>
 <tr class="separator:a707e829b10ce3c6b7dc68015793bfc36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeec5186f51aaee09f35aa65075938a02" id="r_aeec5186f51aaee09f35aa65075938a02"><td class="memTemplParams" colspan="2">template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
-<tr class="memitem:aeec5186f51aaee09f35aa65075938a02"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__generation_8cpp.html#aeec5186f51aaee09f35aa65075938a02">ntlib::next_prime</a> (T n) noexcept</td></tr>
-<tr class="memdesc:aeec5186f51aaee09f35aa65075938a02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the smallest prime bigger than a given number.  <br /></td></tr>
-<tr class="separator:aeec5186f51aaee09f35aa65075938a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad48ce889f40fb0d3c014b352bcbdb01b" id="r_ad48ce889f40fb0d3c014b352bcbdb01b"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</td></tr>
+<tr class="memitem:ad48ce889f40fb0d3c014b352bcbdb01b"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="prime__generation_8cpp.html#ad48ce889f40fb0d3c014b352bcbdb01b">ntlib::next_prime</a> (T n) noexcept</td></tr>
+<tr class="memdesc:ad48ce889f40fb0d3c014b352bcbdb01b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the smallest prime bigger than a given number.  <br /></td></tr>
+<tr class="separator:ad48ce889f40fb0d3c014b352bcbdb01b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Generate prime numbers. </p>

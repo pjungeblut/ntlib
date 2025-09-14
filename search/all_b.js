@@ -1,7 +1,7 @@
 var searchData=
 [
   ['lcm_0',['lcm',['../base_8cpp.html#a6bf0792b5953c3eb3d8af0f99d43851e',1,'ntlib::lcm(T a, T b) noexcept'],['../base_8cpp.html#af87c4c6fb982a0bd6376f7736ec55a41',1,'ntlib::lcm(std::initializer_list&lt; T &gt; list) noexcept']]],
-  ['legendre_1',['legendre',['../modulo_8cpp.html#a96502f7ab4282a55b19fb66b484bfb82',1,'ntlib']]],
+  ['legendre_1',['legendre',['../modulo_8cpp.html#a9f86677bb358b5cd6ed129a5809e2fe2',1,'ntlib']]],
   ['library_2',['NTLib - Number Theory Library',['../index.html',1,'']]],
   ['library_20ntlib_3',['Number Theory Library (NTLib)',['../md_README.html',1,'']]],
   ['license_20disclaimer_4',['License &amp; Disclaimer',['../md_README.html#autotoc_md18',1,'']]],

@@ -174,10 +174,11 @@ Functions</h2></td></tr>
 <tr class="memitem:a7867f57080cee92f122ba7d28b0e3e20"><td class="memTemplItemLeft" align="right" valign="top">constexpr A&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a7867f57080cee92f122ba7d28b0e3e20">ntlib::mod_pow</a> (A a, B b, M m, MF mod_func) noexcept</td></tr>
 <tr class="memdesc:a7867f57080cee92f122ba7d28b0e3e20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary exponentiation with a custom mod-function and modulus.  <br /></td></tr>
 <tr class="separator:a7867f57080cee92f122ba7d28b0e3e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22e7f00087ba99c51a1220fd8953e394" id="r_a22e7f00087ba99c51a1220fd8953e394"><td class="memTemplParams" colspan="2">template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
-<tr class="memitem:a22e7f00087ba99c51a1220fd8953e394"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a22e7f00087ba99c51a1220fd8953e394">ntlib::mod_mult_inv</a> (T a, T m) noexcept</td></tr>
-<tr class="memdesc:a22e7f00087ba99c51a1220fd8953e394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the multiplicative inverse.  <br /></td></tr>
-<tr class="separator:a22e7f00087ba99c51a1220fd8953e394"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5133706e0b7ba679c2690365e33a29b3" id="r_a5133706e0b7ba679c2690365e33a29b3"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</td></tr>
+<tr class="memitem:a5133706e0b7ba679c2690365e33a29b3"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a5133706e0b7ba679c2690365e33a29b3">ntlib::mod_mult_inv</a> (T a, T m) noexcept</td></tr>
+<tr class="memdesc:a5133706e0b7ba679c2690365e33a29b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the multiplicative inverse.  <br /></td></tr>
+<tr class="separator:a5133706e0b7ba679c2690365e33a29b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34f49ac624aa3a81b254add17b64fdce" id="r_a34f49ac624aa3a81b254add17b64fdce"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; </td></tr>
 <tr class="memitem:a34f49ac624aa3a81b254add17b64fdce"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a34f49ac624aa3a81b254add17b64fdce">ntlib::mod_is_square</a> (T a, T p) noexcept</td></tr>
 <tr class="memdesc:a34f49ac624aa3a81b254add17b64fdce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test whether a given number is a quadratic residue module a prime.  <br /></td></tr>
@@ -190,14 +191,16 @@ Functions</h2></td></tr>
 <tr class="memitem:abb25a1902a69cca093f750091d8ad0d0"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#abb25a1902a69cca093f750091d8ad0d0">ntlib::mod_factorial</a> (T n, T m)</td></tr>
 <tr class="memdesc:abb25a1902a69cca093f750091d8ad0d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a factorial modulo a given number.  <br /></td></tr>
 <tr class="separator:abb25a1902a69cca093f750091d8ad0d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96502f7ab4282a55b19fb66b484bfb82" id="r_a96502f7ab4282a55b19fb66b484bfb82"><td class="memTemplParams" colspan="2">template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
-<tr class="memitem:a96502f7ab4282a55b19fb66b484bfb82"><td class="memTemplItemLeft" align="right" valign="top">constexpr S&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a96502f7ab4282a55b19fb66b484bfb82">ntlib::legendre</a> (T a, T p) noexcept</td></tr>
-<tr class="memdesc:a96502f7ab4282a55b19fb66b484bfb82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the Legendre Symbol.  <br /></td></tr>
-<tr class="separator:a96502f7ab4282a55b19fb66b484bfb82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc687d134cf78816e9a25ad1f1d55e04" id="r_adc687d134cf78816e9a25ad1f1d55e04"><td class="memTemplParams" colspan="2">template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
-<tr class="memitem:adc687d134cf78816e9a25ad1f1d55e04"><td class="memTemplItemLeft" align="right" valign="top">constexpr S&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#adc687d134cf78816e9a25ad1f1d55e04">ntlib::jacobi</a> (T a, T b) noexcept</td></tr>
-<tr class="memdesc:adc687d134cf78816e9a25ad1f1d55e04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the Jacobi Symbol \(\left(\frac{a}{p}\right)\).  <br /></td></tr>
-<tr class="separator:adc687d134cf78816e9a25ad1f1d55e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f86677bb358b5cd6ed129a5809e2fe2" id="r_a9f86677bb358b5cd6ed129a5809e2fe2"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</td></tr>
+<tr class="memitem:a9f86677bb358b5cd6ed129a5809e2fe2"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a9f86677bb358b5cd6ed129a5809e2fe2">ntlib::legendre</a> (T a, T p) noexcept</td></tr>
+<tr class="memdesc:a9f86677bb358b5cd6ed129a5809e2fe2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the Legendre Symbol.  <br /></td></tr>
+<tr class="separator:a9f86677bb358b5cd6ed129a5809e2fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21deccffaedcb175d17f9b59fcb729fe" id="r_a21deccffaedcb175d17f9b59fcb729fe"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</td></tr>
+<tr class="memitem:a21deccffaedcb175d17f9b59fcb729fe"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a21deccffaedcb175d17f9b59fcb729fe">ntlib::jacobi</a> (T a, T b) noexcept</td></tr>
+<tr class="memdesc:a21deccffaedcb175d17f9b59fcb729fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the Jacobi Symbol \(\left(\frac{a}{p}\right)\).  <br /></td></tr>
+<tr class="separator:a21deccffaedcb175d17f9b59fcb729fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Primary module interface unit for module <code>modulo</code>. </p>
@@ -296,19 +299,20 @@ template&lt;Integer T&gt; </div>
 
 </div>
 </div>
-<a id="adc687d134cf78816e9a25ad1f1d55e04" name="adc687d134cf78816e9a25ad1f1d55e04"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc687d134cf78816e9a25ad1f1d55e04">&#9670;&#160;</a></span>jacobi()</h2>
+<a id="a21deccffaedcb175d17f9b59fcb729fe" name="a21deccffaedcb175d17f9b59fcb729fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21deccffaedcb175d17f9b59fcb729fe">&#9670;&#160;</a></span>jacobi()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
+template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">S ntlib::jacobi </td>
+          <td class="memname">T ntlib::jacobi </td>
           <td>(</td>
           <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>a</em></span>, </td>
         </tr>
@@ -329,7 +333,6 @@ template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>An integer-like type. </td></tr>
-    <tr><td class="paramname">S</td><td>The signed type corresponding to <code>T</code>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -344,19 +347,20 @@ template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
 
 </div>
 </div>
-<a id="a96502f7ab4282a55b19fb66b484bfb82" name="a96502f7ab4282a55b19fb66b484bfb82"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96502f7ab4282a55b19fb66b484bfb82">&#9670;&#160;</a></span>legendre()</h2>
+<a id="a9f86677bb358b5cd6ed129a5809e2fe2" name="a9f86677bb358b5cd6ed129a5809e2fe2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f86677bb358b5cd6ed129a5809e2fe2">&#9670;&#160;</a></span>legendre()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
+template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">S ntlib::legendre </td>
+          <td class="memname">T ntlib::legendre </td>
           <td>(</td>
           <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>a</em></span>, </td>
         </tr>
@@ -378,7 +382,6 @@ template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>An integer-like type. </td></tr>
-    <tr><td class="paramname">S</td><td>The signed type corresponding to <code>T</code>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -537,13 +540,14 @@ template&lt;Integer T&gt; </div>
 
 </div>
 </div>
-<a id="a22e7f00087ba99c51a1220fd8953e394" name="a22e7f00087ba99c51a1220fd8953e394"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22e7f00087ba99c51a1220fd8953e394">&#9670;&#160;</a></span>mod_mult_inv()</h2>
+<a id="a5133706e0b7ba679c2690365e33a29b3" name="a5133706e0b7ba679c2690365e33a29b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5133706e0b7ba679c2690365e33a29b3">&#9670;&#160;</a></span>mod_mult_inv()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
+template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -571,7 +575,6 @@ template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>A integer-like type. </td></tr>
-    <tr><td class="paramname">S</td><td>The signed type corresponding to <code>T</code> </td></tr>
   </table>
   </dd>
 </dl>

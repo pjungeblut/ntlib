@@ -24,6 +24,5 @@ var searchData=
   ['operator_3d_3d_21',['operator==',['../classntlib_1_1matrix.html#a574548c40458da0d7877da751ec9d963',1,'ntlib::matrix::operator==()'],['../classntlib_1_1mod__int.html#a86835d66a942118c312c5e08bbff2171',1,'ntlib::mod_int::operator==()'],['../rational_8cpp.html#af2c40dab8df4979d738d5f14dc75e3e1',1,'ntlib::operator==()']]],
   ['operator_5b_5d_22',['operator[]',['../classntlib_1_1sieve__235.html#aa29a5dbe1982c2edae76841b34e35333',1,'ntlib::sieve_235::operator[](std::size_t idx) const'],['../classntlib_1_1sieve__235.html#a011ab8fe5ce0aa138146e980ea85b324',1,'ntlib::sieve_235::operator[](std::size_t idx)'],['../classntlib_1_1matrix.html#abd40a22a3600b603e3bce5c78d299875',1,'ntlib::matrix::operator[]()']]],
   ['other_23',['Other',['../index.html#autotoc_md8',1,'']]],
-  ['other_20projects_24',['Release Builds and Installation (for Usage in other Projects)',['../md_README.html#autotoc_md16',1,'']]],
-  ['overview_25',['Feature Overview',['../index.html#autotoc_md1',1,'']]]
+  ['overview_24',['Feature Overview',['../index.html#autotoc_md1',1,'']]]
 ];

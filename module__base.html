@@ -187,10 +187,10 @@ requires std::totally_ordered&lt;T&gt;</td></tr>
 <tr class="memitem:af688754a400d40792794b426c0d52cf7"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="base_8cpp.html#af688754a400d40792794b426c0d52cf7">ntlib::abs</a> (T n) noexcept</td></tr>
 <tr class="memdesc:af688754a400d40792794b426c0d52cf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the absolute value of a given number.  <br /></td></tr>
 <tr class="separator:af688754a400d40792794b426c0d52cf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20812657384d1d4eaa06fb8da9927ee9" id="r_a20812657384d1d4eaa06fb8da9927ee9"><td class="memTemplParams" colspan="2">template&lt;AdditiveGroup T, AdditiveGroup U = std::make_unsigned_t&lt;T&gt;&gt; </td></tr>
-<tr class="memitem:a20812657384d1d4eaa06fb8da9927ee9"><td class="memTemplItemLeft" align="right" valign="top">constexpr U&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="base_8cpp.html#a20812657384d1d4eaa06fb8da9927ee9">ntlib::difference</a> (T a, T b) noexcept</td></tr>
-<tr class="memdesc:a20812657384d1d4eaa06fb8da9927ee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the difference between two numbers.  <br /></td></tr>
-<tr class="separator:a20812657384d1d4eaa06fb8da9927ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4771bce40a716c98e24b6da0af2ecb41" id="r_a4771bce40a716c98e24b6da0af2ecb41"><td class="memTemplParams" colspan="2">template&lt;AdditiveGroup T&gt; </td></tr>
+<tr class="memitem:a4771bce40a716c98e24b6da0af2ecb41"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="base_8cpp.html#a4771bce40a716c98e24b6da0af2ecb41">ntlib::difference</a> (T a, T b) noexcept</td></tr>
+<tr class="memdesc:a4771bce40a716c98e24b6da0af2ecb41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the difference between two numbers.  <br /></td></tr>
+<tr class="separator:a4771bce40a716c98e24b6da0af2ecb41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0da3fec11ac16f272889ba76a1c2be6d" id="r_a0da3fec11ac16f272889ba76a1c2be6d"><td class="memTemplParams" colspan="2">template&lt;std::totally_ordered T&gt; </td></tr>
 <tr class="memitem:a0da3fec11ac16f272889ba76a1c2be6d"><td class="memTemplItemLeft" align="right" valign="top">constexpr int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="base_8cpp.html#a0da3fec11ac16f272889ba76a1c2be6d">ntlib::sgn</a> (T n) noexcept</td></tr>
 <tr class="memdesc:a0da3fec11ac16f272889ba76a1c2be6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the sign of a given number.  <br /></td></tr>
@@ -215,10 +215,11 @@ requires std::totally_ordered&lt;T&gt;</td></tr>
 <tr class="memitem:af87c4c6fb982a0bd6376f7736ec55a41"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="base_8cpp.html#af87c4c6fb982a0bd6376f7736ec55a41">ntlib::lcm</a> (std::initializer_list&lt; T &gt; list) noexcept</td></tr>
 <tr class="memdesc:af87c4c6fb982a0bd6376f7736ec55a41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the least common multiple of a list of numbers.  <br /></td></tr>
 <tr class="separator:af87c4c6fb982a0bd6376f7736ec55a41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a737f6ddbea5aa8554fbfcea214d5836f" id="r_a737f6ddbea5aa8554fbfcea214d5836f"><td class="memTemplParams" colspan="2">template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
-<tr class="memitem:a737f6ddbea5aa8554fbfcea214d5836f"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::tuple&lt; T, S, S &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="base_8cpp.html#a737f6ddbea5aa8554fbfcea214d5836f">ntlib::extended_euclid</a> (T a, T b) noexcept</td></tr>
-<tr class="memdesc:a737f6ddbea5aa8554fbfcea214d5836f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extended Euclidean algorithm.  <br /></td></tr>
-<tr class="separator:a737f6ddbea5aa8554fbfcea214d5836f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e30acd81ea6baee9bbeb2b5fdd36de4" id="r_a3e30acd81ea6baee9bbeb2b5fdd36de4"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</td></tr>
+<tr class="memitem:a3e30acd81ea6baee9bbeb2b5fdd36de4"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::tuple&lt; T, T, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="base_8cpp.html#a3e30acd81ea6baee9bbeb2b5fdd36de4">ntlib::extended_euclid</a> (T a, T b) noexcept</td></tr>
+<tr class="memdesc:a3e30acd81ea6baee9bbeb2b5fdd36de4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extended Euclidean algorithm.  <br /></td></tr>
+<tr class="separator:a3e30acd81ea6baee9bbeb2b5fdd36de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9493740aa48e914151a1049c96cbe16d" id="r_a9493740aa48e914151a1049c96cbe16d"><td class="memTemplParams" colspan="2">template&lt;MultiplicativeMonoid A, Integer B&gt; </td></tr>
 <tr class="memitem:a9493740aa48e914151a1049c96cbe16d"><td class="memTemplItemLeft" align="right" valign="top">constexpr A&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="base_8cpp.html#a9493740aa48e914151a1049c96cbe16d">ntlib::pow</a> (A a, B b) noexcept</td></tr>
 <tr class="memdesc:a9493740aa48e914151a1049c96cbe16d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary exponentation.  <br /></td></tr>

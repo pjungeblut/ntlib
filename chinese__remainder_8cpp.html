@@ -255,25 +255,28 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5139a8aacaaa9054eadfa4f7f0884370" id="r_a5139a8aacaaa9054eadfa4f7f0884370"><td class="memTemplParams" colspan="2">template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
-<tr class="memitem:a5139a8aacaaa9054eadfa4f7f0884370"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="structntlib_1_1crt__congruence.html">crt_congruence</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a5139a8aacaaa9054eadfa4f7f0884370">ntlib::crt_coprime</a> (const std::vector&lt; <a class="el" href="structntlib_1_1crt__congruence.html">crt_congruence</a>&lt; T &gt; &gt; &amp;congruences) noexcept</td></tr>
-<tr class="memdesc:a5139a8aacaaa9054eadfa4f7f0884370"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve a system of modular congruences for pairwise coprime moduli.  <br /></td></tr>
-<tr class="separator:a5139a8aacaaa9054eadfa4f7f0884370"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5d442297342895c5ba1dea5621961a9" id="r_ab5d442297342895c5ba1dea5621961a9"><td class="memTemplParams" colspan="2">template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </td></tr>
-<tr class="memitem:ab5d442297342895c5ba1dea5621961a9"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::optional&lt; <a class="el" href="structntlib_1_1crt__congruence.html">crt_congruence</a>&lt; T &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab5d442297342895c5ba1dea5621961a9">ntlib::crt</a> (const std::vector&lt; <a class="el" href="structntlib_1_1crt__congruence.html">crt_congruence</a>&lt; T &gt; &gt; &amp;congruences)</td></tr>
-<tr class="memdesc:ab5d442297342895c5ba1dea5621961a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve a general system of modular congruences.  <br /></td></tr>
-<tr class="separator:ab5d442297342895c5ba1dea5621961a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c55121f2caf34b69f40e0872f7bfa12" id="r_a3c55121f2caf34b69f40e0872f7bfa12"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</td></tr>
+<tr class="memitem:a3c55121f2caf34b69f40e0872f7bfa12"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="structntlib_1_1crt__congruence.html">crt_congruence</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a3c55121f2caf34b69f40e0872f7bfa12">ntlib::crt_coprime</a> (const std::vector&lt; <a class="el" href="structntlib_1_1crt__congruence.html">crt_congruence</a>&lt; T &gt; &gt; &amp;congruences) noexcept</td></tr>
+<tr class="memdesc:a3c55121f2caf34b69f40e0872f7bfa12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve a system of modular congruences for pairwise coprime moduli.  <br /></td></tr>
+<tr class="separator:a3c55121f2caf34b69f40e0872f7bfa12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab607c3f85e3a21a76ae4a434ff90dbc1" id="r_ab607c3f85e3a21a76ae4a434ff90dbc1"><td class="memTemplParams" colspan="2">template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</td></tr>
+<tr class="memitem:ab607c3f85e3a21a76ae4a434ff90dbc1"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::optional&lt; <a class="el" href="structntlib_1_1crt__congruence.html">crt_congruence</a>&lt; T &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab607c3f85e3a21a76ae4a434ff90dbc1">ntlib::crt</a> (const std::vector&lt; <a class="el" href="structntlib_1_1crt__congruence.html">crt_congruence</a>&lt; T &gt; &gt; &amp;congruences)</td></tr>
+<tr class="memdesc:ab607c3f85e3a21a76ae4a434ff90dbc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve a general system of modular congruences.  <br /></td></tr>
+<tr class="separator:ab607c3f85e3a21a76ae4a434ff90dbc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Primary module interface unit for module <code><a class="el" href="module__chinese__remainder.html" title="Solve systems of modular congruences using the Chinese remainder theorem.">chinese_remainder</a></code>. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="ab5d442297342895c5ba1dea5621961a9" name="ab5d442297342895c5ba1dea5621961a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5d442297342895c5ba1dea5621961a9">&#9670;&#160;</a></span>crt()</h2>
+<a id="ab607c3f85e3a21a76ae4a434ff90dbc1" name="ab607c3f85e3a21a76ae4a434ff90dbc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab607c3f85e3a21a76ae4a434ff90dbc1">&#9670;&#160;</a></span>crt()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
+template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -297,7 +300,6 @@ template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>An integer-like type. </td></tr>
-    <tr><td class="paramname">S</td><td>The signed type corresponding to <code>T</code>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -311,13 +313,14 @@ template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
 
 </div>
 </div>
-<a id="a5139a8aacaaa9054eadfa4f7f0884370" name="a5139a8aacaaa9054eadfa4f7f0884370"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5139a8aacaaa9054eadfa4f7f0884370">&#9670;&#160;</a></span>crt_coprime()</h2>
+<a id="a3c55121f2caf34b69f40e0872f7bfa12" name="a3c55121f2caf34b69f40e0872f7bfa12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c55121f2caf34b69f40e0872f7bfa12">&#9670;&#160;</a></span>crt_coprime()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
+template&lt;Integer T&gt; <br />
+requires std::numeric_limits&lt;T&gt;::is_signed</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -341,7 +344,6 @@ template&lt;Integer T, Integer S = std::make_signed_t&lt;T&gt;&gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>An integer-like type. </td></tr>
-    <tr><td class="paramname">S</td><td>The signed type corresponding to <code>T</code>. </td></tr>
   </table>
   </dd>
 </dl>

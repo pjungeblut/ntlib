@@ -9,5 +9,5 @@ var searchData=
   ['euler_5ftotient_2ecpp_6',['euler_totient.cpp',['../euler__totient_8cpp.html',1,'']]],
   ['euler_5ftotient_5fsieve_7',['euler_totient_sieve',['../euler__totient_8cpp.html#ab80f63c5dad16e45edb09e2516c5e953',1,'ntlib']]],
   ['exec_5feach_5felement_8',['exec_each_element',['../matrix_8cpp.html#a783c8e7ef81bd2309db2435e65c41eb1',1,'ntlib']]],
-  ['extended_5feuclid_9',['extended_euclid',['../base_8cpp.html#a737f6ddbea5aa8554fbfcea214d5836f',1,'ntlib']]]
+  ['extended_5feuclid_9',['extended_euclid',['../base_8cpp.html#a3e30acd81ea6baee9bbeb2b5fdd36de4',1,'ntlib']]]
 ];
