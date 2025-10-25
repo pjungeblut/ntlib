@@ -69,6 +69,20 @@ ninja ut_base    # all unit-test targets are name with `ut_<module-name>`
 ./test/base      # the test executable is named like the module under test
 ```
 
+### Generate Code Coverage Reports
+
+**Note:** This requires `gcovr` to be installed.
+
+**Note:** This currently only works with clang.
+For other compilers, adapt the `--gcov-executable` flag in the root `CMakeLists.txt` file.
+
+The following can be used to run all tests and execute coverage reports for the library.
+The report is written to `build/tests/coverage/index.html`.
+
+```bash
+cmake --build --preset tests --target coverage
+```
+
 # License & Disclaimer
 This software is licensed under the MIT license.
 See `LICENSE` for details.

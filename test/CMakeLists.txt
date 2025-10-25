@@ -21,14 +21,21 @@ FetchContent_MakeAvailable(googletest)
 
 # Helper function to add unittests.
 function(add_unittest name libraries)
-  add_executable(ut_${name})
-  target_sources(ut_${name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/${name}.cpp)
-  target_link_libraries(ut_${name} PRIVATE
-      ${libraries}
-      GTest::gtest_main
-  )
-  set_target_properties(ut_${name} PROPERTIES OUTPUT_NAME ${name})
-  add_test(NAME ${name} COMMAND ut_${name})
+    add_executable(ut_${name})
+
+    target_sources(ut_${name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/${name}.cpp)
+
+    if (NTLIB_COVERAGE_REPORT)
+        target_compile_options(ut_${name} PRIVATE --coverage)
+        target_link_libraries(ut_${name} PRIVATE --coverage)
+    endif()
+
+    target_link_libraries(ut_${name} PRIVATE
+        ${libraries}
+        GTest::gtest_main
+    )
+    set_target_properties(ut_${name} PROPERTIES OUTPUT_NAME ${name})
+    add_test(NAME ${name} COMMAND ut_${name})
 endfunction()
 
 # Base functionality.
