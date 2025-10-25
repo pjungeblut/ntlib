@@ -146,7 +146,13 @@ Build and Run Tests for Individual Modules</h3>
 <div class="fragment"><div class="line">cd build/debug   # alternatively, go to `build/release`</div>
 <div class="line">ninja ut_base    # all unit-test targets are name with `ut_&lt;module-name&gt;`</div>
 <div class="line">./test/base      # the test executable is named like the module under test</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md18"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md18"></a>
+Generate Code Coverage Reports</h3>
+<p><b>Note:</b> This requires <code>gcovr</code> to be installed.</p>
+<p><b>Note:</b> This currently only works with clang. For other compilers, adapt the <code>--gcov-executable</code> flag in the root <code>CMakeLists.txt</code> file.</p>
+<p>The following can be used to run all tests and execute coverage reports for the library. The report is written to <code>build/tests/coverage/index.html</code>.</p>
+<div class="fragment"><div class="line">cmake --build --preset tests --target coverage</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md19"></a>
 License &amp; Disclaimer</h1>
 <p>This software is licensed under the MIT license. See <code>LICENSE</code> for details. NTLib is still in development. Therefore, things will break and the API/ABI will change.</p>
 <p>Feedback is always welcome. </p>
