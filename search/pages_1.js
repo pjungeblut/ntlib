@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['ntlib_0',['Number Theory Library (NTLib)',['../md_README.html',1,'']]],
-  ['ntlib_20number_20theory_20library_1',['NTLib - Number Theory Library',['../index.html',1,'']]],
-  ['number_20theory_20library_2',['NTLib - Number Theory Library',['../index.html',1,'']]],
-  ['number_20theory_20library_20ntlib_3',['Number Theory Library (NTLib)',['../md_README.html',1,'']]]
+  ['basic_20functionality_0',['Basic Functionality',['../index.html#autotoc_md2',1,'']]],
+  ['build_20and_20run_20tests_20for_20individual_20modules_1',['Build and Run Tests for Individual Modules',['../md_README.html#autotoc_md17',1,'']]]
 ];

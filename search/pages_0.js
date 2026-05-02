@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['library_0',['NTLib - Number Theory Library',['../index.html',1,'']]],
-  ['library_20ntlib_1',['Number Theory Library (NTLib)',['../md_README.html',1,'']]]
+  ['and_20run_20tests_20for_20individual_20modules_0',['Build and Run Tests for Individual Modules',['../md_README.html#autotoc_md17',1,'']]],
+  ['arithmetic_20functions_1',['Arithmetic Functions',['../index.html#autotoc_md4',1,'']]]
 ];

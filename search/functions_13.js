@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['zero_0',['zero',['../concepts_8cpp.html#ad69384c31440f495650c1427727680f3',1,'ntlib']]]
+  ['zero_0',['zero',['../concepts_8cpp.html#a5b2f6612508fc37359452c39ee340a3c',1,'ntlib']]]
 ];
