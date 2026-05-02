@@ -7,7 +7,6 @@ module;
 #include <algorithm>
 #include <cassert>
 #include <concepts>
-#include <functional>
 #include <random>
 #include <ranges>
 #include <type_traits>

@@ -4,7 +4,6 @@
  */
 module;
 
-#include <cmath>
 #include <vector>
 
 /**

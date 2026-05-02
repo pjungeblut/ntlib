@@ -8,7 +8,6 @@ module;
 #include <concepts>
 #include <cstddef>
 #include <initializer_list>
-#include <memory>
 #include <ostream>
 #include <string>
 

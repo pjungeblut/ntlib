@@ -9,7 +9,6 @@ module;
 #include <cassert>
 #include <cstdint>
 #include <optional>
-#include <span>
 #include <type_traits>
 
 /**

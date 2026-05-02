@@ -12,10 +12,8 @@ module;
 #include <cmath>
 #include <cstdint>
 #include <functional>
-#include <numeric>
 #include <ranges>
 #include <type_traits>
-#include <vector>
 
 /**
  * @module base

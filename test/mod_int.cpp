@@ -2,7 +2,6 @@
 
 #include <cstdint>
 #include <limits>
-#include <memory>
 #include <utility>
 
 import base;

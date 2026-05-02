@@ -6,7 +6,6 @@ module;
 
 #include <algorithm>
 #include <cassert>
-#include <type_traits>
 #include <vector>
 
 /**

@@ -1,9 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <algorithm>
-#include <array>
 #include <limits>
-#include <map>
 #include <set>
 #include <vector>
 
