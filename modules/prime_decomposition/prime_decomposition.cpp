@@ -255,11 +255,7 @@ prime_factors<T> prime_decomposition_large(T n) {
   // Decompose remainder and add its prime factors to the result.
   // No duplicate entries as remainder is coprime to all previous factors.
   const prime_factors<T> rem = ntlib::prime_decomposition_large(n);
-#ifdef __cpp_lib_containers_ranges
   factors.append_range(rem);
-#else
-  factors.insert(factors.end(), rem.begin(), rem.end());
-#endif
   return factors;
 }
 
@@ -290,11 +286,7 @@ prime_factors<T> prime_decomposition(T n) {
         ntlib::prime_decomposition_large(remainder);
 
     // Concatenate lists of prime powers.
-#ifdef __cpp_lib_containers_ranges
     factors.append_range(factors_rem);
-#else
-    factors.insert(factors.end(), factors_rem.begin(), factors_rem.end());
-#endif
     return factors;
   }
 }
