@@ -221,7 +221,6 @@ std::vector<std::vector<T>> binom_table(T N) {
 export template<Integer T>
 [[nodiscard]] constexpr
 std::vector<std::vector<T>> mod_binom_table(std::size_t N, T m) {
-  assert(N >= 0);
   assert(m > T{0});
 
   std::vector<std::vector<T>> binoms(N + 1, std::vector<T>(N + 1, T{0}));
