@@ -259,7 +259,7 @@ private:
  * @tparam T An integer-like type.
  * @tparam m The modulus.
  */
-export template<Integer T, T m>
+template<Integer T, T m>
 class algebra_traits<mod_int<T, m>> {
 public:
   /**

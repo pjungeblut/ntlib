@@ -38,7 +38,7 @@ class algebra_traits {};
  * 
  * @tparam T An integral type.
  */
-export template<std::integral T>
+template<std::integral T>
 class algebra_traits<T> {
 public:
   /**

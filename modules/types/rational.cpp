@@ -316,7 +316,7 @@ rational<T> operator-(const rational<T> &r) {
  * 
  * @tparam T An integer-like type.
  */
-export template<Integer T>
+template<Integer T>
 class algebra_traits<rational<T>> {
 public:
   /**

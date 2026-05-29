@@ -467,7 +467,7 @@ matrix<ROWS, COLUMNS, T> exec_each_element(
  * @tparam COLUMNS The number of columns.
  * @tparam T The element type.
  */
-export template<std::size_t ROWS, std::size_t COLUMNS, Ring T>
+template<std::size_t ROWS, std::size_t COLUMNS, Ring T>
 class algebra_traits<matrix<ROWS, COLUMNS, T>> {
 public:
   /**
