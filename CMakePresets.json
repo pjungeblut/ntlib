@@ -17,8 +17,16 @@
       }
     },
     {
+      "name": "gnu",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_C_COMPILER": "gcc"
+      }
+    },
+    {
       "name": "debug",
-      "displayName": "Debug (Clang latest)",
+      "displayName": "Debug",
       "inherits": ["common", "clang"],
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
@@ -26,7 +34,7 @@
     },
     {
       "name": "release",
-      "displayName": "Release (Clang latest)",
+      "displayName": "Release",
       "inherits": ["common", "clang"],
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
