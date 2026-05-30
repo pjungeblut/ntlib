@@ -1,31 +1,13 @@
 <map id="modules/combinatorics/pythagorean_triple.cpp" name="modules/combinatorics/pythagorean_triple.cpp">
-<area shape="rect" id="Node000001" title="Primary module interface unit for module pythagorean_triple." alt="" coords="140,5,295,46"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,168,80,193"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,49,69,159,66,155,193,45"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="154,94,203,120"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,48,193,81,189,79,205,45"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="227,94,284,120"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="229,45,246,79,241,81,224,48"/>
-<area shape="rect" id="Node000005" href="$base_8cpp.html" title="Primary module interface unit for module base." alt="" coords="332,94,382,120"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="253,44,324,84,321,88,251,49"/>
-<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="333,116,95,169,94,164,332,111"/>
-<area shape="poly" id="edge15_Node000005_Node000005" title=" " alt="" coords="383,91,400,93,406,99,408,107,406,116,399,121,396,117,401,113,403,107,402,101,398,98,382,96"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="103,168,152,193"/>
-<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="333,118,168,169,167,164,331,113"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="177,168,215,193"/>
-<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="333,122,230,167,228,162,331,117"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="240,168,304,193"/>
-<area shape="poly" id="edge8_Node000005_Node000008" title=" " alt="" coords="344,122,299,160,296,156,341,118"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="328,168,387,193"/>
-<area shape="poly" id="edge9_Node000005_Node000009" title=" " alt="" coords="360,120,360,152,354,152,354,120"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="411,168,468,193"/>
-<area shape="poly" id="edge10_Node000005_Node000010" title=" " alt="" coords="373,118,416,155,413,159,369,122"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="492,168,553,193"/>
-<area shape="poly" id="edge11_Node000005_Node000011" title=" " alt="" coords="383,116,482,159,479,164,381,121"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="577,168,654,193"/>
-<area shape="poly" id="edge12_Node000005_Node000012" title=" " alt="" coords="383,113,563,162,561,167,382,118"/>
-<area shape="rect" id="Node000013" title=" " alt="" coords="679,168,739,193"/>
-<area shape="poly" id="edge13_Node000005_Node000013" title=" " alt="" coords="383,110,500,131,664,165,663,170,499,136,382,115"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="763,168,844,193"/>
-<area shape="poly" id="edge14_Node000005_Node000014" title=" " alt="" coords="383,109,533,129,748,164,748,170,533,135,382,114"/>
+<area shape="rect" id="Node000001" title="Primary module interface unit for module pythagorean_triple." alt="" coords="84,5,239,46"/>
+<area shape="rect" id="Node000002" href="$base_8cpp.html" title="Primary module interface unit for module base." alt="" coords="94,94,144,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,48,135,81,130,79,149,45"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="183,168,222,193"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="170,46,183,93,198,152,193,153,178,95,164,47"/>
+<area shape="poly" id="edge4_Node000002_Node000002" title=" " alt="" coords="144,91,161,93,168,99,170,107,167,116,161,121,158,117,163,113,165,107,163,101,159,98,144,96"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,168,70,193"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,122,64,159,61,155,103,118"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="93,168,152,193"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="122,120,124,152,119,152,117,120"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="135,118,179,155,175,159,131,122"/>
 </map>

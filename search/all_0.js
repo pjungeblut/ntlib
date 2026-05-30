@@ -1,7 +1,7 @@
 var searchData=
 [
   ['a_0',['a',['../structntlib_1_1crt__congruence.html#af2e4174ee552f1712cf132e04f187204',1,'ntlib::crt_congruence']]],
-  ['abs_1',['abs',['../base_8cpp.html#adb88cd8b6061ece7fa88de34c20f5ece',1,'ntlib']]],
+  ['abs_1',['abs',['../base_8cpp.html#af688754a400d40792794b426c0d52cf7',1,'ntlib']]],
   ['additivecommutativegroup_2',['AdditiveCommutativeGroup',['../conceptntlib_1_1AdditiveCommutativeGroup.html',1,'ntlib']]],
   ['additivegroup_3',['AdditiveGroup',['../conceptntlib_1_1AdditiveGroup.html',1,'ntlib']]],
   ['additivemonoid_4',['AdditiveMonoid',['../conceptntlib_1_1AdditiveMonoid.html',1,'ntlib']]],
