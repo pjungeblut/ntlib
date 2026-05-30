@@ -2,11 +2,14 @@
  * @file
  * @brief Module interface unit for module `base`, partition `concepts`.
  */
-module;
 
-#include <concepts>
-
+/**
+ * @module base:concepts
+ * @brief Defines number theoretic concepts used throughout the library.
+ */
 export module base:concepts;
+
+import std;
 
 namespace ntlib {
 

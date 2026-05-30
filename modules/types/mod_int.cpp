@@ -4,15 +4,15 @@
  */
 module;
 
-#include <cassert>
-#include <limits>
-#include <type_traits>
+#include <cassert> // Needed for `assert` macro.
 
 /**
  * @module mod_int
  * @brief Represents an integer modulo another integer.
  */
 export module mod_int;
+
+import std;
 
 import base;
 import modulo;

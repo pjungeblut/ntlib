@@ -1,4 +1,10 @@
-cmake_minimum_required (VERSION 3.28)
+cmake_minimum_required (VERSION 4.2.3)
+
+# Enable `import std`.
+# CMake support for this is still experimental.
+# This MUST come before the `project` command.
+set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "d0edc3af-4c50-42ea-a356-e2862fe7a444")
+set(CMAKE_CXX_MODULE_STD 1)
 
 project(NTLib
   VERSION 0.9

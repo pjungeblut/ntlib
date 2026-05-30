@@ -22,14 +22,14 @@ See here for the complete [Doxygen documentation](https://pjungeblut.github.io/n
 ## Requirements
 NTLib uses up-to-date C++ features.
 In particular:
-* C++20 modules
+* C++20 modules (including C++23 `import std;`)
 * C++23 standard library features
 
 As a consequence (especially because of the modules), you need recent tooling to sucessfully compile the library.
-A working set of tools under Ubuntu 24.04 LTS is:
-* Clang-19.1, including Clang Tools 19
-* Ninja 1.11
-* CMake and CTest 3.28
+A working set of tools under Ubuntu 26.04 is:
+* g++ 16.0.1
+* Ninja 1.13.2
+* CMake and CTest 4.2.3
 
 ## Download NTLib
 Clone NTLib into a new `ntlib` directory:

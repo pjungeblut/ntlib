@@ -4,17 +4,15 @@
  */
 module;
 
-#include <cassert>
-#include <compare>
-#include <ostream>
-#include <string>
-#include <type_traits>
+#include <cassert> // Needed for `assert` macro.
 
 /**
  * @module rational
  * @brief Provides a class template for rational numbers.
  */
 export module rational;
+
+import std;
 
 import base;
 

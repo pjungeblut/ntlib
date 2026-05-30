@@ -2,14 +2,6 @@
  * @file
  * @brief Primary module interface unit for module `chinese_remainder`.
  */
-module;
-
-#include <algorithm>
-#include <optional>
-#include <ranges>
-#include <tuple>
-#include <type_traits>
-#include <vector>
 
 /**
  * @module chinese_remainder
@@ -34,6 +26,8 @@ module;
  * a unique solution modulo \f$M = \mathrm{lcm}(m_1, \ldots, m_k)\f$.
  */
 export module chinese_remainder;
+
+import std;
 
 import base;
 import modulo;

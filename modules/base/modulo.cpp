@@ -4,18 +4,15 @@
  */
 module;
 
-#include <algorithm>
-#include <cassert>
-#include <concepts>
-#include <random>
-#include <ranges>
-#include <type_traits>
+#include <cassert> // Needed for `assert` macro.
 
 /**
  * @module modulo
  * @brief Function templates for modular arithmetic.
  */
 export module modulo;
+
+import std;
 
 import base;
 

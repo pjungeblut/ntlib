@@ -4,9 +4,7 @@
  */
 module;
 
-#include <cassert>
-#include <tuple>
-#include <vector>
+#include <cassert> // Needed for `assert` macro.
 
 /**
  * @module pell_equation
@@ -16,6 +14,8 @@ module;
  * \f$x, y \in \mathbb{Z}\f$ satisfying \f$x^2 - D \cdot y^2 = 1\f$.
  */
 export module pell_equation;
+
+import std;
 
 import base;
 import continued_fraction;

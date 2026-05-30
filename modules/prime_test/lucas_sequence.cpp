@@ -4,14 +4,15 @@
  */
 module;
 
-#include <cassert>
-#include <utility>
+#include <cassert> // Needed for `assert` macro.
 
 /**
  * @module lucas_sequence
  * @brief Compute terms of Lucas sequences.
  */
 export module lucas_sequence;
+
+import std;
 
 import base;
 import matrix;

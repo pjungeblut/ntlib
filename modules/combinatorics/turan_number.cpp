@@ -4,7 +4,7 @@
  */
 module;
 
-#include <cassert>
+#include <cassert> // Needed for `assert` macro.
 
 /**
  * @module turan_number

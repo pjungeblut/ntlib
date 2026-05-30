@@ -4,14 +4,15 @@
  */
 module;
 
-#include <cassert>
-#include <tuple>
+#include <cassert> // Needed for `assert` macro.
 
 /**
  * @module diophantine
  * @brief Algorithms to solve diophantine equations.
  */
 export module diophantine;
+
+import std;
 
 import base;
 

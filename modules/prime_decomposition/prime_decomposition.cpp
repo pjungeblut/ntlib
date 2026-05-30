@@ -4,16 +4,7 @@
  */
 module;
 
-#include <cassert>
-#include <cstddef>
-#include <cstdlib>
-#include <concepts>
-#include <limits>
-#include <optional>
-#include <ranges>
-#include <type_traits>
-#include <utility>
-#include <vector>
+#include <cassert> // Needed for `assert` macro.
 
 #include "prime_list.hpp"
 
@@ -23,6 +14,8 @@ module;
  * decomposition.
  */
 export module prime_decomposition;
+
+import std;
 
 import base;
 import int128;

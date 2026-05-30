@@ -4,9 +4,7 @@
  */
 module;
 
-#include <algorithm>
-#include <cassert>
-#include <vector>
+#include <cassert> // Needed for `assert` macro.
 
 /**
  * @module divisors
@@ -16,6 +14,8 @@ module;
  * to compute the divisor function.
  */
 export module divisors;
+
+import std;
 
 import base;
 import prime_decomposition;

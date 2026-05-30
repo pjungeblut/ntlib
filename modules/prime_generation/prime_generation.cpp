@@ -2,10 +2,6 @@
  * @file
  * @brief Primary module interface unit for module `prime_generation`.
  */
-module;
-
-#include <cstddef>
-#include <vector>
 
 /**
  * @module prime_generation
@@ -15,6 +11,8 @@ module;
  * and prime sieves.
  */
 export module prime_generation;
+
+import std;
 
 import base;
 import prime_test;

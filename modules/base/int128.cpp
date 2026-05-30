@@ -2,9 +2,6 @@
  * @file
  * @brief Primary module interface unit for module `int128`.
  */
-module;
-
-#include <type_traits>
 
 /**
  * @module int128
@@ -14,6 +11,8 @@ module;
  * integers supported by Clang and GCC.
  */
 export module int128;
+
+import std;
 
 import base;
 

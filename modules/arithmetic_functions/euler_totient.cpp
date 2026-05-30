@@ -1,14 +1,9 @@
 /**
  * @file
- * @brief Primary module interfact unit for module `euler_totient`.
+ * @brief Primary module interface unit for module `euler_totient`.
  */
-module;
 
-#include <algorithm>
-#include <numeric>
-#include <vector>
-
-/**
+ /**
  * @module euler_totient
  * @brief Compute Euler's totient function \f$\phi\f$.
  * 
@@ -20,6 +15,8 @@ module;
  * using a sieve for all \f$n \leq N\f$.
  */
 export module euler_totient;
+
+import std;
 
 import base;
 import prime_decomposition;

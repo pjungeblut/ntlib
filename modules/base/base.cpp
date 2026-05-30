@@ -4,16 +4,8 @@
  */
 module;
 
-#include <algorithm>
-#include <array>
-#include <bit>
-#include <cassert>
-#include <climits>
-#include <cmath>
-#include <cstdint>
-#include <functional>
-#include <ranges>
-#include <type_traits>
+#include <cassert> // Needed for `assert` macro.
+#include <climits> // Needed for `CHAR_BIT` define.
 
 /**
  * @module base
@@ -23,6 +15,8 @@ module;
  * depends on the C++ standard library.
  */
 export module base;
+
+import std;
 
 export import :concepts;
 
@@ -48,7 +42,7 @@ constexpr auto SMALL_PRIMES = std::to_array<T>({
     709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811,
     821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911,
     919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997, 1'009});
-static_assert(std::ranges::is_sorted(SMALL_PRIMES<uint32_t>),
+static_assert(std::ranges::is_sorted(SMALL_PRIMES<std::uint32_t>),
     "Some NTLIB-internal functions assume that the list is sorted.");
 
 /**
@@ -342,11 +336,11 @@ T isqrt(T n) noexcept {
 
   if constexpr ((std::is_integral_v<T> && sizeof(T) <= 4) ||
       std::is_same_v<T, double>) {
-    return floor(sqrt(n));
+    return std::floor(std::sqrt(n));
   } else if constexpr (std::is_same_v<T, float>) {
-    return floorf(sqrtf(n));
+    return std::floorf(std::sqrtf(n));
   } else if constexpr (std::is_same_v<T, long double>) {
-    return floorl(sqrtl(n));
+    return std::floorl(std::sqrtl(n));
   } else {
     // Checks without overflows that `a*a <= b`.
     const auto square_atmost = [](auto a, auto b) {

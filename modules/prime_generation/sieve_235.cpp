@@ -5,11 +5,7 @@
  */
 module;
 
-#include <climits>
-#include <cstddef>
-#include <cstring>
-#include <memory>
-#include <vector>
+#include <climits> // Needed for `CHAR_BIT` define.
 
 /**
  * @module prime_generation:sieve_235
@@ -26,6 +22,8 @@ module;
  * or by a factor of 15/4 compared to a `std::vector<bool>`.
  */
 export module prime_generation:sieve_235;
+
+import std;
 
 namespace ntlib {
 

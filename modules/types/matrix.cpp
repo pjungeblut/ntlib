@@ -4,18 +4,15 @@
  */
 module;
 
-#include <cassert>
-#include <concepts>
-#include <cstddef>
-#include <initializer_list>
-#include <ostream>
-#include <string>
+#include <cassert> // Needed for `assert` macro.
 
 /**
  * @module matrix
  * @brief Represents a matrix whose dimensions are compile time constants.
  */
 export module matrix;
+
+import std;
 
 import base;
 

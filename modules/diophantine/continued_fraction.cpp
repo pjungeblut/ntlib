@@ -2,15 +2,14 @@
  * @file
  * @brief Primary module interface unit for module `continued_fraction`.
  */
-module;
-
-#include <vector>
 
 /**
  * @module continued_fraction
  * @brief Contininued fraction expansion for quadratic irrationals.
  */
 export module continued_fraction;
+
+import std;
 
 import base;
 import rational;

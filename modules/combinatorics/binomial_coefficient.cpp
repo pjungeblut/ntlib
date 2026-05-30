@@ -4,9 +4,7 @@
  */
 module;
 
-#include <algorithm>
-#include <cassert>
-#include <vector>
+#include <cassert> // Needed for `assert` macro.
 
 /**
  * @module binomial_coefficient
@@ -21,6 +19,8 @@ module;
  * https://cp-algorithms.com/combinatorics/binomial-coefficients.html.
  */
 export module binomial_coefficient;
+
+import std;
 
 import base;
 import chinese_remainder;

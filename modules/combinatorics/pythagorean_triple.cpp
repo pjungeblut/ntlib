@@ -2,11 +2,6 @@
  * @file
  * @brief Primary module interface unit for module `pythagorean_triple`.
  */
-module;
-
-#include <algorithm>
-#include <tuple>
-#include <vector>
 
 /**
  * @brief Generate primitive Pythagorean triples.
@@ -31,6 +26,8 @@ module;
  * Pythagorean triple an be constructed by above formula.
  */
 export module pythagorean_triple;
+
+import std;
 
 import base;
 

@@ -4,18 +4,15 @@
  */
 module;
 
-#include <algorithm>
-#include <array>
-#include <cassert>
-#include <cstdint>
-#include <optional>
-#include <type_traits>
+#include <cassert> // Needed for `assert` macro.
 
 /**
  * @module prime_test
  * @brief Test whether a given number is prime.
  */
 export module prime_test;
+
+import std;
 
 import base;
 import int128;
@@ -110,8 +107,8 @@ bool miller_selfridge_rabin_test(T n, T a) noexcept {
  * @return Whether \f$n\f$ is prime.
  */
 [[nodiscard]] constexpr
-bool forisek_jancina_no_base_cases(uint32_t n) noexcept {
-  constexpr auto bases = std::to_array<uint64_t>({
+bool forisek_jancina_no_base_cases(std::uint32_t n) noexcept {
+  constexpr auto bases = std::to_array<std::uint64_t>({
       15591, 2018, 166, 7429, 8064, 16045, 10503, 4399, 1949, 1295, 2776, 3620,
       560, 3128, 5212, 2657, 2300, 2021, 4652, 1471, 9336, 4018, 2398, 20462,
       10277, 8028, 2213, 6219, 620, 3763, 4852, 5012, 3185, 1333, 6227, 5298,
@@ -135,11 +132,11 @@ bool forisek_jancina_no_base_cases(uint32_t n) noexcept {
       4708, 418, 1621, 1171, 3471, 88, 11345, 412, 1559, 194});
 
   // Hashing to find the correct base.
-  uint64_t h = n;
+  std::uint64_t h = n;
   h = ((h >> 16) ^ h) * 0x45D9F3B;
   h = ((h >> 16) ^ h) * 0x45D9F3B;
   h = ((h >> 16) ^ h) & 0xFF;
-  return ntlib::miller_selfridge_rabin_test(static_cast<uint64_t>(n), bases[h]);
+  return ntlib::miller_selfridge_rabin_test(static_cast<std::uint64_t>(n), bases[h]);
 }
 
 /**
@@ -151,10 +148,10 @@ bool forisek_jancina_no_base_cases(uint32_t n) noexcept {
  * @return Whether \f$n\f$ is prime.
  */
 [[nodiscard]] constexpr
-bool is_prime_32(uint32_t n) noexcept {
+bool is_prime_32(std::uint32_t n) noexcept {
   // Handle small numbers by trial division.
   std::optional<bool> trial_division =
-      ntlib::is_prime_trial_division(n, SMALL_PRIMES<uint32_t>);
+      ntlib::is_prime_trial_division(n, SMALL_PRIMES<std::uint32_t>);
   if (trial_division.has_value()) { return trial_division.value(); }
 
   // Use prime test by Forisek and Jancina for larger values.
@@ -170,17 +167,17 @@ bool is_prime_32(uint32_t n) noexcept {
  * @return Whether \f$n\f$ is prime.
  */
 [[nodiscard]] constexpr
-bool is_prime_64(uint64_t n) noexcept {
+bool is_prime_64(std::uint64_t n) noexcept {
   // Handle small numbers by trial division.
   std::optional<bool> trial_division =
-      ntlib::is_prime_trial_division(n, SMALL_PRIMES<uint64_t>);
+      ntlib::is_prime_trial_division(n, SMALL_PRIMES<std::uint64_t>);
   if (trial_division.has_value()) { return trial_division.value(); }
 
   // Use deterministic Miller-Selfridge-Rabin test for larger values.
   // For set of bases: https://miller-rabin.appspot.com/
-  constexpr auto bases64 = std::to_array<uint64_t>({
+  constexpr auto bases64 = std::to_array<std::uint64_t>({
       2, 325, 9'375, 28'178, 450'775, 9'780'504, 1'795'265'022});
-  return std::ranges::all_of(bases64, [n](uint64_t a) {
+  return std::ranges::all_of(bases64, [n](std::uint64_t a) {
     return ntlib::miller_selfridge_rabin_test(
         static_cast<ntlib::u128>(n), static_cast<ntlib::u128>(a));
   });
@@ -309,13 +306,13 @@ bool is_prime(T n) noexcept {
   if constexpr (std::is_integral_v<T> && sizeof(T) <= 4) {
     if constexpr (std::is_signed_v<T>) {
       if (n < 0) { return false; }
-      else { return ntlib::is_prime_32(static_cast<uint32_t>(n)); }
-    } else { return ntlib::is_prime_32(static_cast<uint32_t>(n)); }
+      else { return ntlib::is_prime_32(static_cast<std::uint32_t>(n)); }
+    } else { return ntlib::is_prime_32(static_cast<std::uint32_t>(n)); }
   } else if constexpr (std::is_integral_v<T> && sizeof(T) <= 8) {
     if constexpr (std::is_signed_v<T>) {
       if (n < 0) { return false; }
-      else { return ntlib::is_prime_64(static_cast<uint64_t>(n)); }
-    } else { return ntlib::is_prime_64(static_cast<uint64_t>(n)); }
+      else { return ntlib::is_prime_64(static_cast<std::uint64_t>(n)); }
+    } else { return ntlib::is_prime_64(static_cast<std::uint64_t>(n)); }
   } else {
     return ntlib::is_prime_baillie_psw<T>(n);
   }
